@@ -9,6 +9,7 @@
     "preview": "astro preview"
   },
   "devDependencies": {
+    "@directus/sdk": "^9.2.2",
     "astro": "^0.21.12"
   }
 }

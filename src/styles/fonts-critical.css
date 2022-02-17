@@ -1,0 +1,32 @@
+@font-face {
+  font-family: LiterataCritical;
+  src: url('/assets/fonts/LiterataCritical.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  /* unicode-range: U+65-U+90, U+97-122; */
+  font-display: swap;
+}
+@font-face {
+  font-family: JosefinSansCritical;
+  src: url('/assets/fonts/JosefinSansCritical.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  /* unicode-range: U+65-U+90, U+97-122; */
+  font-display: swap;
+}
+@font-face {
+  font-family: FiraCodeCritical;
+  src: url('/assets/fonts/FiraCodeCritical.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  /* unicode-range: U+65-U+90, U+97-122; */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Recursive';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/RecursiveCritical.woff2') format('woff2');
+  font-display: swap;
+}

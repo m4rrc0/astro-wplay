@@ -1,0 +1,81 @@
+---
+import { Markdown } from 'astro/components';
+
+const {languages_code, event: {
+  status,
+      name,
+      address,
+      cover_image,
+      recurring,
+      schedule,
+      scheduleFormatted,
+      organizers,
+      translations,
+      // translations.languages_code,
+      // translations.fallback_language,
+      // translations.highlighted_details,
+      // translations.description,
+      // translations.main_url,
+      // translations.facebook_event_url,
+      // translations.other_links,
+      event_instances,
+}} = Astro.props;
+
+const { description, highlighted_details } = translations?.find(t => t.languages_code === languages_code) || {}
+
+---
+
+<h1>{name}</h1>
+
+{cover_image && <img src={cover_image.src} width="200" />}
+
+<!--
+<div><a href={addressLink} target="_blank">{addressString}</a></div>
+<img src={`http://localhost:8055/assets/${logo.id}`} />
+<ul>
+    {typesTranslated.map(({ fr }) => <li>{fr}</li>)}
+</ul>
+<ul>
+<li>
+  website: {website}
+</li>
+<li>
+  facebook_page: {facebook_page}
+</li>
+<li>
+  instagram: {instagram}
+</li>
+<li>
+  twitter: {twitter}
+</li>
+<li>
+  youtube_channel: {youtube_channel}
+</li>
+</ul>
+
+<div>
+    <h2>Horaires</h2>
+    <div>
+        {opening_hours_strings.map(str => (
+            <p>{str}</p>
+        ))}
+    </div>
+    <div>
+        <Markdown content={opening_hours_remark.fr.markdown} />
+    </div>
+</div>
+<ul>
+    {games_services_translated.map(({ fr }) => (<li>{fr}</li>))}
+</ul>
+<ul>
+    {amenities_translated.map(({ fr }) => (<li>{fr}</li>))}
+</ul>
+-->
+<div>
+    <h2>Mis en avant</h2>
+    <Markdown content={highlighted_details} />
+</div>
+<div>
+    <h2>Description</h2>
+    <Markdown content={description} />
+</div>

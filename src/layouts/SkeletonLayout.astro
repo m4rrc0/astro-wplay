@@ -1,0 +1,35 @@
+---
+// import '../styles/global.css';
+
+import SEO from '../components/SEO.astro'
+import HeadFonts from '../partials/HeadFonts.astro'
+import HeadIconsAndManifest from '../partials/HeadIconsAndManifest.astro'
+
+const { lang = 'fr' } = Astro.props;
+---
+
+<html {lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico" /> -->
+
+    <!-- load styles from src/styles/global.css using Astro.resolve() -->
+    <link rel="stylesheet" type="text/css" href={Astro.resolve('../styles/global.css')} />
+
+    <HeadFonts />
+    <HeadIconsAndManifest />
+
+    <SEO
+      locale="fr_BE"
+      ogType="website"
+      siteName="Wanna Play" />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <slot name="body"/>
+    <slot />
+    <script src="/assets/js/instant.page.js" defer></script>
+  </body>
+</html>

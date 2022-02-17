@@ -1,0 +1,118 @@
+---
+  import Debug from 'astro/debug';
+  import { directus, start as startDirectus, fetchPages, fetchOrganizations, fetchEvents } from '../services/directus.js'
+  import SkeletonLayout from '../layouts/SkeletonLayout.astro'
+  import BasicPageLayout from '../layouts/BasicPageLayout.astro'
+  import OrganizationPageLayout from '../layouts/OrganizationPageLayout.astro'
+  import EventPageLayout from '../layouts/EventPageLayout.astro'
+
+
+export async function getStaticPaths() {
+  await startDirectus()
+
+	const pages = await fetchPages()
+	const organizations = await fetchOrganizations()
+	const events = await fetchEvents()
+
+  // const pagesStaticPaths = await pages.data.map(page => {
+  //   // const path = page.path === 'index' ? undefined : page.path
+  //   return { params: { path }, props: { page, pages } }
+  // })
+  const organizationsStaticPaths = await organizations.map(organization => {
+    return { params: { path: organization.path }, props: { organization, organizations } }
+  })
+  const eventsStaticPaths = await events.map(event => {
+    return { params: { path: event.path }, props: { event, events } }
+  })
+  const listsStaticPaths = [
+    { params: { path: undefined }, props: { events, organizations } },
+  ]
+  const staticPaths = [
+    // ...pagesStaticPaths,
+    ...organizationsStaticPaths,
+    ...eventsStaticPaths,
+    ...listsStaticPaths
+    ]
+  return staticPaths
+}
+
+
+const {path} = Astro.request.params;
+const {pages, page, organization, organizations, event, events} = Astro.props;
+---
+
+<SkeletonLayout>
+  <BasicPageLayout>
+    <!-- {
+      page && (
+        <>
+          <div>
+            <header>
+              <h1>
+                <img src="http://localhost:8055/assets/c1b371bc-27ef-45ac-bd5f-bc78e66db22c" alt="Wanna Play" width="200" />
+              </h1>
+              <p class="h2">Connecte les joueurs</p>
+              <p>Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un club, ...?
+          Retrouve toute l'info liée au monde du jeu de société sur Wanna Play!</p>
+            </header>
+          </div>
+          <ul>
+            {page.main.map((slice) => {
+              if(slice.collection === 'headers')
+                return <li>{slice.item.code_name}</li>
+              if(slice.collection === 'sections')
+                return <li>{slice.collection}</li>
+          
+              return <li>{slice.collection}</li>
+            })}
+          </ul>
+        </>
+      )
+    } -->
+
+    {
+      typeof(path) === 'undefined' && (
+        <>
+          <div>
+            <h2>Organisations</h2>
+            <ul>
+              {
+                organizations.map(o => (
+                  <li><a href={o.path}>{o.name}</a></li>
+                ))
+              }
+            </ul>
+          </div>
+          <div>
+            <h2>Events</h2>
+            <ul>
+              {
+                events.map(e => (
+                  <li><a href={e.path}>{e.name}</a></li>
+                ))
+              }
+            </ul>
+          </div>
+        </>
+      )
+    }
+
+    {
+      organization && (
+        <>
+          <OrganizationPageLayout {organization} languages_code="fr" />
+          <Debug {organization} />
+        </>
+      )
+    }
+
+    {
+      event && (
+        <>
+          <EventPageLayout {event} languages_code="fr" />
+          <Debug {event} />
+        </>
+      )
+    }
+  </BasicPageLayout>
+</SkeletonLayout>

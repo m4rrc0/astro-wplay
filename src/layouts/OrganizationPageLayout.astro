@@ -1,0 +1,89 @@
+---
+import { Markdown } from 'astro/components';
+
+const {languages_code, organization: {
+      // status,
+      // date_updated,
+      name,
+      // slug,
+      // types,
+      typesTranslated,
+      logo,
+      cover_image,
+      // opening_hours,
+      opening_hours_strings,
+      // games_services,
+      games_services_translated,
+      // address,
+      addressString,
+      addressLink,
+      // amenities,
+      amenities_translated,
+      website,
+      facebook_page,
+      instagram,
+      twitter,
+      youtube_channel,
+      translations,
+      // opening_hours_remark,
+      // description,
+      // gallery,
+}} = Astro.props;
+
+const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
+
+---
+
+<div>{name}</div>
+<div><a href={addressLink} target="_blank">{addressString}</a></div>
+<img src={logo.src} width="200" />
+<ul>
+    {typesTranslated?.map(({ [languages_code]: code }) => <li>{code}</li>)}
+</ul>
+<ul>
+<li>
+  website: {website}
+</li>
+<li>
+  facebook_page: {facebook_page}
+</li>
+<li>
+  instagram: {instagram}
+</li>
+<li>
+  twitter: {twitter}
+</li>
+<li>
+  youtube_channel: {youtube_channel}
+</li>
+</ul>
+
+<div>
+    <h2>Horaires</h2>
+    {
+      opening_hours_strings && (
+        <div>
+            {opening_hours_strings.map(str => (
+                <p>{str}</p>
+            ))}
+        </div>
+      )
+    }
+    {
+      opening_hours_remark && (
+        <div>
+            <Markdown content={opening_hours_remark} />
+        </div>
+      )
+    }
+</div>
+<ul>
+    {games_services_translated?.map(({ [languages_code]: code }) => (<li>{code}</li>))}
+</ul>
+<ul>
+    {amenities_translated?.map(({ [languages_code]: code }) => (<li>{code}</li>))}
+</ul>
+<div>
+    <h2>Description</h2>
+    <Markdown content={description} />
+</div>

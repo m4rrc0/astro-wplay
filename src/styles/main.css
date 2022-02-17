@@ -1,0 +1,40 @@
+/* --- General styles --- */
+:focus {
+  outline: var(--size-outline, 0.2rem) solid;
+  outline-offset: var(--size-outline, 0.2rem);
+}
+
+/* --- App specific --- */
+*,
+*::before,
+*::after {
+  border-style: solid;
+  border-width: 0;
+}
+
+input:not([type='submit']):not([type='button']):not([type='reset']),
+textarea {
+  border-width: 1px; /* TODO: remove this when sizing lib is ok */
+}
+
+/* #app {
+  margin: auto;
+  padding: 0 var(--gap);
+  max-width: var(--measure);
+} */
+
+blockquote {
+  border-left: var(--size-border-l, 0.4rem) solid;
+  margin-left: 0;
+  padding-left: var(--gap, 1.25rem);
+  font-style: italic;
+  /* font-size: var(--size-); */
+}
+
+/* tt,
+ code,
+ kbd,
+ pre,
+ samp {
+   padding: 0 0.2rem;
+ } */

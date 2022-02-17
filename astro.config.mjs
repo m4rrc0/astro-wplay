@@ -6,8 +6,22 @@
 // helpful tooltips, and warnings if your exported object is invalid.
 // You can disable this by removing "@ts-check" and `@type` comments below.
 
+import dotenv from 'dotenv'
+import fs from 'fs/promises'
+
+const env = dotenv.parse(await fs.readFile('.env'))
+
 // @ts-check
 export default /** @type {import('astro').AstroUserConfig} */ ({
   // Comment out "renderers: []" to enable Astro's default component support.
-  renderers: [],
-});
+  // renderers: [],
+  vite: {
+    // expose private env var on the server only
+    // as seen on https://github.com/withastro/astro/issues/1765
+    define: {
+      'process.env.DIRECTUS_URL': `"${env.DIRECTUS_URL}"`,
+      'process.env.DIRECTUS_EMAIL': `"${env.DIRECTUS_EMAIL}"`,
+      'process.env.DIRECTUS_PW': `"${env.DIRECTUS_PW}"`,
+    },
+  },
+})

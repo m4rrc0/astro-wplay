@@ -1,0 +1,144 @@
+/* nuds color system - default rules and values */
+/* -------------------------------------------- */
+
+:root {
+  /* The colors we want to use throughout the site */
+  /* Only the basics are defined here. It is up to the dev to define the colors to be used */
+  --color-currentcolor: currentcolor;
+  --color-transparent: transparent;
+  /* TODO: should we define a bunch of default colors to play with? */
+}
+
+body,
+*[class*="color-palette-"] {
+  /* Default fallback values if custom properties are not supported */
+  color: #111;
+  background-color: transparent;
+  border-color: currentcolor;
+  outline-color: currentcolor;
+  text-decoration-color: currentcolor;
+  text-emphasis-color: currentcolor;
+  caret-color: currentcolor;
+  column-rule-color: currentcolor;
+
+  /* Default variable names and fallback values for every css color-related properties */
+  /* Note: We provide a fallback value in case custom properties are supported but the variable is not set for some reason */
+  color: var(--color-text, #111);
+  background-color: var(--color-bg, transparent);
+  /* other properties have a fallback of 'currentcolor' so we don't have to set a value if we are fine with that */
+  border-color: var(--color-border, currentcolor);
+  outline-color: var(--color-outline, currentcolor);
+  text-decoration-color: var(--color-text-decoration, currentcolor);
+  text-emphasis-color: var(--color-text-emphasis, currentcolor);
+  caret-color: var(--color-caret, currentcolor);
+  column-rule-color: var(--color-column-rule, currentcolor);
+}
+
+/* More variable names definitions and fallback values for css selectors */
+*:focus,
+*[class^="color-palette-"]:focus,
+*[class^="color-palette-"] *:focus {
+  outline-color: var(--color-outline, currentcolor);
+}
+*::selection,
+*[class^="color-palette-"]::selection,
+*[class^="color-palette-"] *::selection {
+  color: #ffffff;
+  color: var(--color-selection-text, #ffffff);
+  background-color: #111111;
+  background-color: var(--color-selection-bg, #111111);
+}
+a,
+a[class^="color-palette-"],
+*[class^="color-palette-"] a {
+  color: currentcolor;
+  color: var(--color-a-text, #111111);
+  background-color: transparent;
+  background-color: var(--color-a-bg, transparent);
+}
+a:hover,
+a[class^="color-palette-"]:hover,
+*[class^="color-palette-"] a:hover {
+  color: #888888;
+  color: var(--color-a_hover-text, #888888);
+  background-color: transparent;
+  background-color: var(--color-a_hover-bg, transparent);
+}
+button,
+.button,
+button[class*="color-palette-"],
+.button[class*="color-palette-"],
+*[class*="color-palette-"] button,
+*[class*="color-palette-"] .button {
+  color: currentcolor;
+  color: var(--color-button-text, #111111);
+  background-color: transparent;
+  background-color: var(--color-button-bg, transparent);
+  border-color: var(--color-button-border, currentcolor);
+}
+button:hover,
+.button:hover,
+button[class*="color-palette-"]:hover,
+.button[class*="color-palette-"]:hover,
+*[class*="color-palette-"] button:hover,
+*[class*="color-palette-"] .button:hover {
+  color: #888;
+  color: var(--color-button_hover-text, #888);
+  background-color: transparent;
+  background-color: var(--color-button_hover-bg, transparent);
+  border-color: var(--color-button_hover-border, currentcolor);
+}
+button:disabled,
+.button:disabled,
+button[class*="color-palette-"]:disabled,
+.button[class*="color-palette-"]:disabled,
+*[class*="color-palette-"] button:disabled,
+*[class*="color-palette-"] .button:disabled {
+  color: #999;
+  color: var(--color-button_disabled-text, #999);
+  background-color: #eee;
+  background-color: var(--color-button_disabled-bg, #eee);
+  border-color: var(--color-button_disabled-border, currentcolor);
+}
+tt,
+tt[class^="color-palette-"],
+*[class^="color-palette-"] tt,
+code,
+code[class^="color-palette-"],
+*[class^="color-palette-"] code,
+kbd,
+kbd[class^="color-palette-"],
+*[class^="color-palette-"] kbd,
+pre,
+pre[class^="color-palette-"],
+*[class^="color-palette-"] pre,
+samp,
+samp[class^="color-palette-"],
+*[class^="color-palette-"] samp {
+  color: var(--color-code-text, currentcolor);
+  background-color: var(--color-code-bg, transparent);
+  border-color: var(--color-code-border, currentcolor);
+}
+/* End of variables assignments and fallback values */
+
+/* Every element inherits colors for the closest defined parent */
+body *,
+*[class*="color-palette-"] * {
+  color: inherit;
+  /* ... except for the background that should probably just remain transparent */
+  /* background-color: inherit; */
+  /* Note: if we want to enforce an inherited background, we can set a class of "color-palette-" on an element */
+  border-color: inherit;
+  outline-color: inherit;
+  text-decoration-color: inherit;
+  text-emphasis-color: inherit;
+  caret-color: inherit;
+  column-rule-color: inherit;
+}
+
+/* This is useful to be able to use variations of the same palette */
+:root {
+  --color-neutral: var(--color-neutral-palette);
+  --color-primary: var(--color-primary-palette);
+  --color-secondary: var(--color-secondary-palette);
+}

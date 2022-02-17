@@ -6,10 +6,17 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "serve": "astro preview"
   },
   "devDependencies": {
     "@directus/sdk": "^9.2.2",
-    "astro": "^0.21.12"
+    "astro": "^0.21.12",
+    "cssnano": "^5.0.17",
+    "dotenv": "^16.0.0",
+    "postcss-functions": "^4.0.2",
+    "postcss-import": "^14.0.2",
+    "postcss-mixins": "^9.0.1",
+    "postcss-preset-env": "^7.3.3"
   }
 }

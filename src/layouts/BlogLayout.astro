@@ -1,0 +1,36 @@
+---
+// Component Imports
+import SkeletonLayout from './SkeletonLayout.astro'
+import BasicPageLayout from './BasicPageLayout.astro'
+import SEO from '../components/SEO.svelte'
+
+const { content: {
+  title,
+  slug,
+  lang,
+  ogType,
+  siteName,
+  description,
+  canonicalUrl,
+} = {} } = Astro.props;
+
+---
+
+<SkeletonLayout>
+  <SEO
+    slot="head"
+    {...{ lang, ogType, siteName, title, description, canonicalUrl }} />
+  <BasicPageLayout>
+
+    <div class="stack">
+      <slot />
+    </div>
+
+  </BasicPageLayout>
+</SkeletonLayout>
+
+<style>
+  .stack {
+    --gap: 1em;
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+
+---
+
+<div id="template-global" class="">
+  <div class="box no-border">
+    <nav class="center cluster overflow gap-h6-down">
+      <ul class="">
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/blog/">Blog</a>
+        </li>
+        <li>
+          <a href="/projects/">Projects</a>
+        </li>
+        <li>
+          <a href="/tests/">Tests</a>
+        </li>
+        <li>
+          <a href="/styleguide/">Styleguide</a>
+        </li>
+        <li>
+          <a href="/subscribe/">Subscribe</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="box no-border">
+    <div class="center">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  #template-global {
+    margin-bottom: var(--gap-xxl);
+  }
+  nav {
+    /* --gap: var(--size-h6); */
+    /* margin: var(--gap) 0; */
+  }
+</style>

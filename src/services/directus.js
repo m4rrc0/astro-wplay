@@ -12,7 +12,8 @@ export const directus = new Directus(DIRECTUS_URL)
 
 // --- STATIC VALUES --- //
 
-const cmsBaseUrl = `http://localhost:8055`
+// const cmsBaseUrl = `http://localhost:8055`
+const cmsBaseUrl = DIRECTUS_URL
 const cmsAssetsUrl = `${cmsBaseUrl}/assets`
 
 const imageFields = (preString) => [

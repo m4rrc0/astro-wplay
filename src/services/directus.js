@@ -110,7 +110,8 @@ const formatDateTime = (str) => {
 
 function removeEmptyPropOnObject(obj) {
   if (typeof obj === 'object' && !Array.isArray(obj)) {
-    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
+    // return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
+    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v || v === false))
   }
   return obj
 }
@@ -168,7 +169,7 @@ function transformImage(i) {
 }
 
 function transformAddress(address) {
-  const a = address[0]
+  const a = address?.[0]?.street && address?.[0]
   if (!a) return { string: null, link: null }
 
   const string = `${a.street} ${a.number}, ${a.zip} ${a.city}`
@@ -298,11 +299,12 @@ export async function fetchOrganizations() {
       'games_services',
       'address',
       'amenities',
-      'website',
-      'facebook_page',
-      'instagram',
-      'twitter',
-      'youtube_channel',
+      'links',
+      // 'website',
+      // 'facebook_page',
+      // 'instagram',
+      // 'twitter',
+      // 'youtube_channel',
       'translations.*',
       // "gallery.*",
       ...imageFields('gallery.*.'),
@@ -327,8 +329,8 @@ function fallbackOnParentsOfEvent({
   // process translations fields first
   const translations = languages
     .map(({ code }) => {
-      const eventFields = translationFromCode(eventRaw?.translations, code)
-      const parentFields = translationFromCode(parent?.translations, code)
+      const eventFields = removeEmptyPropOnObject(translationFromCode(eventRaw?.translations, code))
+      const parentFields = removeEmptyPropOnObject(translationFromCode(parent?.translations, code))
       const organizerFields = translationFromCode(
         mainOrganizer?.translations,
         code,
@@ -340,6 +342,7 @@ function fallbackOnParentsOfEvent({
       if (!eventFields && !parentFields && !organizerFields) return null
 
       return {
+        ...(organizerFields || {}),
         ...(parentFields || {}),
         ...(eventFields || {}),
         // fallback_language: eventFields?.fallback_language,
@@ -453,6 +456,7 @@ const flattenEvents = (eventsUnflat) => {
   let eventsFlatten = []
 
   eventsUnflat.forEach((event) => {
+
     if (event.hasNoSchedule) {
       // skip event entirely because it will be used by children if it is a recurring one
       return null
@@ -468,6 +472,7 @@ const flattenEvents = (eventsUnflat) => {
     // TODO: think about data inconsistencies if recurring is true but only one date for example
     // this is possible if only one date has been provided for now
   })
+
   return eventsFlatten
 }
 
@@ -476,6 +481,7 @@ export async function fetchEvents() {
     limit: -1,
     fields: ['*'],
   })
+
   const eventsRaw = await directus.items('events').readMany({
     limit: -1,
     // filter: { status: { _eq: 'published' } },
@@ -489,6 +495,10 @@ export async function fetchEvents() {
       ...imageFields('cover_image.'),
       'recurring',
       'schedule',
+      'links',
+      // 'links.web_page',
+      // 'links.facebook_event',
+      // 'links.other_links',
       // 'organizers.organizations_id.*',
       'organizers.organizations_id.name',
       'organizers.organizations_id.slug',
@@ -497,28 +507,27 @@ export async function fetchEvents() {
       'organizers.organizations_id.games_services',
       'organizers.organizations_id.amenities',
       ...imageFields('organizers.organizations_id.gallery.*.'),
+      'organizers.organizations_id.translations.languages_code',
       'organizers.organizations_id.translations.description',
       // 'translations.*',
       'translations.languages_code',
-      'translations.fallback_language',
+      // 'translations.fallback_language',
       'translations.highlighted_details',
       'translations.description',
-      'translations.main_url',
-      'translations.facebook_event_url',
-      'translations.other_links',
       // parent_event
       'parent_event',
       'parent_event.status',
       'parent_event.name',
       'parent_event.address',
+      'parent_event.links',
       ...imageFields('parent_event.cover_image.'),
       'parent_event.translations.languages_code',
-      'parent_event.translations.fallback_language',
+      // 'parent_event.translations.fallback_language',
       'parent_event.translations.highlighted_details',
       'parent_event.translations.description',
-      'parent_event.translations.main_url',
-      'parent_event.translations.facebook_event_url',
-      'parent_event.translations.other_links',
+      // 'parent_event.translations.main_url',
+      // 'parent_event.translations.facebook_event_url',
+      // 'parent_event.translations.other_links',
       'parent_event.organizers.organizations_id.name',
       'parent_event.organizers.organizations_id.slug',
       'parent_event.organizers.organizations_id.address',
@@ -526,6 +535,7 @@ export async function fetchEvents() {
       'parent_event.organizers.organizations_id.games_services',
       'parent_event.organizers.organizations_id.amenities',
       ...imageFields('parent_event.organizers.organizations_id.gallery.*.'),
+      'parent_event.organizers.organizations_id.translations.languages_code',
       'parent_event.organizers.organizations_id.translations.description',
 
       'event_instances',

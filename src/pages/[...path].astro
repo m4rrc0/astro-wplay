@@ -10,7 +10,7 @@
 export async function getStaticPaths() {
   await startDirectus()
 
-	const pages = await fetchPages()
+	// const pages = await fetchPages()
 	const organizations = await fetchOrganizations()
 	const events = await fetchEvents()
 
@@ -25,7 +25,11 @@ export async function getStaticPaths() {
     return { params: { path: event.path }, props: { event, events } }
   })
   const listsStaticPaths = [
-    { params: { path: undefined }, props: { events, organizations } },
+    { params: { path: 'list' }, props: { 
+      events, 
+      organizations
+      }
+    },
   ]
   const staticPaths = [
     // ...pagesStaticPaths,
@@ -38,7 +42,11 @@ export async function getStaticPaths() {
 
 
 const {path} = Astro.request.params;
-const {pages, page, organization, organizations, event, events} = Astro.props;
+const {
+  // pages, page, 
+  organization, organizations,
+  event, events
+  } = Astro.props;
 ---
 
 <SkeletonLayout>
@@ -71,7 +79,7 @@ const {pages, page, organization, organizations, event, events} = Astro.props;
     } -->
 
     {
-      typeof(path) === 'undefined' && (
+      path === 'list' && (
         <>
           <div>
             <h2>Organisations</h2>
@@ -83,6 +91,7 @@ const {pages, page, organization, organizations, event, events} = Astro.props;
               }
             </ul>
           </div>
+
           <div>
             <h2>Events</h2>
             <ul>
@@ -105,6 +114,7 @@ const {pages, page, organization, organizations, event, events} = Astro.props;
         </>
       )
     }
+
 
     {
       event && (

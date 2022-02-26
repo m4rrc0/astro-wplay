@@ -3,23 +3,25 @@ import { Markdown } from 'astro/components';
 
 const {languages_code, event: {
   status,
-      name,
-      address,
-      cover_image,
-      recurring,
-      schedule,
-      scheduleFormatted,
-      organizers,
-      translations,
-      // translations.languages_code,
-      // translations.fallback_language,
-      // translations.highlighted_details,
-      // translations.description,
-      // translations.main_url,
-      // translations.facebook_event_url,
-      // translations.other_links,
-      event_instances,
+  name,
+  address,
+  cover_image,
+  recurring,
+  schedule,
+  scheduleFormatted,
+  organizers,
+  translations,
+  // translations.languages_code,
+  // translations.fallback_language,
+  // translations.highlighted_details,
+  // translations.description,
+  // translations.main_url,
+  // translations.facebook_event_url,
+  // translations.other_links,
+  event_instances,
 }} = Astro.props;
+
+// console.log(translations)
 
 const { description, highlighted_details } = translations?.find(t => t.languages_code === languages_code) || {}
 

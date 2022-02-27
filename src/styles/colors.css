@@ -3,13 +3,14 @@
 
 :root {
   /* All the colors we might want to use throughout the site with their respective variable names */
-  --color-white: #fff;
+  --color-white: #ffffff;
+  --color-blue: rgb(47,82,160);
+  --color-blue-trans: rgba(47,82,160, 0.8);
+  --color-green: rgb(0,171,175);
+  --color-red: rgb(233,75,109);
   --color-black: #111;
   --color-dark: #333;
   --color-grey: #888;
-  --color-red: red;
-  --color-blue: blue;
-  --color-green: green;
 }
 
 body,
@@ -149,19 +150,19 @@ samp[class^="color-palette-"],
 /* color PALETTES */
 :root,
 body,
-.color-palette-1 {
+.color-palette-main {
   --color-neutral-palette: var(--color-white);
-  --color-primary-palette: var(--color-dark);
-  --color-secondary-palette: var(--color-grey);
-}
-.color-palette-2 {
-  --color-neutral-palette: var(--color-black);
-  --color-primary-palette: var(--color-red);
+  --color-primary-palette: var(--color-blue);
   --color-secondary-palette: var(--color-green);
 }
-.color-palette-3 {
-  --color-neutral-palette: var(--color-grey);
-  --color-primary-palette: var(--color-blue);
+.color-palette-danger {
+  --color-neutral-palette: var(--color-red);
+  --color-primary-palette: var(--color-white);
+  --color-secondary-palette: var(--color-blue);
+}
+.color-palette-trans {
+  --color-neutral-palette: var(--color-blue-trans);
+  --color-primary-palette: var(--color-white);
   --color-secondary-palette: var(--color-green);
 }
 

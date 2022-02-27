@@ -1,13 +1,13 @@
-const functions = require('./functions');
+const functions = require('./functions')
 
-const sizeBasePx = 16;
-const sizeMaxPx = 100;
-const sizeScaleSteps = 12;
+const sizeBasePx = 16
+const sizeMaxPx = 100
+const sizeScaleSteps = 12
 const sizeScaleRatio = functions.sizeScaleRatio(
   sizeBasePx,
   sizeMaxPx,
-  sizeScaleSteps
-);
+  sizeScaleSteps,
+)
 
 module.exports = {
   environmentVariables: {
@@ -32,6 +32,7 @@ module.exports = {
     // ratio is computed with (maxSize / baseSize) ** (1 / steps)
     /* (baseSize = 16, maxSize = 100, steps = 12) => 1.16499 */
     '--size-scale-ratio': `${sizeScaleRatio}`,
+    '--size-relative-ratio': '1.618',
 
     '--size-lock-screen-min': '20',
     '--size-lock-screen-max': '88',
@@ -45,7 +46,7 @@ module.exports = {
     '--branding-small': '600px',
     '--main-color': 'orange',
   },
-};
+}
 // export default {
 //   environmentVariables: {
 //     '--branding-padding': '20px',

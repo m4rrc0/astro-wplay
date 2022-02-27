@@ -54,11 +54,12 @@ body,
   );
   --lock-h1: ...
   --lock-h2: ... */
-  @mixin locks h0, h1, h2, h3, h4, p, h5, h6, h7, h8, h9;
+  @mixin locks h-1, h0, h1, h2, h3, h4, p, h5, h6, h7, h8, h9;
   /* Can also use function */
   /* --lock-h1: lock(var(--size-h1-min),var(--size-h1-max),var(--size-lock-screen-min),var(--size-lock-screen-max)); */
 
   /* --size-font: var(--lock); */
+  --size-h-1: var(--lock-h-1);
   --size-h0: var(--lock-h0);
   --size-h1: var(--lock-h1);
   --size-h2: var(--lock-h2);
@@ -80,6 +81,7 @@ body,
 
     /* Combination with the formula to avoid media queries */
     /* prettier-ignore */
+    --size-h-1: min(max((var(--size-h-1-min) * 1rem), var(--lock-h-1)), (var(--size-h-1-max) * 1rem)); /* prettier-ignore */
     --size-h0: min(max((var(--size-h0-min) * 1rem), var(--lock-h0)), (var(--size-h0-max) * 1rem)); /* prettier-ignore */
     --size-h1: min(max((var(--size-h1-min) * 1rem), var(--lock-h1)), (var(--size-h1-max) * 1rem)); /* prettier-ignore */
     --size-h2: min(max((var(--size-h2-min) * 1rem), var(--lock-h2)), (var(--size-h2-max) * 1rem)); /* prettier-ignore */
@@ -98,6 +100,7 @@ body,
   /* If no support for min(max()) we use media queries for more predictability */
   @supports not (font-size: min(max(16px, 2.2vw), 22px)) {
     @media (width > calc(env(--size-lock-screen-max) * 1rem)) {
+      --size-h-1: calc(var(--size-h-1-max) * 1rem);
       --size-h0: calc(var(--size-h0-max) * 1rem);
       --size-h1: calc(var(--size-h1-max) * 1rem);
       --size-h2: calc(var(--size-h2-max) * 1rem);
@@ -111,6 +114,7 @@ body,
       --size-h9: calc(var(--size-h9-max) * 1rem);
     }
     @media (width < calc(env(--size-lock-screen-min) * 1rem)) {
+      --size-h-1: calc(var(--size-h-1-min) * 1rem);
       --size-h0: calc(var(--size-h0-min) * 1rem);
       --size-h1: calc(var(--size-h1-min) * 1rem);
       --size-h2: calc(var(--size-h2-min) * 1rem);
@@ -145,35 +149,45 @@ body,
 body,
 *[class*="size-context-"] {
   /* should have multiple widths (max, measure, aside, min, 0, ?) */
-  /* gap is for margins, paddings, grid-gap, ... */
-  --gap-relative-s: 0.618em;
-  --gap-relative-m: 1em;
-  --gap-relative-l: 1.618em;
-  --gap-relative: var(--gap-relative-m);
+  /* --size-relative-ratio is defined in tokens = 1.618 by default */
+  --size-relative-xs: calc(var(--size-relative-s) / var(--size-relative-ratio)); /* 0.382 */
+  --size-relative-s: calc(var(--size-relative-m) / var(--size-relative-ratio)); /* 0.618 */
+  --size-relative-m: 1em;
+  --size-relative-l: calc(var(--size-relative-m) * var(--size-relative-ratio)); /* 1.618 */
+  --size-relative-xl: calc(var(--size-relative-l) * var(--size-relative-ratio)); /* 2.618 */
+  --size-relative: var(--size-relative-m);
 
-  --gap-xxs: var(--size-h7);
+  /* --- main site's sections widths --- */
+  --measure: var(--measure-text);
+  --width-text: var(--measure-text);
+  /* --width-max: ; */
+  /* --width-main: ; */
+  /* --width-aside: ; */
+  --width-column: calc(var(--measure) / 4);
+  /* --width-min: ; */ /* min block width */
+
+  /* gap is for margins, paddings, grid-gap, ... */
+  /* --gap-xxs: var(--size-h7);
   --gap-xs: var(--size-h6);
   --gap-s: var(--size-h5);
-  --gap-m: var(--size-h4);
   --gap-l: var(--size-h3);
   --gap-xl: var(--size-h2);
-  --gap-xxl: var(--size-h1);
+  --gap-xxl: var(--size-h1); */
+  --gap-m: var(--size-h4);
+  /* --gap: var(--gap-m); */
 
-  --gap: var(--gap-m);
   /* useful vars for layout primitives */
-  --gutters: var(--gap-m);
-  --space: var(--gap-m);
-  --padding: var(--gap-m);
-  --width-border: var(--gap-xxs);
-  --width-max: var(--gap-xxs);
-  --width-min: var(--gap-xxs);
-  --width-item: var(--gap-xxs);
-  --width-side: var(--gap-xxs);
-  --width-main-min: var(--gap-xxs);
-  --height: var(--gap-xxs);
-  --threshold: var(--gap-xxs);
-
-  --measure: var(--measure-text);
+  /* --gutters: var(--gap-m); */
+  /* --space: var(--gap-m); */
+  --padding: var(--size-relative);
+  /* --width-border: var(--gap-xxs); */
+  /* --width-max: var(--gap-xxs); */
+  /* --width-min: var(--gap-xxs); */
+  /* --width-item: var(--gap-xxs); */
+  /* --width-side: var(--gap-xxs); */
+  /* --width-main-min: var(--gap-xxs); */
+  /* --height: var(--gap-xxs); */
+  /* --threshold: var(--gap-xxs); */
 
   --size-border-button: var(--size-h8);
   /* --- Border widths --- */
@@ -198,13 +212,7 @@ body,
   /* default */
   --size-gutters: var(--size-gutters-m);
 
-  /* --- main site's sections widths --- */
-  /* --width-max: ; */
-  /* --width-main: ; */
-  /* --width-aside: ; */
-  --width-text: var(--measure-text);
-  --width-column: calc(var(--measure) / 4);
-  /* --width-min: ; */ /* min block width */
+
 }
 
 /* 4. ------------------------------------
@@ -214,6 +222,8 @@ We will use "size contexts" to determine the mins and max to use for the compute
 .size-context-main,
 body {
   /* Default sizing for title */
+  --size-h-1-max: var(--s12);
+  --size-h-1-min: var(--s9);
   --size-h0-max: var(--s9);
   --size-h0-min: var(--s6);
   --size-h1-max: var(--s6);
@@ -240,6 +250,8 @@ body {
 
 .size-context-massive {
   /* Sizing for massive titles in sections */
+  --size-h-1-max: var(--s12);
+  --size-h-1-min: var(--s12);
   --size-h0-max: var(--s12);
   --size-h0-min: var(--s5);
   --size-h1-max: var(--s10);
@@ -273,6 +285,8 @@ body {
 }
 
 .size-context-miniature {
+  --size-h-1-max: var(--s2);
+  --size-h-1-min: var(--s-1);
   --size-h0-max: var(--s-1);
   --size-h0-min: var(--s-2);
   --size-h1-max: var(--s-2);
@@ -302,6 +316,8 @@ utility classes to make it easier to apply font-sizes or other dimensions inside
 
 /* prettier-ignore */
 *, .size-h4, .h4, .size-p, .p { font-size: 1rem; font-size: var(--size-h4, 1rem);} /* prettier-ignore */
+.size-h-1, .h-1 { font-size: 3rem; font-size: var(--size-h-1, 3rem); } /* prettier-ignore */
+.size-h0, .h0 { font-size: 2.5rem; font-size: var(--size-h0, 2.5rem); } /* prettier-ignore */
 h1, h1 *, .size-h1, .h1 { font-size: 2rem; font-size: var(--size-h1, 2rem); } /* prettier-ignore */
 h2, h2 *, .size-h2, .h2 { font-size: 1.8rem; font-size: var(--size-h2, 1.8rem); } /* prettier-ignore */
 h3, h3 *, .size-h3, .h3 { font-size: 1.5rem; font-size: var(--size-h3, 1.5rem); } /* prettier-ignore */
@@ -320,6 +336,7 @@ button, .button { border-width: var(--size-border-button) }
 .size-border-l { --size-border: var(--size-border-l); } /* prettier-ignore */
 /* --- GAP Sub-contexts --- */ /* prettier-ignore */
 .gap-0, .gap-0-down > *, .gap-down-0 > *, .no-gap, .no-gap-down > *, .no-down-gap > * { --gap: 0; } /* prettier-ignore */
+.gap-h-1, .gap-h-1-down > *, .gap-down-h-1 > * { --gap: var(--size-h-1); } /* prettier-ignore */
 .gap-h0, .gap-h0-down > *, .gap-down-h0 > * { --gap: var(--size-h0); } /* prettier-ignore */
 .gap-h1, .gap-h1-down > *, .gap-down-h1 > * { --gap: var(--size-h1); } /* prettier-ignore */
 .gap-h2, .gap-h2-down > *, .gap-down-h2 > * { --gap: var(--size-h2); } /* prettier-ignore */
@@ -338,3 +355,57 @@ button, .button { border-width: var(--size-border-button) }
 .border-s { border: var(--size-border-s)} /* prettier-ignore */
 .border-m { border: var(--size-border-m)} /* prettier-ignore */
 .border-l { border: var(--size-border-l)} /* prettier-ignore */
+.padding-0, .no-padding { padding: 0; } /* prettier-ignore */
+.padding-h-1 { padding: var(--size-h-1)} /* prettier-ignore */
+.padding-h0 { padding: var(--size-h0)} /* prettier-ignore */
+.padding-h1 { padding: var(--size-h1)} /* prettier-ignore */
+.padding-h2 { padding: var(--size-h2)} /* prettier-ignore */
+.padding-h3 { padding: var(--size-h3)} /* prettier-ignore */
+.padding-h4 { padding: var(--size-h4)} /* prettier-ignore */
+.padding-h5 { padding: var(--size-h5)} /* prettier-ignore */
+.padding-h6 { padding: var(--size-h6)} /* prettier-ignore */
+.padding-h7 { padding: var(--size-h7)} /* prettier-ignore */
+.padding-h8 { padding: var(--size-h8)} /* prettier-ignore */
+.padding-h9 { padding: var(--size-h9)} /* prettier-ignore */
+.padding-relative { padding: var(--size-relative)} /* prettier-ignore */
+.padding-relative-xs { padding: var(--size-relative-xs)} /* prettier-ignore */
+.padding-relative-s { padding: var(--size-relative-s)} /* prettier-ignore */
+.padding-relative-m { padding: var(--size-relative-m)} /* prettier-ignore */
+.padding-relative-l { padding: var(--size-relative-l)} /* prettier-ignore */
+.padding-relative-xl { padding: var(--size-relative-xl)} /* prettier-ignore */
+.padding-x-0, .no-padding-x { padding-left: 0; padding-right: 0; } /* prettier-ignore */
+.padding-x-h-1 { padding-left: var(--size-h-1); padding-right: var(--size-h-1); } /* prettier-ignore */
+.padding-x-h0 { padding-left: var(--size-h0); padding-right: var(--size-h0); } /* prettier-ignore */
+.padding-x-h1 { padding-left: var(--size-h1); padding-right: var(--size-h1); } /* prettier-ignore */
+.padding-x-h2 { padding-left: var(--size-h2); padding-right: var(--size-h2); } /* prettier-ignore */
+.padding-x-h3 { padding-left: var(--size-h3); padding-right: var(--size-h3); } /* prettier-ignore */
+.padding-x-h4 { padding-left: var(--size-h4); padding-right: var(--size-h4); } /* prettier-ignore */
+.padding-x-h5 { padding-left: var(--size-h5); padding-right: var(--size-h5); } /* prettier-ignore */
+.padding-x-h6 { padding-left: var(--size-h6); padding-right: var(--size-h6); } /* prettier-ignore */
+.padding-x-h7 { padding-left: var(--size-h7); padding-right: var(--size-h7); } /* prettier-ignore */
+.padding-x-h8 { padding-left: var(--size-h8); padding-right: var(--size-h8); } /* prettier-ignore */
+.padding-x-h9 { padding-left: var(--size-h9); padding-right: var(--size-h9); } /* prettier-ignore */
+.padding-x-relative { padding-left: var(--size-relative); padding-right: var(--size-relative); } /* prettier-ignore */
+.padding-x-relative-xs { padding-left: var(--size-relative-xs); padding-right: var(--size-relative-xs); } /* prettier-ignore */
+.padding-x-relative-s { padding-left: var(--size-relative-s); padding-right: var(--size-relative-s); } /* prettier-ignore */
+.padding-x-relative-m { padding-left: var(--size-relative-m); padding-right: var(--size-relative-m); } /* prettier-ignore */
+.padding-x-relative-l { padding-left: var(--size-relative-l); padding-right: var(--size-relative-l); } /* prettier-ignore */
+.padding-x-relative-xl { padding-left: var(--size-relative-xl); padding-right: var(--size-relative-xl); } /* prettier-ignore */
+.padding-y-0, .no-padding-y { padding-top: 0; padding-bottom: 0; } /* prettier-ignore */
+.padding-y-h-1 { padding-top: var(--size-h-1); padding-bottom: var(--size-h-1); } /* prettier-ignore */
+.padding-y-h0 { padding-top: var(--size-h0); padding-bottom: var(--size-h0); } /* prettier-ignore */
+.padding-y-h1 { padding-top: var(--size-h1); padding-bottom: var(--size-h1); } /* prettier-ignore */
+.padding-y-h2 { padding-top: var(--size-h2); padding-bottom: var(--size-h2); } /* prettier-ignore */
+.padding-y-h3 { padding-top: var(--size-h3); padding-bottom: var(--size-h3); } /* prettier-ignore */
+.padding-y-h4 { padding-top: var(--size-h4); padding-bottom: var(--size-h4); } /* prettier-ignore */
+.padding-y-h5 { padding-top: var(--size-h5); padding-bottom: var(--size-h5); } /* prettier-ignore */
+.padding-y-h6 { padding-top: var(--size-h6); padding-bottom: var(--size-h6); } /* prettier-ignore */
+.padding-y-h7 { padding-top: var(--size-h7); padding-bottom: var(--size-h7); } /* prettier-ignore */
+.padding-y-h8 { padding-top: var(--size-h8); padding-bottom: var(--size-h8); } /* prettier-ignore */
+.padding-y-h9 { padding-top: var(--size-h9); padding-bottom: var(--size-h9); } /* prettier-ignore */
+.padding-y-relative { padding-top: var(--size-relative); padding-bottom: var(--size-relative); } /* prettier-ignore */
+.padding-y-relative-xs { padding-top: var(--size-relative-xs); padding-bottom: var(--size-relative-xs); } /* prettier-ignore */
+.padding-y-relative-s { padding-top: var(--size-relative-s); padding-bottom: var(--size-relative-s); } /* prettier-ignore */
+.padding-y-relative-m { padding-top: var(--size-relative-m); padding-bottom: var(--size-relative-m); } /* prettier-ignore */
+.padding-y-relative-l { padding-top: var(--size-relative-l); padding-bottom: var(--size-relative-l); } /* prettier-ignore */
+.padding-y-relative-xl { padding-top: var(--size-relative-xl); padding-bottom: var(--size-relative-xl); } /* prettier-ignore */

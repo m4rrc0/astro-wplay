@@ -111,7 +111,9 @@ const formatDateTime = (str) => {
 function removeEmptyPropOnObject(obj) {
   if (typeof obj === 'object' && !Array.isArray(obj)) {
     // return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
-    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v || v === false))
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, v]) => v || v === false),
+    )
   }
   return obj
 }
@@ -329,8 +331,12 @@ function fallbackOnParentsOfEvent({
   // process translations fields first
   const translations = languages
     .map(({ code }) => {
-      const eventFields = removeEmptyPropOnObject(translationFromCode(eventRaw?.translations, code))
-      const parentFields = removeEmptyPropOnObject(translationFromCode(parent?.translations, code))
+      const eventFields = removeEmptyPropOnObject(
+        translationFromCode(eventRaw?.translations, code),
+      )
+      const parentFields = removeEmptyPropOnObject(
+        translationFromCode(parent?.translations, code),
+      )
       const organizerFields = translationFromCode(
         mainOrganizer?.translations,
         code,
@@ -456,7 +462,6 @@ const flattenEvents = (eventsUnflat) => {
   let eventsFlatten = []
 
   eventsUnflat.forEach((event) => {
-
     if (event.hasNoSchedule) {
       // skip event entirely because it will be used by children if it is a recurring one
       return null

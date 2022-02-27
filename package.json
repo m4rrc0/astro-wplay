@@ -17,6 +17,6 @@
     "postcss-functions": "^4.0.2",
     "postcss-import": "^14.0.2",
     "postcss-mixins": "^9.0.1",
-    "postcss-preset-env": "^7.3.3"
+    "postcss-preset-env": "^7.4.1"
   }
 }

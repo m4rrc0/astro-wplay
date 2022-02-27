@@ -10,6 +10,10 @@
 *::after {
   border-style: solid;
   border-width: 0;
+  /* Default background properties */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 input:not([type='submit']):not([type='button']):not([type='reset']),

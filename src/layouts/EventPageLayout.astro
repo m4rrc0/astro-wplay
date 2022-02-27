@@ -21,15 +21,20 @@ const {languages_code, event: {
   event_instances,
 }} = Astro.props;
 
-// console.log(translations)
 
 const { description, highlighted_details } = translations?.find(t => t.languages_code === languages_code) || {}
 
 ---
 
-<h1>{name}</h1>
+<header
+  class="center max text box no-border color-palette-trans background-overlay h1 padding-y-relative-xl"
+  style={`background-image: url("${cover_image.src}");`}>
+  <h1 class="centered">{name}</h1>
 
-{cover_image && <img src={cover_image.src} width="200" />}
+</header>
+
+
+<!-- {cover_image && <img src={cover_image.src} width="200" />} -->
 
 <!--
 <div><a href={addressLink} target="_blank">{addressString}</a></div>

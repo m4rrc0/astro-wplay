@@ -22,6 +22,7 @@
   /* (baseSize = 16, maxSize = 100, steps = 12) => 1.16499 */
   /* --size-scale-ratio: sizeScaleRatio(); */
   --size-scale-ratio: env(--size-scale-ratio);
+  --size-relative-ratio: env(--size-relative-ratio);
 
   --size-lock-screen-min: env(--size-lock-screen-min);
   --size-lock-screen-max: env(--size-lock-screen-max);

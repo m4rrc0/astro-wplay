@@ -22,10 +22,7 @@ module.exports = {
     '--font-mono-critical': 'FiraCodeCritical', //* 'FiraCodeCritical' */
     '--font-mono-fallback': 'monospace',
 
-    /* --- SIZES --- */
-    /* --measure-text: 65ch; */
-    '--measure-text': '38rem',
-
+    /* --- SIZES FOR FONTS AND SPACES --- */
     '--size-base-px': `${sizeBasePx}`, //* unitless px value of base size (if necessary) */
     '--size-max-px': `${sizeMaxPx}`, //* unitless px value of max size cross site (if necessary) */
     '--size-scale-steps': `${sizeScaleSteps}`,
@@ -38,13 +35,27 @@ module.exports = {
     '--size-lock-screen-max': '88',
     /* TODO: does not work */
     /* --fluid-min-screen-px: 400;
-      --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
+    --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
       --fluid-max-screen-px: 600;
       --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
 
-    '--branding-padding': '20px',
-    '--branding-small': '600px',
-    '--main-color': 'orange',
+    /* --- WIDTHS --- */
+    /* --measure-text: 65ch; */
+    '--width-measure': '38rem',
+    '--width-measure-relative': '38em',
+    '--width-measure-ratio': '38',
+    '--width-max': '75rem' /* more or less 1200px here */,
+    '--width-relative-ratio': '0.618',
+
+    /* BORDER RADIUS */
+    '--border-radius-s': '',
+    '--border-radius-m': '',
+    '--border-radius-l': '',
+    '--border-radius-circle': '',
+    // TESTS //
+    // '--branding-padding': '20px',
+    // '--branding-small': '600px',
+    // '--main-color': 'orange',
   },
 }
 // export default {

@@ -11,8 +11,6 @@
   --font-mono-fallback: env(--font-mono-fallback);
 
   /* --- SIZES --- */
-  --measure-text: env(--measure-text);
-
   --size-base-px: env(--size-base-px); /* unitless px value (if necessary) */
   /* unitless px value of max size cross site (if necessary) */
   --size-max-px: env(--size-max-px);
@@ -23,14 +21,23 @@
   /* --size-scale-ratio: sizeScaleRatio(); */
   --size-scale-ratio: env(--size-scale-ratio);
   --size-relative-ratio: env(--size-relative-ratio);
-
+  
   --size-lock-screen-min: env(--size-lock-screen-min);
   --size-lock-screen-max: env(--size-lock-screen-max);
   /* TODO: does not work */
   /* --fluid-min-screen-px: 400;
-    --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
-    --fluid-max-screen-px: 600;
-    --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
+  --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
+  --fluid-max-screen-px: 600;
+  --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
+  
+
+  --width-measure: env(--width-measure);
+  --width-measure-relative: env(--width-measure-relative);
+  --width-measure-ratio: env(--width-measure-ratio);
+  --width-max: env(--width-max);
+  --width-relative-ratio: env(--width-relative-ratio);
+  /* --width-main: env(--width-main); */
+  /* --width-aside: env(--width-aside); */
 }
 
 @custom-selector :--h1 h1, h1 *, .h1, .h1 *;

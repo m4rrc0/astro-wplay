@@ -99,10 +99,11 @@ intrinsic: class bool
   box-sizing: content-box;
   margin-left: auto;
   margin-right: auto;
-  max-width: var(--max-width, var(--measure, 38rem));
+  max-width: var(--max-width, var(--width-max, var(--measure, 38rem)));
 }
 .center.max {
-  width: var(--max-width, var(--measure, 38rem));
+  width: var(--max-width, var(--width-max, var(--measure, 38rem)));
+  max-width: 100%;
 }
 .center.text {
   text-align: center;

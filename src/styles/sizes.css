@@ -158,12 +158,27 @@ body,
   --size-relative: var(--size-relative-m);
 
   /* --- main site's sections widths --- */
-  --measure: var(--measure-text);
-  --width-text: var(--measure-text);
-  /* --width-max: ; */
-  /* --width-main: ; */
-  /* --width-aside: ; */
-  --width-column: calc(var(--measure) / 4);
+  --measure: var(--width-measure);
+  --measure-relative: var(--width-measure-relative);
+  --width-measure-h1: calc(var(--size-h1) * var(--width-measure-ratio));
+  --width-measure-h2: calc(var(--size-h2) * var(--width-measure-ratio));
+  --width-measure-h3: calc(var(--size-h3) * var(--width-measure-ratio));
+  --width-measure-h4: calc(var(--size-h4) * var(--width-measure-ratio));
+  --width-measure-h5: calc(var(--size-h5) * var(--width-measure-ratio));
+  --width-measure-h6: calc(var(--size-h6) * var(--width-measure-ratio));
+  /* --width-max: ; */ /* already defined in tokens and vars */
+
+  /* ----------------------------------------------- */
+  /* TODO: better way to handle widths. does not scale nice. see logo on org page */
+  /* ----------------------------------------------- */
+
+  --width-main: calc(var(--width-max) * var(--width-relative-ratio));
+  --width-aside: calc(var(--width-max) - var(--width-main));
+  --width-col-2: calc(var(--width-max) / 2);
+  --width-col-3: calc(var(--width-max) / 3);
+  --width-col-4: calc(var(--width-max) / 4);
+  --width-col-5: calc(var(--width-max) / 5);
+  --width-col-6: calc(var(--width-max) / 6);
   /* --width-min: ; */ /* min block width */
 
   /* gap is for margins, paddings, grid-gap, ... */
@@ -315,17 +330,17 @@ body {
 utility classes to make it easier to apply font-sizes or other dimensions inside a size context */
 
 /* prettier-ignore */
-*, .size-h4, .h4, .size-p, .p { font-size: 1rem; font-size: var(--size-h4, 1rem);} /* prettier-ignore */
-.size-h-1, .h-1 { font-size: 3rem; font-size: var(--size-h-1, 3rem); } /* prettier-ignore */
-.size-h0, .h0 { font-size: 2.5rem; font-size: var(--size-h0, 2.5rem); } /* prettier-ignore */
-h1, h1 *, .size-h1, .h1 { font-size: 2rem; font-size: var(--size-h1, 2rem); } /* prettier-ignore */
-h2, h2 *, .size-h2, .h2 { font-size: 1.8rem; font-size: var(--size-h2, 1.8rem); } /* prettier-ignore */
-h3, h3 *, .size-h3, .h3 { font-size: 1.5rem; font-size: var(--size-h3, 1.5rem); } /* prettier-ignore */
-h5, h5 *, .size-h5, .h5 { font-size: 0.8rem; font-size: var(--size-h5, 0.8rem); } /* prettier-ignore */
-h6, h6 *, .size-h6, .h6 { font-size: 0.6rem; font-size: var(--size-h6, 0.6rem); } /* prettier-ignore */
-.size-h7, .h7 { font-size: 0.4rem; font-size: var(--size-h7, 0.4rem); } /* prettier-ignore */
-.size-h8, .h8 { font-size: 0.25rem; font-size: var(--size-h8, 0.25rem); } /* prettier-ignore */
-.size-h9, .h9 { font-size: 0.1rem; font-size: var(--size-h9, 0.1rem); }
+*, .size-h4, .h4, .size-p, .p, .size-h4 *, .h4 *, .size-p *, .p * { font-size: 1rem; font-size: var(--size-h4, 1rem);} /* prettier-ignore */
+.size-h-1, .h-1, .size-h-1 *, .h-1 * { font-size: 3rem; font-size: var(--size-h-1, 3rem); } /* prettier-ignore */
+.size-h0, .h0, .size-h0 *, .h0 * { font-size: 2.5rem; font-size: var(--size-h0, 2.5rem); } /* prettier-ignore */
+h1, h1 *, .size-h1, .h1, .size-h1 *, .h1 * { font-size: 2rem; font-size: var(--size-h1, 2rem); } /* prettier-ignore */
+h2, h2 *, .size-h2, .h2, .size-h2 *, .h2 * { font-size: 1.8rem; font-size: var(--size-h2, 1.8rem); } /* prettier-ignore */
+h3, h3 *, .size-h3, .h3, .size-h3 *, .h3 * { font-size: 1.5rem; font-size: var(--size-h3, 1.5rem); } /* prettier-ignore */
+h5, h5 *, .size-h5, .h5, .size-h5 *, .h5 * { font-size: 0.8rem; font-size: var(--size-h5, 0.8rem); } /* prettier-ignore */
+h6, h6 *, .size-h6, .h6, .size-h6 *, .h6 * { font-size: 0.6rem; font-size: var(--size-h6, 0.6rem); } /* prettier-ignore */
+.size-h7, .h7, .size-h7 *, .h7 * { font-size: 0.4rem; font-size: var(--size-h7, 0.4rem); } /* prettier-ignore */
+.size-h8, .h8, .size-h8 *, .h8 * { font-size: 0.25rem; font-size: var(--size-h8, 0.25rem); } /* prettier-ignore */
+.size-h9, .h9, .size-h9 *, .h9 * { font-size: 0.1rem; font-size: var(--size-h9, 0.1rem); }
 /* prettier-ignore */
 button, .button { border-width: var(--size-border-button) }
 
@@ -409,3 +424,35 @@ button, .button { border-width: var(--size-border-button) }
 .padding-y-relative-m { padding-top: var(--size-relative-m); padding-bottom: var(--size-relative-m); } /* prettier-ignore */
 .padding-y-relative-l { padding-top: var(--size-relative-l); padding-bottom: var(--size-relative-l); } /* prettier-ignore */
 .padding-y-relative-xl { padding-top: var(--size-relative-xl); padding-bottom: var(--size-relative-xl); } /* prettier-ignore */
+.max-width-measure, .max-width-down-measure * { max-width: var(--width-measure);} /* prettier-ignore */
+.max-width-measure-relative, .max-width-down-measure-relative * { max-width: var(--width-measure-relative);} /* prettier-ignore */
+.max-width-measure-h1, .max-width-down-measure-h1 * { max-width: var(--width-measure-h1);} /* prettier-ignore */
+.max-width-measure-h2, .max-width-down-measure-h2 * { max-width: var(--width-measure-h2);} /* prettier-ignore */
+.max-width-measure-h3, .max-width-down-measure-h3 * { max-width: var(--width-measure-h3);} /* prettier-ignore */
+.max-width-measure-h4, .max-width-down-measure-h4 * { max-width: var(--width-measure-h4);} /* prettier-ignore */
+.max-width-measure-h5, .max-width-down-measure-h5 * { max-width: var(--width-measure-h5);} /* prettier-ignore */
+.max-width-measure-h6, .max-width-down-measure-h6 * { max-width: var(--width-measure-h6);} /* prettier-ignore */
+.max-width-max, .max-width-down-max * { max-width: var(--width-max);} /* prettier-ignore */
+.max-width-main, .max-width-down-main * { max-width: var(--width-main);} /* prettier-ignore */
+.max-width-aside, .max-width-down-aside * { max-width: var(--width-aside);} /* prettier-ignore */
+.max-width-col-2, .max-width-down-col-2 * { max-width: var(--width-col-2);} /* prettier-ignore */
+.max-width-col-3, .max-width-down-col-3 * { max-width: var(--width-col-3);} /* prettier-ignore */
+.max-width-col-4, .max-width-down-col-4 * { max-width: var(--width-col-4);} /* prettier-ignore */
+.max-width-col-5, .max-width-down-col-5 * { max-width: var(--width-col-5);} /* prettier-ignore */
+.max-width-col-6, .max-width-down-col-6 * { max-width: var(--width-col-6);} /* prettier-ignore */
+.width-measure, .width-down-measure * { width: var(--width-measure); max-width: 100%;} /* prettier-ignore */
+.width-measure-relative, .width-down-measure-relative * { width: var(--width-measure-relative); max-width: 100%;} /* prettier-ignore */
+.width-measure-h1, .width-down-measure-h1 * { width: var(--width-measure-h1); max-width: 100%;} /* prettier-ignore */
+.width-measure-h2, .width-down-measure-h2 * { width: var(--width-measure-h2); max-width: 100%;} /* prettier-ignore */
+.width-measure-h3, .width-down-measure-h3 * { width: var(--width-measure-h3); max-width: 100%;} /* prettier-ignore */
+.width-measure-h4, .width-down-measure-h4 * { width: var(--width-measure-h4); max-width: 100%;} /* prettier-ignore */
+.width-measure-h5, .width-down-measure-h5 * { width: var(--width-measure-h5); max-width: 100%;} /* prettier-ignore */
+.width-measure-h6, .width-down-measure-h6 * { width: var(--width-measure-h6); max-width: 100%;} /* prettier-ignore */
+.width-max, .width-down-max * { width: var(--width-max); max-width: 100%;} /* prettier-ignore */
+.width-main, .width-down-main * { width: var(--width-main); max-width: 100%;} /* prettier-ignore */
+.width-aside, .width-down-aside * { width: var(--width-aside); max-width: 100%;} /* prettier-ignore */
+.width-col-2, .width-down-col-2 * { width: var(--width-col-2); max-width: 100%;} /* prettier-ignore */
+.width-col-3, .width-down-col-3 * { width: var(--width-col-3); max-width: 100%;} /* prettier-ignore */
+.width-col-4, .width-down-col-4 * { width: var(--width-col-4); max-width: 100%;} /* prettier-ignore */
+.width-col-5, .width-down-col-5 * { width: var(--width-col-5); max-width: 100%;} /* prettier-ignore */
+.width-col-6, .width-down-col-6 * { width: var(--width-col-6); max-width: 100%;} /* prettier-ignore */

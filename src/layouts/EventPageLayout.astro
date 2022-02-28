@@ -5,6 +5,8 @@ const {languages_code, event: {
   status,
   name,
   address,
+  addressLink,
+  addressString,
   cover_image,
   recurring,
   schedule,
@@ -27,17 +29,20 @@ const { description, highlighted_details } = translations?.find(t => t.languages
 ---
 
 <header
-  class="center max text box no-border color-palette-trans background-overlay h1 padding-y-relative-xl"
-  style={`background-image: url("${cover_image.src}");`}>
+  class="center text box no-border color-palette-trans background-overlay h1 padding-y-relative-xl"
+  style={cover_image && `background-image: url("${cover_image.src}");`}>
   <h1 class="centered">{name}</h1>
+  {
+    addressString && (
+      <p class="h6">
+        <a href={addressLink} target="_blank" rel="noopener noreferrer">{addressString}</a>
+      </p>)
+  }
 
 </header>
 
 
-<!-- {cover_image && <img src={cover_image.src} width="200" />} -->
-
 <!--
-<div><a href={addressLink} target="_blank">{addressString}</a></div>
 <img src={`http://localhost:8055/assets/${logo.id}`} />
 <ul>
     {typesTranslated.map(({ fr }) => <li>{fr}</li>)}
@@ -78,11 +83,17 @@ const { description, highlighted_details } = translations?.find(t => t.languages
     {amenities_translated.map(({ fr }) => (<li>{fr}</li>))}
 </ul>
 -->
-<div>
+<div class="center width-measure">
     <h2>Mis en avant</h2>
     <Markdown content={highlighted_details} />
 </div>
-<div>
+<div class="center width-measure">
     <h2>Description</h2>
     <Markdown content={description} />
 </div>
+
+<!-- <style>
+header > * {
+  max-width: var(--width-measure-relative);
+}
+</style> -->

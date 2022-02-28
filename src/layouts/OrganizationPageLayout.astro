@@ -34,9 +34,29 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
 
 ---
 
-<div>{name}</div>
-<div><a href={addressLink} target="_blank">{addressString}</a></div>
-<img src={logo.src} width="200" />
+<header>
+  <div
+    class="center text box no-border color-palette-trans background-overlay h1 padding-y-relative-xl"
+    style={cover_image && `background-image: url("${cover_image.src}");`}>
+    <h1 class="centered">{name}</h1>
+    {
+      addressString && (
+        <p class="h6">
+          <a href={addressLink} target="_blank" rel="noopener noreferrer">{addressString}</a>
+        </p>)
+    }
+
+  </div>
+  <div
+    class="center intrinsic box no-border width-col-6 border-radius-s color-palette-main"
+    style="
+      margin-top: calc(var(--size-h2) * -1);
+      box-shadow: 0 0px 6px rgb(0 0 0 / 16%);
+      height: var(--width-col-6);">
+    <img src={logo.src} class="" style="max-width: 100%; max-height: 100%;" />
+  </div>
+</header>
+
 <ul>
     {typesTranslated?.map(({ [languages_code]: code }) => <li>{code}</li>)}
 </ul>

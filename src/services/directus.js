@@ -1,5 +1,5 @@
 import { Directus } from '@directus/sdk'
-import { slugify, createPath } from '../utils'
+import { slugify, createPath, areasBe } from '../utils'
 
 // const DIRECTUS_EMAIL = import.meta.env.PUBLIC_DIRECTUS_EMAIL
 // const DIRECTUS_PW = import.meta.env.PUBLIC_DIRECTUS_PW
@@ -43,6 +43,24 @@ const imageFields = (preString) => [
 ]
 
 const localesDictionary = [
+  // links names
+  { code_name: 'website', fr: 'Site web' },
+  { code_name: 'facebook_page', fr: 'Page Facebook' },
+  { code_name: 'twitter', fr: 'Twitter' },
+  { code_name: 'instagram', fr: 'Instagram' },
+  { code_name: 'youtube_channel', fr: 'Youtube' },
+  // Areas
+  { code_name: 'walloon-brabant', fr: 'Brabant Wallon' },
+  { code_name: 'flemish-brabant', fr: 'Brabant Flamand' },
+  { code_name: 'brussels', fr: 'Bruxelles' },
+  { code_name: 'antwerp', fr: 'Anvers' },
+  { code_name: 'limburg', fr: 'Limbourg' },
+  { code_name: 'liege', fr: 'Liège' },
+  { code_name: 'namur', fr: 'Namur' },
+  { code_name: 'hainaut', fr: 'Hainaut' },
+  { code_name: 'luxembourg', fr: 'Luxembourg' },
+  { code_name: 'west-flanders', fr: 'Flandre Occidentale' },
+  { code_name: 'east-flanders', fr: 'Flandre Orientale' },
   // Organization types
   { code_name: 'association', fr: 'Association' },
   { code_name: 'club', fr: 'Club' },
@@ -171,16 +189,25 @@ function transformImage(i) {
 }
 
 function transformAddress(address) {
-  const a = address?.[0]?.street && address?.[0]
-  if (!a) return { string: null, link: null }
+  const a = address?.[0]?.zip && address?.[0]
+  if (!a) return { ...address, string: null, gMapLink: null }
 
   const string = `${a.street} ${a.number}, ${a.zip} ${a.city}`
-  const link = `https://maps.google.com/maps?q=${string.replace(
+  const gMapLink = `https://maps.google.com/maps?q=${string.replace(
     /\s/g,
     '+',
   )}+belgium`
 
-  return { string, link }
+  let area = areasBe.find(
+    (area) => a.zip >= area.zipMin && a.zip <= area.zipMax,
+  )
+  if (!area) console.warn(`ZIP MISSING - Address: '${string}'`)
+  area = area && {
+    ...area,
+    name: translateFromCodeName(area.slug),
+  }
+
+  return { ...a, string, gMapLink, area }
 }
 
 // --- F&T PAGES --- //
@@ -224,9 +251,7 @@ export function transformOrganization(o) {
       ? `_${status?.toUpperCase()}_${o.name}`
       : o.name
   // Transform Address
-  const { string: addressString, link: addressLink } = transformAddress(
-    o.address,
-  )
+  const address = transformAddress(o.address)
   // Transform types
   const typesTranslated = types?.map(translateFromCodeName)
   // Transform opening_hours
@@ -263,12 +288,16 @@ export function transformOrganization(o) {
   const gallery = o?.gallery?.map(transformImage)
   const cover_image = transformImage(o?.cover_image)
 
+  const links = o.links?.map(({ name, url }) => ({
+    name: translateFromCodeName(name),
+    url,
+  }))
+
   return {
     ...o,
     path,
     name,
-    addressString,
-    addressLink,
+    address,
     typesTranslated,
     opening_hours_strings,
     // opening_hours_remark,
@@ -278,6 +307,7 @@ export function transformOrganization(o) {
     logo,
     gallery,
     cover_image,
+    links,
   }
 }
 
@@ -437,9 +467,7 @@ export function transformEvent(eventRaw, languages) {
   const cover_image = transformImage(e?.cover_image)
 
   // Transform Address
-  const { string: addressString, link: addressLink } = transformAddress(
-    e.address,
-  )
+  const address = transformAddress(e.address)
 
   return {
     ...e,
@@ -450,8 +478,7 @@ export function transformEvent(eventRaw, languages) {
     slug,
     path,
     cover_image,
-    addressString,
-    addressLink,
+    address,
   }
 }
 

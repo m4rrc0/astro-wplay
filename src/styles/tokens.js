@@ -48,10 +48,10 @@ module.exports = {
     '--width-relative-ratio': '0.618',
 
     /* BORDER RADIUS */
-    '--border-radius-s': '',
-    '--border-radius-m': '',
-    '--border-radius-l': '',
-    '--border-radius-circle': '',
+    '--border-radius-s': '0.3rem',
+    '--border-radius-m': '0.618rem',
+    '--border-radius-l': '1rem',
+    '--border-radius-circle': '50%',
     // TESTS //
     // '--branding-padding': '20px',
     // '--branding-small': '600px',

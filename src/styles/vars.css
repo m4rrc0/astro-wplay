@@ -38,6 +38,11 @@
   --width-relative-ratio: env(--width-relative-ratio);
   /* --width-main: env(--width-main); */
   /* --width-aside: env(--width-aside); */
+
+  --border-radius-s: env(--border-radius-s);
+  --border-radius-m: env(--border-radius-m);
+  --border-radius-l: env(--border-radius-l);
+  --border-radius-circle: env(--border-radius-circle);
 }
 
 @custom-selector :--h1 h1, h1 *, .h1, .h1 *;

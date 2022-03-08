@@ -370,6 +370,8 @@ button, .button { border-width: var(--size-border-button) }
 .border-s { border: var(--size-border-s)} /* prettier-ignore */
 .border-m { border: var(--size-border-m)} /* prettier-ignore */
 .border-l { border: var(--size-border-l)} /* prettier-ignore */
+.border-radius-s { border-radius: var(--border-radius-s)} /* prettier-ignore */
+
 .padding-0, .no-padding { padding: 0; } /* prettier-ignore */
 .padding-h-1 { padding: var(--size-h-1)} /* prettier-ignore */
 .padding-h0 { padding: var(--size-h0)} /* prettier-ignore */

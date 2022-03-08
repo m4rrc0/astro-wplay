@@ -1,4 +1,5 @@
 ---
+import Debug from 'astro/debug';
 import { Markdown } from 'astro/components';
 
 const {languages_code, organization: {
@@ -14,9 +15,7 @@ const {languages_code, organization: {
       opening_hours_strings,
       // games_services,
       games_services_translated,
-      // address,
-      addressString,
-      addressLink,
+      address,
       // amenities,
       amenities_translated,
       website,
@@ -28,57 +27,62 @@ const {languages_code, organization: {
       // opening_hours_remark,
       // description,
       // gallery,
+      links
 }} = Astro.props;
 
 const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
 
 ---
 
+<!-- <Debug {links} /> -->
+
 <header>
   <div
-    class="center text box no-border color-palette-trans background-overlay h1 padding-y-relative-xl"
+    class="center text box no-border
+      color-palette-trans
+      h1 padding-y-relative-xl
+      background-overlay
+      "
     style={cover_image && `background-image: url("${cover_image.src}");`}>
     <h1 class="centered">{name}</h1>
+    <p class="h3">
+      {typesTranslated?.map(({ [languages_code]: typeTranslated }) => typeTranslated).join(', ')} à {address.city} dans la province de {address.area.name.fr}
+    </p>
     {
-      addressString && (
+      address?.string && (
         <p class="h6">
-          <a href={addressLink} target="_blank" rel="noopener noreferrer">{addressString}</a>
+          <a href={address.gMapLink} target="_blank" rel="noopener noreferrer">{address.string}</a>
         </p>)
     }
 
   </div>
   <div
-    class="center intrinsic box no-border width-col-6 border-radius-s color-palette-main"
+    class="center intrinsic box no-border
+      color-palette-main
+      width-col-6
+      border-radius-s
+      "
     style="
       margin-top: calc(var(--size-h2) * -1);
-      box-shadow: 0 0px 6px rgb(0 0 0 / 16%);
-      height: var(--width-col-6);">
+      box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
+      max-height: var(--width-col-6);
+      overflow: hidden;
+      ">
+
     <img src={logo.src} class="" style="max-width: 100%; max-height: 100%;" />
   </div>
 </header>
 
 <ul>
-    {typesTranslated?.map(({ [languages_code]: code }) => <li>{code}</li>)}
-</ul>
-<ul>
-<li>
-  website: {website}
-</li>
-<li>
-  facebook_page: {facebook_page}
-</li>
-<li>
-  instagram: {instagram}
-</li>
-<li>
-  twitter: {twitter}
-</li>
-<li>
-  youtube_channel: {youtube_channel}
-</li>
+  {links.map(({name, url}) => (
+    <li><a href={url} target="_blank" rel="noopener noreferrer">{name.fr}</a></li>
+  ))}
 </ul>
 
-<div>
+<div class="
+  box no-border
+  color-palette-variation-funky-contrast
+">
     <h2>Horaires</h2>
     {
       opening_hours_strings && (

@@ -66,7 +66,7 @@ const localesDictionary = [
   { code_name: 'club', fr: 'Club' },
   { code_name: 'bar', fr: 'Bar' },
   { code_name: 'restaurant', fr: 'Restaurant' },
-  { code_name: 'toyLibrary', fr: 'Ludothèque' },
+  { code_name: 'toy_library', fr: 'Ludothèque' },
   { code_name: 'shop', fr: 'Boutique' },
   { code_name: 'festival', fr: 'Festival' },
   // Days of week
@@ -188,9 +188,15 @@ function transformImage(i) {
     : null
 }
 
-function transformAddress(address) {
-  const a = address?.[0]?.zip && address?.[0]
-  if (!a) return { ...address, string: null, gMapLink: null }
+function transformAddress(address, entryName) {
+  let a = address
+  if (Array.isArray(address)) {
+    a = address?.[0]?.zip && address?.[0]
+  }
+  if (!a?.zip) {
+    console.warn(`ADDRESS MISSING - ${entryName}'s address: '${a}'`)
+    return address
+  }
 
   const string = `${a.street} ${a.number}, ${a.zip} ${a.city}`
   const gMapLink = `https://maps.google.com/maps?q=${string.replace(
@@ -201,7 +207,9 @@ function transformAddress(address) {
   let area = areasBe.find(
     (area) => a.zip >= area.zipMin && a.zip <= area.zipMax,
   )
+  // Zip is unacounted for. Should not exist in Belgium.
   if (!area) console.warn(`ZIP MISSING - Address: '${string}'`)
+
   area = area && {
     ...area,
     name: translateFromCodeName(area.slug),
@@ -251,7 +259,7 @@ export function transformOrganization(o) {
       ? `_${status?.toUpperCase()}_${o.name}`
       : o.name
   // Transform Address
-  const address = transformAddress(o.address)
+  const address = transformAddress(o.address, o.name)
   // Transform types
   const typesTranslated = types?.map(translateFromCodeName)
   // Transform opening_hours
@@ -353,7 +361,7 @@ export async function fetchOrganizations() {
 
 function fallbackOnParentsOfEvent({
   eventRaw,
-  parent,
+  parentRaw,
   mainOrganizer,
   languages,
   hasParent,
@@ -365,7 +373,7 @@ function fallbackOnParentsOfEvent({
         translationFromCode(eventRaw?.translations, code),
       )
       const parentFields = removeEmptyPropOnObject(
-        translationFromCode(parent?.translations, code),
+        translationFromCode(parentRaw?.translations, code),
       )
       const organizerFields = translationFromCode(
         mainOrganizer?.translations,
@@ -392,8 +400,6 @@ function fallbackOnParentsOfEvent({
       ? removeEmptyPropOnObject({
           name: mainOrganizer.name,
           address: mainOrganizer.address,
-          addressString: mainOrganizer.addressString,
-          addressLink: mainOrganizer.addressLink,
           cover_image: mainOrganizer.cover_image,
           games_servicesTranslated: mainOrganizer.games_servicesTranslated,
           amenitiesTranslated: mainOrganizer.amenitiesTranslated,
@@ -402,12 +408,10 @@ function fallbackOnParentsOfEvent({
       : {}),
     ...(hasParent
       ? removeEmptyPropOnObject({
-          name: parent.name,
-          address: parent.address,
-          addressString: parent.addressString,
-          addressLink: parent.addressLink,
-          cover_image: parent.cover_image,
-          organizers: parent.organizers,
+          name: parentRaw.name,
+          address: parentRaw.address,
+          cover_image: parentRaw.cover_image,
+          organizers: parentRaw.organizers,
         })
       : {}),
     ...removeEmptyPropOnObject(eventRaw),
@@ -418,10 +422,10 @@ function fallbackOnParentsOfEvent({
 }
 
 export function transformEvent(eventRaw, languages) {
-  const parent = eventRaw.parent_event
+  const parentRaw = eventRaw.parent_event
   const mainOrganizerRaw =
     eventRaw?.organizers?.[0]?.organizations_id ||
-    parent?.organizers?.[0]?.organizations_id
+    parentRaw?.organizers?.[0]?.organizations_id
   const mainOrganizer = transformOrganization(mainOrganizerRaw)
 
   // Inject booleans
@@ -429,13 +433,13 @@ export function transformEvent(eventRaw, languages) {
     eventRaw.recurring ||
     eventRaw.schedule.length + eventRaw.event_instances.length > 1
   const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
-  const hasParent = !!parent
+  const hasParent = !!parentRaw
   // const hasDescriptionOrHighlighted = eventRaw.translations.inde
 
   // Fallback values from parent_event or first Organizer
   const e = fallbackOnParentsOfEvent({
     eventRaw,
-    parent,
+    parentRaw,
     mainOrganizer,
     languages,
     hasParent,
@@ -467,7 +471,7 @@ export function transformEvent(eventRaw, languages) {
   const cover_image = transformImage(e?.cover_image)
 
   // Transform Address
-  const address = transformAddress(e.address)
+  const address = transformAddress(e.address, e.name)
 
   return {
     ...e,

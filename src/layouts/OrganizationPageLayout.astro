@@ -34,7 +34,7 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
 
 ---
 
-<!-- <Debug {links} /> -->
+<!-- <Debug {name} /> -->
 
 <header>
   <div
@@ -43,11 +43,13 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
       h1 padding-y-relative-xl
       background-overlay
       "
-    style={cover_image && `background-image: url("${cover_image.src}");`}>
+    style={cover_image?.src ? `background-image: url("${cover_image.src}");` : ''}>
     <h1 class="centered">{name}</h1>
-    <p class="h3">
-      {typesTranslated?.map(({ [languages_code]: typeTranslated }) => typeTranslated).join(', ')} à {address.city} dans la province de {address.area.name.fr}
-    </p>
+    {typesTranslated?.[0] && address?.city && address?.area?.name?.fr &&
+      <p class="h3">
+        {typesTranslated?.map(({ [languages_code]: typeTranslated }) => typeTranslated).join(', ')} à {address.city} dans la province de {address?.area?.name?.fr}
+      </p>
+    }
     {
       address?.string && (
         <p class="h6">
@@ -69,15 +71,15 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
       overflow: hidden;
       ">
 
-    <img src={logo.src} class="" style="max-width: 100%; max-height: 100%;" />
+    {logo?.src && <img src={logo.src} class="" style="max-width: 100%; max-height: 100%;" />}
   </div>
 </header>
 
-<ul>
+{links && links?.[0] && <ul>
   {links.map(({name, url}) => (
     <li><a href={url} target="_blank" rel="noopener noreferrer">{name.fr}</a></li>
   ))}
-</ul>
+</ul>}
 
 <div class="
   box no-border

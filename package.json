@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build --experimental-static-build",
     "preview": "astro preview",
     "serve": "astro preview"
   },
   "devDependencies": {
     "@directus/sdk": "^9.2.2",
-    "astro": "^0.21.12",
+    "astro": "^0.23.7",
     "cssnano": "^5.0.17",
     "dotenv": "^16.0.0",
     "postcss-functions": "^4.0.2",

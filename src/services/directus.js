@@ -3,12 +3,11 @@ import { slugify, createPath, areasBe } from '@utils'
 
 // const DIRECTUS_EMAIL = import.meta.env.PUBLIC_DIRECTUS_EMAIL
 // const DIRECTUS_PW = import.meta.env.PUBLIC_DIRECTUS_PW
-const DIRECTUS_URL = import.meta.env.DIRECTUS_URL
-const DIRECTUS_EMAIL = import.meta.env.DIRECTUS_EMAIL
-const DIRECTUS_PW = import.meta.env.DIRECTUS_PW
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL || process.env.DIRECTUS_URL
+const DIRECTUS_EMAIL =
+  import.meta.env.DIRECTUS_EMAIL || process.env.DIRECTUS_EMAIL
+const DIRECTUS_PW = import.meta.env.DIRECTUS_PW || process.env.DIRECTUS_PW
 const ENV = 'development'
-
-console.log('-------HERE-------', import.meta.env, '\n', process.env)
 
 export const directus = new Directus(DIRECTUS_URL)
 

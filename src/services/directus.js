@@ -8,6 +8,8 @@ const DIRECTUS_EMAIL = import.meta.env.DIRECTUS_EMAIL
 const DIRECTUS_PW = import.meta.env.DIRECTUS_PW
 const ENV = 'development'
 
+console.log('-------HERE-------', import.meta.env)
+
 export const directus = new Directus(DIRECTUS_URL)
 
 // --- STATIC VALUES --- //

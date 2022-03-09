@@ -8,9 +8,9 @@
 
 :root {
   /* FONTS */
-  --font-body: var(--font-body-fallback);
-  --font-heading: var(--font-heading-fallback);
-  --font-mono: var(--font-mono-fallback);
+  --font-body: var(--font-body-fallback, sans-serif);
+  --font-heading: var(--font-heading-fallback, sans-serif);
+  --font-mono: var(--font-mono-fallback, monospace);
 
   --mono: 0; /* Monospace: Sans (natural-width) or Mono (fixed-width) */
   --casl: 0; /* Casual: Linear to Casual */
@@ -20,21 +20,21 @@
 }
 
 html {
-  font-family: var(--font-body-fallback);
+  font-family: var(--font-body-fallback, sans-serif);
 }
 html.fonts-stage-1 {
-  --font-body: var(--font-body-critical, var(--font-body-fallback));
-  --font-heading: var(--font-heading-critical, var(--font-heading-fallback));
-  --font-mono: var(--font-mono-critical, var(--font-mono-fallback));
+  --font-body: var(--font-body-critical, var(--font-body-fallback, sans-serif));
+  --font-heading: var(--font-heading-critical, var(--font-heading-fallback, sans-serif));
+  --font-mono: var(--font-mono-critical, var(--font-mono-fallback, monospace));
 }
 @supports (font-variation-settings: 'wght' 700) {
   html.fonts-stage-2 {
     --font-body: var(--font-body-prefered, var(--font-body-critical,
-    var(--font-body-fallback)));
+    var(--font-body-fallback, sans-serif)));
     --font-heading: var(--font-heading-prefered, var(--font-heading-critical,
-    var(--font-heading-fallback)));
+    var(--font-heading-fallback, sans-serif)));
     --font-mono: var(--font-mono-prefered, var(--font-mono-critical,
-    var(--font-mono-fallback)));
+    var(--font-mono-fallback, monospace)));
   }
 }
 

@@ -68,6 +68,7 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
         "
       style="
         margin-top: calc(var(--size-h2) * -1);
+        margin-bottom: var(--size-h2);
         box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
         max-height: var(--width-col-6);
         overflow: hidden;
@@ -140,8 +141,8 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
   </div>}
 
   {links?.[0] && (
-    <div class="box no-border cluster center intrinsic">
-      <ul class="reset width-down-col-8">
+    <div class="box no-border cluster center max-width-measure-h4">
+      <ul class="reset justify-content-space-between">
         {links.map(({name, url, iconName}) => (
           <li>
             <a href={url} target="_blank" rel="noopener noreferrer" class="

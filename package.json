@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@directus/sdk": "^9.2.2",
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "astro": "^0.23.7",
     "astro-icon": "^0.6.0",
     "cssnano": "^5.0.17",

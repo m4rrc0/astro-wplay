@@ -12,8 +12,10 @@ const sizeScaleRatio = functions.sizeScaleRatio(
 module.exports = {
   environmentVariables: {
     /* --- FONTS --- */
-    '--font-body-prefered': 'Literata', //* 'Literata', 'Recursive' */
-    '--font-body-critical': 'LiterataCritical', //* 'LiterataCritical' */
+    // '--font-body-prefered': 'Literata', //* 'Literata', 'Recursive' */
+    // '--font-body-critical': 'LiterataCritical', //* 'LiterataCritical' */
+    '--font-body-prefered': 'Quicksand',
+    '--font-body-critical': 'Quicksand', //* 'LiterataCritical' */
     '--font-body-fallback': 'sans-serif',
     '--font-heading-prefered': 'Josefin Sans', //* 'Josefin Sans', 'Recursive' */
     '--font-heading-critical': 'JosefinSansCritical', //* 'JosefinSansCritical', 'RecursiveCritical' */

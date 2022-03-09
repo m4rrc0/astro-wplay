@@ -18,22 +18,23 @@
   --slnt: 0; /* Slant: 0 to -15 degrees */
   --ital: 0; /* Italic: always roman, auto, or always italic */
 }
+
 html {
   font-family: var(--font-body-fallback);
-  &.fonts-stage-1 {
-    --font-body: var(--font-body-critical), var(--font-body-fallback);
-    --font-heading: var(--font-heading-critical), var(--font-heading-fallback);
-    --font-mono: var(--font-mono-critical), var(--font-mono-fallback);
-  }
-  @supports (font-variation-settings: 'wght' 700) {
-    &.fonts-stage-2 {
-      --font-body: var(--font-body-prefered), var(--font-body-critical),
-        var(--font-body-fallback);
-      --font-heading: var(--font-heading-prefered), var(--font-heading-critical),
-        var(--font-heading-fallback);
-      --font-mono: var(--font-mono-prefered), var(--font-mono-critical),
-        var(--font-mono-fallback);
-    }
+}
+html.fonts-stage-1 {
+  --font-body: var(--font-body-critical, var(--font-body-fallback));
+  --font-heading: var(--font-heading-critical, var(--font-heading-fallback));
+  --font-mono: var(--font-mono-critical, var(--font-mono-fallback));
+}
+@supports (font-variation-settings: 'wght' 700) {
+  html.fonts-stage-2 {
+    --font-body: var(--font-body-prefered, var(--font-body-critical,
+    var(--font-body-fallback)));
+    --font-heading: var(--font-heading-prefered, var(--font-heading-critical,
+    var(--font-heading-fallback)));
+    --font-mono: var(--font-mono-prefered, var(--font-mono-critical,
+    var(--font-mono-fallback)));
   }
 }
 

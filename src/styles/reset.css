@@ -47,7 +47,9 @@ body {
   line-height: 1.5;
 }
 /* A elements that don't have a class get default styles */
-a:not([class]) {
+/* NOTE: IMO should be a default for <a> elems */
+/* a:not([class]) { */
+a {
   text-decoration-skip-ink: auto;
 }
 /* Make images easier to work with */
@@ -91,4 +93,14 @@ input[type='submit'],
 input[type='button'],
 input[type='reset'] {
   cursor: pointer;
+}
+a.reset,
+a.reset *,
+.reset-a a,
+.reset-a a *,
+.reset-down-a a,
+.reset-down-a a * {
+  /* color: inherit; */
+  text-decoration: inherit;
+  /* border-bottom: none; */
 }

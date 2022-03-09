@@ -24,5 +24,9 @@ export default /** @type {import('astro').AstroUserConfig} */ ({
     //   'process.env.DIRECTUS_EMAIL': `"${env.DIRECTUS_EMAIL}"`,
     //   'process.env.DIRECTUS_PW': `"${env.DIRECTUS_PW}"`,
     // },
+    // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)
+    ssr: {
+      external: ['svgo'],
+    },
   },
 })

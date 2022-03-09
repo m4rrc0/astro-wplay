@@ -12,6 +12,7 @@
   "devDependencies": {
     "@directus/sdk": "^9.2.2",
     "astro": "^0.23.7",
+    "astro-icon": "^0.6.0",
     "cssnano": "^5.0.17",
     "postcss-functions": "^4.0.2",
     "postcss-import": "^14.0.2",

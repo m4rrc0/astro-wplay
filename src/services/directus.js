@@ -41,14 +41,14 @@ const imageFields = (preString) => [
   preString + 'image_alt',
   preString + 'image_title',
 ]
-
-const localesDictionary = [
+/* prettier-ignore */
+const dico = [
   // links names
-  { code_name: 'website', fr: 'Site web' },
-  { code_name: 'facebook_page', fr: 'Page Facebook' },
-  { code_name: 'twitter', fr: 'Twitter' },
-  { code_name: 'instagram', fr: 'Instagram' },
-  { code_name: 'youtube_channel', fr: 'Youtube' },
+  { code_name: 'website', fr: 'Site web', iconName: 'gridicons:share-computer' },
+  { code_name: 'facebook_page', fr: 'Page Facebook', iconName: 'brandico:facebook-rect' },
+  { code_name: 'twitter', fr: 'Twitter', iconName: 'fa:twitter-square' },
+  { code_name: 'instagram', fr: 'Instagram', iconName: 'fa-brands:instagram-square' },
+  { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'fa-brands:youtube-square' },
   // Areas
   { code_name: 'walloon-brabant', fr: 'Brabant Wallon' },
   { code_name: 'flemish-brabant', fr: 'Brabant Flamand' },
@@ -93,10 +93,14 @@ const localesDictionary = [
   { code_name: 'children', fr: 'Enfants bienvenus' },
 ]
 
+// const iconsDico = [
+//   { code_name: 'facebook', iconName: 'brandico:facebook-rect' },
+// ]
+
 // --- UTILITY FUNCTIONS --- //
 
 const translateFromCodeName = (code_name) => {
-  const match = localesDictionary.find((el) => el.code_name === code_name)
+  const match = dico.find((el) => el.code_name === code_name)
 
   if (!match) {
     console.warn(
@@ -301,10 +305,21 @@ export function transformOrganization(o) {
   const gallery = o?.gallery?.map(transformImage)
   const cover_image = transformImage(o?.cover_image)
 
-  const links = o.links?.map(({ name, url }) => ({
-    name: translateFromCodeName(name),
-    url,
-  }))
+  const links = o.links?.map(({ name, url }) => {
+    const linkNameTranslated = translateFromCodeName(name)
+    let { iconName } = linkNameTranslated
+
+    if (!iconName) {
+      console.warn(`--SELF WARNING-- No icon found with code_name '${name}'`)
+      iconName = 'bi:question-square'
+    }
+
+    return {
+      name: linkNameTranslated,
+      url,
+      iconName,
+    }
+  })
 
   return {
     ...o,

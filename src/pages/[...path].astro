@@ -1,10 +1,10 @@
 ---
   import Debug from 'astro/debug';
   import { directus, start as startDirectus, fetchPages, fetchOrganizations, fetchEvents } from '../services/directus.js'
-  import SkeletonLayout from '../layouts/SkeletonLayout.astro'
-  import BasicPageLayout from '../layouts/BasicPageLayout.astro'
-  import OrganizationPageLayout from '../layouts/OrganizationPageLayout.astro'
-  import EventPageLayout from '../layouts/EventPageLayout.astro'
+  import SkeletonLayout from '@layouts/SkeletonLayout.astro'
+  import BasicPageLayout from '@layouts/BasicPageLayout.astro'
+  import OrganizationPageLayout from '@layouts/OrganizationPageLayout.astro'
+  import EventPageLayout from '@layouts/EventPageLayout.astro'
 
 
 export async function getStaticPaths() {
@@ -41,7 +41,7 @@ export async function getStaticPaths() {
 }
 
 
-const {path} = Astro.request.params;
+const { path } = Astro.request.params;
 const {
   // pages, page, 
   organization, organizations,

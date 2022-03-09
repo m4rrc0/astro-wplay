@@ -1,11 +1,11 @@
 import { Directus } from '@directus/sdk'
-import { slugify, createPath, areasBe } from '../utils'
+import { slugify, createPath, areasBe } from '@utils'
 
 // const DIRECTUS_EMAIL = import.meta.env.PUBLIC_DIRECTUS_EMAIL
 // const DIRECTUS_PW = import.meta.env.PUBLIC_DIRECTUS_PW
-const DIRECTUS_URL = process.env.DIRECTUS_URL
-const DIRECTUS_EMAIL = process.env.DIRECTUS_EMAIL
-const DIRECTUS_PW = process.env.DIRECTUS_PW
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL
+const DIRECTUS_EMAIL = import.meta.env.DIRECTUS_EMAIL
+const DIRECTUS_PW = import.meta.env.DIRECTUS_PW
 const ENV = 'development'
 
 export const directus = new Directus(DIRECTUS_URL)
@@ -95,11 +95,21 @@ const localesDictionary = [
 
 // --- UTILITY FUNCTIONS --- //
 
-const translateFromCodeName = (code_name) =>
-  localesDictionary.find((el) => el.code_name === code_name) || {
-    code_name,
-    fr: code_name,
+const translateFromCodeName = (code_name) => {
+  const match = localesDictionary.find((el) => el.code_name === code_name)
+
+  if (!match) {
+    console.warn(
+      `--SELF WARNING-- No match in dico for code_name '${code_name}'`,
+    )
+    return {
+      code_name,
+      fr: code_name,
+    }
   }
+
+  return match
+}
 
 const reduceTranslatedMarkdown = ({ translations, fieldName }) =>
   translations.reduce(
@@ -168,6 +178,7 @@ export async function start() {
       .login({ email: DIRECTUS_EMAIL, password: DIRECTUS_PW })
       .then(() => {
         authenticated = true
+        console.info('--SELF INFO-- DIRECTUS AUTH = OK')
       })
       .catch(() => {
         window.alert('Invalid credentials')
@@ -188,15 +199,9 @@ function transformImage(i) {
     : null
 }
 
-function transformAddress(address, entryName) {
-  let a = address
-  if (Array.isArray(address)) {
-    a = address?.[0]?.zip && address?.[0]
-  }
-  if (!a?.zip) {
-    console.warn(`ADDRESS MISSING - ${entryName}'s address: '${a}'`)
-    return address
-  }
+function transformAddress(address) {
+  const a = address?.[0]?.zip && address?.[0]
+  if (!a) return { ...address, string: null, gMapLink: null }
 
   const string = `${a.street} ${a.number}, ${a.zip} ${a.city}`
   const gMapLink = `https://maps.google.com/maps?q=${string.replace(
@@ -207,8 +212,8 @@ function transformAddress(address, entryName) {
   let area = areasBe.find(
     (area) => a.zip >= area.zipMin && a.zip <= area.zipMax,
   )
-  // Zip is unacounted for. Should not exist in Belgium.
-  if (!area) console.warn(`ZIP MISSING - Address: '${string}'`)
+  if (!area)
+    console.warn(`--SELF WARNING-- ZIP missing for address: '${string}'`)
 
   area = area && {
     ...area,
@@ -259,7 +264,7 @@ export function transformOrganization(o) {
       ? `_${status?.toUpperCase()}_${o.name}`
       : o.name
   // Transform Address
-  const address = transformAddress(o.address, o.name)
+  const address = transformAddress(o.address)
   // Transform types
   const typesTranslated = types?.map(translateFromCodeName)
   // Transform opening_hours
@@ -274,7 +279,7 @@ export function transformOrganization(o) {
       return { time_start, time_end, str: timeSlotString }
     })
     const timeSlotsString = timeSlotsFormatted?.map(({ str }) => str).join(', ')
-    return `${daysString}: ${timeSlotsString}`
+    return `<strong>${daysString}:</strong> ${timeSlotsString}`
   })
 
   // // Transform opening_hours_remark
@@ -361,7 +366,7 @@ export async function fetchOrganizations() {
 
 function fallbackOnParentsOfEvent({
   eventRaw,
-  parentRaw,
+  parent,
   mainOrganizer,
   languages,
   hasParent,
@@ -373,7 +378,7 @@ function fallbackOnParentsOfEvent({
         translationFromCode(eventRaw?.translations, code),
       )
       const parentFields = removeEmptyPropOnObject(
-        translationFromCode(parentRaw?.translations, code),
+        translationFromCode(parent?.translations, code),
       )
       const organizerFields = translationFromCode(
         mainOrganizer?.translations,
@@ -400,6 +405,8 @@ function fallbackOnParentsOfEvent({
       ? removeEmptyPropOnObject({
           name: mainOrganizer.name,
           address: mainOrganizer.address,
+          addressString: mainOrganizer.addressString,
+          addressLink: mainOrganizer.addressLink,
           cover_image: mainOrganizer.cover_image,
           games_servicesTranslated: mainOrganizer.games_servicesTranslated,
           amenitiesTranslated: mainOrganizer.amenitiesTranslated,
@@ -408,10 +415,12 @@ function fallbackOnParentsOfEvent({
       : {}),
     ...(hasParent
       ? removeEmptyPropOnObject({
-          name: parentRaw.name,
-          address: parentRaw.address,
-          cover_image: parentRaw.cover_image,
-          organizers: parentRaw.organizers,
+          name: parent.name,
+          address: parent.address,
+          addressString: parent.addressString,
+          addressLink: parent.addressLink,
+          cover_image: parent.cover_image,
+          organizers: parent.organizers,
         })
       : {}),
     ...removeEmptyPropOnObject(eventRaw),
@@ -422,10 +431,10 @@ function fallbackOnParentsOfEvent({
 }
 
 export function transformEvent(eventRaw, languages) {
-  const parentRaw = eventRaw.parent_event
+  const parent = eventRaw.parent_event
   const mainOrganizerRaw =
     eventRaw?.organizers?.[0]?.organizations_id ||
-    parentRaw?.organizers?.[0]?.organizations_id
+    parent?.organizers?.[0]?.organizations_id
   const mainOrganizer = transformOrganization(mainOrganizerRaw)
 
   // Inject booleans
@@ -433,13 +442,13 @@ export function transformEvent(eventRaw, languages) {
     eventRaw.recurring ||
     eventRaw.schedule.length + eventRaw.event_instances.length > 1
   const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
-  const hasParent = !!parentRaw
+  const hasParent = !!parent
   // const hasDescriptionOrHighlighted = eventRaw.translations.inde
 
   // Fallback values from parent_event or first Organizer
   const e = fallbackOnParentsOfEvent({
     eventRaw,
-    parentRaw,
+    parent,
     mainOrganizer,
     languages,
     hasParent,
@@ -471,7 +480,7 @@ export function transformEvent(eventRaw, languages) {
   const cover_image = transformImage(e?.cover_image)
 
   // Transform Address
-  const address = transformAddress(e.address, e.name)
+  const address = transformAddress(e.address)
 
   return {
     ...e,

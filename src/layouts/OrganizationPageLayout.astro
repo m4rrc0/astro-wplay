@@ -44,7 +44,7 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
       background-overlay
       "
     style={cover_image?.src ? `background-image: url("${cover_image.src}");` : ''}>
-    <h1 class="centered">{name}</h1>
+    <h1 class="centered" set:html={name} />
     {typesTranslated?.[0] && address?.city && address?.area?.name?.fr &&
       <p class="h3">
         {typesTranslated?.map(({ [languages_code]: typeTranslated }) => typeTranslated).join(', ')} à {address.city} dans la province de {address?.area?.name?.fr}
@@ -71,7 +71,7 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
       overflow: hidden;
       ">
 
-    {logo?.src && <img src={logo.src} class="" style="max-width: 100%; max-height: 100%;" />}
+    {logo?.src && <img src={logo.src} class="" style="max-width: 100%; max-height: inherit;" />}
   </div>
 </header>
 
@@ -81,16 +81,16 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
   ))}
 </ul>}
 
-<div class="
+{(opening_hours_strings?.[0] || opening_hours_remark) && <div class="
   box no-border
   color-palette-variation-funky-contrast
 ">
     <h2>Horaires</h2>
     {
-      opening_hours_strings && (
+      opening_hours_strings?.[0] && (
         <div>
             {opening_hours_strings.map(str => (
-                <p>{str}</p>
+                <p set:html={str} />
             ))}
         </div>
       )
@@ -102,14 +102,40 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
         </div>
       )
     }
-</div>
-<ul>
-    {games_services_translated?.map(({ [languages_code]: code }) => (<li>{code}</li>))}
-</ul>
-<ul>
-    {amenities_translated?.map(({ [languages_code]: code }) => (<li>{code}</li>))}
-</ul>
-<div>
+</div>}
+{(games_services_translated?.[0] || amenities_translated?.[0]) &&
+  <div class="box no-border cluster padding-h6 gap-h6">
+    <ul class="reset">
+      <>
+        {games_services_translated?.map(({ [languages_code]: code }) => (
+          <li class="
+            box no-border padding-x-h7 padding-y-h8
+            color-palette-variation-contrast
+            border-radius-s
+          ">{code}</li>
+        ))}
+
+        {amenities_translated?.map(({ [languages_code]: code }) => (
+          <li class="
+            box no-border padding-x-h7 padding-y-h8
+            color-palette-variation-funky-contrast
+            border-radius-s
+          ">{code}</li>
+        ))}
+      </>
+    </ul>
+  </div>
+}
+<!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
+  <ul class="reset">
+      {amenities_translated?.map(({ [languages_code]: code }) => (
+        <li>{code}</li>
+      ))}
+  </ul>
+</div>} -->
+{description && <div class="
+  box no-border
+">
     <h2>Description</h2>
     <Markdown content={description} />
-</div>
+</div>}

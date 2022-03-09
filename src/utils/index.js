@@ -19,8 +19,8 @@ export function slugify(string) {
     .replace(/-+$/, '') // Trim - from end of text
 }
 
-export function createPath({ event, organization }) {
-  if (event) return `event/${event.slug}`
-  if (organization) return `organization/${organization.slug}`
+export function createPath({ locale = 'fr', event, organization }) {
+  if (event) return `${locale}/e/${event.slug}`
+  if (organization) return `${locale}/o/${organization.slug}`
   return null
 }

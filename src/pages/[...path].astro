@@ -86,7 +86,7 @@ const {
             <ul>
               {
                 organizations.map(o => (
-                  <li><a href={o.path}>{o.name}</a></li>
+                  <li><a href={`/${o.path}`}>{o.name}</a></li>
                 ))
               }
             </ul>
@@ -97,7 +97,7 @@ const {
             <ul>
               {
                 events.map(e => (
-                  <li><a href={e.path}>{e.name}</a></li>
+                  <li><a href={`/${e.path}`}>{e.name}</a></li>
                 ))
               }
             </ul>

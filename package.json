@@ -12,7 +12,7 @@
   "devDependencies": {
     "@directus/sdk": "^9.2.2",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
-    "astro": "^0.23.7",
+    "astro": "^0.24.3",
     "astro-icon": "^0.6.0",
     "cssnano": "^5.0.17",
     "postcss-functions": "^4.0.2",

@@ -38,6 +38,7 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
 <!-- <Debug {name} /> -->
 
 <!-- <div class="stack gap-down-h1"> -->
+<main class="center max">
   <header>
     <div
       class="center text box no-border
@@ -142,7 +143,7 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
 
   {links?.[0] && (
     <div class="box no-border cluster center max-width-measure-h4">
-      <ul class="reset justify-content-space-between">
+      <ul class="reset justify-content-space-around">
         {links.map(({name, url, iconName}) => (
           <li>
             <a href={url} target="_blank" rel="noopener noreferrer" class="
@@ -156,4 +157,6 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
       </ul>
     </div>
   )}
+</main>
+
 <!-- </div> -->

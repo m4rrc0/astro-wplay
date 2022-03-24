@@ -1,12 +1,11 @@
 ---
 import { Markdown } from 'astro/components';
+import { Icon } from 'astro-icon'
 
 const {languages_code, event: {
   status,
   name,
   address,
-  addressLink,
-  addressString,
   cover_image,
   recurring,
   schedule,
@@ -20,77 +19,180 @@ const {languages_code, event: {
   // translations.main_url,
   // translations.facebook_event_url,
   // translations.other_links,
+  games_services_translated,
+  amenities_translated,
   event_instances,
+  isRecurring,
+  time_start,
+  time_end,
+  isSameDay,
+  links,
 }} = Astro.props;
-
 
 const { description, highlighted_details } = translations?.find(t => t.languages_code === languages_code) || {}
 
 ---
+<main class="center max">
+  <header>
+    <div
+      class="center intrinsic text box no-border stack gap-down-h4
+        color-palette-trans
+        padding-y-h-1
+        background-overlay
+        "
+      style={cover_image?.src ? `background-image: url("${cover_image.src}");` : ''}>
+      <h1 class="" set:html={name} />
+      <div>
+        {address?.city && address?.area?.name?.fr &&
+          <p class="h3">
+            Événement jeux à {address.city} dans la province de {address?.area?.name?.fr}
+          </p>
+        }
+        {
+          address?.string && (
+            <p class="h6">
+              <a href={address.gMapLink} target="_blank" rel="noopener noreferrer">{address.string}</a>
+            </p>)
+        }
+      </div>
+      {
+        time_start?.time_fr && time_end?.time_fr && (
+          <p set:html={
+              isSameDay ?
+              `<strong>${time_start.date_fr} de ${time_start.time_fr} à ${time_end.time_fr}</strong>` :
+              `De <strong>${time_start.date_fr} - ${time_start.time_fr}</strong> à <strong>${time_end.date_fr} - ${time_end.time_fr}</strong>`
+            } class="
+            box no-border width-fit-content
+            color-palette-main color-palette-variation-funky-contrast
+            size-h4 padding-h7 padding-y-h8
+            border-radius-l
+          "></p>
+        )
+      }
 
-<header
-  class="center text box no-border color-palette-trans background-overlay h1 padding-y-relative-xl"
-  style={cover_image && `background-image: url("${cover_image.src}");`}>
-  <h1 class="centered">{name}</h1>
-  {
-    addressString && (
-      <p class="h6">
-        <a href={addressLink} target="_blank" rel="noopener noreferrer">{addressString}</a>
-      </p>)
+    </div>
+  </header>
+  {organizers?.[0] && (
+    <div
+      class="box no-border center intrinsic
+        color-palette-main
+        border-radius-s
+        "
+      style="
+        max-width: 90%;
+        width: fit-content; 
+        margin-top: calc(var(--size-h2) * -1);
+        margin-bottom: var(--size-h2);
+        box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
+        ">
+        <p class="size-h3">Organisé par</p>
+        <div class="box no-border cluster center max-width-measure-h4">
+          <ul class="reset justify-content-center">
+            {organizers.map(({name, path, logo}) => (
+              <li>
+                <a href={`/${path}`} class="
+                  box no-border stack center intrinsic gap-down-h8
+                ">
+                  <img src={logo?.src} class="max-width-col-16" style="max-height: inherit;" />
+                  <div class="size-h4">{name}</div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+    </div>
+  )}
+
+
+  <!-- {(opening_hours_strings?.[0] || opening_hours_remark) && <div class="
+    box no-border
+    color-palette-variation-funky-contrast
+  ">
+    <div class="center max-width-measure-h4">
+      <h2>Horaires</h2>
+      {
+        opening_hours_strings?.[0] && (
+          <div>
+              {opening_hours_strings.map(str => (
+                <p set:html={str} />
+              ))}
+          </div>
+        )
+      }
+      {
+        opening_hours_remark && (
+          <div>
+              <Markdown content={opening_hours_remark} />
+          </div>
+        )
+      }
+    </div>
+  </div>} -->
+  {(games_services_translated?.[0] || amenities_translated?.[0]) &&
+    <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
+      <ul class="reset">
+        <>
+          {games_services_translated?.map(({ [languages_code]: code }) => (
+            <li class="
+              box no-border padding-x-h7 padding-y-h8
+              color-palette-variation-contrast
+              border-radius-s
+            ">{code}</li>
+          ))}
+
+          {amenities_translated?.map(({ [languages_code]: code }) => (
+            <li class="
+              box no-border padding-x-h7 padding-y-h8
+              color-palette-variation-funky-contrast
+              border-radius-s
+            ">{code}</li>
+          ))}
+        </>
+      </ul>
+    </div>
   }
-
-</header>
-
-
-<!--
-<img src={`http://localhost:8055/assets/${logo.id}`} />
-<ul>
-    {typesTranslated.map(({ fr }) => <li>{fr}</li>)}
-</ul>
-<ul>
-<li>
-  website: {website}
-</li>
-<li>
-  facebook_page: {facebook_page}
-</li>
-<li>
-  instagram: {instagram}
-</li>
-<li>
-  twitter: {twitter}
-</li>
-<li>
-  youtube_channel: {youtube_channel}
-</li>
-</ul>
-
-<div>
-    <h2>Horaires</h2>
-    <div>
-        {opening_hours_strings.map(str => (
-            <p>{str}</p>
+  <!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
+    <ul class="reset">
+        {amenities_translated?.map(({ [languages_code]: code }) => (
+          <li>{code}</li>
         ))}
+    </ul>
+  </div>} -->
+
+  {highlighted_details && <div class="
+    box no-border center
+    max-width-measure-h4
+  ">
+      <h2>Infos importantes</h2>
+      <Markdown content={highlighted_details} />
+  </div>}
+
+  {description && <div class="
+    box no-border center
+    max-width-measure-h4
+  ">
+      <h2>Description</h2>
+      <Markdown content={description} />
+  </div>}
+
+  {links?.[0] && (
+    <div class="box no-border cluster center max-width-measure-h4">
+      <ul class="reset justify-content-space-around">
+        {links.map(({name, url, iconName}) => (
+          <li>
+            <a href={url} target="_blank" rel="noopener noreferrer" class="
+              box no-border stack center intrinsic gap-down-h8
+            ">
+              <Icon name={iconName} size="1em" class="size-h1" />
+              <div class="size-h4">{name.fr}</div>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
-    <div>
-        <Markdown content={opening_hours_remark.fr.markdown} />
-    </div>
-</div>
-<ul>
-    {games_services_translated.map(({ fr }) => (<li>{fr}</li>))}
-</ul>
-<ul>
-    {amenities_translated.map(({ fr }) => (<li>{fr}</li>))}
-</ul>
--->
-<div class="center width-measure">
-    <h2>Mis en avant</h2>
-    <Markdown content={highlighted_details} />
-</div>
-<div class="center width-measure">
-    <h2>Description</h2>
-    <Markdown content={description} />
-</div>
+  )}
+</main>
+
 
 <!-- <style>
 header > * {

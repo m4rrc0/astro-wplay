@@ -1,10 +1,7 @@
 ---
   import Debug from 'astro/debug';
-  import { directus, start as startDirectus, fetchPages, fetchOrganizations, fetchEvents } from '../services/directus.js'
-  import SkeletonLayout from '@layouts/SkeletonLayout.astro'
-  import BasicPageLayout from '@layouts/BasicPageLayout.astro'
-  import OrganizationPageLayout from '@layouts/OrganizationPageLayout.astro'
-  import EventPageLayout from '@layouts/EventPageLayout.astro'
+  import { directus, start as startDirectus, fetchPages, fetchOrganizations, fetchEvents, fetchArticles } from '../services/directus.js'
+  import { SkeletonLayout, BasicPageLayout, OrganizationPageLayout, EventPageLayout, ArticlePageLayout } from '@layouts'
 
 
 export async function getStaticPaths() {
@@ -13,6 +10,7 @@ export async function getStaticPaths() {
 	// const pages = await fetchPages()
 	const organizations = await fetchOrganizations()
 	const events = await fetchEvents()
+	const articles = await fetchArticles()
 
   // const pagesStaticPaths = await pages.data.map(page => {
   //   // const path = page.path === 'index' ? undefined : page.path
@@ -24,18 +22,21 @@ export async function getStaticPaths() {
   const eventsStaticPaths = await events.map(event => {
     return { params: { path: event.path }, props: { event, events } }
   })
+  const articlesStaticPaths = await articles.map(article => {
+    return { params: { path: article.path }, props: { article, articles } }
+  })
   const listsStaticPaths = [
-    { params: { path: 'list' }, props: { 
-      events, 
-      organizations
-      }
-    },
+    { params: { path: 'fr/o' }, props: { organizations } },
+    { params: { path: 'fr/e' }, props: { events } },
+    { params: { path: 'fr/a' }, props: { articles } },
   ]
+
   const staticPaths = [
     // ...pagesStaticPaths,
     ...organizationsStaticPaths,
     ...eventsStaticPaths,
-    ...listsStaticPaths
+    ...articlesStaticPaths,
+    ...listsStaticPaths,
     ]
   return staticPaths
 }
@@ -45,7 +46,8 @@ const { path } = Astro.request.params;
 const {
   // pages, page, 
   organization, organizations,
-  event, events
+  event, events,
+  article, articles,
   } = Astro.props;
 ---
 
@@ -79,30 +81,45 @@ const {
     } -->
 
     {
-      path === 'list' && (
-        <>
-          <div>
-            <h2>Organisations</h2>
-            <ul>
-              {
-                organizations.map(o => (
-                  <li><a href={`/${o.path}`}>{o.name}</a></li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div>
-            <h2>Events</h2>
-            <ul>
-              {
-                events.map(e => (
-                  <li><a href={`/${e.path}`}>{e.name}</a></li>
-                ))
-              }
-            </ul>
-          </div>
-        </>
+      path === 'fr/o' && (
+        <div>
+          <h2>Organisations</h2>
+          <ul>
+            {
+              organizations.map(o => (
+                <li><a href={`/${o.path}`}>{o.name}</a></li>
+              ))
+            }
+          </ul>
+        </div>
+      )
+    }
+    {
+      path === 'fr/e' && (
+        <div>
+          <h2>Events</h2>
+          <ul>
+            {
+              events.map(e => (
+                <li><a href={`/${e.path}`}>{e.name}</a></li>
+              ))
+            }
+          </ul>
+        </div>
+      )
+    }
+    {
+      path === 'fr/a' && (
+        <div>
+          <h2>Articles</h2>
+          <ul>
+            {
+              articles.map(a => (
+                <li><a href={`/${a.path}`}>{a.path}</a></li>
+              ))
+            }
+          </ul>
+        </div>
       )
     }
 
@@ -115,9 +132,15 @@ const {
 
     {
       event && (
+        <EventPageLayout {event} languages_code="fr" />
+      )
+    }
+
+    {
+      article && (
         <>
-          <EventPageLayout {event} languages_code="fr" />
-          <Debug {event} />
+          <!--ArticlePageLayout {article} languages_code="fr" /-->
+          <Debug {article} />
         </>
       )
     }

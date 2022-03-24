@@ -2,34 +2,65 @@
 
 ---
 
-<div id="layout-page-base" class="">
+<div id="layout-page-base" class="stack split-after-2 gap-down-0 justify-start" style="min-height: 100vh;">
   <div id="menu-main" class="box no-border">
     <nav class="center cluster overflow gap-h6-down">
       <ul class="reset reset-down-a size-h3">
         <li>
-          <a href="/">
+          <a href="/" class="stack horizontal align-items-center">
             <img src="/assets/images/favicons/favicon-32x32.png" width="32" height="32" style="display: inline;" />
             <span>Wanna Play</span>
           </a>
         </li>
-        <li>
-          <a href="/list">List</a>
-        </li>
-        <li>
-          <a href="/styleguide">Styleguide</a>
-        </li>
+        <li><a href="/fr/o">Organisations</a></li>
+        <li><a href="/fr/e">Événements</a></li>
+        <li><a href="/fr/a">Articles</a></li>
+        <li><a href="/fr/project">Projet</a></li>
+        <li><a href="/styleguide">Styleguide</a></li>
       </ul>
     </nav>
   </div>
-  <div class="center">
-    <slot />
-  </div>
-  <footer class="">
-    <div class="">
-      <a
-        href="https://www.facebook.com/WannaPlayBE/"
-        target="_blank"
-        rel="noopener">Facebook</a> - <a href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured" target="_blank" rel="noopener">Youtube</a> - <a href="https://www.instagram.com/wannaplay_be/" target="_blank" rel="noopener">Instagram</a> - <a href="http://eepurl.com/cM3shf" target="_blank" rel="noopener">Newsletter</a> - <a href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ" target="_blank" rel="noopener">Spotify</a></div><p class="css-1ka4ol6">Identité graphique et site web par <a href="http://www.feedbydesign.com/" class="css-bae6h4">Feed by Design</a><p class="css-1niq0go"><span>© Wanna Play ASBL - </span><span>0695.574.033 - </span><span>IBAN BE41 6511 6348 4210</span><br><span>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - info@wanna-play.be</span></p>
+  <slot />
+  <footer class="
+    color-palette-variation-contrast
+    ">
+    <div class="
+      box no-border center intrinsic text stack gap-down-h7
+    ">
+      <div class="cluster justify-center size-h3">
+        <div>
+          <a
+            href="https://www.facebook.com/WannaPlayBE/"
+            target="_blank"
+            rel="noopener"
+          >Facebook</a><a
+            href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
+            target="_blank"
+            rel="noopener"
+          >Youtube</a><a
+            href="https://www.instagram.com/wannaplay_be/"
+            target="_blank"
+            rel="noopener"
+          >Instagram</a><a
+            href="http://eepurl.com/cM3shf"
+            target="_blank"
+            rel="noopener"
+          >Newsletter</a><a
+            href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
+            target="_blank"
+            rel="noopener"
+          >Spotify</a>
+        </div>
+      </div>
+      <p>Identité graphique et site web par <a href="http://www.feedbydesign.com/">Feed by Design</a></p>
+      <p class="size-h6">
+        <span>© Wanna Play ASBL - </span>
+        <span>0695.574.033 - </span>
+        <span>IBAN BE41 6511 6348 4210</span>
+        <br>
+        <span>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - info@wanna-play.be</span>
+      </p>
+    </div>
   </footer>
 </div>
 
@@ -40,5 +71,23 @@
   nav {
     /* --gap: var(--size-h6); */
     /* margin: var(--gap) 0; */
+  }
+  footer {
+    margin-top: 4vw;
+    position: relative;
+    z-index: 0;
+  }
+  footer:before {
+    background: inherit;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: skewY(-2deg);
+    transform-origin: 0% 0;
+    z-index: -1;
   }
 </style>

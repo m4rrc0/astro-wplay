@@ -6,6 +6,9 @@ split-after: class int
 NEW: (impossible without JS) split-type: var <element> // To avoid ":nth-child" and be able to use ":nth-of-type" // Triggered with .split-after class
 NEW: horizontal: class bool
 NEW: stop: class bool -> apply `class="stack recursive stop"` to stop recursion down this path
+NEW: justify-content: var keyword
+NEW: align-items: var keyword
+NEW: align-content: var keyword
 */
 .stack {
   /* --gap-stack: var(--gap); */
@@ -15,6 +18,11 @@ NEW: stop: class bool -> apply `class="stack recursive stop"` to stop recursion 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  justify-content: var(--justify-content, flex-start);
+  align-items: stretch;
+  align-items: var(--align-items, stretch);
+  align-content: stretch;
+  align-content: var(--align-content, stretch);
 }
 .stack:not(.horizontal) > *,
 .stack.recursive:not(.horizontal) * {
@@ -28,6 +36,8 @@ NEW: stop: class bool -> apply `class="stack recursive stop"` to stop recursion 
 /* horizontal mod */
 .stack.horizontal {
   flex-direction: row;
+  align-items: center;
+  align-items: var(--align-items, center);
 }
 .stack.horizontal > *,
 .stack.horizontal.recursive * {

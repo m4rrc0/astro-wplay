@@ -46,7 +46,9 @@ const imageFields = (preString) => [
 const dico = [
   // links names
   { code_name: 'website', fr: 'Site web', iconName: 'gridicons:share-computer' },
+  { code_name: 'web_page', fr: 'Page web', iconName: 'gridicons:share-computer' },
   { code_name: 'facebook_page', fr: 'Page Facebook', iconName: 'brandico:facebook-rect' },
+  { code_name: 'facebook_event', fr: 'Événement Facebook', iconName: 'brandico:facebook-rect' },
   { code_name: 'twitter', fr: 'Twitter', iconName: 'fa:twitter-square' },
   { code_name: 'instagram', fr: 'Instagram', iconName: 'fa-brands:instagram-square' },
   { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'fa-brands:youtube-square' },
@@ -135,10 +137,26 @@ const formatDateTime = (str) => {
   const timeOptions = { hour: '2-digit', minute: '2-digit' }
 
   const date = new Date(str)
-  return `${date.toLocaleDateString(
-    'fr',
-    dateOptions,
-  )} - ${date.toLocaleTimeString('fr', timeOptions)}`
+  return {
+    dateTimeRaw: str,
+    date_fr: date.toLocaleDateString('fr', dateOptions),
+    time_fr: date.toLocaleTimeString('fr', timeOptions),
+  }
+}
+const formatLink = ({ name, url }) => {
+  const linkNameTranslated = translateFromCodeName(name)
+  let { iconName } = linkNameTranslated
+
+  if (!iconName) {
+    console.warn(`--SELF WARNING-- No icon found with code_name '${name}'`)
+    iconName = 'bi:question-square'
+  }
+
+  return {
+    name: linkNameTranslated,
+    url,
+    iconName,
+  }
 }
 
 function removeEmptyPropOnObject(obj) {
@@ -205,8 +223,8 @@ function transformImage(i) {
 }
 
 function transformAddress(address) {
-  const a = address?.[0]?.zip && address?.[0]
-  if (!a) return { ...address, string: null, gMapLink: null }
+  const a = (address?.[0]?.zip && address?.[0]) || (address?.zip && address)
+  if (!a) return null
 
   const string = `${a.street} ${a.number}, ${a.zip} ${a.city}`
   const gMapLink = `https://maps.google.com/maps?q=${string.replace(
@@ -226,6 +244,15 @@ function transformAddress(address) {
   }
 
   return { ...a, string, gMapLink, area }
+}
+
+// --- FETCH LANGUAGES --- //
+const fetchLanguages = async () => {
+  const { data: languages } = await directus.items('languages').readMany({
+    limit: -1,
+    fields: ['*'],
+  })
+  return languages
 }
 
 // --- F&T PAGES --- //
@@ -305,22 +332,8 @@ export function transformOrganization(o) {
   const logo = transformImage(o?.logo)
   const gallery = o?.gallery?.map(transformImage)
   const cover_image = transformImage(o?.cover_image)
-
-  const links = o.links?.map(({ name, url }) => {
-    const linkNameTranslated = translateFromCodeName(name)
-    let { iconName } = linkNameTranslated
-
-    if (!iconName) {
-      console.warn(`--SELF WARNING-- No icon found with code_name '${name}'`)
-      iconName = 'bi:question-square'
-    }
-
-    return {
-      name: linkNameTranslated,
-      url,
-      iconName,
-    }
-  })
+  // Transform links
+  const links = o.links?.map(formatLink)
 
   return {
     ...o,
@@ -383,6 +396,7 @@ export async function fetchOrganizations() {
 function fallbackOnParentsOfEvent({
   eventRaw,
   parent,
+  organizers,
   mainOrganizer,
   languages,
   hasParent,
@@ -421,11 +435,9 @@ function fallbackOnParentsOfEvent({
       ? removeEmptyPropOnObject({
           name: mainOrganizer.name,
           address: mainOrganizer.address,
-          addressString: mainOrganizer.addressString,
-          addressLink: mainOrganizer.addressLink,
           cover_image: mainOrganizer.cover_image,
-          games_servicesTranslated: mainOrganizer.games_servicesTranslated,
-          amenitiesTranslated: mainOrganizer.amenitiesTranslated,
+          games_services_translated: mainOrganizer.games_services_translated,
+          amenities_translated: mainOrganizer.amenities_translated,
           gallery: mainOrganizer.gallery,
         })
       : {}),
@@ -433,81 +445,105 @@ function fallbackOnParentsOfEvent({
       ? removeEmptyPropOnObject({
           name: parent.name,
           address: parent.address,
-          addressString: parent.addressString,
-          addressLink: parent.addressLink,
           cover_image: parent.cover_image,
-          organizers: parent.organizers,
+          // organizers: parent.organizers,
         })
       : {}),
     ...removeEmptyPropOnObject(eventRaw),
+    organizers,
     translations,
   }
+
+  // console.log({
+  //   name: eventRaw.name,
+  //   eR: eventRaw?.address,
+  //   p: parent?.address,
+  //   o: mainOrganizer?.address,
+  //   e: e.address,
+  // })
 
   return e
 }
 
 export function transformEvent(eventRaw, languages) {
-  const parent = eventRaw.parent_event
-  const mainOrganizerRaw =
-    eventRaw?.organizers?.[0]?.organizations_id ||
-    parent?.organizers?.[0]?.organizations_id
-  const mainOrganizer = transformOrganization(mainOrganizerRaw)
+  const parent =
+    eventRaw?.parent_event && transformEvent(eventRaw?.parent_event)
+  const organizers =
+    (eventRaw?.organizers?.[0]?.organizations_id &&
+      eventRaw?.organizers?.map(({ organizations_id: o }) =>
+        transformOrganization(o),
+      )) ||
+    (parent?.organizers?.[0] &&
+      parent?.organizers?.map(({ organizations_id: o }) =>
+        transformOrganization(o),
+      ))
+
+  const mainOrganizer = organizers?.[0]
 
   // Inject booleans
   const isRecurring =
     eventRaw.recurring ||
-    eventRaw.schedule.length + eventRaw.event_instances.length > 1
+    eventRaw.schedule?.length + eventRaw.event_instances?.length > 1
+  const parentIsRecurring = parent?.recurring || parent?.schedule?.length > 0
   const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
   const hasParent = !!parent
   // const hasDescriptionOrHighlighted = eventRaw.translations.inde
 
   // Fallback values from parent_event or first Organizer
-  const e = fallbackOnParentsOfEvent({
-    eventRaw,
-    parent,
-    mainOrganizer,
-    languages,
-    hasParent,
-  })
+  const e = languages
+    ? fallbackOnParentsOfEvent({
+        eventRaw,
+        parent,
+        organizers,
+        mainOrganizer,
+        languages,
+        hasParent,
+      })
+    : eventRaw
 
   // Transform datetimes
   const scheduleFormatted = !hasNoSchedule
-    ? e.schedule.map(({ time_start, time_end }) => {
-        const time_start_string = formatDateTime(time_start)
-        const time_end_string = formatDateTime(time_end)
+    ? e.schedule.map(({ time_start: tsRaw, time_end: teRaw }) => {
+        const time_start = formatDateTime(tsRaw)
+        const time_end = formatDateTime(teRaw)
+        const isSameDay = time_start?.date_fr === time_end?.date_fr
 
         return {
           time_start,
-          // time_start_date,
-          time_start_string,
           time_end,
-          time_end_string,
+          isSameDay,
         }
       })
     : null
 
   // Create Slug
   const nameSlug = slugify(e.name)
-  const dateSlug = scheduleFormatted[0].time_start.substring(0, 10)
+  const dateSlug = scheduleFormatted?.[0].time_start.dateTimeRaw.substring(
+    0,
+    10,
+  )
   const slug = `${nameSlug}-${dateSlug}`
   const path = createPath({ event: { slug } })
-
   // Transform images
   const cover_image = transformImage(e?.cover_image)
-
   // Transform Address
   const address = transformAddress(e.address)
+  // Transform links
+  const links = e.links?.map(formatLink)
 
   return {
     ...e,
     isRecurring,
+    parentIsRecurring,
     hasNoSchedule,
     hasParent,
+    parent_event: parent,
     scheduleFormatted,
     slug,
     path,
     cover_image,
     address,
+    links,
   }
 }
 
@@ -538,10 +574,7 @@ const flattenEvents = (eventsUnflat) => {
 }
 
 export async function fetchEvents() {
-  const { data: languages } = await directus.items('languages').readMany({
-    limit: -1,
-    fields: ['*'],
-  })
+  const languages = await fetchLanguages()
 
   const eventsRaw = await directus.items('events').readMany({
     limit: -1,
@@ -561,9 +594,11 @@ export async function fetchEvents() {
       // 'links.facebook_event',
       // 'links.other_links',
       // 'organizers.organizations_id.*',
+      'organizers.organizations_id.status',
       'organizers.organizations_id.name',
       'organizers.organizations_id.slug',
       'organizers.organizations_id.address',
+      ...imageFields('organizers.organizations_id.logo.'),
       ...imageFields('organizers.organizations_id.cover_image.'),
       'organizers.organizations_id.games_services',
       'organizers.organizations_id.amenities',
@@ -580,6 +615,8 @@ export async function fetchEvents() {
       'parent_event.status',
       'parent_event.name',
       'parent_event.address',
+      'parent_event.recurring',
+      'parent_event.schedule',
       'parent_event.links',
       ...imageFields('parent_event.cover_image.'),
       'parent_event.translations.languages_code',
@@ -589,9 +626,11 @@ export async function fetchEvents() {
       // 'parent_event.translations.main_url',
       // 'parent_event.translations.facebook_event_url',
       // 'parent_event.translations.other_links',
+      'parent_event.organizers.organizations_id.status',
       'parent_event.organizers.organizations_id.name',
       'parent_event.organizers.organizations_id.slug',
       'parent_event.organizers.organizations_id.address',
+      ...imageFields('parent_event.organizers.organizations_id.logo.'),
       ...imageFields('parent_event.organizers.organizations_id.cover_image.'),
       'parent_event.organizers.organizations_id.games_services',
       'parent_event.organizers.organizations_id.amenities',
@@ -608,4 +647,24 @@ export async function fetchEvents() {
   // const events = eventsUnflat
 
   return events
+}
+
+// --- F&T ARTICLES --- //
+
+export function transformArticle(articleRaw, languages) {
+  return { ...articleRaw, path: 'a/test' }
+}
+
+export async function fetchArticles() {
+  const languages = await fetchLanguages()
+
+  const articlesRaw = await directus.items('articles').readMany({
+    limit: -1,
+    // filter: { status: { _eq: 'published' } },
+    fields: ['*', 'status'],
+  })
+
+  const articles = articlesRaw.data.map((e) => transformArticle(e, languages))
+
+  return articles
 }

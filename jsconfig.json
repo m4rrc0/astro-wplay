@@ -4,8 +4,9 @@
       "paths": {
         "@src/*": ["src/*"],
         "@components/*": ["src/components/*"],
+        "@components": ["src/components/index.js"],
         "@layouts/*": ["src/layouts/*"],
-        "@layouts": ["src/layouts"],
+        "@layouts": ["src/layouts/index.js"],
         "@pages/*": ["src/pages/*"],
         "@partials/*": ["src/partials/*"],
         "@services/*": ["src/services/*"],

@@ -1,0 +1,29 @@
+---
+// import Debug from 'astro/debug';
+// import { Markdown } from 'astro/components';
+// import { Icon } from 'astro-icon'
+
+const {languages_code, article: {
+  code_name
+}} = Astro.props;
+
+// const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
+
+---
+
+<!-- <Debug {name} /> -->
+
+<main class="center max">
+  <header>
+    <p>{code_name}</p>
+  </header>
+
+  <!-- {description && <div class="
+    box no-border center
+    max-width-measure-h4
+  ">
+      <h2>Description</h2>
+      <Markdown content={description} />
+  </div>} -->
+
+</main>

@@ -185,6 +185,10 @@ body,
   --width-col-10: calc(var(--width-max) / 10);
   --width-col-11: calc(var(--width-max) / 11);
   --width-col-12: calc(var(--width-max) / 12);
+  --width-col-13: calc(var(--width-max) / 13);
+  --width-col-14: calc(var(--width-max) / 14);
+  --width-col-15: calc(var(--width-max) / 15);
+  --width-col-16: calc(var(--width-max) / 16);
   /* --width-min: ; */ /* min block width */
 
   /* gap is for margins, paddings, grid-gap, ... */
@@ -377,6 +381,10 @@ button, .button { border-width: var(--size-border-button) }
 .border-m { border: var(--size-border-m)} /* prettier-ignore */
 .border-l { border: var(--size-border-l)} /* prettier-ignore */
 .border-radius-s { border-radius: var(--border-radius-s)} /* prettier-ignore */
+.border-radius-m { border-radius: var(--border-radius-m)} /* prettier-ignore */
+.border-radius-l { border-radius: var(--border-radius-l)} /* prettier-ignore */
+.border-radius-xl { border-radius: var(--border-radius-xl)} /* prettier-ignore */
+.border-radius-circle { border-radius: var(--border-radius-circle)} /* prettier-ignore */
 
 .padding-0, .no-padding { padding: 0; } /* prettier-ignore */
 .padding-h-1 { padding: var(--size-h-1)} /* prettier-ignore */
@@ -454,6 +462,11 @@ button, .button { border-width: var(--size-border-button) }
 .max-width-col-10, .max-width-down-col-10 > * { max-width: var(--width-col-10);} /* prettier-ignore */
 .max-width-col-11, .max-width-down-col-11 > * { max-width: var(--width-col-11);} /* prettier-ignore */
 .max-width-col-12, .max-width-down-col-12 > * { max-width: var(--width-col-12);} /* prettier-ignore */
+.max-width-col-13, .max-width-down-col-13 > * { max-width: var(--width-col-13);} /* prettier-ignore */
+.max-width-col-14, .max-width-down-col-14 > * { max-width: var(--width-col-14);} /* prettier-ignore */
+.max-width-col-15, .max-width-down-col-15 > * { max-width: var(--width-col-15);} /* prettier-ignore */
+.max-width-col-16, .max-width-down-col-16 > * { max-width: var(--width-col-16);} /* prettier-ignore */
+.width-fit-content, .width-down-fit-content > * { width: fit-content; max-width: 100%;} /* prettier-ignore */
 .width-measure, .width-down-measure > * { width: var(--width-measure); max-width: 100%;} /* prettier-ignore */
 .width-measure-relative, .width-down-measure-relative > * { width: var(--width-measure-relative); max-width: 100%;} /* prettier-ignore */
 .width-measure-h1, .width-down-measure-h1 > * { width: var(--width-measure-h1); max-width: 100%;} /* prettier-ignore */
@@ -476,3 +489,7 @@ button, .button { border-width: var(--size-border-button) }
 .width-col-10, .width-down-col-10 > * { width: var(--width-col-10); max-width: 100%;} /* prettier-ignore */
 .width-col-11, .width-down-col-11 > * { width: var(--width-col-11); max-width: 100%;} /* prettier-ignore */
 .width-col-12, .width-down-col-12 > * { width: var(--width-col-12); max-width: 100%;} /* prettier-ignore */
+.width-col-13, .width-down-col-13 > * { width: var(--width-col-13); max-width: 100%;} /* prettier-ignore */
+.width-col-14, .width-down-col-14 > * { width: var(--width-col-14); max-width: 100%;} /* prettier-ignore */
+.width-col-15, .width-down-col-15 > * { width: var(--width-col-15); max-width: 100%;} /* prettier-ignore */
+.width-col-16, .width-down-col-16 > * { width: var(--width-col-16); max-width: 100%;} /* prettier-ignore */

@@ -19,28 +19,39 @@ const cmsAssetsUrl = `${cmsBaseUrl}/assets`
 
 const imageFields = (preString) => [
   preString + 'id',
-  // preString + "storage",
-  // preString + "filename_disk",
   preString + 'filename_download',
   preString + 'title',
   preString + 'type',
-  // preString + "folder",
-  // preString + "uploaded_by",
-  // preString + "uploaded_on",
-  // preString + "modified_by",
-  // preString + "modified_on",
-  // preString + "charset",
   preString + 'filesize',
   preString + 'width',
   preString + 'height',
-  // preString + "duration",
-  // preString + "embed",
   preString + 'description',
-  // preString + "location",
-  // preString + "tags",
-  // preString + "metadata",
   preString + 'image_alt',
   preString + 'image_title',
+]
+const blockFields = (preString) => [
+  preString + `id`,
+  `${preString}status`,
+  `${preString}code_name`,
+  `${preString}translations.languages_code`,
+  `${preString}translations.title`,
+  `${preString}translations.subtitle`,
+  ...imageFields(`${preString}translations.featured_image.`),
+  `${preString}translations.text`,
+  ...imageFields(`${preString}translations.background_image.`),
+  ...imageFields(`${preString}translations.gallery.*.`),
+]
+const pageDataFields = (preString) => [
+  `${preString}id`,
+  `${preString}status`,
+  `${preString}slug`,
+  `${preString}translations.id`,
+  `${preString}translations.languages_code`,
+  `${preString}translations.status`,
+  `${preString}translations.title`,
+  `${preString}translations.description`,
+  `${preString}translations.slug`,
+  `${preString}translations.redirect_here`,
 ]
 /* prettier-ignore */
 const dico = [
@@ -246,8 +257,13 @@ function transformAddress(address) {
   return { ...a, string, gMapLink, area }
 }
 
+function transformPageData(page_data) {
+  // TODO: flatten properly to account for overriding the first entry in the list with the next etc.
+  return page_data?.[0]
+}
+
 // --- FETCH LANGUAGES --- //
-const fetchLanguages = async () => {
+export const fetchLanguages = async () => {
   const { data: languages } = await directus.items('languages').readMany({
     limit: -1,
     fields: ['*'],
@@ -289,7 +305,7 @@ export function transformOrganization(o) {
     amenities,
   } = o
   // Create Path
-  const path = createPath({ organization: { slug } })
+  const path = createPath({ type: 'organization', slug })
   // Distort Name if not published
   const name =
     status !== 'published' && ENV !== 'production'
@@ -523,7 +539,8 @@ export function transformEvent(eventRaw, languages) {
     10,
   )
   const slug = `${nameSlug}-${dateSlug}`
-  const path = createPath({ event: { slug } })
+  // TODO: should probably create "paths" for translated paths
+  const path = createPath({ type: 'event', slug })
   // Transform images
   const cover_image = transformImage(e?.cover_image)
   // Transform Address
@@ -652,7 +669,24 @@ export async function fetchEvents() {
 // --- F&T ARTICLES --- //
 
 export function transformArticle(articleRaw, languages) {
-  return { ...articleRaw, path: 'a/test' }
+  // variables
+  const { header, main, footer } = articleRaw || {}
+  const page_data = transformPageData(articleRaw?.page_data)
+  const slug = page_data?.slug
+
+  // Booleans
+  const hasNoHeader = !header || !header?.[0]
+  const hasNoMain = !main || !main?.[0]
+  const hasNoFooter = !footer || !footer?.[0]
+  const isPage = !!slug
+
+  // Early return
+  if (hasNoHeader && hasNoMain && hasNoFooter) return null
+
+  // Computed fields
+  const path = createPath({ type: 'article', slug })
+
+  return { ...articleRaw, path }
 }
 
 export async function fetchArticles() {
@@ -661,10 +695,18 @@ export async function fetchArticles() {
   const articlesRaw = await directus.items('articles').readMany({
     limit: -1,
     // filter: { status: { _eq: 'published' } },
-    fields: ['*', 'status'],
+    fields: [
+      // '*',
+      'status',
+      'code_name',
+      ...pageDataFields('page_data.'),
+      ...blockFields('header.'),
+      ...blockFields('main.'),
+      ...blockFields('footer.'),
+    ],
   })
 
-  const articles = articlesRaw.data.map((e) => transformArticle(e, languages))
+  const articles = articlesRaw.data.map((a) => transformArticle(a, languages))
 
   return articles
 }

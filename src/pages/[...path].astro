@@ -1,6 +1,7 @@
 ---
   import Debug from 'astro/debug';
-  import { directus, start as startDirectus, fetchPages, fetchOrganizations, fetchEvents, fetchArticles } from '../services/directus.js'
+  import { createPath } from '@utils';
+  import { directus, start as startDirectus, fetchLanguages, fetchOrganizations, fetchEvents, fetchArticles } from '../services/directus.js'
   import { SkeletonLayout, BasicPageLayout, OrganizationPageLayout, EventPageLayout, ArticlePageLayout } from '@layouts'
 
 
@@ -8,36 +9,45 @@ export async function getStaticPaths() {
   await startDirectus()
 
 	// const pages = await fetchPages()
+  const languages = await fetchLanguages()
 	const organizations = await fetchOrganizations()
 	const events = await fetchEvents()
 	const articles = await fetchArticles()
 
-  // const pagesStaticPaths = await pages.data.map(page => {
-  //   // const path = page.path === 'index' ? undefined : page.path
-  //   return { params: { path }, props: { page, pages } }
-  // })
-  const organizationsStaticPaths = await organizations.map(organization => {
-    return { params: { path: organization.path }, props: { organization, organizations } }
-  })
-  const eventsStaticPaths = await events.map(event => {
-    return { params: { path: event.path }, props: { event, events } }
-  })
-  const articlesStaticPaths = await articles.map(article => {
-    return { params: { path: article.path }, props: { article, articles } }
-  })
-  const listsStaticPaths = [
-    { params: { path: 'fr/o' }, props: { organizations } },
-    { params: { path: 'fr/e' }, props: { events } },
-    { params: { path: 'fr/a' }, props: { articles } },
-  ]
+  let staticPaths = []
 
-  const staticPaths = [
-    // ...pagesStaticPaths,
-    ...organizationsStaticPaths,
-    ...eventsStaticPaths,
-    ...articlesStaticPaths,
-    ...listsStaticPaths,
+  // TODO: account for multiple languages! (lang is hardcoded to 'fr' for the moment)
+  languages.forEach(lang => {
+    // const pagesStaticPaths = await pages.data.map(page => {
+    //   // const path = page.path === 'index' ? undefined : page.path
+    //   return { params: { path }, props: { page, pages } }
+    // })
+    const organizationsStaticPaths = organizations.map(organization => {
+      return { params: { path: organization.path }, props: { organization, organizations } }
+    })
+    const eventsStaticPaths = events.map(event => {
+      return { params: { path: event.path }, props: { event, events } }
+    })
+    const articlesStaticPaths = articles.map(article => {
+      return { params: { path: article.path }, props: { article, articles } }
+    })
+    const listsStaticPaths = [
+      { params: { path: 'fr/o' }, props: { organizations } },
+      { params: { path: 'fr/e' }, props: { events } },
+      { params: { path: 'fr/a' }, props: { articles } },
     ]
+
+    staticPaths = [
+      ...staticPaths,
+      // ...pagesStaticPaths,
+      ...organizationsStaticPaths,
+      ...eventsStaticPaths,
+      ...articlesStaticPaths,
+      ...listsStaticPaths,
+    ]
+  })
+
+
   return staticPaths
 }
 
@@ -138,10 +148,7 @@ const {
 
     {
       article && (
-        <>
-          <!--ArticlePageLayout {article} languages_code="fr" /-->
-          <Debug {article} />
-        </>
+        <ArticlePageLayout {article} languages_code="fr" />
       )
     }
   </BasicPageLayout>

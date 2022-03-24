@@ -1,20 +1,24 @@
 ---
-// import Debug from 'astro/debug';
+import Debug from 'astro/debug';
+import Blocks from '@components/Blocks.svelte'
 // import { Markdown } from 'astro/components';
 // import { Icon } from 'astro-icon'
 
 const {languages_code, article: {
-  code_name
+  code_name,
+  page_data,
+  header,
+  main,
+  footer
 }} = Astro.props;
 
 // const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
 
 ---
 
-<!-- <Debug {name} /> -->
-
 <main class="center max">
   <header>
+    <Blocks blocks={header} />
     <p>{code_name}</p>
   </header>
 
@@ -27,3 +31,5 @@ const {languages_code, article: {
   </div>} -->
 
 </main>
+
+<Debug {header} />

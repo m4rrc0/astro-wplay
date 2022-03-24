@@ -9,7 +9,10 @@ const {languages_code, article: {
   page_data,
   header,
   main,
-  footer
+  footer,
+  MdsvexCompiled,
+  SveltePreprocessed,
+  SvelteCompiled
 }} = Astro.props;
 
 // const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
@@ -18,7 +21,9 @@ const {languages_code, article: {
 
 <main class="center max">
   <header>
-    <Blocks blocks={header} />
+    <!-- <Layout client:only="svelte" /> -->
+    <!-- <svelte:component this={layout} /> -->
+    <!-- <Blocks blocks={header} /> -->
     <p>{code_name}</p>
   </header>
 
@@ -32,4 +37,4 @@ const {languages_code, article: {
 
 </main>
 
-<Debug {header} />
+<!-- <Debug {layout} /> -->

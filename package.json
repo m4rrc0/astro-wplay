@@ -15,6 +15,7 @@
     "astro": "^0.24.3",
     "astro-icon": "^0.6.0",
     "cssnano": "^5.0.17",
+    "mdsvex": "^0.10.5",
     "postcss-functions": "^4.0.2",
     "postcss-import": "^14.0.2",
     "postcss-mixins": "^9.0.1",

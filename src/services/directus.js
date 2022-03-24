@@ -1,6 +1,14 @@
 import { Directus } from '@directus/sdk'
 import { slugify, createPath, areasBe } from '@utils'
 
+export default function serverImport(id) {
+  return import(id)
+}
+const mdsvex = serverImport('mdsvex')
+const svelteCompiler = serverImport('svelte/compiler')
+// const svelte = require('svelte/compiler');
+// import { compile as compileSvx } from 'mdsvex'
+
 // const DIRECTUS_EMAIL = import.meta.env.PUBLIC_DIRECTUS_EMAIL
 // const DIRECTUS_PW = import.meta.env.PUBLIC_DIRECTUS_PW
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL || process.env.DIRECTUS_URL
@@ -668,7 +676,7 @@ export async function fetchEvents() {
 
 // --- F&T ARTICLES --- //
 
-export function transformArticle(articleRaw, languages) {
+export async function transformArticle(articleRaw, languages) {
   // variables
   const { header, main, footer } = articleRaw || {}
   const page_data = transformPageData(articleRaw?.page_data)
@@ -686,7 +694,48 @@ export function transformArticle(articleRaw, languages) {
   // Computed fields
   const path = createPath({ type: 'article', slug })
 
-  return { ...articleRaw, path }
+  const source = `
+  <script></script>
+  # Hello friends
+  `
+
+  // const { compile: compileSvx } = await mdsvex
+  const m = await mdsvex
+  const svelte = await svelteCompiler
+
+  const filename = 'file.svx'
+  const mdsvexOptions = {
+    filename,
+  }
+  const MdsvexCompiled = await m.compile(source, mdsvexOptions)
+
+  // This will give you a valid svelte component
+  const SveltePreprocessed = await svelte.preprocess(
+    source,
+    m.mdsvex(mdsvexOptions),
+    {
+      filename,
+    },
+  )
+
+  console.log({ MdsvexCompiled, SveltePreprocessed })
+
+  // Now you can compile it if you wish
+  const SvelteCompiled = svelte.compile(SveltePreprocessed.code, {
+    filename,
+    dev: true,
+    generate: 'ssr',
+  })
+
+  // console.log(layout.render)
+
+  return {
+    ...articleRaw,
+    path,
+    MdsvexCompiled,
+    SveltePreprocessed,
+    SvelteCompiled,
+  }
 }
 
 export async function fetchArticles() {
@@ -706,7 +755,9 @@ export async function fetchArticles() {
     ],
   })
 
-  const articles = articlesRaw.data.map((a) => transformArticle(a, languages))
+  const articles = await Promise.all(
+    articlesRaw.data.map(async (a) => await transformArticle(a, languages)),
+  )
 
   return articles
 }

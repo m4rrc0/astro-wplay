@@ -138,38 +138,6 @@ const reduceTranslatedMarkdown = ({ translations, fieldName }) =>
     {},
   )
 
-const formatDateTime = (str) => {
-  const dateOptions = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }
-  const timeOptions = { hour: '2-digit', minute: '2-digit' }
-
-  const date = new Date(str)
-  return {
-    dateTimeRaw: str,
-    date_fr: date.toLocaleDateString('fr', dateOptions),
-    time_fr: date.toLocaleTimeString('fr', timeOptions),
-  }
-}
-const formatLink = ({ name, url }) => {
-  const linkNameTranslated = translateFromCodeName(name)
-  let { iconName } = linkNameTranslated
-
-  if (!iconName) {
-    console.warn(`--SELF WARNING-- No icon found with code_name '${name}'`)
-    iconName = 'bi:question-square'
-  }
-
-  return {
-    name: linkNameTranslated,
-    url,
-    iconName,
-  }
-}
-
 function removeEmptyPropOnObject(obj) {
   if (typeof obj === 'object' && !Array.isArray(obj)) {
     // return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
@@ -224,6 +192,46 @@ export async function start() {
 
 // --- TRANSFORM FIELDS --- //
 
+const transformDateTime = (str) => {
+  if (!str) return str
+
+  const dateOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }
+  const timeOptions = { hour: '2-digit', minute: '2-digit' }
+
+  const date = new Date(str)
+  return {
+    dateTimeRaw: str,
+    fr: {
+      date: str ? date.toLocaleDateString('fr', dateOptions) : undefined,
+      time:
+        str?.length > 10
+          ? date.toLocaleTimeString('fr', timeOptions)
+          : undefined,
+    },
+  }
+}
+
+const transformLink = ({ name, url }) => {
+  const linkNameTranslated = translateFromCodeName(name)
+  let { iconName } = linkNameTranslated
+
+  if (!iconName) {
+    console.warn(`--SELF WARNING-- No icon found with code_name '${name}'`)
+    iconName = 'bi:question-square'
+  }
+
+  return {
+    name: linkNameTranslated,
+    url,
+    iconName,
+  }
+}
+
 function transformImage(i) {
   return i
     ? {
@@ -260,6 +268,25 @@ function transformAddress(address) {
 function transformPageData(page_data) {
   // TODO: flatten properly to account for overriding the first entry in the list with the next etc.
   return page_data?.[0]
+}
+
+function transformUserProfile(user_profileRaw) {
+  const avatar = transformImage(user_profileRaw?.directus_user.avatar)
+
+  return { ...user_profileRaw, avatar }
+}
+
+function transformBlock(blockRaw, languages) {
+  const translations = blockRaw?.translations.map((t) => ({
+    ...t,
+    featured_image: transformImage(t.featured_image),
+    background_image: transformImage(t.background_image),
+    gallery: t?.gallery?.map(transformImage),
+  }))
+  return {
+    ...blockRaw,
+    translations,
+  }
 }
 
 // --- FETCH LANGUAGES --- //
@@ -349,7 +376,7 @@ export function transformOrganization(o) {
   const gallery = o?.gallery?.map(transformImage)
   const cover_image = transformImage(o?.cover_image)
   // Transform links
-  const links = o.links?.map(formatLink)
+  const links = o.links?.map(transformLink)
 
   return {
     ...o,
@@ -520,9 +547,9 @@ export function transformEvent(eventRaw, languages) {
   // Transform datetimes
   const scheduleFormatted = !hasNoSchedule
     ? e.schedule.map(({ time_start: tsRaw, time_end: teRaw }) => {
-        const time_start = formatDateTime(tsRaw)
-        const time_end = formatDateTime(teRaw)
-        const isSameDay = time_start?.date_fr === time_end?.date_fr
+        const time_start = transformDateTime(tsRaw)
+        const time_end = transformDateTime(teRaw)
+        const isSameDay = time_start?.fr?.date === time_end?.fr?.date
 
         return {
           time_start,
@@ -546,7 +573,7 @@ export function transformEvent(eventRaw, languages) {
   // Transform Address
   const address = transformAddress(e.address)
   // Transform links
-  const links = e.links?.map(formatLink)
+  const links = e.links?.map(transformLink)
 
   return {
     ...e,
@@ -670,14 +697,19 @@ export async function fetchEvents() {
 
 export function transformArticle(articleRaw, languages) {
   // variables
-  const { header, main, footer } = articleRaw || {}
+  const {
+    authors: authorsRaw,
+    header: headerRaw,
+    main: mainRaw,
+    footer: footerRaw,
+  } = articleRaw || {}
   const page_data = transformPageData(articleRaw?.page_data)
   const slug = page_data?.slug
 
   // Booleans
-  const hasNoHeader = !header || !header?.[0]
-  const hasNoMain = !main || !main?.[0]
-  const hasNoFooter = !footer || !footer?.[0]
+  const hasNoHeader = !headerRaw || !headerRaw?.[0]
+  const hasNoMain = !mainRaw || !mainRaw?.[0]
+  const hasNoFooter = !footerRaw || !footerRaw?.[0]
   const isPage = !!slug
 
   // Early return
@@ -685,8 +717,25 @@ export function transformArticle(articleRaw, languages) {
 
   // Computed fields
   const path = createPath({ type: 'article', slug })
+  const authors = authorsRaw.map((authorRaw) =>
+    transformUserProfile(authorRaw?.user_profiles_id),
+  )
+  const date_published = transformDateTime(articleRaw.date_published)
+  const date_modified = transformDateTime(articleRaw.date_modified)
+  const header = headerRaw.map((i) => transformBlock(i, languages))
+  const main = mainRaw.map((i) => transformBlock(i, languages))
+  const footer = footerRaw.map((i) => transformBlock(i, languages))
 
-  return { ...articleRaw, path }
+  return {
+    ...articleRaw,
+    path,
+    authors,
+    date_published,
+    date_modified,
+    header,
+    main,
+    footer,
+  }
 }
 
 export async function fetchArticles() {
@@ -700,6 +749,15 @@ export async function fetchArticles() {
       'status',
       'code_name',
       ...pageDataFields('page_data.'),
+      'authors.user_profiles_id.id',
+      'authors.user_profiles_id.status',
+      'authors.user_profiles_id.display_name',
+      'authors.user_profiles_id.directus_user.id',
+      'authors.user_profiles_id.directus_user.first_name',
+      'authors.user_profiles_id.directus_user.last_name',
+      ...imageFields('authors.user_profiles_id.directus_user.avatar.'),
+      'date_published',
+      'date_modified',
       ...blockFields('header.'),
       ...blockFields('main.'),
       ...blockFields('footer.'),

@@ -1,0 +1,24 @@
+---
+import { Markdown } from 'astro/components'
+
+import { io } from '@utils'
+const { props: allProps, $render } = await io(Astro)
+const { remoteMd, ...props} = allProps
+
+// const {
+//     slots,
+//     privateRenderMarkdownDoNotUse: renderMd,
+// } = Astro
+
+let content = props.content 
+// || remoteMd && await renderMd(remoteMd) || ''
+
+// if (slots.has('default')) {
+//     content = await slots.render('default')
+//     // console.log({ content })
+// }
+
+// console.log({ remoteMd, content, props: { content, ...props} })
+---
+
+{($render || content) && <Markdown {...{ content, ...props}} />}

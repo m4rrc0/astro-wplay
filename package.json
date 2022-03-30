@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build --experimental-static-build",
     "preview": "astro preview",
-    "serve": "astro preview"
+    "serve": "astro preview",
+    "format": "npx prettier -w ."
   },
   "devDependencies": {
     "@directus/sdk": "^9.2.2",
@@ -18,6 +19,7 @@
     "postcss-functions": "^4.0.2",
     "postcss-import": "^14.0.2",
     "postcss-mixins": "^9.0.1",
-    "postcss-preset-env": "^7.4.1"
+    "postcss-preset-env": "^7.4.1",
+    "prettier-plugin-astro": "^0.0.12"
   }
 }

@@ -48,6 +48,7 @@ module.exports = {
     '--width-measure-ratio': '38',
     '--width-max': '75rem' /* more or less 1200px here */,
     '--width-relative-ratio': '0.618',
+    '--width-narrow': '50rem',
 
     /* BORDER RADIUS */
     '--border-radius-s': '0.3rem',

@@ -1,0 +1,22 @@
+---
+const { list } = Astro.props;
+const l = list?.length
+---
+
+{
+    l === 1 && (
+        <slot name="child" data={list[0]}></slot>
+    )
+}
+{
+    l > 1 && (
+        <slot name="parent">
+            {
+                list.map(data => (
+                    <p>INNER</p>
+                    <!-- <slot name="child" data={list[0]}></slot> -->
+                ))
+            }
+        </slot>
+    )
+}

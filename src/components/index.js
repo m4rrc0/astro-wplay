@@ -1,2 +1,7 @@
 export { default as SEO } from './SEO.astro'
-export { default as Blocks } from './Blocks.svelte'
+// export { default as Blocks } from './Blocks.svelte'
+export { default as Blocks } from './Blocks.astro'
+export { default as Block } from './Block.astro'
+export { default as ListOrNot } from './ListOrNot.astro'
+export { default as Md } from './Md.astro'
+export { default as IO } from './IO.astro'

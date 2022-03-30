@@ -1,0 +1,7 @@
+---
+import { io } from '@utils'
+const { props, $render } = await io(Astro)
+
+---
+
+{$render && <p {...props}><slot /></p>}

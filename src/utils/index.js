@@ -31,3 +31,19 @@ export function createPath({ locale = 'fr', type, slug, event, organization }) {
   if (organization) return `${locale}/o/${organization.slug}`
   return null
 }
+
+export async function io(Astro) {
+  const { slots } = Astro
+  const { $skip, $skipNoInner, ...props } = Astro.props
+
+  let content = ''
+  if (slots.has('default')) {
+    content = (await slots?.render('default')) || ''
+  }
+
+  const $render =
+    !($skip === true) && !($skipNoInner === true && content === '')
+
+  return { ...Astro, props, $render }
+}
+export const conditionalRendering = io

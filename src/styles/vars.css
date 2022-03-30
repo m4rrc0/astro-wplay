@@ -36,6 +36,7 @@
   --width-measure-ratio: env(--width-measure-ratio);
   --width-max: env(--width-max);
   --width-relative-ratio: env(--width-relative-ratio);
+  --width-narrow: env(--width-narrow);
   /* --width-main: env(--width-main); */
   /* --width-aside: env(--width-aside); */
 

@@ -1,35 +1,92 @@
 ---
 import Debug from 'astro/debug';
-import Blocks from '@components/Blocks.svelte'
+// import { Div, P } from '@elements'
+import { IO, Md } from '@components'
+import { BlockImgLeft, BlockImgLeftHeading } from '@layouts'
 // import { Markdown } from 'astro/components';
 // import { Icon } from 'astro-icon'
 
-const {languages_code, article: {
+// import TestMd from '@components/TestMd.astro'
+
+const {lang, article: {
   code_name,
   page_data,
-  header,
+  authors,
+  date_published,
+  date_modified,
+  header: headerList,
   main,
   footer
 }} = Astro.props;
+
+const header = headerList?.[0]
+const headerT = header.translations.find(({ languages_code }) => languages_code === lang )
 
 // const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
 
 ---
 
+<!-- <TestMd /> -->
+
 <main class="center max">
-  <header>
-    <Blocks blocks={header} />
-    <p>{code_name}</p>
+  <!-- <BlockImgLeftHeading block={header} {lang} tag={'header'} /> -->
+  <header class="size-context-narrow width-max center">
+    <IO div $skipNoInner class="with-sidebar box no-border gap-down-h4" style="--side-width: var(--width-col-3); --content-min: 50%;">
+      <IO div $skipNoInner>
+        <IO div $skipNoInner>
+          <IO img $skip={!headerT?.featured_image?.src} src={headerT.featured_image.src} />
+        </IO>
+        <IO div $skipNoInner class="stack">
+          <h1>{headerT.title}</h1>
+          <IO p $skipNoInner>{headerT.subtitle}</IO>
+          <IO ul $skipNoInner class="reset cluster">
+            <IO div $skipNoInner>
+              {authors.map(author => (
+                <IO li $skipNoInner class="stack horizontal gap-down-h7">
+                  <IO div $skipNoInner class="box no-padding border-radius-circle border-width-1">
+                    <IO img $skip={author?.avatar?.src} src={author?.avatar?.src}
+                      class="border-radius-circle" style="max-height: 2em;" />
+                  </IO>
+                  <IO p $skipNoInner>{author.display_name}</IO>
+                </IO>
+              ))}
+            </IO>
+          </IO>
+          <IO p $skip={!date_published?.fr?.date}>Publié le <strong>{date_published?.fr?.date}</strong></IO>
+        </IO>
+      </IO>
+    </IO>
+
+    <IO div $skipNoInner class={`
+      box no-border center
+      max-width-measure-h4
+    `}>
+        <Md $skipNoInner content={headerT?.text} />
+    </IO>
   </header>
 
-  <!-- {description && <div class="
-    box no-border center
-    max-width-measure-h4
-  ">
-      <h2>Description</h2>
-      <Markdown content={description} />
-  </div>} -->
+  {main?.[1]?.id ? (
+    <div>
+      {main.map(block => (
+        <BlockImgLeft {block} {lang} />
+      ))}
+    </div>
+  ) : main?.[0]?.id ? (
+      <BlockImgLeft block={main[0]} {lang} />
+  ) : null}
+
+
+
+  {footer?.[1]?.id ? (
+    <div>
+      {footer.map(block => (
+        <BlockImgLeft {block} {lang} />
+      ))}
+    </div>
+  ) : footer?.[0]?.id ? (
+      <BlockImgLeft block={footer[0]} {lang} />
+  ) : null}
 
 </main>
 
-<Debug {header} />
+<!-- <Debug {main} /> -->

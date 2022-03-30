@@ -56,11 +56,11 @@ const { description, highlighted_details } = translations?.find(t => t.languages
         }
       </div>
       {
-        time_start?.time_fr && time_end?.time_fr && (
+        time_start?.fr?.time && time_end?.fr?.time && (
           <p set:html={
               isSameDay ?
-              `<strong>${time_start.date_fr} de ${time_start.time_fr} à ${time_end.time_fr}</strong>` :
-              `De <strong>${time_start.date_fr} - ${time_start.time_fr}</strong> à <strong>${time_end.date_fr} - ${time_end.time_fr}</strong>`
+              `<strong>${time_start?.fr?.date} de ${time_start.fr?.time} à ${time_end.fr?.time}</strong>` :
+              `De <strong>${time_start?.fr?.date} - ${time_start.fr?.time}</strong> à <strong>${time_end.fr?.date} - ${time_end.fr?.time}</strong>`
             } class="
             box no-border width-fit-content
             color-palette-main color-palette-variation-funky-contrast

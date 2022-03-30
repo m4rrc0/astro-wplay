@@ -336,6 +336,10 @@ body {
   --size-h9-min: var(--s-8);
 }
 
+.size-context-narrow {
+  --width-max: var(--width-narrow);
+}
+
 /* 5. ------------------------------------
 utility classes to make it easier to apply font-sizes or other dimensions inside a size context */
 
@@ -376,10 +380,12 @@ button, .button { border-width: var(--size-border-button) }
 /* useful if the gap on the current element is conflicting with a gap it should receive from a parent */ /* prettier-ignore */
 .gap-down > * { --gap: var(--gap-down); } /* prettier-ignore */
 /* Utility classes */ /* prettier-ignore */
-.border-0, .no-border { border: none; } /* prettier-ignore */
-.border-s { border: var(--size-border-s)} /* prettier-ignore */
-.border-m { border: var(--size-border-m)} /* prettier-ignore */
-.border-l { border: var(--size-border-l)} /* prettier-ignore */
+.no-border { border: none; } /* prettier-ignore */
+.border-width-0 { border-width: none; } /* prettier-ignore */
+.border-width-1 { border-width: 1px; } /* prettier-ignore */
+.border-width-s { border-width: var(--size-border-s)} /* prettier-ignore */
+.border-width-m { border-width: var(--size-border-m)} /* prettier-ignore */
+.border-width-l { border-width: var(--size-border-l)} /* prettier-ignore */
 .border-radius-s { border-radius: var(--border-radius-s)} /* prettier-ignore */
 .border-radius-m { border-radius: var(--border-radius-m)} /* prettier-ignore */
 .border-radius-l { border-radius: var(--border-radius-l)} /* prettier-ignore */

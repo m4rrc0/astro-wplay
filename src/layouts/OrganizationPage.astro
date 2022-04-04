@@ -3,7 +3,7 @@ import Debug from 'astro/debug';
 import { Markdown } from 'astro/components';
 import { Icon } from 'astro-icon'
 
-const {languages_code, organization: {
+const {lang, organization: {
       // status,
       // date_updated,
       name,
@@ -31,7 +31,7 @@ const {languages_code, organization: {
       links
 }} = Astro.props;
 
-const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
+const { description, opening_hours_remark } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
 
 ---
 
@@ -50,7 +50,7 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
       <h1 class="centered" set:html={name} />
       {typesTranslated?.[0] && address?.city && address?.area?.name?.fr &&
         <p class="h3">
-          {typesTranslated?.map(({ [languages_code]: typeTranslated }) => typeTranslated).join(', ')} à {address.city} dans la province de {address?.area?.name?.fr}
+          {typesTranslated?.map(({ [lang.code]: typeTranslated }) => typeTranslated).join(', ')} à {address.city} dans la province de {address?.area?.name?.fr}
         </p>
       }
       {
@@ -79,6 +79,30 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
     </div>
   </header>
 
+  {(games_services_translated?.[0] || amenities_translated?.[0]) &&
+    <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
+      <ul class="reset">
+        <>
+          {games_services_translated?.map(({ [lang.code]: code }) => (
+            <li class="
+              box no-border padding-x-h7 padding-y-h8
+              color-palette-variation-contrast
+              border-radius-s
+            ">{code}</li>
+          ))}
+
+          {amenities_translated?.map(({ [lang.code]: code }) => (
+            <li class="
+              box no-border padding-x-h7 padding-y-h8
+              color-palette-variation-funky-contrast
+              border-radius-s
+            ">{code}</li>
+          ))}
+        </>
+      </ul>
+    </div>
+  }
+
   {(opening_hours_strings?.[0] || opening_hours_remark) && <div class="
     box no-border
     color-palette-variation-funky-contrast
@@ -103,32 +127,9 @@ const { description, opening_hours_remark } = translations?.find(t => t.language
       }
     </div>
   </div>}
-  {(games_services_translated?.[0] || amenities_translated?.[0]) &&
-    <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
-      <ul class="reset">
-        <>
-          {games_services_translated?.map(({ [languages_code]: code }) => (
-            <li class="
-              box no-border padding-x-h7 padding-y-h8
-              color-palette-variation-contrast
-              border-radius-s
-            ">{code}</li>
-          ))}
-
-          {amenities_translated?.map(({ [languages_code]: code }) => (
-            <li class="
-              box no-border padding-x-h7 padding-y-h8
-              color-palette-variation-funky-contrast
-              border-radius-s
-            ">{code}</li>
-          ))}
-        </>
-      </ul>
-    </div>
-  }
   <!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
     <ul class="reset">
-        {amenities_translated?.map(({ [languages_code]: code }) => (
+        {amenities_translated?.map(({ [lang.code]: code }) => (
           <li>{code}</li>
         ))}
     </ul>

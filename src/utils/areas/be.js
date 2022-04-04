@@ -1,6 +1,6 @@
 export const areasBe = [
   {
-    slug: 'walloon-brabant',
+    code_name: 'walloon-brabant',
     zipMin: '1300',
     zipMax: '1499',
     // svgElem: (
@@ -8,7 +8,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'flemish-brabant',
+    code_name: 'flemish-brabant',
     zipMin: '1500',
     zipMax: '1999',
     // svgElem: (
@@ -16,7 +16,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'flemish-brabant',
+    code_name: 'flemish-brabant',
     zipMin: '3000',
     zipMax: '3499',
     // svgElem: (
@@ -24,7 +24,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'brussels',
+    code_name: 'brussels',
     zipMin: '1000',
     zipMax: '1299',
     // svgElem: (
@@ -32,7 +32,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'antwerp',
+    code_name: 'antwerp',
     zipMin: '2000',
     zipMax: '2999',
     // svgElem: (
@@ -40,7 +40,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'limburg',
+    code_name: 'limburg',
     zipMin: '3500',
     zipMax: '3999',
     // svgElem: (
@@ -48,7 +48,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'liege',
+    code_name: 'liege',
     zipMin: '4000',
     zipMax: '4999',
     // svgElem: (
@@ -56,7 +56,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'namur',
+    code_name: 'namur',
     zipMin: '5000',
     zipMax: '5999',
     // svgElem: (
@@ -64,7 +64,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'hainaut',
+    code_name: 'hainaut',
     zipMin: '6000',
     zipMax: '6599',
     // svgElem: (
@@ -72,7 +72,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'hainaut',
+    code_name: 'hainaut',
     zipMin: '7000',
     zipMax: '7999',
     // svgElem: (
@@ -80,7 +80,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'luxembourg',
+    code_name: 'luxembourg',
     zipMin: '6600',
     zipMax: '6999',
     // svgElem: (
@@ -88,7 +88,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'west-flanders',
+    code_name: 'west-flanders',
     zipMin: '8000',
     zipMax: '8999',
     // svgElem: (
@@ -96,7 +96,7 @@ export const areasBe = [
     // ),
   },
   {
-    slug: 'east-flanders',
+    code_name: 'east-flanders',
     zipMin: '9000',
     zipMax: '9999',
     // svgElem: (
@@ -108,6 +108,6 @@ export const areasBe = [
   // zipMin: typeof a.zipMin === 'string' ? [a.zipMin] : a.zipMin,
   // zipMax: typeof a.zipMax === 'string' ? [a.zipMax] : a.zipMax,
   countryCode: 'be',
-  urlPath: `be/${a.slug}`,
+  urlPath: `be/${a.code_name}`,
   // svgElem: typeof window === 'undefined' ? null : a.svgElem,
 }))

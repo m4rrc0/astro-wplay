@@ -24,7 +24,7 @@ const l = blocks.length
 <div>
         {
           footer.map(block => {
-            const t = block?.translations.find(({ languages_code }) => languages_code === lang)
+            const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
             return (
               <div>
                 {t.title && <h2>{t.title}</h2>}

@@ -386,6 +386,7 @@ button, .button { border-width: var(--size-border-button) }
 .border-width-s { border-width: var(--size-border-s)} /* prettier-ignore */
 .border-width-m { border-width: var(--size-border-m)} /* prettier-ignore */
 .border-width-l { border-width: var(--size-border-l)} /* prettier-ignore */
+*[class*="border-radius-"] { overflow: hidden; } /* prettier-ignore */
 .border-radius-s { border-radius: var(--border-radius-s)} /* prettier-ignore */
 .border-radius-m { border-radius: var(--border-radius-m)} /* prettier-ignore */
 .border-radius-l { border-radius: var(--border-radius-l)} /* prettier-ignore */

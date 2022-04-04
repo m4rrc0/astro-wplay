@@ -1,7 +1,7 @@
 ---
+import { SkeletonPage, BasicPage } from '@layouts'
+
 // Component Imports
-import SkeletonLayout from '@layouts/SkeletonLayout.astro'
-import BasicPageLayout from '@layouts/BasicPageLayout.astro'
 import SEO from '@components/SEO.astro'
 import Paragraph from '@partials/styleguide/Paragraph.astro';
 import DemoBoxComplete from '@partials/styleguide/DemoBoxComplete.astro'
@@ -9,7 +9,7 @@ import DemoBoxComplete from '@partials/styleguide/DemoBoxComplete.astro'
 let list6 = ['main', 'danger', 'trans'];
 ---
 
-<SkeletonLayout>
+<SkeletonPage>
   <SEO
     slot="head"
     lang="en"
@@ -18,7 +18,7 @@ let list6 = ['main', 'danger', 'trans'];
     description="A (soon to be) extensive style guide using nuds libraries"
     canonicalUrl="https://www.wanna-play.be/styleguide/" />
 
-  <BasicPageLayout>
+  <BasicPage>
     <div class="box no-border stack gap-down" style="--gap-down: 1em">
       <h1>Styleguide</h1>
       <p>
@@ -124,8 +124,8 @@ let list6 = ['main', 'danger', 'trans'];
         
       </section>
     </div>
-  </BasicPageLayout>
-</SkeletonLayout>
+  </BasicPage>
+</SkeletonPage>
 
 
 

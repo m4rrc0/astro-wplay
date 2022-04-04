@@ -55,6 +55,9 @@ module.exports = {
     '--border-radius-m': '0.618rem',
     '--border-radius-l': '1rem',
     '--border-radius-circle': '50%',
+
+    /* COLORS */
+
     // TESTS //
     // '--branding-padding': '20px',
     // '--branding-small': '600px',

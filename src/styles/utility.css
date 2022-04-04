@@ -2,3 +2,32 @@
 .background-overlay {
   box-shadow: inset 0 0 0 9999px var(--color-bg);
 }
+
+/* Breakout clickable element. */
+/* As seen here: https://piccalil.li/tutorial/create-a-semantic-break-out-button-to-make-an-entire-element-clickable/ */
+.breakout-clickable {
+  position: relative;
+  /* cursor: pointer; */
+  /* transition: transform 300ms ease-in-out, box-shadow 400ms ease, background 100ms ease; */
+}
+.breakout-clickable .clickable::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.breakout-clickable:hover,
+.breakout-clickable:focus-within {
+  box-shadow: 0 0.5rem 0.5rem var(--color-shadow) !important;
+  transform: translateY(-0.2rem);
+}
+.breakout-clickable .clickable:focus {
+  outline: none;
+}
+.breakout-clickable .clickable:focus::after {
+  outline: 1px solid;
+  outline-offset: calc(var(--gap) / 2 * -1);
+}

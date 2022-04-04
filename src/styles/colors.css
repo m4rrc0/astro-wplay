@@ -6,8 +6,11 @@
   --color-white: #ffffff;
   --color-blue: rgb(47,82,160);
   --color-blue-trans: rgba(47,82,160, 0.8);
-  --color-green: rgb(0,171,175);
+  --color-teal: rgb(0,171,175);
   --color-red: rgb(233,75,109);
+  --color-orange: rgb(255, 127, 69);
+  --color-purple: rgb(130, 75, 176);
+  --color-green: rgb(97, 194, 80);
   --color-black: #111;
   --color-dark: #333;
   --color-grey: #888;
@@ -22,13 +25,15 @@ body,
   --color-selection-text: var(--color-neutral);
   --color-selection-bg: var(--color-secondary);
   --color-a-text: var(--color-text);
-  --color-a-bg: var(--color-bg);
+  /* --color-a-bg: var(--color-bg); */
+  --color-a-bg: transparent;
   --color-a_hover-text: var(--color-secondary);
-  --color-a_hover-bg: var(--color-neutral);
+  /* --color-a_hover-bg: var(--color-neutral); */
   --color-button-text: var(--color-text);
   --color-button-bg: var(--color-bg);
   --color-button_hover-text: var(--color-secondary);
   --color-button_hover-bg: var(--color-bg);
+  --color-shadow: var(--color-blue-trans);
   /* TODO */
   /* --color-button_disabled-text: var(--color-secondary); */
   /* --color-button_disabled-bg: var(--color-bg); */
@@ -150,20 +155,52 @@ samp[class^="color-palette-"],
 /* color PALETTES */
 :root,
 body,
-.color-palette-main {
+.color-palette-main,
+.color-palette-blue {
   --color-neutral-palette: var(--color-white);
   --color-primary-palette: var(--color-blue);
-  --color-secondary-palette: var(--color-green);
+  --color-secondary-palette: var(--color-teal);
 }
-.color-palette-danger {
-  --color-neutral-palette: var(--color-red);
-  --color-primary-palette: var(--color-white);
+.color-palette-teal,
+.color-palette-shop {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-teal);
   --color-secondary-palette: var(--color-blue);
 }
-.color-palette-trans {
+.color-palette-red,
+.color-palette-danger,
+.color-palette-festival {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-red);
+  --color-secondary-palette: var(--color-blue);
+}
+.color-palette-trans,
+.color-palette-blue-trans {
   --color-neutral-palette: var(--color-blue-trans);
   --color-primary-palette: var(--color-white);
-  --color-secondary-palette: var(--color-green);
+  --color-secondary-palette: var(--color-teal);
+}
+.color-palette-purple,
+.color-palette-club,
+.color-palette-association {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-purple);
+  --color-secondary-palette: var(--color-orange);
+}
+.color-palette-orange,
+.color-palette-warning,
+.color-palette-toy_library {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-orange);
+  --color-secondary-palette: var(--color-purple);
+}
+.color-palette-green,
+.color-palette-success,
+.color-palette-bar,
+.color-palette-restaurant {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-green);
+  --color-secondary-palette: var(--color-blue);
 }
 
 /* color palette VARIATIONS */

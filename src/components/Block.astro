@@ -2,7 +2,7 @@
 import { Markdown } from 'astro/components';
 
 const { block, lang } = Astro.props;
-const t = block?.translations.find(({ languages_code }) => languages_code === lang)
+const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
 
 const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
 ---

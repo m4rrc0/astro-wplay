@@ -20,6 +20,8 @@ body,
   text-emphasis-color: currentcolor;
   caret-color: currentcolor;
   column-rule-color: currentcolor;
+  fill: currentcolor;
+  /* stroke: currentcolor; */
 
   /* Default variable names and fallback values for every css color-related properties */
   /* Note: We provide a fallback value in case custom properties are supported but the variable is not set for some reason */
@@ -36,29 +38,29 @@ body,
 
 /* More variable names definitions and fallback values for css selectors */
 *:focus,
-*[class^="color-palette-"]:focus,
-*[class^="color-palette-"] *:focus {
+*[class*="color-palette-"]:focus,
+*[class*="color-palette-"] *:focus {
   outline-color: var(--color-outline, currentcolor);
 }
 *::selection,
-*[class^="color-palette-"]::selection,
-*[class^="color-palette-"] *::selection {
+*[class*="color-palette-"]::selection,
+*[class*="color-palette-"] *::selection {
   color: #ffffff;
   color: var(--color-selection-text, #ffffff);
   background-color: #111111;
   background-color: var(--color-selection-bg, #111111);
 }
 a,
-a[class^="color-palette-"],
-*[class^="color-palette-"] a {
+a[class*="color-palette-"],
+*[class*="color-palette-"] a {
   color: currentcolor;
   color: var(--color-a-text, #111111);
   background-color: transparent;
   background-color: var(--color-a-bg, transparent);
 }
 a:hover,
-a[class^="color-palette-"]:hover,
-*[class^="color-palette-"] a:hover {
+a[class*="color-palette-"]:hover,
+*[class*="color-palette-"] a:hover {
   color: #888888;
   color: var(--color-a_hover-text, #888888);
   background-color: transparent;
@@ -101,20 +103,20 @@ button[class*="color-palette-"]:disabled,
   border-color: var(--color-button_disabled-border, currentcolor);
 }
 tt,
-tt[class^="color-palette-"],
-*[class^="color-palette-"] tt,
+tt[class*="color-palette-"],
+*[class*="color-palette-"] tt,
 code,
-code[class^="color-palette-"],
-*[class^="color-palette-"] code,
+code[class*="color-palette-"],
+*[class*="color-palette-"] code,
 kbd,
-kbd[class^="color-palette-"],
-*[class^="color-palette-"] kbd,
+kbd[class*="color-palette-"],
+*[class*="color-palette-"] kbd,
 pre,
-pre[class^="color-palette-"],
-*[class^="color-palette-"] pre,
+pre[class*="color-palette-"],
+*[class*="color-palette-"] pre,
 samp,
-samp[class^="color-palette-"],
-*[class^="color-palette-"] samp {
+samp[class*="color-palette-"],
+*[class*="color-palette-"] samp {
   color: var(--color-code-text, currentcolor);
   background-color: var(--color-code-bg, transparent);
   border-color: var(--color-code-border, currentcolor);

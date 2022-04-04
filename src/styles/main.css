@@ -1,4 +1,8 @@
 /* --- General styles --- */
+* {
+  /* transition: transform 300ms ease-in-out, box-shadow 400ms ease, background 100ms ease; */
+  transition: all 100ms ease;
+}
 :focus {
   outline: var(--size-outline, 0.2rem) solid;
   outline-offset: var(--size-outline, 0.2rem);
@@ -42,3 +46,30 @@ blockquote {
  samp {
    padding: 0 0.2rem;
  } */
+
+.map-svg {
+  width: 100%;
+  max-width: var(--width-measure-h4);
+}
+.map-svg polygon, .map-svg path {
+  fill: var(--color-white);
+  stroke: var(--color-blue);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
+}
+.map-svg polygon:hover,
+.map-svg path:hover,
+.map-svg a:focus polygon,
+.map-svg a:focus path {
+  fill: var(--color-blue)
+}
+.map-svg text {
+  visibility: hidden;
+  transition: visibility 0s;
+}
+.map-svg polygon:hover + text,
+.map-svg path:hover + text,
+.map-svg a:focus text {
+  visibility: visible;
+}

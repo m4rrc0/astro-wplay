@@ -168,6 +168,9 @@ NEW: overflow: class
 .cluster > * > * {
   margin: calc(var(--gap) / 2);
 }
+/* Does not work */
+/* .cluster.split-after-1 > * > :nth-child(1) { margin-right: auto; } /* prettier-ignore */
+
 
 /* -------- WITH SIDEBAR ------------ */
 /*
@@ -188,7 +191,8 @@ content-min var dimension(%) = 50% | The narrowest the content (main) element ca
 .with-sidebar.no-stretch > * {
   align-items: 'flex-start';
 }
-.with-sidebar > * > * {
+.with-sidebar > * > *,
+.with-sidebar > * > *[class] {
   margin: calc(var(--gap) / 2);
   flex-grow: 1;
   flex-basis: var(
@@ -293,7 +297,9 @@ Possible behaviors:
       - it is supported
 
 Default: using only the class .grid will progressively enhance by default from basic divs to grid with min(max())
-Remark: if we have very small columns (and only then!!), consider using the class .force which will force the column width even if min(max()) is not supported
+Remarks: 
+  - if we have very small columns (and only then!!), consider using the class .force which will force the column width even if min(max()) is not supported
+  - /!\ using flex requires a wrapper element so always set it like so.
 */
 /* .grid {
   --gap-grid: var(--gap);

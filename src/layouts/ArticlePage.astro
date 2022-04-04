@@ -1,0 +1,102 @@
+---
+import Debug from 'astro/debug';
+// import { Div, P } from '@elements'
+import { IO, Md, Img } from '@components'
+import { BlockImgLeft, BlockImgLeftHeading, BlockStack } from '@layouts'
+// import { Markdown } from 'astro/components';
+// import { Icon } from 'astro-icon'
+
+// import TestMd from '@components/TestMd.astro'
+
+const {lang, article: {
+  code_name,
+  page_data,
+  authors,
+  date_published,
+  date_modified,
+  header: headerList,
+  main,
+  footer
+}} = Astro.props;
+
+const header = headerList?.[0]
+const headerT = header.translations.find(({ languages_code }) => languages_code === lang.code )
+
+// const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
+
+---
+
+<!-- <TestMd /> -->
+
+<main class="center max stack gap-down-h1">
+  <!-- <BlockImgLeftHeading block={header} {lang} tag={'header'} /> -->
+  <header class="size-context-narrow width-max center">
+    <IO div $skipNoInner class="with-sidebar box no-border gap-down-h4" style="--side-width: 260px; --content-min: 50%;">
+      <IO div $skipNoInner>
+        <IO div $skipNoInner>
+          <!-- <IO img $skip={!headerT?.featured_image?.src} src={headerT.featured_image.src} /> -->
+          <Img
+            $skip={!headerT?.featured_image?.src}
+            src={headerT?.featured_image?.src}
+            alt={headerT.title}
+            class=""
+            style="max-width: 260px; max-height: 260px; width: 100%; height: 100%;"
+            width="260"
+            height="260"
+            fit="contain"
+            quality="90" />
+        </IO>
+        <IO div $skipNoInner class="stack">
+          <h1>{headerT.title}</h1>
+          <IO p $skipNoInner>{headerT.subtitle}</IO>
+          <IO ul $skipNoInner class="reset cluster">
+            <IO div $skipNoInner>
+              {authors.map(author => (
+                <IO li $skipNoInner class="stack horizontal gap-down-h7">
+                  <IO div $skipNoInner class="box no-padding border-radius-circle border-width-1">
+                    <!-- <IO img $skip={author?.avatar?.src} src={author?.avatar?.src}
+                      class="border-radius-circle" style="max-height: 2em;" /> -->
+                    <Img
+                    $skip={!author?.avatar?.src}
+                    src={author?.avatar?.src}
+                    alt={author?.display_name}
+                    class="border-radius-circle"
+                    style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
+                    width="32"
+                    height="32"
+                    fit="cover"
+                    quality="90" />
+                  </IO>
+                  <IO p $skipNoInner>{author?.display_name}</IO>
+                </IO>
+              ))}
+            </IO>
+          </IO>
+          <IO p $skip={!date_published?.fr?.date}>Publié le <strong>{date_published?.fr?.date}</strong></IO>
+        </IO>
+      </IO>
+    </IO>
+
+    <IO div $skipNoInner class={`
+      box no-border center
+      max-width-measure-h4
+    `}>
+        <Md $skipNoInner content={headerT?.text} />
+    </IO>
+  </header>
+
+  <IO div $skip={!main?.[0]?.id} class="box no-border center stack gap-down-h2">
+    {main.map(block => (
+      <BlockImgLeft {block} {lang} />
+    ))}
+  </IO>
+
+  <IO div $skip={!footer?.[0]?.id} class="box no-border center stack gap-down-h3">
+    {footer.map(block => (
+      <BlockStack {block} {lang} />
+    ))}
+  </IO>
+
+</main>
+
+<!-- <Debug {main} /> -->

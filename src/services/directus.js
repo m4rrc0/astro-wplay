@@ -53,17 +53,7 @@ const pageDataFields = (preString) => [
   `${preString}translations.slug`,
   `${preString}translations.redirect_here`,
 ]
-/* prettier-ignore */
-const dico = [
-  // links names
-  { code_name: 'website', fr: 'Site web', iconName: 'gridicons:share-computer' },
-  { code_name: 'web_page', fr: 'Page web', iconName: 'gridicons:share-computer' },
-  { code_name: 'facebook_page', fr: 'Page Facebook', iconName: 'brandico:facebook-rect' },
-  { code_name: 'facebook_event', fr: 'Événement Facebook', iconName: 'brandico:facebook-rect' },
-  { code_name: 'twitter', fr: 'Twitter', iconName: 'fa:twitter-square' },
-  { code_name: 'instagram', fr: 'Instagram', iconName: 'fa-brands:instagram-square' },
-  { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'fa-brands:youtube-square' },
-  // Areas
+export const areas = [
   { code_name: 'walloon-brabant', fr: 'Brabant Wallon' },
   { code_name: 'flemish-brabant', fr: 'Brabant Flamand' },
   { code_name: 'brussels', fr: 'Bruxelles' },
@@ -75,6 +65,27 @@ const dico = [
   { code_name: 'luxembourg', fr: 'Luxembourg' },
   { code_name: 'west-flanders', fr: 'Flandre Occidentale' },
   { code_name: 'east-flanders', fr: 'Flandre Orientale' },
+].map((a) => {
+  const slug = { fr: slugify(a.fr) }
+  const path = { fr: createPath({ type: 'area', slug: slug.fr }) }
+  return {
+    ...a,
+    slug,
+    path,
+  }
+})
+/* prettier-ignore */
+const dico = [
+  // links names
+  { code_name: 'website', fr: 'Site web', iconName: 'gridicons:share-computer' },
+  { code_name: 'web_page', fr: 'Page web', iconName: 'gridicons:share-computer' },
+  { code_name: 'facebook_page', fr: 'Page Facebook', iconName: 'brandico:facebook-rect' },
+  { code_name: 'facebook_event', fr: 'Événement Facebook', iconName: 'brandico:facebook-rect' },
+  { code_name: 'twitter', fr: 'Twitter', iconName: 'fa:twitter-square' },
+  { code_name: 'instagram', fr: 'Instagram', iconName: 'fa-brands:instagram-square' },
+  { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'fa-brands:youtube-square' },
+  // Areas
+  ...areas,
   // Organization types
   { code_name: 'association', fr: 'Association' },
   { code_name: 'club', fr: 'Club' },
@@ -195,6 +206,8 @@ export async function start() {
 const transformDateTime = (str) => {
   if (!str) return str
 
+  const hasTime = str?.length > 10
+
   const dateOptions = {
     weekday: 'long',
     year: 'numeric',
@@ -206,12 +219,21 @@ const transformDateTime = (str) => {
   const date = new Date(str)
   return {
     dateTimeRaw: str,
+    hasTime,
     fr: {
-      date: str ? date.toLocaleDateString('fr', dateOptions) : undefined,
-      time:
-        str?.length > 10
-          ? date.toLocaleTimeString('fr', timeOptions)
-          : undefined,
+      date: date.toLocaleDateString('fr', dateOptions),
+      ...(hasTime
+        ? {
+            time: date.toLocaleTimeString('fr', timeOptions),
+            hours: date.toLocaleTimeString('fr', { hour: '2-digit' }),
+            minutes: date.toLocaleTimeString('fr', { minute: '2-digit' }),
+          }
+        : {}),
+      weekday: date.toLocaleDateString('fr', { weekday: 'long' }),
+      day: date.toLocaleDateString('fr', { day: 'numeric' }),
+      month: date.toLocaleDateString('fr', { month: 'long' }),
+      monthShort: date.toLocaleDateString('fr', { month: 'short' }),
+      year: date.toLocaleDateString('fr', { year: 'numeric' }),
     },
   }
 }
@@ -259,7 +281,7 @@ function transformAddress(address) {
 
   area = area && {
     ...area,
-    name: translateFromCodeName(area.slug),
+    name: translateFromCodeName(area.code_name),
   }
 
   return { ...a, string, gMapLink, area }
@@ -399,6 +421,7 @@ export function transformOrganization(o) {
 export async function fetchOrganizations() {
   const organizationsRaw = await directus.items('organizations').readMany({
     limit: -1,
+    sort: 'name',
     // filter: { status: { _eq: 'published' } },
     // fields: [ "*", "translations.*", "main.*", "main.item.*", "main.item.translations.*", "main.item.content.*", "main.item.content.item.*", "main.item.content.item.*" ]
     // fields: [ "*", "translations.*", "main.*", "main.*.*", "main.*.*.*", "main.*.*.*.*", "main.*.*.*.*.*" ]
@@ -688,7 +711,13 @@ export async function fetchEvents() {
 
   const eventsUnflat = eventsRaw.data.map((e) => transformEvent(e, languages))
   const events = flattenEvents(eventsUnflat)
-  // const events = eventsUnflat
+  events.sort((prev, next) => {
+    const a = prev?.time_start?.dateTimeRaw
+    const b = next?.time_start?.dateTimeRaw
+    if (a > b) return 1
+    if (a < b) return -1
+    return 0
+  })
 
   return events
 }

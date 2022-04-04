@@ -19,16 +19,16 @@ export function slugify(string) {
     .replace(/-+$/, '') // Trim - from end of text
 }
 
-export function createPath({ locale = 'fr', type, slug, event, organization }) {
+export function createPath({ locale = 'fr', type, slug }) {
   if (type === 'events') return `${locale}/e`
   if (type === 'event') return `${locale}/e/${slug}`
   if (type === 'organizations') return `${locale}/o`
   if (type === 'organization') return `${locale}/o/${slug}`
   if (type === 'articles') return `${locale}/a`
   if (type === 'article') return `${locale}/a/${slug}`
+  if (type === 'areas') return `${locale}/be`
+  if (type === 'area') return `${locale}/be/${slugify(slug)}`
 
-  if (event) return `${locale}/e/${event.slug}`
-  if (organization) return `${locale}/o/${organization.slug}`
   return null
 }
 

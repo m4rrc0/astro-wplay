@@ -1,0 +1,18 @@
+---
+// import { Markdown } from 'astro/components';
+import { IO, Md } from '@components'
+
+const { block, lang } = Astro.props;
+const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
+
+// const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
+---
+
+<IO div $skipNoInner class="center max-width-measure-h4" style="">
+    <IO div $skipNoInner>
+        <IO img $skip={!t.featured_image?.src} src={t.featured_image?.src} class="" style="" />
+    </IO>
+    <IO h2 $skipNoInner>{t.title}</IO>
+    <IO p $skipNoInner>{t.subtitle}</IO>
+    <Md $skip={!t.text} content={t.text} class="" />
+</IO>

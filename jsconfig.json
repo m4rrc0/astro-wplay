@@ -11,6 +11,7 @@
         "@layouts": ["src/layouts/index.js"],
         "@pages/*": ["src/pages/*"],
         "@partials/*": ["src/partials/*"],
+        "@partials": ["src/partials/index.js"],
         "@services/*": ["src/services/*"],
         "@styles/*": ["src/styles/*"],
         "@utils/*": ["src/utils/*"],

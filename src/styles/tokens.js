@@ -15,13 +15,13 @@ module.exports = {
     // '--font-body-prefered': 'Literata', //* 'Literata', 'Recursive' */
     // '--font-body-critical': 'LiterataCritical', //* 'LiterataCritical' */
     '--font-body-prefered': 'Quicksand',
-    '--font-body-critical': 'Quicksand', //* 'LiterataCritical' */
+    '--font-body-critical': 'QuicksandCritical', //* 'LiterataCritical' */
     '--font-body-fallback': 'sans-serif',
-    '--font-heading-prefered': 'Josefin Sans', //* 'Josefin Sans', 'Recursive' */
-    '--font-heading-critical': 'JosefinSansCritical', //* 'JosefinSansCritical', 'RecursiveCritical' */
+    '--font-heading-prefered': 'Quicksand', //* 'Josefin Sans', 'Recursive' */
+    '--font-heading-critical': 'QuicksandCritical', //* 'JosefinSansCritical', 'RecursiveCritical' */
     '--font-heading-fallback': 'sans-serif',
-    '--font-mono-prefered': 'Fira Code', //* 'Fira Code', 'Recursive' */
-    '--font-mono-critical': 'FiraCodeCritical', //* 'FiraCodeCritical' */
+    '--font-mono-prefered': 'monospace', //* 'Fira Code', 'Recursive' */
+    '--font-mono-critical': 'monospace', //* 'FiraCodeCritical' */
     '--font-mono-fallback': 'monospace',
 
     /* --- SIZES FOR FONTS AND SPACES --- */

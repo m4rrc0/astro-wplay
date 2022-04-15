@@ -6,11 +6,15 @@
 /* EX */
 /* https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&text=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%20%21%3A%2F%3B.%2C%3F-%22%27%28%29%5B%5D%26%C3%A9%C3%A8%C3%A0%C3%A7%C3%AA%C3%AB%E2%82%AC%24%C2%A3%C3%A7 */
 
+/* FONTS loading strategy: simply use font-display: swap; */
 :root {
   /* FONTS */
-  --font-body: var(--font-body-fallback, sans-serif);
-  --font-heading: var(--font-heading-fallback, sans-serif);
-  --font-mono: var(--font-mono-fallback, monospace);
+  --font-body: var(--font-body-prefered, var(--font-body-critical,
+  var(--font-body-fallback, sans-serif)));
+  --font-heading: var(--font-heading-prefered, var(--font-heading-critical,
+  var(--font-heading-fallback, sans-serif)));
+  --font-mono: var(--font-mono-prefered, var(--font-mono-critical,
+  var(--font-mono-fallback, monospace)));
 
   --mono: 0; /* Monospace: Sans (natural-width) or Mono (fixed-width) */
   --casl: 0; /* Casual: Linear to Casual */
@@ -20,9 +24,15 @@
 }
 
 html {
-  font-family: var(--font-body-fallback, sans-serif);
+  font-family: var(--font-body-prefered), var(--font-body-critical),
+    var(--font-body-fallback), sans-serif;
+    /* --font-body-prefered: env(--font-body-prefered);
+    --font-body-critical: env(--font-body-critical);
+    --font-body-fallback: env(--font-body-fallback); */
+  /* font-family: var(--font-body-fallback, sans-serif); */
 }
-html.fonts-stage-1 {
+
+/* html.fonts-stage-1 {
   --font-body: var(--font-body-critical, var(--font-body-fallback, sans-serif));
   --font-heading: var(--font-heading-critical, var(--font-heading-fallback, sans-serif));
   --font-mono: var(--font-mono-critical, var(--font-mono-fallback, monospace));
@@ -36,14 +46,14 @@ html.fonts-stage-1 {
     --font-mono: var(--font-mono-prefered, var(--font-mono-critical,
     var(--font-mono-fallback, monospace)));
   }
-}
+} */
 
 * {
   /* apply axis values with CSS custom properties */
   font-variation-settings: 'MONO' var(--mono), 'CASL' var(--casl),
     'wght' var(--wght), 'slnt' var(--slnt), 'ital' var(--ital);
 
-  font-family: var(--font-body);
+  /* font-family: var(--font-body); */
 }
 
 :--headings {
@@ -51,14 +61,18 @@ html.fonts-stage-1 {
   --wght: 700;
   /* --casl: 0.2; */
   /* --slnt: -2; */
-  font-family: var(--font-heading);
+  /* font-family: var(--font-heading); */
+  font-family: var(--font-heading-prefered), var(--font-heading-critical),
+    var(--font-heading-fallback), sans-serif;
 }
 
 :--code {
   --mono: 1;
   /* --casl: 1; */
   /* --ital: 1; */
-  font-family: var(--font-mono);
+  /* font-family: var(--font-mono); */
+  font-family: var(--font-mono-prefered), var(--font-mono-critical),
+    var(--font-mono-fallback), monospace;
 }
 
 :--bold {

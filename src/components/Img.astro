@@ -2,7 +2,7 @@
 import { IO } from '@components'
 
 const { props: {
-    src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
+    image, src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
 } = {} } = Astro
 const querryParams = { fit, width, height, quality, withoutEnlargement, format }
 const querryString = Object.entries(querryParams).map(([param, val]) => {

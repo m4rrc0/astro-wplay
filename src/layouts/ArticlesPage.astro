@@ -27,6 +27,7 @@ const articles = [...as, ...as, ...as, ...as, ...as]
                                     $skip={!headerT?.featured_image?.src}
                                     src={headerT?.featured_image?.src}
                                     alt={headerT?.title}
+                                    loading="lazy"
                                     class=""
                                     style={`max-width: 590px; max-height: 400px; width: 100%; height: 100%;
                                         border-top-left-radius: var(--border-radius-m); border-top-right-radius: var(--border-radius-m);`}
@@ -44,15 +45,16 @@ const articles = [...as, ...as, ...as, ...as, ...as]
                                         <IO li $skipNoInner class="stack horizontal gap-down-h7">
                                             <IO div $skipNoInner class="box no-padding border-radius-circle border-width-1">
                                                 <Img
-                                                $skip={!author?.avatar?.src}
-                                                src={author?.avatar?.src}
-                                                alt={author?.display_name}
-                                                class="border-radius-circle"
-                                                style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
-                                                width="32"
-                                                height="32"
-                                                fit="cover"
-                                                quality="90" />
+                                                    $skip={!author?.avatar?.src}
+                                                    src={author?.avatar?.src}
+                                                    alt={author?.display_name}
+                                                    loading="lazy"
+                                                    class="border-radius-circle"
+                                                    style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
+                                                    width="32"
+                                                    height="32"
+                                                    fit="cover"
+                                                    quality="90" />
                                             </IO>
                                             <IO p $skipNoInner>{author?.display_name}</IO>
                                         </IO>

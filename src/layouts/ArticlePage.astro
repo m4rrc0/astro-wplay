@@ -39,6 +39,7 @@ const headerT = header.translations.find(({ languages_code }) => languages_code 
             $skip={!headerT?.featured_image?.src}
             src={headerT?.featured_image?.src}
             alt={headerT.title}
+            loading="lazy"
             class=""
             style="max-width: 260px; max-height: 260px; width: 100%; height: 100%;"
             width="260"
@@ -57,15 +58,16 @@ const headerT = header.translations.find(({ languages_code }) => languages_code 
                     <!-- <IO img $skip={author?.avatar?.src} src={author?.avatar?.src}
                       class="border-radius-circle" style="max-height: 2em;" /> -->
                     <Img
-                    $skip={!author?.avatar?.src}
-                    src={author?.avatar?.src}
-                    alt={author?.display_name}
-                    class="border-radius-circle"
-                    style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
-                    width="32"
-                    height="32"
-                    fit="cover"
-                    quality="90" />
+                      $skip={!author?.avatar?.src}
+                      src={author?.avatar?.src}
+                      alt={author?.display_name}
+                      loading="lazy"
+                      class="border-radius-circle"
+                      style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
+                      width="32"
+                      height="32"
+                      fit="cover"
+                      quality="90" />
                   </IO>
                   <IO p $skipNoInner>{author?.display_name}</IO>
                 </IO>

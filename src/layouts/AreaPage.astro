@@ -8,10 +8,10 @@ const { lang, area, events, organizations } = Astro.props
 <main class="center width-max">
     <div class="box no-border stack gap-down-h1">
         <h1>{area[lang.code]}</h1>
-        <h2>Événements</h2>
-        <div class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
-            <ul class="reset">
-                {events.map(event => {
+        <IO h2 $skip={!events?.[0]?.name}>Événements</IO>
+        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
+            <IO $skipNoInner class="reset">
+                {events?.map(event => {
                     const {
                         name,
                         address,
@@ -51,7 +51,7 @@ const { lang, area, events, organizations } = Astro.props
                             <div class="box no-border padding-h8 stack horizontal split-after-1">
                                 <IO p $skipNoInner class="h5">{address?.string}</IO>
                                 <ul class="reset stack horizontal">
-                                    {organizers.map(({name, logo}) => (
+                                    {organizers?.map(({name, logo}) => (
                                         <li>
                                             <Img
                                                 src={logo?.src}
@@ -71,12 +71,12 @@ const { lang, area, events, organizations } = Astro.props
                         </li>
                     )
                 })}
-            </ul>
-        </div>
-        <h2>Organisations</h2>
-        <div class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
-            <ul class="reset">
-                {organizations.map(organization => {
+            </IO>
+        </IO>
+        <IO h2 $skip={!organizations?.[0]}>Organisations</IO>
+        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
+            <IO ul $skipNoInner class="reset">
+                {organizations?.map(organization => {
                     const {
                         name,
                         path,
@@ -108,9 +108,9 @@ const { lang, area, events, organizations } = Astro.props
                                     quality="90" />
                             </div>
                             <h3><a href={`/${path}`} class="reset clickable">{name}</a></h3>
-                            <div class="cluster gap-down-h8">
+                            <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
                                 <ul class="reset">
-                                    {typesTranslated.map(type => {
+                                    {typesTranslated?.map(type => {
                                         const currentPalette = `color-palette-${type.code_name}`
                                         return (
                                             <li
@@ -122,12 +122,12 @@ const { lang, area, events, organizations } = Astro.props
                                         )
                                     })}
                                 </ul>
-                            </div>
+                            </IO>
                         </li>
                     )
                 })}
-            </ul>
-        </div>
+            </IO>
+        </IO>
     </div>
 </main>
 

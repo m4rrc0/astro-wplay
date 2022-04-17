@@ -299,7 +299,7 @@ function transformUserProfile(user_profileRaw) {
 }
 
 function transformBlock(blockRaw, languages) {
-  const translations = blockRaw?.translations.map((t) => ({
+  const translations = blockRaw?.translations?.map((t) => ({
     ...t,
     featured_image: transformImage(t.featured_image),
     background_image: transformImage(t.background_image),
@@ -452,7 +452,7 @@ export async function fetchOrganizations() {
     ],
   })
 
-  const organizations = organizationsRaw.data.map(transformOrganization)
+  const organizations = organizationsRaw.data?.map(transformOrganization)
 
   return organizations
 }
@@ -626,7 +626,7 @@ const flattenEvents = (eventsUnflat) => {
       return null
     } else {
       // TODO: need to verify that code
-      const instancesFromSchedule = event.scheduleFormatted.map((sched) => ({
+      const instancesFromSchedule = event.scheduleFormatted?.map((sched) => ({
         ...event,
         ...sched,
       }))
@@ -709,7 +709,7 @@ export async function fetchEvents() {
     ],
   })
 
-  const eventsUnflat = eventsRaw.data.map((e) => transformEvent(e, languages))
+  const eventsUnflat = eventsRaw.data?.map((e) => transformEvent(e, languages))
   const events = flattenEvents(eventsUnflat)
   events.sort((prev, next) => {
     const a = prev?.time_start?.dateTimeRaw
@@ -746,14 +746,14 @@ export function transformArticle(articleRaw, languages) {
 
   // Computed fields
   const path = createPath({ type: 'article', slug })
-  const authors = authorsRaw.map((authorRaw) =>
+  const authors = authorsRaw?.map((authorRaw) =>
     transformUserProfile(authorRaw?.user_profiles_id),
   )
   const date_published = transformDateTime(articleRaw.date_published)
   const date_modified = transformDateTime(articleRaw.date_modified)
-  const header = headerRaw.map((i) => transformBlock(i, languages))
-  const main = mainRaw.map((i) => transformBlock(i, languages))
-  const footer = footerRaw.map((i) => transformBlock(i, languages))
+  const header = headerRaw?.map((i) => transformBlock(i, languages))
+  const main = mainRaw?.map((i) => transformBlock(i, languages))
+  const footer = footerRaw?.map((i) => transformBlock(i, languages))
 
   return {
     ...articleRaw,
@@ -793,7 +793,7 @@ export async function fetchArticles() {
     ],
   })
 
-  const articles = articlesRaw.data.map((a) => transformArticle(a, languages))
+  const articles = articlesRaw.data?.map((a) => transformArticle(a, languages))
 
   return articles
 }

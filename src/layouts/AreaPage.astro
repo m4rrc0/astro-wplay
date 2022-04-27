@@ -1,4 +1,5 @@
 ---
+import Debug from 'astro/debug'
 import { IO, Img } from '@components'
 
 const { lang, area, events, organizations } = Astro.props
@@ -10,7 +11,7 @@ const { lang, area, events, organizations } = Astro.props
         <h1>{area[lang.code]}</h1>
         <IO h2 $skip={!events?.[0]?.name}>Événements</IO>
         <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
-            <IO $skipNoInner class="reset">
+            <IO ul $skip={!events?.[0]?.name} class="reset">
                 {events?.map(event => {
                     const {
                         name,

@@ -59,7 +59,7 @@ export async function getStaticPaths() {
 }
 
 
-const { path } = Astro.request.params;
+const { path } = Astro.params;
 const {
   lang,
   organization, organizations,

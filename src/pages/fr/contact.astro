@@ -1,0 +1,48 @@
+---
+// import Fragment from 'astro/components'
+import { SkeletonPage, BasicPage } from '@layouts'
+import { Mailto } from '@components'
+
+import { protectEmail } from 'protect-email';
+const CONTACT_EMAIL = import.meta.env.CONTACT_EMAIL
+
+// console.log(CONTACT_EMAIL)
+// Depends on random
+const email = protectEmail(CONTACT_EMAIL);
+
+---
+
+<SkeletonPage>
+    <div slot="head">
+        <title>Contact | Wanna-Play.be</title>
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Wanna Play">
+        <link rel="canonical" href="https://www.wanna-play.be/fr/contact/">
+        <meta property="og:url" content="https://www.wanna-play.be/fr/contact/">
+        <meta property="og:title" content="Contact | Wanna-Play.be">
+        <meta name="description" content="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici.">
+        <meta property="og:description" content="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici.">
+        <!-- <meta name="theme-color" content="rgb(47,82,160)"> -->
+        <!-- <link rel="sitemap" type="application/xml" href="https://www.wanna-play.be/sitemap.xml"> -->
+    </div>
+    <BasicPage>
+
+    <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
+        <h1 class="center text">Contacte-nous</h1>
+        
+        <p>...par e-mail à <a href={`mailto:${email}`} target="_blank" set:html={email} /> ou par <a href="https://www.facebook.com/WannaPlayBE/" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+        <Mailto client:load />
+
+    </main>
+    
+
+    </BasicPage>
+</SkeletonPage>
+
+<style>
+img {
+    /* width: var(--measure-h2); */
+    max-width: 100%;
+    height: auto;
+}
+</style>

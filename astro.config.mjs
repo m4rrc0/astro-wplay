@@ -1,6 +1,7 @@
 // Full Astro Configuration API Documentation:
 // https://astro.build/config
 import { defineConfig } from 'astro/config'
+import svelte from '@astrojs/svelte'
 import sitemap from '@astrojs/sitemap'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 
@@ -15,6 +16,7 @@ export default defineConfig({
   site: 'https://www.wanna-play.be/',
   // trailingSlash: 'always', // 'always' is the default
   integrations: [
+    svelte(),
     sitemap({
       filter: (page) => page !== 'https://www.wanna-play.be/styleguide',
     }),

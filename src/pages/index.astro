@@ -5,8 +5,18 @@ import { SkeletonPage, BasicPage } from '@layouts'
 <SkeletonPage>
   <BasicPage>
     <header class="stack center intrinsic gap-down-h0">
-        <h1><img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" style="width: 100%; max-width: var(--measure);" /></h1>
+        <h1>
+          <img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" id="logo-main" width="4265" height="1834" loading="lazy" />
+        </h1>
         <p class="h2">Connecte les joueurs</p>
     </header>
   </BasicPage>
 </SkeletonPage>
+
+<style>
+#logo-main {
+  width: var(--measure);
+  max-width: 100%;
+  height: auto;
+}
+</style>

@@ -1,6 +1,6 @@
 ---
 import Debug from 'astro/debug'
-import { IO, Img } from '@components'
+import { IO, ImgDirectus } from '@components'
 
 const { lang, area, events, organizations } = Astro.props
 
@@ -8,7 +8,7 @@ const { lang, area, events, organizations } = Astro.props
 
 <main class="center width-max">
     <div class="box no-border stack gap-down-h1">
-        <h1>{area[lang.code]}</h1>
+        <h1>{area.name[lang.code]}</h1>
         <IO h2 $skip={!events?.[0]?.name}>Événements</IO>
         <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
             <IO ul $skip={!events?.[0]?.name} class="reset">
@@ -54,7 +54,7 @@ const { lang, area, events, organizations } = Astro.props
                                 <ul class="reset stack horizontal">
                                     {organizers?.map(({name, logo}) => (
                                         <li>
-                                            <Img
+                                            <ImgDirectus
                                                 src={logo?.src}
                                                 alt={name}
                                                 loading="lazy"
@@ -96,7 +96,7 @@ const { lang, area, events, organizations } = Astro.props
                                 class="center intrinsic"
                                 style="height: var(--width-col-10);
                                     overflow: hidden;">
-                                <Img
+                                <ImgDirectus
                                     image={logo}
                                     src={logo?.src}
                                     alt={name}

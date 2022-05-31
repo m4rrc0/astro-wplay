@@ -12,7 +12,7 @@ const { lang, areas } = Astro.props
                 <ul class="reset stack gap-down-h8 justify-center">
                     {areas.map(area => {
                         return (
-                            <li><a href={'/' + area.path[lang.code]}>{area[lang.code]}</a></li>
+                            <li><a href={'/' + area.path[lang.code]}>{area.name[lang.code]}</a></li>
                         )
                     })}
                 </ul>

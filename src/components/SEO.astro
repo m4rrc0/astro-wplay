@@ -15,7 +15,9 @@
     twitterCard = "summary", // "summary", "summary_large_image", "app", or "player".
   } = Astro.props;
 
-  const titleComposed = title + siteName ? ` | ${siteName}` : ''
+  // const titleComposed = title + siteName ? ` | ${siteName}` : ''
+  const titleComposed = title ? `${title}${siteName ? ` | ${siteName}` : ''}` : siteName
+
 ---
 
 {charset && <meta {charset} />}

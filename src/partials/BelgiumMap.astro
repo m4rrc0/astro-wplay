@@ -69,12 +69,12 @@ const areaElems = {
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 886 712.85"
     class="map-svg">
-    {areas.map(({code_name, fr, slug, path}) => {
+    {areas.map(({code_name, name, slug, path}) => {
         const aElem = areaElems[code_name]
         return (
             <a href={`/${path[lang.code]}`}>
                 <Fragment set:html={aElem.shape} />
-                <text x="50" y="500" class="size-h1 color-palette-main">{fr}</text>
+                <text x="50" y="500" class="size-h1 color-palette-main">{name[lang.code]}</text>
             </a>
         )
     })}

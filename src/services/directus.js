@@ -54,22 +54,24 @@ const pageDataFields = (preString) => [
   `${preString}translations.redirect_here`,
 ]
 export const areas = [
-  { code_name: 'walloon-brabant', fr: 'Brabant Wallon' },
-  { code_name: 'flemish-brabant', fr: 'Brabant Flamand' },
-  { code_name: 'brussels', fr: 'Bruxelles' },
   { code_name: 'antwerp', fr: 'Anvers' },
-  { code_name: 'limburg', fr: 'Limbourg' },
-  { code_name: 'liege', fr: 'Liège' },
-  { code_name: 'namur', fr: 'Namur' },
-  { code_name: 'hainaut', fr: 'Hainaut' },
-  { code_name: 'luxembourg', fr: 'Luxembourg' },
+  { code_name: 'flemish-brabant', fr: 'Brabant Flamand' },
+  { code_name: 'walloon-brabant', fr: 'Brabant Wallon' },
+  { code_name: 'brussels', fr: 'Bruxelles' },
   { code_name: 'west-flanders', fr: 'Flandre Occidentale' },
   { code_name: 'east-flanders', fr: 'Flandre Orientale' },
+  { code_name: 'hainaut', fr: 'Hainaut' },
+  { code_name: 'liege', fr: 'Liège' },
+  { code_name: 'limburg', fr: 'Limbourg' },
+  { code_name: 'luxembourg', fr: 'Luxembourg' },
+  { code_name: 'namur', fr: 'Namur' },
 ].map((a) => {
   const slug = { fr: slugify(a.fr) }
   const path = { fr: createPath({ type: 'area', slug: slug.fr }) }
+  const name = { fr: a.fr }
   return {
-    ...a,
+    code_name: a.code_name,
+    name,
     slug,
     path,
   }

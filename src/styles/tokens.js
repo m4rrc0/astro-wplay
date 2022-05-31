@@ -1,6 +1,6 @@
 const functions = require('./functions')
 
-const sizeBasePx = 16
+const sizeBasePx = 18
 const sizeMaxPx = 100
 const sizeScaleSteps = 12
 const sizeScaleRatio = functions.sizeScaleRatio(

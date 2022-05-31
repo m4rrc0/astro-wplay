@@ -1,6 +1,6 @@
 ---
 // import { Markdown } from 'astro/components';
-import { IO, Md, Img } from '@components'
+import { IO, Md, ImgDirectus } from '@components'
 
 const { block, lang } = Astro.props;
 const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
@@ -15,7 +15,7 @@ const t = block?.translations.find(({ languages_code }) => languages_code === la
         <IO div $skipNoInner>
             <IO div $skipNoInner class="" style="">
                 <!-- <IO img $skip={!t.featured_image?.src} src={t.featured_image?.src} class="" style="max-width: var(--width-col-4);" /> -->
-                <Img
+                <ImgDirectus
                     $skip={!t.featured_image?.src}
                     src={t.featured_image?.src}
                     alt={t.title}

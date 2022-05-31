@@ -1,7 +1,7 @@
 ---
 import Debug from 'astro/debug';
 // import { Div, P } from '@elements'
-import { IO, Md, Img } from '@components'
+import { IO, Md, ImgDirectus } from '@components'
 import { BlockImgLeft, BlockImgLeftHeading, BlockStack } from '@layouts'
 // import { Markdown } from 'astro/components';
 // import { Icon } from 'astro-icon'
@@ -35,7 +35,7 @@ const headerT = header.translations.find(({ languages_code }) => languages_code 
       <IO div $skipNoInner>
         <IO div $skipNoInner>
           <!-- <IO img $skip={!headerT?.featured_image?.src} src={headerT.featured_image.src} /> -->
-          <Img
+          <ImgDirectus
             $skip={!headerT?.featured_image?.src}
             src={headerT?.featured_image?.src}
             alt={headerT.title}
@@ -57,7 +57,7 @@ const headerT = header.translations.find(({ languages_code }) => languages_code 
                   <IO div $skipNoInner class="box no-padding border-radius-circle border-width-1">
                     <!-- <IO img $skip={author?.avatar?.src} src={author?.avatar?.src}
                       class="border-radius-circle" style="max-height: 2em;" /> -->
-                    <Img
+                    <ImgDirectus
                       $skip={!author?.avatar?.src}
                       src={author?.avatar?.src}
                       alt={author?.display_name}

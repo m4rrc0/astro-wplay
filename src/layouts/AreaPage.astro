@@ -1,141 +1,147 @@
 ---
 import Debug from 'astro/debug'
+import { SkeletonPage, BasicPage } from '@layouts'
 import { IO, ImgDirectus } from '@components'
 
 const { lang, area, events, organizations } = Astro.props
 
 ---
-
-<main class="center width-max">
-    <div class="box no-border stack gap-down-h1">
-        <h1>{area.name[lang.code]}</h1>
-        <IO h2 $skip={!events?.[0]?.name}>Événements</IO>
-        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
-            <IO ul $skip={!events?.[0]?.name} class="reset">
-                {events?.map(event => {
-                    const {
-                        name,
-                        address,
-                        cover_image,
-                        organizers,
-                        time_start,
-                        time_end,
-                        isSameDay,
-                    } = event
-
-                    return (
-                        <li class="card-event breakout-clickable box no-border no-padding border-radius-s" style="">
-                            <div class="box no-border padding-h4 with-sidebar gap-h4
-                                color-palette-trans
-                                background-overlay
-                                "
-                                style={
-                                    (cover_image?.src ? `background-image: url("${cover_image.src}"); ` : ' ') +
-                                    `--content-min: 80%;`
-                                }
-                            >
-                                <div>
-                                    <time datetime={time_start.dateTimeRaw} class="stack gap-down-h8 center intrinsic" style="line-height: 1;">
-                                        <span class="size-h1">{time_start?.fr?.day}</span>
-                                        <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                                        <span class="size-h2">{time_start?.fr?.year}</span>
-                                    </time>
-                                    <div>
-                                        <div class="cover no-gap" style="--min-height: 100%;">
-                                            <h2 class="h3 centered">
-                                                <a href={`/${event.path}`} class="reset clickable" set:html={name} />
-                                            </h2>
+<SkeletonPage lang={lang.code}>
+    <BasicPage {lang}>
+        <main class="center width-max">
+            <div class="box no-border stack gap-down-h1">
+                <h1>{area.name[lang.code]}</h1>
+                <IO h2 $skip={!events?.[0]?.name}>Événements</IO>
+                <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
+                    <IO ul $skip={!events?.[0]?.name} class="reset">
+                        {events?.map(event => {
+                            const {
+                                name,
+                                address,
+                                cover_image,
+                                organizers,
+                                time_start,
+                                time_end,
+                                isSameDay,
+                            } = event
+        
+                            return (
+                                <li class="card-event breakout-clickable box no-border no-padding border-radius-s" style="">
+                                    <div class="box no-border padding-h4 with-sidebar gap-h4
+                                        color-palette-trans
+                                        background-overlay
+                                        "
+                                        style={
+                                            (cover_image?.src ? `background-image: url("${cover_image.src}"); ` : ' ') +
+                                            `--content-min: 80%;`
+                                        }
+                                    >
+                                        <div>
+                                            <time datetime={time_start.dateTimeRaw} class="stack gap-down-h8 center intrinsic" style="line-height: 1;">
+                                                <span class="size-h1">{time_start?.fr?.day}</span>
+                                                <span class="size-h2">{time_start?.fr?.monthShort}</span>
+                                                <span class="size-h2">{time_start?.fr?.year}</span>
+                                            </time>
+                                            <div>
+                                                <div class="cover no-gap" style="--min-height: 100%;">
+                                                    <h2 class="h3 centered">
+                                                        <a href={`/${event.path}`} class="reset clickable" set:html={name} />
+                                                    </h2>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="box no-border padding-h8 stack horizontal split-after-1">
-                                <IO p $skipNoInner class="h5">{address?.string}</IO>
-                                <ul class="reset stack horizontal">
-                                    {organizers?.map(({name, logo}) => (
-                                        <li>
-                                            <ImgDirectus
-                                                src={logo?.src}
-                                                alt={name}
-                                                loading="lazy"
-                                                class=""
-                                                style="max-width: 2rem; max-height: 2rem; width: 100%; height: 100%;"
-                                                width="32"
-                                                height="32"
-                                                fit="inside"
-                                                quality="90" />
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            
-                        </li>
-                    )
-                })}
-            </IO>
-        </IO>
-        <IO h2 $skip={!organizations?.[0]}>Organisations</IO>
-        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
-            <IO ul $skipNoInner class="reset">
-                {organizations?.map(organization => {
-                    const {
-                        name,
-                        path,
-                        logo,
-                        typesTranslated,
-                    } = organization
-
-                    return (
-                        <li 
-                            class="card-organization
-                                box no-border stack gap-down-h7 split-after-1
-                                border-radius-s
-                                breakout-clickable"
-                            style="">
-                            <div
-                                class="center intrinsic"
-                                style="height: var(--width-col-10);
-                                    overflow: hidden;">
-                                <ImgDirectus
-                                    image={logo}
-                                    src={logo?.src}
-                                    alt={name}
-                                    loading="lazy"
-                                    class=""
-                                    style="width: 100%; height: 100%;"
-                                    width="120"
-                                    height="120"
-                                    fit="inside"
-                                    quality="90" />
-                            </div>
-                            <h3><a href={`/${path}`} class="reset clickable">{name}</a></h3>
-                            <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
-                                <ul class="reset">
-                                    {typesTranslated?.map(type => {
-                                        const currentPalette = `color-palette-${type.code_name}`
-                                        return (
-                                            <li
-                                                class={`box no-border padding-x-h8 padding-y-h9
-                                                    ${currentPalette} color-palette-variation-contrast
-                                                    border-radius-s`}>
-                                                {type.fr}
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                            </IO>
-                        </li>
-                    )
-                })}
-            </IO>
-        </IO>
-    </div>
-</main>
+                                    <div class="box no-border padding-h8 stack horizontal split-after-1">
+                                        <IO p $skipNoInner class="h5">{address?.string}</IO>
+                                        <ul class="reset stack horizontal">
+                                            {organizers?.map(({name, logo}) => (
+                                                <li>
+                                                    <ImgDirectus
+                                                        src={logo?.src}
+                                                        alt={name}
+                                                        loading="lazy"
+                                                        class=""
+                                                        style="max-width: 2rem; max-height: 2rem; width: 100%; height: 100%;"
+                                                        width="32"
+                                                        height="32"
+                                                        fit="inside"
+                                                        quality="90" />
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                            )
+                        })}
+                    </IO>
+                </IO>
+                <IO h2 $skip={!organizations?.[0]}>Organisations</IO>
+                <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
+                    <IO ul $skipNoInner class="reset">
+                        {organizations?.map(organization => {
+                            const {
+                                name,
+                                path,
+                                logo,
+                                typesTranslated,
+                            } = organization
+        
+                            return (
+                                <li 
+                                    class="card-organization
+                                        box no-border stack gap-down-h7 split-after-1
+                                        border-radius-s
+                                        breakout-clickable"
+                                    style="">
+                                    <div
+                                        class="center intrinsic"
+                                        style="height: var(--width-col-10);
+                                            overflow: hidden;">
+                                        <ImgDirectus
+                                            image={logo}
+                                            src={logo?.src}
+                                            alt={name}
+                                            loading="lazy"
+                                            class=""
+                                            style="width: 100%; height: 100%;"
+                                            width="120"
+                                            height="120"
+                                            fit="inside"
+                                            quality="90" />
+                                    </div>
+                                    <h3><a href={`/${path}`} class="reset clickable">{name}</a></h3>
+                                    <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
+                                        <ul class="reset">
+                                            {typesTranslated?.map(type => {
+                                                const currentPalette = `color-palette-${type.code_name}`
+                                                return (
+                                                    <li
+                                                        class={`box no-border padding-x-h8 padding-y-h9
+                                                            ${currentPalette} color-palette-variation-contrast
+                                                            border-radius-s`}>
+                                                        {type.fr}
+                                                    </li>
+                                                )
+                                            })}
+                                        </ul>
+                                    </IO>
+                                </li>
+                            )
+                        })}
+                    </IO>
+                </IO>
+            </div>
+        </main>
+    </BasicPage>
+</SkeletonPage>
 
 <style>
 .card-event {
     /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
     box-shadow: 0 0.05rem 0.05rem var(--color-shadow);
+    /* Shadow from Directus */
+    /* box-shadow: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
 }
 .card-organization {
     box-shadow: 0 0px 6px rgb(0 0 0 / 30%);

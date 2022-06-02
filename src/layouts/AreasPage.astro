@@ -1,25 +1,29 @@
 ---
+import { SkeletonPage, BasicPage } from '@layouts'
 import { BelgiumMap } from '@partials'
 const { lang, areas } = Astro.props
 
 ---
-
-<main class="box no-border padding-h4">
-    <div class="center width-max stack gap-down-h1" style="width: 750px;">
-        <h1>Belgique</h1>
-        <div class="with-sidebar gap-down-h4" style="--content-min: 75%;">
-            <div>
-                <ul class="reset stack gap-down-h8 justify-center">
-                    {areas.map(area => {
-                        return (
-                            <li><a href={'/' + area.path[lang.code]}>{area.name[lang.code]}</a></li>
-                        )
-                    })}
-                </ul>
-                <div>
-                    <BelgiumMap {lang} {areas} />
+<SkeletonPage lang={lang.code}>
+    <BasicPage {lang}>
+        <main class="box no-border padding-h4">
+            <div class="center width-max stack gap-down-h1" style="width: 750px;">
+                <h1>Belgique</h1>
+                <div class="with-sidebar gap-down-h4" style="--content-min: 75%;">
+                    <div>
+                        <ul class="reset stack gap-down-h8 justify-center">
+                            {areas.map(area => {
+                                return (
+                                    <li><a href={'/' + area.path[lang.code]}>{area.name[lang.code]}</a></li>
+                                )
+                            })}
+                        </ul>
+                        <div>
+                            <BelgiumMap {lang} {areas} />
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</main>
+        </main>
+    </BasicPage>
+</SkeletonPage>

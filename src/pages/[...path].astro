@@ -2,7 +2,7 @@
   import Debug from 'astro/debug';
   import { createPath } from '@utils';
   import { directus, start as startDirectus, fetchLanguages, fetchOrganizations, fetchEvents, fetchArticles, areas } from '../services/directus.js'
-  import { SkeletonPage, BasicPage, OrganizationPage, EventPage, ArticlesPage, ArticlePage, AreasPage, AreaPage } from '@layouts'
+  import { SkeletonPage, BasicPage, HomePage, OrganizationPage, EventPage, ArticlesPage, ArticlePage, AreasPage, AreaPage } from '@layouts'
 
 
 export async function getStaticPaths() {
@@ -37,8 +37,9 @@ export async function getStaticPaths() {
       return { params: { path: area.path[lang.code] }, props: { lang, area, organizations: currentOrgs, events: currentEvents } }
     })
     const listsStaticPaths = [
-      { params: { path: 'fr/o' }, props: { organizations } },
-      { params: { path: 'fr/e' }, props: { events } },
+      { params: { path: createPath({ type: 'home' }) }, props: { lang, areas } },
+      { params: { path: 'fr/o' }, props: { lang, organizations } },
+      { params: { path: 'fr/e' }, props: { lang, events } },
       { params: { path: createPath({ type: 'articles' }) }, props: { lang, articles } },
       { params: { path: createPath({ type: 'areas' }) }, props: { lang, areas } },
     ]
@@ -69,22 +70,18 @@ const {
   } = Astro.props;
 ---
 
-<SkeletonPage>
-  <BasicPage>
-    {
-      path === 'fr/o' && (
-        <div>
-          <h2>Organisations</h2>
-          <ul>
-            {
-              organizations.map(o => (
-                <li><a href={`/${o.path}`}>{o.name}</a></li>
-              ))
-            }
-          </ul>
-        </div>
-      )
-    }
+<Fragment>
+  
+  {path === 'fr/o' && (
+    <div>
+      <h2>Organisations</h2>
+      <ul>
+        {organizations.map(o => (
+          <li><a href={`/${o.path}`}>{o.name}</a></li>
+        ))}
+      </ul>
+    </div>
+  )}
     {
       path === 'fr/e' && (
         <div>
@@ -93,13 +90,14 @@ const {
             {
               events.map(e => (
                 <li><a href={`/${e.path}`}>{e.name}</a></li>
-              ))
+                ))
             }
           </ul>
         </div>
-      )
-    }
+        )
+      }
     <!-- LISTS PAGES -->
+    {path === createPath({ type: 'home' }) && <HomePage {areas} {lang} />}
     {path === createPath({ type: 'articles' }) && <ArticlesPage {articles} {lang} />}
     {path === createPath({ type: 'areas' }) && <AreasPage {areas} {lang} />}
     <!-- ITEMS PAGES -->
@@ -107,6 +105,5 @@ const {
     {event && <EventPage {event} {lang} />}
     {article && <ArticlePage {article} {lang} />}
     {area && <AreaPage {area} {lang} {events} {organizations} />}
-        <!-- <Debug {article} /> -->
-  </BasicPage>
-</SkeletonPage>
+    <!-- <Debug {article} /> -->
+  </Fragment>

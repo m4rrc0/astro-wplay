@@ -8,9 +8,11 @@ const t = block?.translations.find(({ languages_code }) => languages_code === la
 // const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
 ---
 
-<IO div $skipNoInner class="center" style="max-width: calc(var(--width-measure-h4) + var(--width-col-4));">
-    <IO h2 $skipNoInner>{t.title}</IO>
-    <IO p $skipNoInner>{t.subtitle}</IO>
+<IO div $skipNoInner class="center stack gap-down-h5" style="max-width: calc(var(--width-measure-h4) + var(--width-col-4));">
+    <div>
+        <IO h2 $skipNoInner>{t.title}</IO>
+        <IO p $skipNoInner>{t.subtitle}</IO>
+    </div>
     <IO div $skipNoInner class="with-sidebar gap-down-h4" style="--side-width: var(--width-col-4);">
         <IO div $skipNoInner>
             <IO div $skipNoInner class="" style="">

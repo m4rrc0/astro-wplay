@@ -20,7 +20,8 @@ const { content: {
   <SEO
     slot="head"
     {...{ lang, ogType, siteName, title, description, canonicalUrl }} />
-  <BasicPageLayout>
+
+  <BasicPageLayout lang={{ code: 'fr' }}>
 
     <div class="stack">
       <slot />

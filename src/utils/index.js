@@ -20,6 +20,7 @@ export function slugify(string) {
 }
 
 export function createPath({ locale = 'fr', type, slug }) {
+  if (type === 'home') return `${locale}`
   if (type === 'events') return `${locale}/e`
   if (type === 'event') return `${locale}/e/${slug}`
   if (type === 'organizations') return `${locale}/o`

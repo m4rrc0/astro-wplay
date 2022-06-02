@@ -1,0 +1,35 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { BelgiumMap } from '@partials'
+const { lang, areas } = Astro.props
+
+---
+
+<SkeletonPage lang={lang.code}>
+  <BasicPage {lang}>
+    <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
+      <header class="stack center intrinsic gap-down-h0">
+          <h1>
+            <img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" id="logo-main" width="4265" height="1834" loading="lazy" />
+          </h1>
+          <p class="h1 color-palette-variation-funky">Connecte les joueurs</p>
+      </header>
+
+      <div class="center text">
+        <p>Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un club, ...?</p>
+        <p>Retrouve toute l'info liée au monde du jeu de société sur Wanna Play!</p>
+      </div>
+
+      <BelgiumMap {lang} {areas} />
+    </main>                    
+
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+#logo-main {
+  width: var(--width-col-3);
+  max-width: 100%;
+  height: auto;
+}
+</style>

@@ -211,9 +211,9 @@ const transformDateTime = (str) => {
   const hasTime = str?.length > 10
 
   const dateOptions = {
-    weekday: 'long',
+    weekday: 'short',
     year: 'numeric',
-    month: 'long',
+    month: 'short',
     day: 'numeric',
   }
   const timeOptions = { hour: '2-digit', minute: '2-digit' }
@@ -231,9 +231,9 @@ const transformDateTime = (str) => {
             minutes: date.toLocaleTimeString('fr', { minute: '2-digit' }),
           }
         : {}),
-      weekday: date.toLocaleDateString('fr', { weekday: 'long' }),
+      weekday: date.toLocaleDateString('fr', { weekday: 'short' }),
       day: date.toLocaleDateString('fr', { day: 'numeric' }),
-      month: date.toLocaleDateString('fr', { month: 'long' }),
+      month: date.toLocaleDateString('fr', { month: 'short' }),
       monthShort: date.toLocaleDateString('fr', { month: 'short' }),
       year: date.toLocaleDateString('fr', { year: 'numeric' }),
     },
@@ -283,7 +283,7 @@ function transformAddress(address) {
 
   area = area && {
     ...area,
-    name: translateFromCodeName(area.code_name),
+    ...translateFromCodeName(area.code_name),
   }
 
   return { ...a, string, gMapLink, area }
@@ -295,7 +295,9 @@ function transformPageData(page_data) {
 }
 
 function transformUserProfile(user_profileRaw) {
-  const avatar = transformImage(user_profileRaw?.directus_user.avatar)
+  const avatar = transformImage(
+    user_profileRaw?.avatar || user_profileRaw?.directus_user?.avatar,
+  )
 
   return { ...user_profileRaw, avatar }
 }
@@ -783,6 +785,7 @@ export async function fetchArticles() {
       'authors.user_profiles_id.id',
       'authors.user_profiles_id.status',
       'authors.user_profiles_id.display_name',
+      ...imageFields('authors.user_profiles_id.avatar.'),
       'authors.user_profiles_id.directus_user.id',
       'authors.user_profiles_id.directus_user.first_name',
       'authors.user_profiles_id.directus_user.last_name',

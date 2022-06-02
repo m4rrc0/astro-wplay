@@ -1,4 +1,5 @@
 ---
+import { SkeletonPage, BasicPage } from '@layouts'
 import { Markdown } from 'astro/components';
 import { Icon } from 'astro-icon'
 
@@ -32,167 +33,170 @@ const {lang, event: {
 const { description, highlighted_details } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
 
 ---
-<main class="center max">
-  <header>
-    <div
-      class="center intrinsic text box no-border stack gap-down-h4
-        color-palette-trans
-        padding-y-h-1
-        background-overlay
-        "
-      style={cover_image?.src ? `background-image: url("${cover_image.src}");` : ''}>
-      <h1 class="" set:html={name} />
-      <div>
-        {address?.city && address?.area?.name?.fr &&
-          <p class="h3">
-            Événement jeux à {address.city} dans la province de {address?.area?.name?.fr}
-          </p>
-        }
-        {
-          address?.string && (
-            <p class="h6">
-              <a href={address.gMapLink} target="_blank" rel="noopener noreferrer">{address.string}</a>
-            </p>)
-        }
-      </div>
-      {
-        time_start?.fr?.time && time_end?.fr?.time && (
-          <p set:html={
-              isSameDay ?
-              `<strong>${time_start?.fr?.date} de ${time_start.fr?.time} à ${time_end.fr?.time}</strong>` :
-              `De <strong>${time_start?.fr?.date} - ${time_start.fr?.time}</strong> à <strong>${time_end.fr?.date} - ${time_end.fr?.time}</strong>`
-            } class="
-            box no-border width-fit-content
-            color-palette-main color-palette-variation-funky-contrast
-            size-h4 padding-h7 padding-y-h8
-            border-radius-l
-          "></p>
-        )
-      }
+<SkeletonPage lang={lang.code}>
+  <BasicPage {lang}>
+    <main class="center max">
+      <header>
+        <div
+          class="center intrinsic text box no-border stack gap-down-h4
+            color-palette-trans
+            padding-y-h-1
+            background-overlay
+            "
+          style={cover_image?.src ? `background-image: url("${cover_image.src}");` : ''}>
+          <h1 class="" set:html={name} />
+          <div>
+            {address?.city && address?.area?.name?.fr &&
+              <p class="h3">
+                Événement jeux à {address.city} dans la province de {address?.area?.name?.fr}
+              </p>
+            }
+            {
+              address?.string && (
+                <p class="h6">
+                  <a href={address.gMapLink} target="_blank" rel="noopener noreferrer">{address.string}</a>
+                </p>)
+            }
+          </div>
+          {
+            time_start?.fr?.time && time_end?.fr?.time && (
+              <p set:html={
+                  isSameDay ?
+                  `<strong>${time_start?.fr?.date} de ${time_start.fr?.time} à ${time_end.fr?.time}</strong>` :
+                  `De <strong>${time_start?.fr?.date} - ${time_start.fr?.time}</strong> à <strong>${time_end.fr?.date} - ${time_end.fr?.time}</strong>`
+                } class="
+                box no-border width-fit-content
+                color-palette-main color-palette-variation-funky-contrast
+                size-h4 padding-h7 padding-y-h8
+                border-radius-l
+              "></p>
+            )
+          }
 
-    </div>
-  </header>
-  {organizers?.[0] && (
-    <div
-      class="box no-border center intrinsic
-        color-palette-main
-        border-radius-s
-        "
-      style="
-        max-width: 90%;
-        width: fit-content; 
-        margin-top: calc(var(--size-h2) * -1);
-        margin-bottom: var(--size-h2);
-        box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
-        ">
-        <p class="size-h3">Organisé par</p>
+        </div>
+      </header>
+      {organizers?.[0] && (
+        <div
+          class="box no-border center intrinsic
+            color-palette-main
+            border-radius-s
+            "
+          style="
+            max-width: 90%;
+            width: fit-content; 
+            margin-top: calc(var(--size-h2) * -1);
+            margin-bottom: var(--size-h2);
+            box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
+            ">
+            <p class="size-h3">Organisé par</p>
+            <div class="box no-border cluster center max-width-measure-h4">
+              <ul class="reset justify-content-center">
+                {organizers.map(({name, path, logo}) => (
+                  <li>
+                    <a href={`/${path}`} class="
+                      box no-border stack center intrinsic gap-down-h8
+                    ">
+                      <img src={logo?.src} class="max-width-col-16" style="max-height: inherit;" />
+                      <span class="size-h4">{name}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+        </div>
+      )}
+
+
+      <!-- {(opening_hours_strings?.[0] || opening_hours_remark) && <div class="
+        box no-border
+        color-palette-variation-funky-contrast
+      ">
+        <div class="center max-width-measure-h4">
+          <h2>Horaires</h2>
+          {
+            opening_hours_strings?.[0] && (
+              <div>
+                  {opening_hours_strings.map(str => (
+                    <p set:html={str} />
+                  ))}
+              </div>
+            )
+          }
+          {
+            opening_hours_remark && (
+              <div>
+                  <Markdown content={opening_hours_remark} />
+              </div>
+            )
+          }
+        </div>
+      </div>} -->
+      {(games_services_translated?.[0] || amenities_translated?.[0]) &&
+        <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
+          <ul class="reset">
+            <>
+              {games_services_translated?.map(({ [lang.code]: code }) => (
+                <li class="
+                  box no-border padding-x-h7 padding-y-h8
+                  color-palette-variation-contrast
+                  border-radius-s
+                ">{code}</li>
+              ))}
+
+              {amenities_translated?.map(({ [lang.code]: code }) => (
+                <li class="
+                  box no-border padding-x-h7 padding-y-h8
+                  color-palette-variation-funky-contrast
+                  border-radius-s
+                ">{code}</li>
+              ))}
+            </>
+          </ul>
+        </div>
+      }
+      <!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
+        <ul class="reset">
+            {amenities_translated?.map(({ [lang.code]: code }) => (
+              <li>{code}</li>
+            ))}
+        </ul>
+      </div>} -->
+
+      {highlighted_details && <div class="
+        box no-border center
+        max-width-measure-h4
+      ">
+          <h2>Infos importantes</h2>
+          <Markdown content={highlighted_details} />
+      </div>}
+
+      {description && <div class="
+        box no-border center
+        max-width-measure-h4
+      ">
+          <h2>Description</h2>
+          <Markdown content={description} />
+      </div>}
+
+      {links?.[0] && (
         <div class="box no-border cluster center max-width-measure-h4">
-          <ul class="reset justify-content-center">
-            {organizers.map(({name, path, logo}) => (
+          <ul class="reset justify-content-space-around">
+            {links.map(({name, url, iconName}) => (
               <li>
-                <a href={`/${path}`} class="
+                <a href={url} target="_blank" rel="noopener noreferrer" class="
                   box no-border stack center intrinsic gap-down-h8
                 ">
-                  <img src={logo?.src} class="max-width-col-16" style="max-height: inherit;" />
-                  <span class="size-h4">{name}</span>
+                  <Icon name={iconName} size="1em" class="size-h1" />
+                  <div class="size-h4">{name.fr}</div>
                 </a>
               </li>
             ))}
           </ul>
         </div>
-    </div>
-  )}
-
-
-  <!-- {(opening_hours_strings?.[0] || opening_hours_remark) && <div class="
-    box no-border
-    color-palette-variation-funky-contrast
-  ">
-    <div class="center max-width-measure-h4">
-      <h2>Horaires</h2>
-      {
-        opening_hours_strings?.[0] && (
-          <div>
-              {opening_hours_strings.map(str => (
-                <p set:html={str} />
-              ))}
-          </div>
-        )
-      }
-      {
-        opening_hours_remark && (
-          <div>
-              <Markdown content={opening_hours_remark} />
-          </div>
-        )
-      }
-    </div>
-  </div>} -->
-  {(games_services_translated?.[0] || amenities_translated?.[0]) &&
-    <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
-      <ul class="reset">
-        <>
-          {games_services_translated?.map(({ [lang.code]: code }) => (
-            <li class="
-              box no-border padding-x-h7 padding-y-h8
-              color-palette-variation-contrast
-              border-radius-s
-            ">{code}</li>
-          ))}
-
-          {amenities_translated?.map(({ [lang.code]: code }) => (
-            <li class="
-              box no-border padding-x-h7 padding-y-h8
-              color-palette-variation-funky-contrast
-              border-radius-s
-            ">{code}</li>
-          ))}
-        </>
-      </ul>
-    </div>
-  }
-  <!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
-    <ul class="reset">
-        {amenities_translated?.map(({ [lang.code]: code }) => (
-          <li>{code}</li>
-        ))}
-    </ul>
-  </div>} -->
-
-  {highlighted_details && <div class="
-    box no-border center
-    max-width-measure-h4
-  ">
-      <h2>Infos importantes</h2>
-      <Markdown content={highlighted_details} />
-  </div>}
-
-  {description && <div class="
-    box no-border center
-    max-width-measure-h4
-  ">
-      <h2>Description</h2>
-      <Markdown content={description} />
-  </div>}
-
-  {links?.[0] && (
-    <div class="box no-border cluster center max-width-measure-h4">
-      <ul class="reset justify-content-space-around">
-        {links.map(({name, url, iconName}) => (
-          <li>
-            <a href={url} target="_blank" rel="noopener noreferrer" class="
-              box no-border stack center intrinsic gap-down-h8
-            ">
-              <Icon name={iconName} size="1em" class="size-h1" />
-              <div class="size-h4">{name.fr}</div>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )}
-</main>
-
+      )}
+    </main>
+  </BasicPage>
+</SkeletonPage>
 
 <!-- <style>
 header > * {

@@ -8,7 +8,7 @@ const t = block?.translations.find(({ languages_code }) => languages_code === la
 // const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
 ---
 
-<IO div $skipNoInner class="center max-width-measure-h4" style="">
+<IO div $skipNoInner class="center max-width-measure-h4 stack gap-down-h6" style="">
     <IO div $skipNoInner>
         <IO img $skip={!t.featured_image?.src} src={t.featured_image?.src} class="" style="" />
     </IO>

@@ -15,7 +15,7 @@
     "@astrojs/svelte": "^0.1.3",
     "@directus/sdk": "^9.2.2",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
-    "astro": "^1.0.0-beta.18",
+    "astro": "^1.0.0-beta.37",
     "astro-icon": "^0.7.1",
     "cssnano": "^5.0.17",
     "postcss-functions": "^4.0.2",

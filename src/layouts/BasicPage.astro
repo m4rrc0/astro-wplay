@@ -1,4 +1,5 @@
 ---
+const { lang } = Astro.props
 
 ---
 
@@ -7,20 +8,20 @@
     <nav class="center cluster overflow gap-h6-down">
       <ul class="reset reset-down-a size-h3">
         <li>
-          <a href="/" class="stack horizontal align-items-center">
+          <a href={`/${lang.code}`} class="stack horizontal align-items-center">
             <img src="/assets/images/favicons/favicon-32x32.png" alt="logo" width="32" height="32" style="display: inline;" />
             <span>Wanna Play</span>
           </a>
         </li>
-        <li><a href="/fr/be">Où jouer?</a></li>
-        <li><a href="/fr/o">Organisations</a></li>
-        <li><a href="/fr/e">Événements</a></li>
-        <li><a href="/fr/a">Articles</a></li>
-        <!-- <li><a href="/fr/annuaire">Annuaire</a></li> -->
-        <li><a href="/fr/projet">Projet</a></li>
-        <li><a href="/fr/equipe">Équipe</a></li>
-        <li><a href="/fr/contact">Contact</a></li>
-        <li><a href="/styleguide">Styleguide</a></li>
+        <li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
+        <!-- <li><a href={`/${lang.code}/o`}>Organisations</a></li> -->
+        <!-- <li><a href={`/${lang.code}/e`}>Événements</a></li> -->
+        <li><a href={`/${lang.code}/a`}>Articles</a></li>
+        <!-- <li><a href={`/${lang.code}/annuaire`}>Annuaire</a></li> -->
+        <li><a href={`/${lang.code}/projet`}>Projet</a></li>
+        <li><a href={`/${lang.code}/equipe`}>Équipe</a></li>
+        <li><a href={`/${lang.code}/contact`}>Contact</a></li>
+        <!-- <li><a href="/styleguide">Styleguide</a></li> -->
       </ul>
     </nav>
   </div>
@@ -37,23 +38,23 @@
           <a
             href="https://www.facebook.com/WannaPlayBE/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >Facebook</a><a
             href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >Youtube</a><a
             href="https://www.instagram.com/wannaplay_be/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >Instagram</a><a
             href="http://eepurl.com/cM3shf"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >Newsletter</a><a
             href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >Spotify</a>
         </div>
       </div>

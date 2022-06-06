@@ -2,6 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { Markdown } from 'astro/components';
 import { Icon } from 'astro-icon'
+import { IO, ImgDirectus } from '@components'
 
 const {lang, event: {
   status,
@@ -43,7 +44,7 @@ const { description, highlighted_details } = translations?.find(({ languages_cod
             padding-y-h-1
             background-overlay
             "
-          style={cover_image?.src ? `background-image: url("${cover_image.src}");` : ''}>
+          style={cover_image?.src ? `background-image: url("${cover_image.src}");` : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}>
           <h1 class="" set:html={name} />
           <div>
             {address?.city && address?.area?.name?.fr &&
@@ -96,7 +97,28 @@ const { description, highlighted_details } = translations?.find(({ languages_cod
                     <a href={`/${path}`} class="
                       box no-border stack center intrinsic gap-down-h8
                     ">
-                      <img src={logo?.src} class="max-width-col-16" style="max-height: inherit;" />
+                      {logo?.src ? (
+                          <ImgDirectus
+                              image={logo}
+                              src={logo?.src}
+                              alt={name}
+                              loading="lazy"
+                              class=""
+                              style="max-width: 100%; height: auto;"
+                              width="100"
+                              height="100"
+                              fit="inside"
+                              quality="90" />
+                          ) : (
+                          <img
+                              src="/assets/images/WannaPlay-button-circle-blue.png"
+                              alt="logo"
+                              loading="lazy"
+                              class=""
+                              style="max-width: 100%; height: auto;"
+                              width="100"
+                              height="100" />
+                      )}
                       <span class="size-h4">{name}</span>
                     </a>
                   </li>

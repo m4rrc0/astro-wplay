@@ -20,6 +20,26 @@
   background-size: cover;
 }
 
+body {
+  /* overflow-x: hidden; */
+}
+
+a {
+  text-decoration-skip-ink: auto; 
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 4px;
+}
+/* Repetition from reset.css because of cascade */
+a.reset,
+a.reset *,
+.reset-a a,
+.reset-a a *,
+.reset-down-a a,
+.reset-down-a a * {
+  text-decoration: inherit;
+}
+
 input:not([type='submit']):not([type='button']):not([type='reset']),
 textarea {
   border-width: 1px; /* TODO: remove this when sizing lib is ok */
@@ -47,29 +67,24 @@ blockquote {
    padding: 0 0.2rem;
  } */
 
-.map-svg {
+.card-article {
+  max-width: var(--width-col-2);
+  --color-shadow: var(--color-blue-trans);
+  --align-items: center;
+  text-align: center;
+}
+.card-article .featured-image {
+  max-width: 590px;
+  max-height: 400px;
   width: 100%;
-  max-width: var(--width-measure-h4);
+  height: auto;
+  border-top-left-radius: var(--border-radius-m);
+  border-top-right-radius: var(--border-radius-m);
 }
-.map-svg polygon, .map-svg path {
-  fill: var(--color-white);
-  stroke: var(--color-blue);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2px;
+.card-article hr {
+  width: 8rem;
+  border-top: 1px solid var(--color-secondary);
 }
-.map-svg polygon:hover,
-.map-svg path:hover,
-.map-svg a:focus polygon,
-.map-svg a:focus path {
-  fill: var(--color-blue)
-}
-.map-svg text {
-  visibility: hidden;
-  transition: visibility 0s;
-}
-.map-svg polygon:hover + text,
-.map-svg path:hover + text,
-.map-svg a:focus text {
-  visibility: visible;
+.card-article .author-name {
+  line-height: 32px;
 }

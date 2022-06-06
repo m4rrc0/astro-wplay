@@ -44,6 +44,10 @@
   --border-radius-m: env(--border-radius-m);
   --border-radius-l: env(--border-radius-l);
   --border-radius-circle: env(--border-radius-circle);
+
+  --shadow-raised-s: 0 0px 6px rgb(0 0 0 / 30%);
+  --shadow-raised-m: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%);
+
 }
 
 @custom-selector :--h1 h1, h1 *, .h1, .h1 *;

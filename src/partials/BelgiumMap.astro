@@ -72,10 +72,45 @@ const areaElems = {
     {areas.map(({code_name, name, slug, path}) => {
         const aElem = areaElems[code_name]
         return (
-            <a href={`/${path[lang.code]}`}>
+            <a href={`/${path[lang.code]}`} class={`area-${code_name} reset`}>
                 <Fragment set:html={aElem.shape} />
-                <text x="50" y="500" class="size-h1 color-palette-main">{name[lang.code]}</text>
+                <switch>
+                    <foreignObject x="50" y="550" width="250" height="200">
+                        <p xmlns="http://www.w3.org/1999/xhtml" class="text size-h1 color-palette-main">{name[lang.code]}</p>
+                    </foreignObject>
+
+                    <text x="10" y="700" class="text size-h1 color-palette-main">{name[lang.code]}</text>
+                </switch>
             </a>
         )
     })}
 </svg>
+
+<style is:global>
+.map-svg {
+  width: var(--width-measure-h4);
+  max-width: 100%;
+}
+.map-svg polygon, .map-svg path {
+  fill: var(--color-white);
+  stroke: var(--color-blue);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
+}
+.map-svg polygon:hover,
+.map-svg path:hover,
+.map-svg a:focus polygon,
+.map-svg a:focus path {
+  fill: var(--color-blue)
+}
+.map-svg .text {
+  visibility: hidden;
+  transition: visibility 0s;
+}
+.map-svg polygon:hover + * .text,
+.map-svg path:hover + * .text,
+.map-svg a:focus .text {
+  visibility: visible;
+}
+</style>

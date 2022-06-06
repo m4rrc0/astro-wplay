@@ -5,7 +5,7 @@ import { protectEmail } from 'protect-email';
 export let email;
 export let target = '_blank';
 export let rel = 'noopener noreferrer';
-export let referrerpolicy;
+export let referrerpolicy = 'no-referrer';
 
 let isClient = typeof window !== 'undefined'
 const emailEncoded = email && protectEmail(email);

@@ -4,6 +4,7 @@ import { defineConfig } from 'astro/config'
 import svelte from '@astrojs/svelte'
 import sitemap from '@astrojs/sitemap'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
+import critters from 'astro-critters'
 
 // @type-check enabled!
 // VSCode and other TypeScript-enabled text editors will provide auto-completion,
@@ -12,14 +13,16 @@ import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 
 // @ts-check
 export default defineConfig({
-  // your configuration options here...
+  experimental: {
+    integrations: true,
+  },
   site: 'https://www.wanna-play.be/',
-  // trailingSlash: 'always', // 'always' is the default
   integrations: [
     svelte(),
     sitemap({
       filter: (page) => page !== 'https://www.wanna-play.be/styleguide',
     }),
+    critters(),
   ],
   vite: {
     // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)

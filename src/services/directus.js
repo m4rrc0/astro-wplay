@@ -120,6 +120,18 @@ const dico = [
   { code_name: 'children', fr: 'Enfants bienvenus' },
 ]
 
+// const localImages = {
+//   cover_image: {
+//     filename_download: 'WannaPlay-banner-paper.jpeg',
+//     title: 'WannaPlay-banner-paper',
+//     type: 'image/jpeg',
+//     width: 2000,
+//     height: 1333,
+//     description: null,
+//     src: '/assets/images/WannaPlay-banner-paper.jpeg',
+//   },
+// }
+
 // const iconsDico = [
 //   { code_name: 'facebook', iconName: 'brandico:facebook-rect' },
 // ]
@@ -257,12 +269,12 @@ const transformLink = ({ name, url }) => {
 }
 
 function transformImage(i) {
-  return i
+  return i?.id
     ? {
         ...i,
         src: `${cmsAssetsUrl}/${i?.id}`,
       }
-    : null
+    : i
 }
 
 function transformAddress(address) {

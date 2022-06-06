@@ -3,6 +3,7 @@ import Debug from 'astro/debug';
 import { Markdown } from 'astro/components';
 import { Icon } from 'astro-icon'
 import { SkeletonPage, BasicPage } from '@layouts'
+import { IO, ImgDirectus } from '@components'
 
 const {lang, organization: {
       // status,
@@ -63,22 +64,34 @@ const { description, opening_hours_remark } = translations?.find(({ languages_co
           }
 
         </div>
-        <div
-          class="center intrinsic box no-border
-            color-palette-main
-            width-col-6
-            border-radius-s
-            "
-          style="
-            margin-top: calc(var(--size-h2) * -1);
-            margin-bottom: var(--size-h2);
-            box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
-            max-height: var(--width-col-6);
-            overflow: hidden;
-            ">
+        {logo?.src && (
+          <div
+            class="center intrinsic box no-border
+              color-palette-main
+              width-col-6
+              border-radius-s
+              "
+            style="
+              margin-top: calc(var(--size-h2) * -1);
+              margin-bottom: var(--size-h2);
+              box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
+              max-height: var(--width-col-6);
+              overflow: hidden;
+              ">
 
-          {logo?.src && <img src={logo.src} class="" style="max-width: 100%; max-height: inherit;" />}
-        </div>
+              <ImgDirectus
+                  image={logo}
+                  src={logo?.src}
+                  alt={name}
+                  loading="lazy"
+                  class=""
+                  style="max-width: 100%; max-height: inherit; object-fit: contain;"
+                  width={logo.width}
+                  height={logo.height}
+                  fit="inside"
+                  quality="90" />
+          </div>
+        )}
       </header>
 
       {(games_services_translated?.[0] || amenities_translated?.[0]) &&

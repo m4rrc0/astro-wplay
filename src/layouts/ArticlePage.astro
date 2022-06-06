@@ -40,23 +40,22 @@ const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
       {
         headerLayout === 'sideImage' ? (
           <header class="size-context-narrow width-max center">
-            <IO div $skipNoInner class="with-sidebar box no-border gap-down-h4" style="--side-width: 260px; --content-min: 50%;">
+            <IO div $skipNoInner class="with-sidebar box no-border gap-down-h4" style="--side-width: 22rem; --content-min: 50%;">
               <IO div $skipNoInner>
                 <IO div $skipNoInner>
-                  <!-- <IO img $skip={!headerT?.featured_image?.src} src={headerT.featured_image.src} /> -->
                   <ImgDirectus
                     $skip={!headerT?.featured_image?.src}
                     src={headerT?.featured_image?.src}
                     alt={headerT.title}
                     loading="lazy"
                     class=""
-                    style="max-width: 260px; max-height: 260px; width: 100%; height: auto;"
+                    style="max-width: 22rem; max-height: 22rem; width: 100%; height: auto;"
                     {width}
                     {height}
                     fit="contain"
                     quality="90" />
                 </IO>
-                <IO div $skipNoInner class="stack split-after-1">
+                <IO div $skipNoInner class="stack split-after-1 gap-down-h6">
                   <h1>{headerT.title}</h1>
                   <IO p $skipNoInner>{headerT.subtitle}</IO>
                   <IO div $skipNoInner class="cluster">
@@ -88,11 +87,9 @@ const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
               </IO>
             </IO>
 
-            <IO div $skipNoInner class={`
-              box no-border center
-              max-width-measure-h4
+            <IO div $skipNoInner class={`box no-border center | h3
             `}>
-              <strong><Md $skipNoInner content={headerT?.text} /></strong>
+              <Md $skipNoInner content={headerT?.text} />
             </IO>
           </header>
         ) : (
@@ -141,10 +138,7 @@ const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
                 quality="90" />
             </IO>
 
-            <IO div $skipNoInner class={`
-              box no-border center
-              max-width-measure-h4
-            `}>
+            <IO div $skipNoInner class="box no-border center | h3">
                 <strong><Md $skipNoInner content={headerT?.text} /></strong>
             </IO>
           </header>

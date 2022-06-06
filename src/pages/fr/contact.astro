@@ -3,12 +3,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import Mailto from '@components/Mailto.svelte'
 
-// import { protectEmail } from 'protect-email';
 const email = import.meta.env.CONTACT_EMAIL
-
-// console.log(CONTACT_EMAIL)
-// Depends on random
-// const email = protectEmail(CONTACT_EMAIL);
 
 ---
 
@@ -31,7 +26,7 @@ const email = import.meta.env.CONTACT_EMAIL
     <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
         <h1 class="center text">Contacte-nous</h1>
         
-        <p class="h3">...par e-mail à <Mailto client:idle {email} target="_blank" rel="noopener noreferrer" /> ou par <a href="https://www.facebook.com/WannaPlayBE/" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+        <p class="h3">...par e-mail à <Mailto client:idle {email} target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" /> ou par <a href="https://www.facebook.com/WannaPlayBE/" target="_blank" rel="noopener noreferrer">Facebook</a></p>
 
         <div>
             <p>Retrouve nous aussi sur:</p>

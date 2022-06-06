@@ -9,6 +9,9 @@
   position: relative;
   /* cursor: pointer; */
   /* transition: transform 300ms ease-in-out, box-shadow 400ms ease, background 100ms ease; */
+  --shadow-breakout-clickable: var(--shadow-raised-s);
+  --shadow-breakout-clickable-hover: var(--shadow-raised-m);
+  box-shadow: var(--shadow-breakout-clickable);
 }
 .breakout-clickable .clickable::after {
   content: '';
@@ -21,7 +24,9 @@
 }
 .breakout-clickable:hover,
 .breakout-clickable:focus-within {
-  box-shadow: 0 0.5rem 0.5rem var(--color-shadow) !important;
+  /* box-shadow: 0 0.5rem 0.5rem var(--color-shadow); */
+  /* box-shadow: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
+  box-shadow: var(--shadow-breakout-clickable-hover);
   transform: translateY(-0.2rem);
 }
 .breakout-clickable .clickable:focus {

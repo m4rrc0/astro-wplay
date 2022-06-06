@@ -2,7 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { IO, ImgDirectus } from '@components'
 
-const { props: { lang, articles: as } = {}} = Astro
+const { lang, articles: as } = Astro.props || {}
 
 const articles = [...as, ...as, ...as, ...as, ...as]
 
@@ -11,28 +11,26 @@ const articles = [...as, ...as, ...as, ...as, ...as]
   <BasicPage {lang}>
     <main class="center max">
         <div class="box no-border stack gap-down-h1">
-            <h1>Articles</h1>
+            <h1 class="center text">Articles</h1>
             <div class="grid gap-down-h4" style="--width-column: var(--width-col-4);">
-                <ul class="reset">
+                <div>
                     {articles.map(a => {
                         const headerT = a?.header?.[0].translations.find(({ languages_code }) => languages_code === lang.code )
                         return (
-                            <li
-                                class="breakout-clickable
-                                    box no-border stack gap-down-h4 split-after-2
+                            <article
+                                class="card-article
+                                    breakout-clickable
+                                    box no-border stack gap-down-h2 split-after-2
                                     color-palette-variation-contrast
                                     border-radius-m"
-                                style="max-width: var(--width-col-2); --color-shadow: var(--color-blue-trans);"
                                 >
-                                <IO div $skipNoInner _style="border-radius: var(--border-radius-m) var(--border-radius-m) initial initial;">
+                                <IO div $skipNoInner style="width: fit-content;">
                                     <ImgDirectus
                                         $skip={!headerT?.featured_image?.src}
                                         src={headerT?.featured_image?.src}
                                         alt={headerT?.title}
                                         loading="lazy"
-                                        class=""
-                                        style={`max-width: 590px; max-height: 400px; width: 100%; height: 100%;
-                                            border-top-left-radius: var(--border-radius-m); border-top-right-radius: var(--border-radius-m);`}
+                                        class="featured-image"
                                         width="590"
                                         height="400"
                                         fit="cover"
@@ -41,41 +39,39 @@ const articles = [...as, ...as, ...as, ...as, ...as]
                                 <h2 class="h3">
                                     <a href={`/${a.path}`} class="reset clickable">{headerT?.title}</a>
                                 </h2>
-                                <IO div $skipNoInner class="cluster">
-                                    <IO ul $skipNoInner class="reset">
-                                        {a?.authors?.map(author => (
-                                            <IO li $skipNoInner class="stack horizontal gap-down-h7">
-                                                <IO div $skip={!author?.avatar?.src} class="box no-padding border-radius-circle border-width-1">
-                                                    <ImgDirectus
-                                                        $skip={!author?.avatar?.src}
-                                                        src={author?.avatar?.src}
-                                                        alt={author?.display_name}
-                                                        loading="lazy"
-                                                        class="border-radius-circle"
-                                                        style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
-                                                        width="32"
-                                                        height="32"
-                                                        fit="cover"
-                                                        quality="90" />
+                                <IO div $skipNoInner class="stack gap-down-h7">
+                                    <IO div $skipNoInner class="cluster">
+                                        <IO ul $skipNoInner class="reset">
+                                            {a?.authors?.map(author => (
+                                                <IO li $skipNoInner class="stack horizontal gap-down-h7">
+                                                    <IO div $skip={!author?.avatar?.src} class="box no-padding border-radius-circle border-width-1">
+                                                        <ImgDirectus
+                                                            $skip={!author?.avatar?.src}
+                                                            src={author?.avatar?.src}
+                                                            alt={author?.display_name}
+                                                            loading="lazy"
+                                                            class="border-radius-circle"
+                                                            style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
+                                                            width="32"
+                                                            height="32"
+                                                            fit="cover"
+                                                            quality="90" />
+                                                    </IO>
+                                                    <IO p $skipNoInner class="author-name">{author?.display_name}</IO>
                                                 </IO>
-                                                <IO p $skipNoInner class="author-name">{author?.display_name}</IO>
-                                            </IO>
-                                        ))}
+                                            ))}
+                                        </IO>
                                     </IO>
+                                    <hr />
+                                    <IO p $skip={!a?.date_published?.fr?.date}>Publié le <strong>{a?.date_published?.fr?.date}</strong></IO>
                                 </IO>
-                                <IO p $skip={!a?.date_published?.fr?.date}>Publié le <strong>{a?.date_published?.fr?.date}</strong></IO>
-                            </li>
+                            </article>
                         )
                     })}
-                </ul>
+                </div>
             </div>
         </div>
     </main>
   </BasicPage>
 </SkeletonPage>
 
-<style>
-.author-name {
-    line-height: 32px;
-}
-</style>

@@ -55,6 +55,7 @@ a {
 /* Make images easier to work with */
 img {
   max-width: 100%;
+  height: auto; /* Keep aspect ratio */
   display: block;
 }
 /* Natural flow and rhythm in articles by default */

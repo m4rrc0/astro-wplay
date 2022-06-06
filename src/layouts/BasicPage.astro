@@ -1,31 +1,42 @@
 ---
+import Mailto from '@components/Mailto.svelte'
+
 const { lang } = Astro.props
+
+const email = import.meta.env.CONTACT_EMAIL
 
 ---
 
 <div id="layout-page-base" class="stack split-after-2 gap-down-0 justify-start" style="min-height: 100vh;">
-  <div id="menu-main" class="box no-border">
-    <nav class="center cluster overflow gap-h6-down">
-      <ul class="reset reset-down-a size-h3">
-        <li>
-          <a href={`/${lang.code}`} class="stack horizontal align-items-center">
-            <img src="/assets/images/favicons/favicon-32x32.png" alt="logo" width="32" height="32" style="display: inline;" />
-            <span>Wanna Play</span>
-          </a>
-        </li>
-        <li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
-        <!-- <li><a href={`/${lang.code}/o`}>Organisations</a></li> -->
-        <!-- <li><a href={`/${lang.code}/e`}>Événements</a></li> -->
-        <li><a href={`/${lang.code}/a`}>Articles</a></li>
-        <!-- <li><a href={`/${lang.code}/annuaire`}>Annuaire</a></li> -->
-        <li><a href={`/${lang.code}/projet`}>Projet</a></li>
-        <li><a href={`/${lang.code}/equipe`}>Équipe</a></li>
-        <li><a href={`/${lang.code}/contact`}>Contact</a></li>
-        <!-- <li><a href="/styleguide">Styleguide</a></li> -->
-      </ul>
-    </nav>
+  <div id="menu-main" class="color-palette-">
+    <div class="center width-max">
+      <nav class="box no-border cluster overflow gap-h6-down ">
+        <ul class="reset reset-down-a size-h3">
+          <li>
+            <a href={`/${lang.code}`} class="stack horizontal align-items-center" aria-label="Page d'accueil">
+              <img src="/assets/images/favicons/favicon-32x32.png" alt="logo" width="32" height="32" style="display: inline;" />
+              <span>Wanna Play</span>
+            </a>
+          </li>
+          <li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
+          <!-- <li><a href={`/${lang.code}/o`}>Organisations</a></li> -->
+          <!-- <li><a href={`/${lang.code}/e`}>Événements</a></li> -->
+          <li><a href={`/${lang.code}/a`}>Articles</a></li>
+          <!-- <li><a href={`/${lang.code}/annuaire`}>Annuaire</a></li> -->
+          <li><a href={`/${lang.code}/projet`}>Projet</a></li>
+          <li><a href={`/${lang.code}/equipe`}>Équipe</a></li>
+          <li><a href={`/${lang.code}/contact`}>Contact</a></li>
+          <!-- <li><a href="/styleguide">Styleguide</a></li> -->
+          <li class="color-palette-teal">
+            <strong><a href="https://talk.wanna-play.be/" target="_blank">Wanna Talk?</a></strong>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
+
   <slot />
+
   <footer id="footer-main" class="
     skew-border-before
     color-palette-variation-contrast
@@ -58,13 +69,13 @@ const { lang } = Astro.props
           >Spotify</a>
         </div>
       </div>
-      <p>Identité graphique et site web par <a href="http://www.feedbydesign.com/">Feed by Design</a></p>
+      <p>Identité graphique et site web par <a href="http://www.feedbydesign.com/" target="_blank" rel="noopener noreferrer">Feed by Design</a></p>
       <p class="size-h6">
         <span>© Wanna Play ASBL - </span>
         <span>0695.574.033 - </span>
-        <span>IBAN BE41 6511 6348 4210</span>
+        <span>IBAN BE54 5230 8139 4997</span>
         <br>
-        <span>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - info@wanna-play.be</span>
+        <span>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - <Mailto client:idle {email} target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" /></span>
       </p>
     </div>
   </footer>
@@ -74,9 +85,23 @@ const { lang } = Astro.props
   /* #template-global {
     margin-bottom: var(--gap-xxl);
   } */
+  #menu-main {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+  }
   nav {
     /* --gap: var(--size-h6); */
     /* margin: var(--gap) 0; */
+    --justify-content: flex-end;
+  }
+  nav > ul > li:first-child {
+    --justify-content: flex-start;
+    flex-grow: 1;
+  }
+  nav > ul > li:first-child > a {
+    max-width: max-content;
   }
   #footer-main {
     margin-top: 4vw;

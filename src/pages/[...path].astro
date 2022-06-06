@@ -37,9 +37,9 @@ export async function getStaticPaths() {
       return { params: { path: area.path[lang.code] }, props: { lang, area, organizations: currentOrgs, events: currentEvents } }
     })
     const listsStaticPaths = [
-      { params: { path: createPath({ type: 'home' }) }, props: { lang, areas } },
-      { params: { path: 'fr/o' }, props: { lang, organizations } },
-      { params: { path: 'fr/e' }, props: { lang, events } },
+      { params: { path: createPath({ type: 'home' }) }, props: { lang, areas, articles } },
+      // { params: { path: 'fr/o' }, props: { lang, organizations } },
+      // { params: { path: 'fr/e' }, props: { lang, events } },
       { params: { path: createPath({ type: 'articles' }) }, props: { lang, articles } },
       { params: { path: createPath({ type: 'areas' }) }, props: { lang, areas } },
     ]
@@ -72,7 +72,7 @@ const {
 
 <Fragment>
   
-  {path === 'fr/o' && (
+  <!-- {path === 'fr/o' && (
     <div>
       <h2>Organisations</h2>
       <ul>
@@ -95,9 +95,9 @@ const {
           </ul>
         </div>
         )
-      }
+      } -->
     <!-- LISTS PAGES -->
-    {path === createPath({ type: 'home' }) && <HomePage {areas} {lang} />}
+    {path === createPath({ type: 'home' }) && <HomePage {areas} {articles} {lang} />}
     {path === createPath({ type: 'articles' }) && <ArticlesPage {articles} {lang} />}
     {path === createPath({ type: 'areas' }) && <AreasPage {areas} {lang} />}
     <!-- ITEMS PAGES -->

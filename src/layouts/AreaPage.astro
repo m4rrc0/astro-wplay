@@ -1,7 +1,7 @@
 ---
 import Debug from 'astro/debug'
 import { SkeletonPage, BasicPage } from '@layouts'
-import { IO, ImgDirectus } from '@components'
+import { IO, ImgDirectus, Img } from '@components'
 
 const { lang, area, events, organizations } = Astro.props
 
@@ -71,8 +71,8 @@ const { lang, area, events, organizations } = Astro.props
                                                             fit="inside"
                                                             quality="90" />
                                                         ) : (
-                                                        <img
-                                                            src="/assets/images/WannaPlay-button-circle-blue.png"
+                                                        <Img
+                                                            src="/src/assets/images/WannaPlay-button-circle-blue.png"
                                                             alt="logo"
                                                             loading="lazy"
                                                             class=""
@@ -125,8 +125,8 @@ const { lang, area, events, organizations } = Astro.props
                                                 fit="inside"
                                                 quality="90" />
                                             ) : (
-                                            <img
-                                                src="/assets/images/WannaPlay-button-circle-blue.png"
+                                            <Img
+                                                src="/src/assets/images/WannaPlay-button-circle-blue.png"
                                                 alt="logo"
                                                 loading="lazy"
                                                 class=""

@@ -1,9 +1,11 @@
 ---
-import { IO } from '@components'
+import { Img } from "astro-imagetools/components";
 
-const { props: {
-    image, src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
-} = {} } = Astro
+// import { IO } from '@components'
+
+const {
+    $skip, class: _class, style, image, src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
+} = Astro.props || {}
 const querryParams = { fit, width, height, quality, withoutEnlargement, format }
 const querryString = Object.entries(querryParams).map(([param, val]) => {
     return (typeof val).match(/undefined|null/) ? val : `${param}=${val}`
@@ -12,4 +14,15 @@ const querryString = Object.entries(querryParams).map(([param, val]) => {
 const src = `${srcRaw}${querryString ? '?' + querryString : ''}`
 ---
 
-<IO img {...props} {src} {width} {height} />
+<!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> -->
+<Img
+    {...props}
+    {src}
+    {width}
+    {height}
+    attributes={{
+        img: {
+            style,
+            class: _class
+        },
+    }} />

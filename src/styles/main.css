@@ -20,7 +20,8 @@
   background-size: cover;
 }
 
-html, body {
+body {
+  position:relative;
   overflow-x: hidden;
 }
 

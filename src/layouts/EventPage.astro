@@ -2,7 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { Markdown } from 'astro/components';
 import { Icon } from 'astro-icon'
-import { IO, ImgDirectus } from '@components'
+import { IO, ImgDirectus, Img } from '@components'
 
 const {lang, event: {
   status,
@@ -97,7 +97,7 @@ const { description, highlighted_details } = translations?.find(({ languages_cod
                     <a href={`/${path}`} class="
                       box no-border stack center intrinsic gap-down-h8
                     ">
-                      {logo?.src ? (
+                      {logo?.src && (
                           <ImgDirectus
                               image={logo}
                               src={logo?.src}
@@ -109,16 +109,15 @@ const { description, highlighted_details } = translations?.find(({ languages_cod
                               height="100"
                               fit="inside"
                               quality="90" />
-                          ) : (
-                          <img
-                              src="/assets/images/WannaPlay-button-circle-blue.png"
+                          )}
+                          <!-- <Img
+                              src="/src/assets/images/WannaPlay-button-circle-blue.png"
                               alt="logo"
                               loading="lazy"
                               class=""
                               style="max-width: 100%; height: auto;"
                               width="100"
-                              height="100" />
-                      )}
+                              height="100" /> -->
                       <span class="size-h4">{name}</span>
                     </a>
                   </li>

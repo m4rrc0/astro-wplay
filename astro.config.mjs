@@ -5,6 +5,7 @@ import svelte from '@astrojs/svelte'
 import sitemap from '@astrojs/sitemap'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import critters from 'astro-critters'
+import { astroImageTools } from 'astro-imagetools'
 
 // @type-check enabled!
 // VSCode and other TypeScript-enabled text editors will provide auto-completion,
@@ -23,6 +24,7 @@ export default defineConfig({
       filter: (page) => page !== 'https://www.wanna-play.be/styleguide',
     }),
     critters(),
+    astroImageTools,
   ],
   vite: {
     // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)

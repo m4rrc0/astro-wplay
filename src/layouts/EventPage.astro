@@ -2,7 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { Markdown } from 'astro/components';
 import { Icon } from 'astro-icon'
-import { IO, ImgDirectus, Img } from '@components'
+import { SEO, IO, ImgDirectus, Img } from '@components'
 import { imageDirectusSrc } from '@utils'
 
 const {lang, event: {
@@ -32,11 +32,28 @@ const {lang, event: {
   links,
 }} = Astro.props;
 
+const {day, monthLong, year} = time_start?.[lang.code] || {}
+
 const { description, highlighted_details } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
+const presentation = address?.city && address?.area?.name?.fr && `Événement jeux à ${address.city} dans la province de ${address?.area?.name?.fr}`
 const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: 'cover', quality: '50' })
+const srcSocial = imageDirectusSrc({ src: cover_image?.src, width: '1200', height: '630', fit: 'cover', quality: '99' })
+const startLong = day && monthLong && year && `${day} ${monthLong} ${year}`
+const metaTitle = [startLong, name].filter(z => z).join(' - ')
+const metaDescription = [presentation, startLong].filter(z => z).join(' le ')
 
 ---
 <SkeletonPage lang={lang.code}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title={metaTitle}
+    description={metaDescription || description}
+    canonicalUrl={Astro.canonicalURL.href}
+    socialImage={srcSocial}
+    ogVideo={false}
+    twitterCard="summary"
+  />
   <BasicPage {lang}>
     <main class="center max">
       <header>
@@ -49,11 +66,7 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
           style={srcCover ? `background-image: url("${srcCover}");` : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}>
           <h1 class="" set:html={name} />
           <div>
-            {address?.city && address?.area?.name?.fr &&
-              <p class="h3">
-                Événement jeux à {address.city} dans la province de {address?.area?.name?.fr}
-              </p>
-            }
+            {presentation && <p class="h3">{presentation}</p>}
             {
               address?.string && (
                 <p class="h6">

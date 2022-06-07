@@ -2,7 +2,8 @@
 // import { Img } from "astro-imagetools/components";
 import { SkeletonPage, BasicPage } from '@layouts'
 import { BelgiumMap } from '@partials'
-import { IO, ImgDirectus, Img } from '@components'
+import { SEO, IO, ImgDirectus, Img } from '@components'
+
 // import logo from '@images/LOGO-1024px.png?w=600'
 
 const { lang, areas, articles: as } = Astro.props || {}
@@ -12,6 +13,16 @@ const articles = [...as, ...as, ...as, ...as].slice(0, 3)
 ---
 
 <SkeletonPage lang={lang.code}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Connecte les joueurs"
+    description="Wanna Play a pour mission de connecter les joueurs en live et en ligne. Toute l'info du jeu de société en Belgique."
+    canonicalUrl={Astro.canonicalURL.href}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+  />
   <BasicPage {lang}>
     <main class="center max">
       <div class="stack gap-down-h0 box no-border">

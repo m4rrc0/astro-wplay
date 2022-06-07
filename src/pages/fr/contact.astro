@@ -1,6 +1,7 @@
 ---
 // import Fragment from 'astro/components'
 import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
 import Mailto from '@components/Mailto.svelte'
 
 const email = import.meta.env.CONTACT_EMAIL
@@ -8,38 +9,33 @@ const email = import.meta.env.CONTACT_EMAIL
 ---
 
 <SkeletonPage>
-    <div slot="head">
-        <title>Contact | Wanna-Play.be</title>
-        <meta property="og:type" content="website">
-        <meta property="og:site_name" content="Wanna Play">
-        <link rel="canonical" href="https://www.wanna-play.be/fr/contact/">
-        <meta property="og:url" content="https://www.wanna-play.be/fr/contact/">
-        <meta property="og:title" content="Contact | Wanna-Play.be">
-        <meta name="description" content="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici.">
-        <meta property="og:description" content="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici.">
-        <!-- <meta name="theme-color" content="rgb(47,82,160)"> -->
-        <!-- <link rel="sitemap" type="application/xml" href="https://www.wanna-play.be/sitemap.xml"> -->
-    </div>
+    <SEO
+        slot="head"
+        ogType="website"
+        title="Contact"
+        description="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici."
+        canonicalUrl={Astro.canonicalURL.href}
+        socialImage="/assets/images/LOGO-1024px.png"
+        ogVideo={false}
+        twitterCard="summary"
+    />
     
     <BasicPage lang={{ code: 'fr' }}>
+        <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
+            <h1 class="center text">Contacte-nous</h1>
+            
+            <p class="h3">...par e-mail à <Mailto client:visible {email} target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" /> ou par <a href="https://www.facebook.com/WannaPlayBE/" target="_blank" rel="noopener noreferrer">Facebook</a></p>
 
-    <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
-        <h1 class="center text">Contacte-nous</h1>
-        
-        <p class="h3">...par e-mail à <Mailto client:visible {email} target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" /> ou par <a href="https://www.facebook.com/WannaPlayBE/" target="_blank" rel="noopener noreferrer">Facebook</a></p>
-
-        <div>
-            <p>Retrouve nous aussi sur:</p>
-            <ul>
-                <li><a href="https://www.instagram.com/wannaplay_be/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                <li><a href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured" target="_blank" rel="noopener noreferrer">Youtube</a></li>
-                <li><a href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ" target="_blank" rel="noopener noreferrer">Spotify</a></li>
-                <li>En live lors d'événements ludiques belges 😉</li>
-            </ul>
-        </div>
-    </main>
-    
-
+            <div>
+                <p>Retrouve nous aussi sur:</p>
+                <ul>
+                    <li><a href="https://www.instagram.com/wannaplay_be/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                    <li><a href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured" target="_blank" rel="noopener noreferrer">Youtube</a></li>
+                    <li><a href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ" target="_blank" rel="noopener noreferrer">Spotify</a></li>
+                    <li>En live lors d'événements ludiques belges 😉</li>
+                </ul>
+            </div>
+        </main>
     </BasicPage>
 </SkeletonPage>
 

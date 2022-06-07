@@ -2,10 +2,30 @@
 import Debug from 'astro/debug'
 import { renderBackgroundImage } from "astro-imagetools/api";
 import { SkeletonPage, BasicPage } from '@layouts'
-import { IO, ImgDirectus, Img } from '@components'
+import { SEO, IO, ImgDirectus, Img } from '@components'
 import { imageDirectusSrc } from '@utils';
 
 const { lang, area, events, organizations } = Astro.props
+
+const areaName = area.name[lang.code]
+
+const eventsCountPhrase = `${events.length === 1 ? `${events.length} événement` : `${events.length} événements`} jeu`
+const eventsTimeStart = events?.[0]?.time_start
+const eventsTimeEnd = events.length < 2 ? null : (events?.[events.length - 1]?.time_end || events?.[events.length - 1]?.time_start)
+const eventsTimeArr = [
+    eventsTimeStart && `${eventsTimeStart?.[lang.code]?.day} ${eventsTimeStart?.[lang.code]?.monthLong} ${eventsTimeStart?.[lang.code]?.year}`,
+    eventsTimeEnd && `${eventsTimeEnd?.[lang.code]?.day} ${eventsTimeEnd?.[lang.code]?.monthLong} ${eventsTimeEnd?.[lang.code]?.year}`,
+].filter(z => z)
+const eventsPhrase = eventsTimeArr.length === 0 ?
+    `${eventsCountPhrase} à ${areaName}` :
+    eventsTimeArr.length === 1 || eventsTimeArr?.[0] == eventsTimeArr?.[1] ?
+        `${eventsCountPhrase} à ${areaName} le ${eventsTimeArr[0]}` :
+        `${eventsCountPhrase} à ${areaName} entre le ${eventsTimeArr.join(' et le ')}` 
+
+// const restosBarsCount = organizations
+//     .filter((o) => o.types.find('bar') || o.types.find('restaurant'))
+
+// console.log(area)
 
 // const events = await Promise.all(_events?.map(async (_e) => {
 //     const e = _e
@@ -26,11 +46,22 @@ const { lang, area, events, organizations } = Astro.props
 
 ---
 <SkeletonPage lang={lang.code}>
+    <SEO
+        slot="head"
+        ogType="website"
+        title={`Soirées jeux, clubs, bar à jeux, ludothèques dans la province de ${areaName}`}
+        description={`Tu veux jouer dans la province de ${areaName}? Viens découvrir les lieux ludiques de la région.`}
+        canonicalUrl={Astro.canonicalURL.href}
+        socialImage="/assets/images/LOGO-1024px.png"
+        ogVideo={false}
+        twitterCard="summary"
+    />
     <BasicPage {lang}>
         <main class="center width-max">
             <div class="box no-border stack gap-down-h1">
-                <h1 class="center text">{area.name[lang.code]}</h1>
+                <h1 class="center text">{areaName}</h1>
                 <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
+                <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
                 <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
                     <IO ul $skip={!events?.[0]?.name} class="reset">
                         {events?.map(event => {

@@ -48,3 +48,35 @@ export async function io(Astro) {
   return { ...Astro, props, $render }
 }
 export const conditionalRendering = io
+
+// Directus API info: https://docs.directus.io/reference/files/#requesting-a-thumbnail
+export function imageDirectusSrc({
+  src: srcRaw,
+  fit,
+  width,
+  height,
+  quality,
+  withoutEnlargement,
+  format,
+}) {
+  const querryParams = {
+    fit,
+    width,
+    height,
+    quality,
+    withoutEnlargement,
+    format,
+  }
+  if (!srcRaw) return srcRaw
+
+  const querryString = Object.entries(querryParams)
+    .map(([param, val]) => {
+      return (typeof val).match(/undefined|null/) ? val : `${param}=${val}`
+    })
+    .filter((e) => e)
+    .join('&')
+  // console.log({querryParams, querryString})
+  const src = `${srcRaw}${querryString ? '?' + querryString : ''}`
+
+  return src
+}

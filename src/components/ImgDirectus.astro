@@ -1,17 +1,15 @@
 ---
 import { Img } from "astro-imagetools/components";
+import { imageDirectusSrc } from '@utils'
 
 // import { IO } from '@components'
 
 const {
-    $skip, class: _class, style, image, src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
+    $skip, id, class: _class, style, onload, image, src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
 } = Astro.props || {}
-const querryParams = { fit, width, height, quality, withoutEnlargement, format }
-const querryString = Object.entries(querryParams).map(([param, val]) => {
-    return (typeof val).match(/undefined|null/) ? val : `${param}=${val}`
-}).filter(e => e).join('&')
-// console.log({querryParams, querryString})
-const src = `${srcRaw}${querryString ? '?' + querryString : ''}`
+
+const src = imageDirectusSrc({ src: srcRaw, fit, width, height, quality, withoutEnlargement, format })
+
 ---
 
 <!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> -->
@@ -22,7 +20,9 @@ const src = `${srcRaw}${querryString ? '?' + querryString : ''}`
     {height}
     attributes={{
         img: {
-            style,
-            class: _class
+            ...(id ? { id } : {}),
+            ...(_class ? { class: _class } : {}),
+            ...(style ? { style } : {}),
+            onload: `this.style.background = 'transparent';${onload || ''}`
         },
     }} />

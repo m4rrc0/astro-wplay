@@ -1,9 +1,28 @@
 ---
 import Debug from 'astro/debug'
+import { renderBackgroundImage } from "astro-imagetools/api";
 import { SkeletonPage, BasicPage } from '@layouts'
 import { IO, ImgDirectus, Img } from '@components'
+import { imageDirectusSrc } from '@utils';
 
 const { lang, area, events, organizations } = Astro.props
+
+// const events = await Promise.all(_events?.map(async (_e) => {
+//     const e = _e
+//     if (e?.cover_image?.src) {
+//         const ext = e?.cover_image?.type?.split('/')[1]
+//         console.log(e?.cover_image?.src)
+//         const { link, style, htmlElement, ...rest } = await renderBackgroundImage({
+//           src: e.cover_image.src,
+//           breakpoints: { count: 2, minWidth: 700, maxWidth: 800 }
+//         });
+//         console.log({ link, style, htmlElement, ...rest })
+
+//         // const cover_image_src = await import (e.cover_image.src)
+//         // e.cover_image.src = cover_image_src || e.cover_image.src
+//     }
+//     return e
+// }))
 
 ---
 <SkeletonPage lang={lang.code}>
@@ -25,8 +44,8 @@ const { lang, area, events, organizations } = Astro.props
                                 isSameDay,
                             } = event
 
-                            // console.log(cover_image.src)
-        
+                            const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1000', fit: 'cover', quality: '50' })
+
                             return (
                                 <li class="card-event breakout-clickable box no-border no-padding border-radius-s" style="">
                                     <div class="box no-border padding-h4 with-sidebar gap-h4
@@ -34,7 +53,7 @@ const { lang, area, events, organizations } = Astro.props
                                         background-overlay
                                         "
                                         style={
-                                            (cover_image?.src ? `background-image: url("${cover_image.src}"); ` : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                                            (srcCover ? `background-image: url("${srcCover}"); ` : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
                                             `--content-min: 80%;`
                                         }
                                     >

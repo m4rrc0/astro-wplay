@@ -22,9 +22,9 @@ const {
     {height}
     attributes={{
         img: {
-            id,
-            class: _class,
-            style,
+            ...(id ? { id } : {}),
+            ...(_class ? { class: _class } : {}),
+            ...(style ? { style } : {}),
             onload: `this.style.background = 'transparent';${onload || ''}`
         },
     }} />

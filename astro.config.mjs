@@ -3,6 +3,7 @@
 import { defineConfig } from 'astro/config'
 import svelte from '@astrojs/svelte'
 import sitemap from '@astrojs/sitemap'
+import robotsTxt from 'astro-robots-txt'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import critters from 'astro-critters'
 import { astroImageTools } from 'astro-imagetools'
@@ -23,6 +24,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => page !== 'https://www.wanna-play.be/styleguide',
     }),
+    robotsTxt(),
     critters(),
     astroImageTools,
   ],

@@ -33,7 +33,6 @@ const {lang, event: {
 }} = Astro.props;
 
 const {day, monthLong, year} = time_start?.[lang.code] || {}
-
 const { description, highlighted_details } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
 const presentation = address?.city && address?.area?.name?.fr && `Événement jeux à ${address.city} dans la province de ${address?.area?.name?.fr}`
 const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: 'cover', quality: '50' })

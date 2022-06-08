@@ -8,7 +8,6 @@ import { imageDirectusSrc } from '@utils';
 const { lang, area, events, organizations } = Astro.props
 
 const areaName = area.name[lang.code]
-
 const eventsCountPhrase = `${events.length === 1 ? `${events.length} événement` : `${events.length} événements`} jeu`
 const eventsTimeStart = events?.[0]?.time_start
 const eventsTimeEnd = events.length < 2 ? null : (events?.[events.length - 1]?.time_end || events?.[events.length - 1]?.time_start)
@@ -21,11 +20,8 @@ const eventsPhrase = eventsTimeArr.length === 0 ?
     eventsTimeArr.length === 1 || eventsTimeArr?.[0] == eventsTimeArr?.[1] ?
         `${eventsCountPhrase} à ${areaName} le ${eventsTimeArr[0]}` :
         `${eventsCountPhrase} à ${areaName} entre le ${eventsTimeArr.join(' et le ')}` 
-
 // const restosBarsCount = organizations
 //     .filter((o) => o.types.find('bar') || o.types.find('restaurant'))
-
-// console.log(area)
 
 // const events = await Promise.all(_events?.map(async (_e) => {
 //     const e = _e

@@ -50,6 +50,10 @@
 {ogVideo && <meta property="og:video" content={ogVideo} />}
 
 {twitterCard && <meta name="twitter:card" content={twitterCard} />}
+<!-- @username for the website used in the card footer. -->
+<!-- <meta name="twitter:site" content="@nytimesbits" /> -->
+<!-- @username for the content creator / author. -->
+<!-- <meta name="twitter:creator" content="@nickbilton" /> -->
 
 {Array.isArray(meta) && meta.length ? meta.map(m => <meta {...m} />) : null}
 

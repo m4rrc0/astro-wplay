@@ -1,5 +1,6 @@
 ---
-import Mailto from '@components/Mailto.svelte'
+import { Mailto } from '@components'
+import { destructureEmail } from '@utils'
 
 const { lang } = Astro.props
 
@@ -75,7 +76,7 @@ const email = import.meta.env.CONTACT_EMAIL
         <span>0695.574.033 - </span>
         <span>IBAN BE54 5230 8139 4997</span>
         <br>
-        <span>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - <Mailto client:visible {email} target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" /></span>
+        <span>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - <Mailto {email} /></span>
       </p>
     </div>
   </footer>

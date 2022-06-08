@@ -1,0 +1,10 @@
+---
+import Mailto from './Mailto.svelte'
+import { destructureEmail } from '@utils'
+
+const { email, target="_blank", rel="noopener noreferrer", referrerpolicy="no-referrer" } = Astro.props || {}
+
+// const hasSlot = Astro.slots.has('default')
+---
+
+<Mailto client:visible em={destructureEmail(email)} {target} {rel} {referrerpolicy} />

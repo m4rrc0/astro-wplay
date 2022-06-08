@@ -80,3 +80,15 @@ export function imageDirectusSrc({
 
   return src
 }
+
+export function destructureEmail(str) {
+  const [_n, _d] = str.split('@')
+  const n = _n.split('')
+  const d = _d.split('')
+  return [n, d]
+}
+export function restructureEmail(_str) {
+  const [_n, _d] = _str
+  const str = [_n.join(''), '@', _d.join('')].join('')
+  return str
+}

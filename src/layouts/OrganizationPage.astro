@@ -3,7 +3,7 @@ import Debug from 'astro/debug';
 import { Markdown } from 'astro/components';
 import { Icon } from 'astro-icon'
 import { SkeletonPage, BasicPage } from '@layouts'
-import { IO, ImgDirectus } from '@components'
+import { SEO, IO, ImgDirectus } from '@components'
 import { imageDirectusSrc } from '@utils'
 
 const {lang, organization: {
@@ -35,7 +35,7 @@ const {lang, organization: {
 }} = Astro.props;
 
 const { description, opening_hours_remark } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
-
+const presentation = typesTranslated?.[0] && address?.city && address?.area?.name?.fr && typesTranslated?.map(({ [lang.code]: typeTranslated }) => typeTranslated).join(', ') + ` à ${address.city} dans la province de ${address?.area?.name?.fr}`
 const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: 'cover', quality: '50' })
 
 
@@ -43,6 +43,16 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
 
 <!-- <Debug {name} /> -->
 <SkeletonPage lang={lang.code}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title={name}
+    description={presentation || description}
+    canonicalUrl={Astro.canonicalURL.href}
+    socialImage={logo}
+    ogVideo={false}
+    twitterCard="summary"
+  />
   <BasicPage {lang}>
     <!-- <div class="stack gap-down-h1"> -->
     <main class="center max">
@@ -55,11 +65,7 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
             "
           style={srcCover ? `background-image: url("${srcCover}");` : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}>
           <h1 class="centered" set:html={name} />
-          {typesTranslated?.[0] && address?.city && address?.area?.name?.fr &&
-            <p class="h3">
-              {typesTranslated?.map(({ [lang.code]: typeTranslated }) => typeTranslated).join(', ')} à {address.city} dans la province de {address?.area?.name?.fr}
-            </p>
-          }
+          {presentation && <p class="h3">{presentation}</p>}
           {
             address?.string && (
               <p class="h6">

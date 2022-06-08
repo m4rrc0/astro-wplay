@@ -247,6 +247,7 @@ const transformDateTime = (str) => {
       day: date.toLocaleDateString('fr', { day: 'numeric' }),
       month: date.toLocaleDateString('fr', { month: 'short' }),
       monthShort: date.toLocaleDateString('fr', { month: 'short' }),
+      monthLong: date.toLocaleDateString('fr', { month: 'long' }),
       year: date.toLocaleDateString('fr', { year: 'numeric' }),
     },
   }

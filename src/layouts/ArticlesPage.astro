@@ -1,6 +1,6 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
-import { IO, ImgDirectus } from '@components'
+import { SEO, IO, ImgDirectus } from '@components'
 
 const { lang, articles: as } = Astro.props || {}
 
@@ -8,6 +8,16 @@ const articles = [...as, ...as, ...as, ...as, ...as]
 
 ---
 <SkeletonPage lang={lang.code}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Articles"
+    description="Viens découvrir ou redécouvrir le monde ludique au travers des plumes de nos auteurs"
+    canonicalUrl={Astro.canonicalURL.href}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+  />
   <BasicPage {lang}>
     <main class="center max">
         <div class="box no-border stack gap-down-h1">

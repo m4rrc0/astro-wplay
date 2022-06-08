@@ -9,7 +9,10 @@ const { lang = 'fr' } = Astro.props;
 <html {lang}>
   <head>
     <meta charset="utf-8" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
+
     <!-- Default referrer policy for requests: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy -->
     <!-- Send a full URL when performing a same-origin request, only send the origin when the protocol security level stays the same (e.g. HTTPS→HTTPS), and send no header to a less secure destination (e.g. HTTPS→HTTP). -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -25,35 +28,7 @@ const { lang = 'fr' } = Astro.props;
       as="font"
       type="font/woff2"
       crossorigin />
-
-    <!-- FROM Wanna Play GATSBY site -->
-    <!-- <meta name="generator" content="Gatsby 2.23.3">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Toute l'info liée au monde du jeu de société en Belgique | Wanna-Play.be</title>
-    <link data-react-helmet="true" rel="canonical" href="https://www.wanna-play.be">
-    <meta data-react-helmet="true" property="og:type" content="website">
-    <meta data-react-helmet="true" property="og:image" content="/static/WannaPlay-247222ff36d9fef3c35b6852c815bde3.png">
-    <meta data-react-helmet="true" property="og:site_name" content="Wanna Play">
-    <meta data-react-helmet="true" property="og:title" content="Toute l'info liée au monde du jeu de société en Belgique | Wanna-Play.be">
-    <meta data-react-helmet="true" name="description" content="Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un club, ...? Retrouve tout ça sur Wanna Play !">
-    <meta data-react-helmet="true" property="og:description" content="Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un club, ...? Retrouve tout ça sur Wanna Play !">
-    <meta data-react-helmet="true" property="og:url" content="https://www.wanna-play.be">
-    <link rel="icon" href="/favicon-32x32.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="manifest" href="/manifest.webmanifest">
-    <meta name="theme-color" content="rgb(47,82,160)">
-    <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=73b744b8a0cadb4035f66e19b54e3944">
-    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-    <link rel="preconnect dns-prefetch" href="https://www.google-analytics.com"> -->
     
-
     <!-- ### MANIFEST & ICONS ### -->
     <!-- General -->
     <!-- <link rel="manifest" href="/manifest.webmanifest"> -->
@@ -83,7 +58,6 @@ const { lang = 'fr' } = Astro.props;
 
     <SEO
       locale="fr_BE"
-      ogType="website"
       siteName="Wanna Play" />
 
     <slot name="head" />

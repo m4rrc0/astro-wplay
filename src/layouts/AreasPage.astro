@@ -1,10 +1,22 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
 import { BelgiumMap } from '@partials'
+import { SEO } from '@components'
+
 const { lang, areas } = Astro.props
 
 ---
 <SkeletonPage lang={lang.code}>
+    <SEO
+        slot="head"
+        ogType="website"
+        title="Où veux-tu jouer en Belgique?"
+        description="Tu veux jouer? Tu es à la bonne adresse! Choisis ta province et explore le monde ludique près de chez toi."
+        canonicalUrl={Astro.canonicalURL.href}
+        socialImage="/assets/images/LOGO-1024px.png"
+        ogVideo={false}
+        twitterCard="summary"
+    />
     <BasicPage {lang}>
         <main class="box no-border padding-h4">
             <div class="center width-max stack gap-down-h1" style="width: 750px;">

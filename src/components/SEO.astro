@@ -2,17 +2,18 @@
   const {
     setViewport = false,
     charset = "",
+    siteName = "",
+    favicon = "",
     locale = "", // e.g. en_US or fr_BE // og:locale - The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US.
     localeAlternates = "", // og:locale:alternate - An array of other locales this page is available in.
     ogType = "", // probably "website" or "article" or ...
-    siteName = "",
     title = "",
     description = "",
     canonicalUrl = "",
-    favicon = "",
-    socialImage = "",
+    socialImage = "", // og:image - 1200:630 is recommended according to https://www.kapwing.com/resources/what-is-an-og-image-make-and-format-og-images-for-your-blog-or-webpage/
     ogVideo = "", // og:video - A URL to a video file that complements this object.
-    twitterCard = "summary", // "summary", "summary_large_image", "app", or "player".
+    twitterCard = "", // "summary", "summary_large_image", "app", or "player".
+    meta = [],
   } = Astro.props;
 
   // const titleComposed = title + siteName ? ` | ${siteName}` : ''
@@ -49,3 +50,7 @@
 {ogVideo && <meta property="og:video" content={ogVideo} />}
 
 {twitterCard && <meta name="twitter:card" content={twitterCard} />}
+
+{Array.isArray(meta) && meta.length ? meta.map(m => <meta {...m} />) : null}
+
+<slot />

@@ -2,8 +2,9 @@
 import Debug from 'astro/debug';
 import { SkeletonPage, BasicPage } from '@layouts'
 // import { Div, P } from '@elements'
-import { IO, Md, ImgDirectus } from '@components'
+import { SEO, IO, Md, ImgDirectus } from '@components'
 import { BlockImgLeft, BlockImgLeftHeading, BlockStack } from '@layouts'
+import { imageDirectusSrc } from '@utils'
 // import { Markdown } from 'astro/components';
 // import { Icon } from 'astro-icon'
 
@@ -22,16 +23,37 @@ const {lang, article: {
 
 const header = headerList?.[0]
 const headerT = header.translations.find(({ languages_code }) => languages_code === lang.code )
+const { title, text, featured_image } = headerT || {}
 
 // const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
-const { width, height } = headerT?.featured_image || {}
+const { width, height } = featured_image || {}
 
 const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
+
+const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fit: 'cover', quality: '99' })
 
 ---
 
 <!-- <TestMd /> -->
 <SkeletonPage lang={lang.code}>
+  <SEO
+    slot="head"
+    ogType="article"
+    title={title}
+    description={text}
+    canonicalUrl={Astro.canonicalURL.href}
+    socialImage={srcSocial}
+    ogVideo={false}
+    twitterCard="summary"
+    meta={[
+      {property: 'article:published_time', content: date_published?.dateTimeRaw},
+      {property: 'article:modified_time', content: date_modified?.dateTimeRaw},
+      // {property: 'article:expiration_time', content: ''},
+      {property: 'article:author', content: authors?.[0]?.display_name},
+      {property: 'article:section', content: 'Board Game'},
+      // {property: 'article:tag', content: ''},
+    ].filter(({ content }) => content)}
+  />
   <BasicPage {lang}>
     <main class="center max stack gap-down-h1">
       <!-- <BlockImgLeftHeading block={header} {lang} tag={'header'} /> -->

@@ -1,9 +1,10 @@
 ---
 import '../styles/global.css';
-
+// import Swup from 'swup';
 import SEO from '../components/SEO.astro'
 
 const { lang = 'fr' } = Astro.props;
+
 ---
 
 <html {lang}>
@@ -65,9 +66,18 @@ const { lang = 'fr' } = Astro.props;
   <body>
     <slot name="body"/>
     <slot />
+    <!-- <script type="module" data-swup-ignore-script>
+      import "/assets/js/swup.min.js"
+      import "/assets/js/SwupScriptsPlugin.min.js"
+      const swup = new Swup({
+        plugins: [new SwupScriptsPlugin()],
+        containers: ["#layout-page-base > main"]
+      });
+    </script> -->
     <script src="/assets/js/instant.page.js" defer type="module"></script>
     <!-- <script hoist>import '../assets/js/instant.page.js';</script> -->
     <!-- <script hoist src="https://instant.page/5.1.0" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script> -->
     <noscript><style is:inline>.astro-imagetools-img{background:none;}</style></noscript>
   </body>
-</html>
+  </html>
+  

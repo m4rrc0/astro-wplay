@@ -7,6 +7,7 @@ import robotsTxt from 'astro-robots-txt'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import critters from 'astro-critters'
 import { astroImageTools } from 'astro-imagetools'
+import compress from 'astro-compress'
 
 // @type-check enabled!
 // VSCode and other TypeScript-enabled text editors will provide auto-completion,
@@ -27,6 +28,13 @@ export default defineConfig({
     robotsTxt(),
     critters(),
     astroImageTools,
+    compress({
+      // css: false,
+      // html: false,
+      // js: false,
+      img: false,
+      // svg: false,
+    }),
   ],
   vite: {
     // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)

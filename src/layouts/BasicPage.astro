@@ -1,6 +1,6 @@
 ---
+import { Icon } from 'astro-icon'
 import Mailto from '@components/Mailto.astro'
-import { destructureEmail } from '@utils'
 
 const { lang } = Astro.props
 
@@ -8,7 +8,7 @@ const email = import.meta.env.CONTACT_EMAIL
 
 ---
 
-<div id="layout-page-base" class="stack split-after-2 gap-down-0 justify-start" style="min-height: 100vh;">
+<div id="layout-page-base" class="stack split-after-2 gap-down-h1 justify-start" style="min-height: 100vh;">
   <div id="menu-main" class="color-palette-">
     <div class="center width-max">
       <nav class="box no-border cluster overflow gap-h6-down ">
@@ -70,7 +70,10 @@ const email = import.meta.env.CONTACT_EMAIL
           >Spotify</a>
         </div>
       </div>
-      <p>Identité graphique et site web par <a href="http://www.feedbydesign.com/" target="_blank" rel="noopener noreferrer">Feed by Design</a></p>
+      <div>
+        <p>Site web créé avec <Icon name="carbon:fire" title="enthousiasme" role="img" /> et <Icon name="ph:coffee" title="caféine" role="img" /> par <a href="http://www.m4rr.co/" target="_blank" rel="noopener noreferrer">m4rrc0</a></p>
+        <p>Identité graphique créée avec <Icon name="ci:heart-outline" title="passion" role="img" /> et <Icon name="simple-line-icons:magic-wand" title="magie" role="img" /> par <a href="http://www.tess-h.be/" target="_blank" rel="noopener noreferrer">Tess h.</a></p>
+      </div>
       <p class="size-h6">
         <span>© Wanna Play ASBL - </span>
         <span>0695.574.033 - </span>

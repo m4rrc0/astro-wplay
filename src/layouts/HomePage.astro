@@ -44,8 +44,20 @@ const articles = [...as, ...as, ...as, ...as].slice(0, 3)
           <p>Retrouve toute l'info liée au monde du jeu de société sur Wanna Play!</p>
         </div>
   
-        <div class="center intrinsic">
-          <BelgiumMap {lang} {areas} />
+        <div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
+          <h2 class="center text">Où veux-tu jouer?</h2>
+          <div class="cluster gap-down-h6" style="--justify-content: center;">
+              <ul class="reset">
+                  {areas.map(area => {
+                      return (
+                          <li><a href={'/' + area.path[lang.code]} class={`area-${area.code_name}`}>{area.name[lang.code]}</a></li>
+                      )
+                  })}
+              </ul>
+          </div>
+          <div>
+              <BelgiumMap {lang} {areas} />
+          </div>
         </div>
   
         <section class="articles center max text stack gap-down-h1
@@ -75,7 +87,7 @@ const articles = [...as, ...as, ...as, ...as].slice(0, 3)
                                     width="590"
                                     height="400"
                                     fit="cover"
-                                    quality="90" />
+                                    quality="99" />
                             </IO>
                             <h3 class="h4">
                                 <a href={`/${a.path}`} class="reset clickable">{headerT?.title}</a>
@@ -96,7 +108,7 @@ const articles = [...as, ...as, ...as, ...as].slice(0, 3)
                                                         width="32"
                                                         height="32"
                                                         fit="cover"
-                                                        quality="90" />
+                                                        quality="99" />
                                                 </IO>
                                                 <IO p $skipNoInner class="author-name">{author?.display_name}</IO>
                                             </IO>

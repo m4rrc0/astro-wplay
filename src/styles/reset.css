@@ -105,3 +105,8 @@ a.reset *,
   text-decoration: inherit;
   /* border-bottom: none; */
 }
+p svg {
+  height: 1em;
+  vertical-align: middle;
+  /* display: inline-block; */
+}

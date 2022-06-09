@@ -1,5 +1,5 @@
 ---
-import Debug from 'astro/debug';
+// import Debug from 'astro/debug';
 import { SkeletonPage, BasicPage } from '@layouts'
 // import { Div, P } from '@elements'
 import { SEO, IO, Md, ImgDirectus } from '@components'
@@ -75,7 +75,7 @@ const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fi
                     {width}
                     {height}
                     fit="contain"
-                    quality="90" />
+                    quality="99" />
                 </IO>
                 <IO div $skipNoInner class="stack split-after-1 gap-down-h6">
                   <h1>{headerT.title}</h1>
@@ -97,7 +97,7 @@ const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fi
                               width="32"
                               height="32"
                               fit="cover"
-                              quality="90" />
+                              quality="99" />
                           </IO>
                           <IO p $skipNoInner>{author?.display_name}</IO>
                         </IO>
@@ -135,7 +135,7 @@ const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fi
                             width="32"
                             height="32"
                             fit="cover"
-                            quality="90" />
+                            quality="99" />
                         </IO>
                         <IO p $skipNoInner>{author?.display_name}</IO>
                       </IO>
@@ -157,7 +157,7 @@ const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fi
                 {width}
                 {height}
                 fit="contain"
-                quality="90" />
+                quality="99" />
             </IO>
 
             <IO div $skipNoInner class="box no-border center | h3">

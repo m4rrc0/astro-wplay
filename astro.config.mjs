@@ -36,3 +36,18 @@ export default defineConfig({
     plugins: [viteCommonjs()],
   },
 })
+
+// ?? Should I integrate postCSS config here? postCSS + Svelte?
+//
+// import presetEnv from 'postcss-preset-env'
+// import cssNano from 'cssnano'
+// const postCssConfig = { plugins: [presetEnv, cssNano] }
+// export default defineConfig({
+//   integrations: [svelte()],
+//   postcss: postCssConfig,
+//   vite: {
+//     css: {
+//       postcss: postCssConfig,
+//     },
+//   }
+// }

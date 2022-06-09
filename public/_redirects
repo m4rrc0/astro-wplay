@@ -1,3 +1,22 @@
-/ /fr 302
-/project/ /fr/projet 301
-/team/ /fr/equipe 301
+/ /fr/ 301
+/project/ /fr/projet/ 301
+/team/ /fr/equipe/ 301
+/articles/ /fr/a/ 301
+/in/belgium/ /fr/be/ 301
+/contact/ /fr/contact/ 301
+/in/belgium/west-flanders/ /fr/be/flandre-occidentale/ 301
+/in/belgium/east-flanders/ /fr/be/flandre-orientale/ 301
+/in/belgium/antwerp/ /fr/be/anvers/ 301
+/in/belgium/limburg/ /fr/be/limbourg/ 301
+/in/belgium/flemish-brabant/ /fr/be/brabant-flamand/ 301
+/in/belgium/brussels/ /fr/be/bruxelles/ 301
+/in/belgium/walloon-brabant/ /fr/be/brabant-wallon/ 301
+/in/belgium/hainaut/ /fr/be/hainaut/ 301
+/in/belgium/namur/ /fr/be/namur/ 301
+/in/belgium/liege/ /fr/be/liege/ 301
+/in/belgium/luxembourg/ /fr/be/luxembourg/ 301
+/brussels-games-festival/ /archive/brussels-games-festival 301
+/inauguration/ /archive/inauguration 301
+/in/belgium/:area/:type/:slug /fr/o/:slug 301
+
+/articles/:slug /fr/a/:slug 301

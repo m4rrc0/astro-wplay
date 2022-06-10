@@ -75,10 +75,10 @@ blockquote {
   text-align: center;
 }
 .card-article .featured-image {
-  max-width: 590px;
-  max-height: 400px;
-  width: 100%;
+  width: 590px;
   height: auto;
+  max-width: 100%;
+  max-height: 400px;
   border-top-left-radius: var(--border-radius-m);
   border-top-right-radius: var(--border-radius-m);
 }

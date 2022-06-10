@@ -95,10 +95,10 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
                   alt={name}
                   loading="lazy"
                   class=""
-                  style="max-width: 100%; max-height: inherit; object-fit: contain;"
+                  style={`width: ${logo.width}; max-width: 100%; height: auto; max-height: ${logo.height}; object-fit: contain;`}
                   width={logo.width}
                   height={logo.height}
-                  fit="inside"
+                  fit="contain"
                   quality="99" />
           </div>
         )}

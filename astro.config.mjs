@@ -26,7 +26,7 @@ export default defineConfig({
       filter: (page) => page !== 'https://www.wanna-play.be/styleguide',
     }),
     robotsTxt(),
-    critters(),
+    critters({ fonts: true }),
     astroImageTools,
     compress({
       // css: false,

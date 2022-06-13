@@ -807,7 +807,7 @@ export async function fetchArticles() {
   const articlesRaw = await directus.items('articles').readByQuery({
     limit: -1,
     filter: { status: { _eq: 'published' } },
-    sort: 'date_published',
+    sort: '-date_published',
     fields: [
       // '*',
       'status',

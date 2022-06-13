@@ -330,7 +330,7 @@ function transformBlock(blockRaw, languages) {
 
 // --- FETCH LANGUAGES --- //
 export const fetchLanguages = async () => {
-  const { data: languages } = await directus.items('languages').readMany({
+  const { data: languages } = await directus.items('languages').readByQuery({
     limit: -1,
     fields: ['*'],
   })
@@ -340,7 +340,7 @@ export const fetchLanguages = async () => {
 // --- F&T PAGES --- //
 
 export async function fetchPages() {
-  return directus.items('Pages').readMany({
+  return directus.items('Pages').readByQuery({
     limit: -1,
     // filter: { status: { _eq: 'published' } },
     // fields: [ "*", "translations.*", "main.*", "main.item.*", "main.item.translations.*", "main.item.content.*", "main.item.content.item.*", "main.item.content.item.*" ]
@@ -436,12 +436,10 @@ export function transformOrganization(o) {
 }
 
 export async function fetchOrganizations() {
-  const organizationsRaw = await directus.items('organizations').readMany({
+  const organizationsRaw = await directus.items('organizations').readByQuery({
     limit: -1,
     sort: 'date_updated',
-    // filter: { status: { _eq: 'published' } },
-    // fields: [ "*", "translations.*", "main.*", "main.item.*", "main.item.translations.*", "main.item.content.*", "main.item.content.item.*", "main.item.content.item.*" ]
-    // fields: [ "*", "translations.*", "main.*", "main.*.*", "main.*.*.*", "main.*.*.*.*", "main.*.*.*.*.*" ]
+    filter: { status: { _in: ['published', 'to_check'] } },
     fields: [
       'status',
       'date_updated',
@@ -660,15 +658,23 @@ const flattenEvents = (eventsUnflat) => {
 export async function fetchEvents() {
   const languages = await fetchLanguages()
 
-  const eventsRaw = await directus.items('events').readMany({
+  const eventsRaw = await directus.items('events').readByQuery({
     limit: -1,
-    // filter: { status: { _eq: 'published' } },
-    // filter: { date_published: { _gte: '$NOW' } },
+    filter: {
+      _and: [
+        { status: { _eq: 'published' } },
+        { date_updated: { _gte: '$NOW(-6 months)' } }, // TODO: change this when we can check the last event time in schedule
+      ],
+    },
+    // filter: { date_published: { _gte: '$NOW(-1 week)' } },
+    // filter: { schedule: { time_start: { _gte: '$NOW(-1 week)' } } },
+
     // fields: [ "*", "translations.*", "main.*", "main.item.*", "main.item.translations.*", "main.item.content.*", "main.item.content.item.*", "main.item.content.item.*" ]
     // fields: [ "*", "translations.*", "main.*", "main.*.*", "main.*.*.*", "main.*.*.*.*", "main.*.*.*.*.*" ]
     fields: [
-      // '*',
+      '*',
       'status',
+      'date_updated',
       'name',
       'address',
       ...imageFields('cover_image.'),
@@ -788,9 +794,9 @@ export function transformArticle(articleRaw, languages) {
 export async function fetchArticles() {
   const languages = await fetchLanguages()
 
-  const articlesRaw = await directus.items('articles').readMany({
+  const articlesRaw = await directus.items('articles').readByQuery({
     limit: -1,
-    // filter: { status: { _eq: 'published' } },
+    filter: { status: { _eq: 'published' } },
     fields: [
       // '*',
       'status',

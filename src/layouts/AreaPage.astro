@@ -146,7 +146,9 @@ const eventsPhrase = eventsTimeArr.length === 0 ?
                                 logo,
                                 typesTranslated,
                             } = organization
-        
+
+                            const nameIsLong = name.length > 30
+                            
                             return (
                                 <li 
                                     class="card-organization
@@ -156,7 +158,7 @@ const eventsPhrase = eventsTimeArr.length === 0 ?
                                     style="">
                                     <div
                                         class="center intrinsic"
-                                        style="height: var(--width-col-10); overflow: hidden;">
+                                        style="justify-content: center; height: var(--width-col-10); overflow: hidden;">
                                         
                                         {logo?.src ? (
                                             <ImgDirectus
@@ -181,7 +183,7 @@ const eventsPhrase = eventsTimeArr.length === 0 ?
                                                 height="120" />
                                         )}
                                     </div>
-                                    <h3><a href={`/${path}`} class="reset clickable">{name}</a></h3>
+                                    <h3><a href={`/${path}`} class={`reset clickable${nameIsLong ? ' h4': ''}`}>{name}</a></h3>
                                     <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
                                         <ul class="reset">
                                             {typesTranslated?.map(type => {

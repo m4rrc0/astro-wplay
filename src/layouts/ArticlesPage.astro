@@ -2,9 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, IO, ImgDirectus } from '@components'
 
-const { lang, articles: as } = Astro.props || {}
-
-const articles = [...as, ...as, ...as, ...as, ...as]
+const { lang, articles } = Astro.props || {}
 
 ---
 <SkeletonPage lang={lang.code}>

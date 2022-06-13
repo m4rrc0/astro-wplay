@@ -282,7 +282,13 @@ function transformAddress(address) {
   const a = (address?.[0]?.zip && address?.[0]) || (address?.zip && address)
   if (!a) return null
 
-  const string = `${a.street} ${a.number}, ${a.zip} ${a.city}`
+  // const string = `${a.street} ${a.number}, ${a.zip} ${a.city}`
+  const string = [
+    [a.street, a.number].filter((z) => z).join(' '),
+    [a.zip, a.city].filter((z) => z).join(' '),
+  ]
+    .filter((z) => z)
+    .join(', ')
   const gMapLink = `https://maps.google.com/maps?q=${string.replace(
     /\s/g,
     '+',
@@ -386,10 +392,16 @@ export function transformOrganization(o) {
     const daysTranslated = days?.map(translateFromCodeName)
     const daysString = daysTranslated?.map(({ fr }) => fr).join(', ')
     const timeSlotsFormatted = time_slots?.map(({ time_start, time_end }) => {
-      const timeSlotString = `${time_start.substring(
-        0,
-        5,
-      )} → ${time_end.substring(0, 5)}`
+      const timeSlotString = [
+        time_start?.substring(0, 5),
+        time_end?.substring(0, 5),
+      ]
+        .filter((z) => z)
+        .join(' → ')
+      // const timeSlotString = `${time_start.substring(
+      //   0,
+      //   5,
+      // )} → ${time_end.substring(0, 5)}`
       return { time_start, time_end, str: timeSlotString }
     })
     const timeSlotsString = timeSlotsFormatted?.map(({ str }) => str).join(', ')
@@ -438,7 +450,7 @@ export function transformOrganization(o) {
 export async function fetchOrganizations() {
   const organizationsRaw = await directus.items('organizations').readByQuery({
     limit: -1,
-    sort: 'date_updated',
+    sort: '-date_updated',
     filter: { status: { _in: ['published', 'to_check'] } },
     fields: [
       'status',
@@ -668,9 +680,7 @@ export async function fetchEvents() {
     },
     // filter: { date_published: { _gte: '$NOW(-1 week)' } },
     // filter: { schedule: { time_start: { _gte: '$NOW(-1 week)' } } },
-
-    // fields: [ "*", "translations.*", "main.*", "main.item.*", "main.item.translations.*", "main.item.content.*", "main.item.content.item.*", "main.item.content.item.*" ]
-    // fields: [ "*", "translations.*", "main.*", "main.*.*", "main.*.*.*", "main.*.*.*.*", "main.*.*.*.*.*" ]
+    // sort: 'date_updated',
     fields: [
       '*',
       'status',
@@ -797,6 +807,7 @@ export async function fetchArticles() {
   const articlesRaw = await directus.items('articles').readByQuery({
     limit: -1,
     filter: { status: { _eq: 'published' } },
+    sort: 'date_published',
     fields: [
       // '*',
       'status',

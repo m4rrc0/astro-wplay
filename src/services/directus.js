@@ -7,7 +7,7 @@ const DIRECTUS_URL = import.meta.env.DIRECTUS_URL || process.env.DIRECTUS_URL
 const DIRECTUS_EMAIL =
   import.meta.env.DIRECTUS_EMAIL || process.env.DIRECTUS_EMAIL
 const DIRECTUS_PW = import.meta.env.DIRECTUS_PW || process.env.DIRECTUS_PW
-const ENV = 'development'
+const ENV = import.meta.env.MODE || process.env.NODE_ENV // 'development' or 'production'
 
 export const directus = new Directus(DIRECTUS_URL)
 
@@ -438,7 +438,7 @@ export function transformOrganization(o) {
 export async function fetchOrganizations() {
   const organizationsRaw = await directus.items('organizations').readMany({
     limit: -1,
-    sort: 'name',
+    sort: 'date_updated',
     // filter: { status: { _eq: 'published' } },
     // fields: [ "*", "translations.*", "main.*", "main.item.*", "main.item.translations.*", "main.item.content.*", "main.item.content.item.*", "main.item.content.item.*" ]
     // fields: [ "*", "translations.*", "main.*", "main.*.*", "main.*.*.*", "main.*.*.*.*", "main.*.*.*.*.*" ]
@@ -663,6 +663,7 @@ export async function fetchEvents() {
   const eventsRaw = await directus.items('events').readMany({
     limit: -1,
     // filter: { status: { _eq: 'published' } },
+    // filter: { date_published: { _gte: '$NOW' } },
     // fields: [ "*", "translations.*", "main.*", "main.item.*", "main.item.translations.*", "main.item.content.*", "main.item.content.item.*", "main.item.content.item.*" ]
     // fields: [ "*", "translations.*", "main.*", "main.*.*", "main.*.*.*", "main.*.*.*.*", "main.*.*.*.*.*" ]
     fields: [

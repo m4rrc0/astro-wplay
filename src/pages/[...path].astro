@@ -18,6 +18,7 @@ export async function getStaticPaths() {
 
   // TODO: account for multiple languages! (lang is hardcoded to 'fr' for the moment)
   languages.forEach(lang => {
+    if (lang.code !== 'fr') return null
     // const pagesStaticPaths = await pages.data.map(page => {
     //   // const path = page.path === 'index' ? undefined : page.path
     //   return { params: { path }, props: { page, pages } }

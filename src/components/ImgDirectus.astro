@@ -8,21 +8,30 @@ const {
     $skip, id, class: _class, style, onload, image, src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
 } = Astro.props || {}
 
-const src = imageDirectusSrc({ src: srcRaw, fit, width, height, quality, withoutEnlargement, format })
+const src = imageDirectusSrc({ src: srcRaw, fit, width, height, quality, withoutEnlargement, format, type: image?.type })
 
+const [typePre, typePost] = image?.type?.split('/') || []
+const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('svg')))
 ---
 
 <!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> -->
-<Img
-    {...props}
-    {src}
-    {width}
-    {height}
-    attributes={{
-        img: {
-            ...(id ? { id } : {}),
-            ...(_class ? { class: _class } : {}),
-            ...(style ? { style } : {}),
-            onload: `this.style.background = 'transparent';${onload || ''}`
-        },
-    }} />
+{
+    !src ?
+        null : (
+            useImageTools ?
+                <Img
+                    {...props}
+                    {src}
+                    {width}
+                    {height}
+                    attributes={{
+                        img: {
+                            ...(id ? { id } : {}),
+                            ...(_class ? { class: _class } : {}),
+                            ...(style ? { style } : {}),
+                            onload: `this.style.background = 'transparent';${onload || ''}`
+                        },
+                    }} /> :
+                <img {...props} {src} {width} {height} {id} class={_class} {style} />
+        )
+}

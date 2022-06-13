@@ -51,6 +51,7 @@ export const conditionalRendering = io
 
 // Directus API info: https://docs.directus.io/reference/files/#requesting-a-thumbnail
 export function imageDirectusSrc({
+  type,
   src: srcRaw,
   fit,
   width,
@@ -59,6 +60,11 @@ export function imageDirectusSrc({
   withoutEnlargement,
   format,
 }) {
+  const [typePre, typePost] = type?.split('/') || []
+
+  if (!srcRaw) return srcRaw
+  if (type && (typePre !== 'image' || typePost?.match('svg'))) return srcRaw
+
   const querryParams = {
     fit,
     width,
@@ -67,7 +73,6 @@ export function imageDirectusSrc({
     withoutEnlargement,
     format,
   }
-  if (!srcRaw) return srcRaw
 
   const querryString = Object.entries(querryParams)
     .map(([param, val]) => {

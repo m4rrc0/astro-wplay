@@ -9,16 +9,24 @@ import DemoBoxComplete from '@partials/styleguide/DemoBoxComplete.astro'
 let list6 = ['main', 'danger', 'trans'];
 ---
 
-<SkeletonPage>
+<SkeletonPage lang="fr">
   <SEO
     slot="head"
-    lang="en"
     ogType="website"
     title="Styleguide"
     description="A (soon to be) extensive style guide using nuds libraries"
-    canonicalUrl="https://www.wanna-play.be/styleguide/" />
+    canonicalUrl={Astro.canonicalURL.href}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+   />
 
   <BasicPage lang={{ code: 'fr' }}>
+    <!-- <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${Astro.canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
+    <!-- <a href={`https://web.dev/measure/?url=https%3A%2F%2Fwww.wanna-play.be%2F`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
+    <!-- <iframe
+      src={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${Astro.canonicalURL.href}%26meta=false%26insights=true`}
+    ></iframe> -->
     <div class="box no-border stack gap-down" style="--gap-down: 1em">
       <h1>Styleguide</h1>
       <p>

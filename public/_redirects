@@ -4,6 +4,7 @@
 /articles/ /fr/a/ 301
 /in/belgium/ /fr/be/ 301
 /contact/ /fr/contact/ 301
+
 /in/belgium/west-flanders/ /fr/be/flandre-occidentale/ 301
 /in/belgium/east-flanders/ /fr/be/flandre-orientale/ 301
 /in/belgium/antwerp/ /fr/be/anvers/ 301
@@ -15,8 +16,21 @@
 /in/belgium/namur/ /fr/be/namur/ 301
 /in/belgium/liege/ /fr/be/liege/ 301
 /in/belgium/luxembourg/ /fr/be/luxembourg/ 301
+
+/in/belgium/west-flanders/events/ /fr/be/flandre-occidentale/ 301
+/in/belgium/east-flanders/events/ /fr/be/flandre-orientale/ 301
+/in/belgium/antwerp/events/ /fr/be/anvers/ 301
+/in/belgium/limburg/events/ /fr/be/limbourg/ 301
+/in/belgium/flemish-brabant/events/ /fr/be/brabant-flamand/ 301
+/in/belgium/brussels/events/ /fr/be/bruxelles/ 301
+/in/belgium/walloon-brabant/events/ /fr/be/brabant-wallon/ 301
+/in/belgium/hainaut/events/ /fr/be/hainaut/ 301
+/in/belgium/namur/events/ /fr/be/namur/ 301
+/in/belgium/liege/events/ /fr/be/liege/ 301
+/in/belgium/luxembourg/events/ /fr/be/luxembourg/ 301
+
 /brussels-games-festival/ /archive/brussels-games-festival 301
 /inauguration/ /archive/inauguration 301
-/in/belgium/:area/:type/:slug /fr/o/:slug 301
 
+/in/belgium/:area/:type/:slug /fr/o/:slug 301
 /articles/:slug /fr/a/:slug 301

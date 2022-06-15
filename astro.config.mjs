@@ -4,10 +4,10 @@ import { defineConfig } from 'astro/config'
 import svelte from '@astrojs/svelte'
 import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
-import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
+// import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import critters from 'astro-critters'
 import { astroImageTools } from 'astro-imagetools'
-import compress from 'astro-compress'
+// import compress from 'astro-compress'
 
 // @type-check enabled!
 // VSCode and other TypeScript-enabled text editors will provide auto-completion,
@@ -23,25 +23,40 @@ export default defineConfig({
   integrations: [
     svelte(),
     sitemap({
-      filter: (page) => page !== 'https://www.wanna-play.be/styleguide',
+      filter: (page) => !page.match(/\/(styleguide|email-error)\/$/),
     }),
-    robotsTxt(),
+    robotsTxt({
+      policy: [
+        {
+          userAgent: '*',
+          allow: '/',
+          disallow: ['/styleguide', '/email-error'],
+        },
+      ],
+    }),
     critters({ fonts: true }),
     astroImageTools,
-    compress({
-      // css: false,
-      // html: false,
-      // js: false,
-      img: false,
-      // svg: false,
-    }),
+    // compress({
+    //   css: false,
+
+    //   // html: {
+    //   //   // minify: true,
+    //   //   collapseInlineTagWhitespace: false,
+    //   //   // collapseWhitespace: false,
+    //   //   decodeEntities: false,
+    //   //   removeComments: true,
+    //   // },
+    //   js: false,
+    //   img: false,
+    //   svg: false,
+    // }),
   ],
   vite: {
     // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)
     ssr: {
       external: ['svgo'],
     },
-    plugins: [viteCommonjs()],
+    // plugins: [viteCommonjs()],
   },
 })
 

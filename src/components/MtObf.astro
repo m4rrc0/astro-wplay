@@ -20,24 +20,16 @@ const post2 = post.substr(postHalf)
 // <Fragment set:html={`<a href="${mailtoEncoded}">${emailEncoded}</a>`} />
 // onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld; return false;"
 ---
+<script type="module" src={(await import("./mt-obf.js?url")).default}></script>
 
-<a href="/email-error/"
+<a is="mt-obf"
+    href="/email-error/"
     {target}
     {rel}
     {referrerpolicy}
     data-mtobf="true"
     style={`--mtobf-pre1: "${pre1}"; --mtobf-pre2: "${pre2}"; --mtobf-post1: "${post1}"; --mtobf-post2: "${post2}";`}
-    onmouseover={`mtdeobf(this,"${pre1}","${pre2}","${post1}","${post2}");`}
-    onfocus={`mtdeobf(this,"${pre1}","${pre2}","${post1}","${post2}");`}
-/>
-
-<script is:global>
-function mtdeobf(self, pre1, pre2, post1, post2) {
-    self.dataset.mtobf = "false";
-    self.innerHTML = [pre1, pre2, '&#', '64;', post1, post2].join('');
-    self.href = ['mai', 'lt', 'o:', pre1, pre2, '@', post1, post2].join('');
-}
-</script>
+    />
 
 <style is:global>
 a[data-mtobf="true"]:after {

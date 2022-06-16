@@ -35,7 +35,10 @@ const {lang, organization: {
 }} = Astro.props;
 
 const { description, opening_hours_remark } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
-const presentation = typesTranslated?.[0] && address?.city && address?.area?.name?.fr && typesTranslated?.map(({ [lang.code]: typeTranslated }) => typeTranslated).join(', ') + ` à ${address.city} dans la province de ${address?.area?.name?.fr}`
+const presentation = typesTranslated?.[0] && address?.city && address?.area?.name?.fr
+  && typesTranslated?.map(({ [lang.code]: typeTranslated }) => typeTranslated).join(', ')
+  + ` à ${address.city}`
+  + (address.city !== address?.area?.name?.fr ? ` dans la ${address?.area?.code_name === 'brussels' ? 'région' : 'province'} de ${address?.area?.name?.fr}` : '')
 const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: 'cover', quality: '50' })
 
 
@@ -132,11 +135,11 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
         box no-border
         color-palette-variation-funky-contrast
       ">
-        <div class="center max-width-measure-h4">
+        <div class="center max-width-measure-h4 stack gap-down-h7">
           <h2>Horaires</h2>
           {
             opening_hours_strings?.[0] && (
-              <div>
+              <div class="stack gap-down-h9">
                   {opening_hours_strings.map(str => (
                     <p set:html={str} />
                   ))}
@@ -162,6 +165,7 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
       {description && <div class="
         box no-border center
         max-width-measure-h4
+        stack gap-down-h7
       ">
           <h2>Description</h2>
           <Markdown content={description} />

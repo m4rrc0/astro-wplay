@@ -34,7 +34,9 @@ const {lang, event: {
 
 const {day, monthLong, year} = time_start?.[lang.code] || {}
 const { description, highlighted_details } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
-const presentation = address?.city && address?.area?.name?.fr && `Événement jeux à ${address.city} dans la province de ${address?.area?.name?.fr}`
+const presentation = address?.city && address?.area?.name?.fr
+  && `Événement jeux à ${address.city}`
+  + (address.city !== address?.area?.name?.fr ? ` dans la ${address?.area?.code_name === 'brussels' ? 'région' : 'province'} de ${address?.area?.name?.fr}` : '')
 const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: 'cover', quality: '50' })
 const srcSocial = imageDirectusSrc({ src: cover_image?.src, width: '1200', height: '630', fit: 'cover', quality: '99' })
 const startLong = day && monthLong && year && `${day} ${monthLong} ${year}`

@@ -79,13 +79,20 @@ export const areas = [
 /* prettier-ignore */
 const dico = [
   // links names
-  { code_name: 'website', fr: 'Site web', iconName: 'gridicons:share-computer' },
-  { code_name: 'web_page', fr: 'Page web', iconName: 'gridicons:share-computer' },
-  { code_name: 'facebook_page', fr: 'Page Facebook', iconName: 'brandico:facebook-rect' },
-  { code_name: 'facebook_event', fr: 'Événement Facebook', iconName: 'brandico:facebook-rect' },
-  { code_name: 'twitter', fr: 'Twitter', iconName: 'fa:twitter-square' },
-  { code_name: 'instagram', fr: 'Instagram', iconName: 'fa-brands:instagram-square' },
-  { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'fa-brands:youtube-square' },
+  { code_name: 'website', fr: 'Site web', iconName: 'ph:link' },
+  { code_name: 'web_page', fr: 'Page web', iconName: 'ph:link' },
+  { code_name: 'facebook_page', fr: 'Page Facebook', iconName: 'ph:facebook-logo' },
+  { code_name: 'facebook_event', fr: 'Événement Facebook', iconName: 'ph:facebook-logo' },
+  { code_name: 'twitter', fr: 'Twitter', iconName: 'ph:twitter-logo' },
+  { code_name: 'instagram', fr: 'Instagram', iconName: 'ph:instagram-logo' },
+  { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'ph:youtube-logo' },
+
+  { code_name: 'spotify', fr: 'Spotify', iconName: 'ph:spotify-logo' },
+  { code_name: 'shop', fr: 'Boutique', iconName: 'ph:shopping-cart-simple' },
+  { code_name: 'tripadvisor', fr: 'Tripadvisor', iconName: 'cib:tripadvisor' },
+  { code_name: 'facebook_group', fr: 'Groupe Facebook', iconName: 'ph:facebook-logo' },
+  { code_name: 'forum', fr: 'Forum', iconName: 'ph:chats' },
+  { code_name: 'talk', fr: 'Le Talk', iconName: 'ri:kakao-talk-line' },
   // Areas
   ...areas,
   // Organization types
@@ -259,7 +266,7 @@ const transformLink = ({ name, url }) => {
 
   if (!iconName) {
     console.warn(`--SELF WARNING-- No icon found with code_name '${name}'`)
-    iconName = 'bi:question-square'
+    iconName = 'ph:question'
   }
 
   return {
@@ -405,7 +412,6 @@ export function transformOrganization(o) {
       return { time_start, time_end, str: timeSlotString }
     })
     const timeSlotsString = timeSlotsFormatted?.map(({ str }) => str).join(', ')
-    console.log(timeSlotsString)
     return (
       (daysString ? `<strong>${daysString}</strong>` : '') +
       (timeSlotsString ? `: ${timeSlotsString}` : '')

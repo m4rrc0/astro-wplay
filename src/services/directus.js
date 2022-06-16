@@ -405,7 +405,11 @@ export function transformOrganization(o) {
       return { time_start, time_end, str: timeSlotString }
     })
     const timeSlotsString = timeSlotsFormatted?.map(({ str }) => str).join(', ')
-    return `<strong>${daysString}:</strong> ${timeSlotsString}`
+    return daysString
+      ? `<strong>${daysString}</strong>`
+      : '' + timeSlotsString
+      ? `: ${timeSlotsString}`
+      : ''
   })
 
   // // Transform opening_hours_remark

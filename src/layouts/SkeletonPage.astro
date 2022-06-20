@@ -5,6 +5,8 @@ import SEO from '../components/SEO.astro'
 
 const { lang = 'fr' } = Astro.props;
 
+const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
+
 ---
 
 <html {lang}>
@@ -84,7 +86,7 @@ const { lang = 'fr' } = Astro.props;
     <!-- <script hoist>import '../assets/js/instant.page.js';</script> -->
     <!-- <script hoist src="https://instant.page/5.1.0" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script> -->
     <noscript><style is:inline>.astro-imagetools-img{background:none;}</style></noscript>
-    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "73596bbe5c8c406d893ffec0b3e6cde1"}'></script><!-- End Cloudflare Web Analytics -->
+    <!-- Cloudflare Web Analytics -->{PUBLIC_ANALYTICS_CLOUDFLARE && (<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon={`{"token": "${PUBLIC_ANALYTICS_CLOUDFLARE}"}`}></script>)}<!-- End Cloudflare Web Analytics -->
   </body>
   </html>
   

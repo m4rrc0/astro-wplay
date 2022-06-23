@@ -177,6 +177,7 @@ body,
 }
 .color-palette-red,
 .color-palette-danger,
+.color-palette-escape_room,
 .color-palette-festival {
   --color-neutral-palette: var(--color-white);
   --color-primary-palette: var(--color-red);

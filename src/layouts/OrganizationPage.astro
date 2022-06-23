@@ -135,7 +135,7 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
         box no-border
         color-palette-variation-funky-contrast
       ">
-        <div class="center max-width-measure-h4 stack gap-down-h7">
+        <div class="center max-width-measure-h4 stack gap-down-h7 recursive">
           <h2>Horaires</h2>
           {
             opening_hours_strings?.[0] && (
@@ -148,7 +148,7 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
           }
           {
             opening_hours_remark && (
-              <div>
+              <div class="">
                   <Markdown content={opening_hours_remark} />
               </div>
             )

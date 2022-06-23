@@ -23,14 +23,15 @@ export default defineConfig({
   integrations: [
     svelte(),
     sitemap({
-      filter: (page) => !page.match(/\/(styleguide|email-error)\/$/),
+      filter: (page) =>
+        !page.match(/\/(styleguide|email-error|h\/o\/o\/k\/s)\/$/),
     }),
     robotsTxt({
       policy: [
         {
           userAgent: '*',
           allow: '/',
-          disallow: ['/styleguide', '/email-error'],
+          disallow: ['/styleguide', '/email-error', '/h/o/o/k/s'],
         },
       ],
     }),

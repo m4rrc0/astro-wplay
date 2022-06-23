@@ -103,6 +103,7 @@ const dico = [
   { code_name: 'toy_library', fr: 'Ludothèque' },
   { code_name: 'shop', fr: 'Boutique' },
   { code_name: 'festival', fr: 'Festival' },
+  { code_name: 'escape_room', fr: 'Escape Room' },
   // Days of week
   { code_name: 'monday', fr: 'Lundi' },
   { code_name: 'tuesday', fr: 'Mardi' },
@@ -685,7 +686,7 @@ export async function fetchEvents() {
     filter: {
       _and: [
         { status: { _eq: 'published' } },
-        { date_updated: { _gte: '$NOW(-6 months)' } }, // TODO: change this when we can check the last event time in schedule
+        // { date_updated: { _gte: '$NOW(-6 months)' } }, // TODO: change this when we can check the last event time in schedule
       ],
     },
     // filter: { date_published: { _gte: '$NOW(-1 week)' } },
@@ -754,7 +755,21 @@ export async function fetchEvents() {
   })
 
   const eventsUnflat = eventsRaw.data?.map((e) => transformEvent(e, languages))
-  const events = flattenEvents(eventsUnflat)
+  const eventsUnfiltered = flattenEvents(eventsUnflat)
+
+  const d = new Date()
+  const today = d.toISOString().substring(0, 10)
+  const inSixMonths = new Date(d.setMonth(d.getMonth() + 6))
+    .toISOString()
+    .substring(0, 10)
+
+  const events = eventsUnfiltered.filter((event) => {
+    return (
+      event?.time_end?.dateTimeRaw > today &&
+      event?.time_end?.dateTimeRaw < inSixMonths
+    )
+  })
+
   events.sort((prev, next) => {
     const a = prev?.time_start?.dateTimeRaw
     const b = next?.time_start?.dateTimeRaw

@@ -1,5 +1,6 @@
 // Full Astro Configuration API Documentation:
 // https://astro.build/config
+import 'dotenv/config'
 import { defineConfig } from 'astro/config'
 import svelte from '@astrojs/svelte'
 import sitemap from '@astrojs/sitemap'
@@ -8,6 +9,8 @@ import robotsTxt from 'astro-robots-txt'
 import critters from 'astro-critters'
 import { astroImageTools } from 'astro-imagetools'
 // import compress from 'astro-compress'
+
+const PAGE_ADMIN = process.env.PAGE_ADMIN || null
 
 // @type-check enabled!
 // VSCode and other TypeScript-enabled text editors will provide auto-completion,
@@ -24,14 +27,15 @@ export default defineConfig({
     svelte(),
     sitemap({
       filter: (page) =>
-        !page.match(/\/(styleguide|email-error|h\/o\/o\/k\/s)\/$/),
+        !page.match(/\/(styleguide|email-error)\/$/) &&
+        !(PAGE_ADMIN && page.endsWith(`${PAGE_ADMIN}/`)),
     }),
     robotsTxt({
       policy: [
         {
           userAgent: '*',
           allow: '/',
-          disallow: ['/styleguide', '/email-error', '/h/o/o/k/s'],
+          disallow: ['/styleguide', '/email-error'],
         },
       ],
     }),

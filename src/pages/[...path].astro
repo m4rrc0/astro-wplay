@@ -1,12 +1,15 @@
 ---
-  import Debug from 'astro/debug';
-  import { createPath } from '@utils';
-  import { directus, start as startDirectus, fetchLanguages, fetchOrganizations, fetchEvents, fetchArticles, areas } from '../services/directus.js'
-  import { SkeletonPage, BasicPage, HomePage, OrganizationPage, EventPage, ArticlesPage, ArticlePage, AreasPage, AreaPage } from '@layouts'
+// import Debug from 'astro/debug';
+import { createPath } from '@utils';
+import { directus, start as startDirectus, fetchLanguages, fetchOrganizations, fetchEvents, fetchArticles, areas } from '../services/directus.js'
+import { SkeletonPage, BasicPage, AdminHidden, HomePage, OrganizationPage, EventPage, ArticlesPage, ArticlePage, AreasPage, AreaPage } from '@layouts'
 
+const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
 export async function getStaticPaths() {
   await startDirectus()
+  
+  const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
 	// const pages = await fetchPages()
   const languages = await fetchLanguages()
@@ -14,7 +17,9 @@ export async function getStaticPaths() {
 	const events = await fetchEvents()
 	const articles = await fetchArticles()
 
-  let staticPaths = []
+  let staticPaths = [
+    ...(PAGE_ADMIN ? [{ params: { path: PAGE_ADMIN }, props: { lang: { code: 'fr' } } }] : []),
+  ]
 
   // TODO: account for multiple languages! (lang is hardcoded to 'fr' for the moment)
   languages.forEach(lang => {
@@ -98,6 +103,7 @@ const {
         )
       } -->
     <!-- LISTS PAGES -->
+    {PAGE_ADMIN && path === PAGE_ADMIN && <AdminHidden {lang} />}
     {path === createPath({ type: 'home' }) && <HomePage {areas} {articles} {lang} />}
     {path === createPath({ type: 'articles' }) && <ArticlesPage {articles} {lang} />}
     {path === createPath({ type: 'areas' }) && <AreasPage {areas} {lang} />}

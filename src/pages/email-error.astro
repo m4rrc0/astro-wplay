@@ -3,7 +3,10 @@ import { SkeletonPage, BasicPage } from '@layouts'
 
 ---
 
-<SkeletonPage>    
+<SkeletonPage>
+    <Fragment slot="head">
+        <meta name="robots" content="noindex">
+    </Fragment>
     <BasicPage lang={{ code: 'fr' }}>
 
     <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">

@@ -20,7 +20,7 @@
   background-size: cover;
 }
 
-body {
+#layout-page-base {
   position:relative;
   overflow-x: hidden;
 }

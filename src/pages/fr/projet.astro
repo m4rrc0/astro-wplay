@@ -110,18 +110,19 @@ import { SEO } from '@components'
     display: inline-block;
     position: relative;
     margin-bottom: 1.382rem;
+    /* text-decoration: underline;
+    text-decoration-color: var(--color-neutral); */
 }
 .title-label::after {
     background-color: inherit;
-
     content: '';
     position: absolute;
     z-index: -1;
+    border-radius: var(--border-radius-l);
     top: -0.691rem;
     bottom: -0.691rem;
     right: -1.382rem;
     left: -9999rem;
-    border-radius: var(--border-radius-l);
 
     /* Trial with box shadow not conclusive: https://css-tricks.com/full-browser-width-bars/ */
     /* top: 0; */

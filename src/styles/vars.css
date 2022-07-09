@@ -52,17 +52,26 @@
 
 }
 
-@custom-selector :--h1 h1, h1 *, .h1, .h1 *;
-@custom-selector :--h2 h2, h2 *, .h2, .h2 *;
-@custom-selector :--h3 h3, h3 *, .h3, .h3 *;
-@custom-selector :--h4 h4, h4 *, .h4, .h4 *;
-@custom-selector :--h5 h5, h5 *, .h5, .h5 *;
-@custom-selector :--h6 h6, h6 *, .h6, .h6 *;
+@custom-selector :--h1 h1, .h1;
+@custom-selector :--h1_ :--h1, :--h1 *;
+@custom-selector :--h2 h2, .h2;
+@custom-selector :--h2_ :--h2, :--h2 *;
+@custom-selector :--h3 h3, .h3;
+@custom-selector :--h3_ :--h3, :--h3 *;
+@custom-selector :--h4 h4, .h4;
+@custom-selector :--h4_ :--h4, :--h4 *;
+@custom-selector :--h5 h5, .h5;
+@custom-selector :--h5_ :--h5, :--h5 *;
+@custom-selector :--h6 h6, .h6;
+@custom-selector :--h6_ :--h6, :--h6 *;
 @custom-selector :--headings :--h1, :--h2, :--h3, :--h4, :--h5, :--h6;
+@custom-selector :--headings_ :--h1_, :--h2_, :--h3_, :--h4_, :--h5_, :--h6_;
 @custom-selector :--code tt, code, kbd, pre, samp;
 @custom-selector :--strong strong, .strong, b, .b, .bold;
-@custom-selector :--bold :--strong;
-@custom-selector :--em em, .em;
+@custom-selector :--strong_ :--strong, :--strong *;
+@custom-selector :--em em, .em, .italic;
+@custom-selector :--em_ :--em, :--em *;
+@custom-selector :--button button, .button, input[type='submit'], input[type='button'], input[type='reset'];
 
 /* :--headings {
   color: env(--main-color) !important;

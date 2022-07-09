@@ -34,3 +34,7 @@
 
 /in/belgium/:area/:type/:slug /fr/o/:slug 301
 /articles/:slug /fr/a/:slug 301
+
+# 302
+/in-brussels/ /fr/e/wanna-play-in-brussels-2022-07-30/ 302
+/in-brussels /fr/e/wanna-play-in-brussels-2022-07-30/ 302

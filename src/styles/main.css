@@ -4,7 +4,8 @@
   transition: all 100ms ease;
 }
 :focus {
-  outline: var(--size-outline, 0.2rem) solid;
+  outline-width: var(--size-outline, 0.2rem);
+  outline-style: solid;
   outline-offset: var(--size-outline, 0.2rem);
 }
 

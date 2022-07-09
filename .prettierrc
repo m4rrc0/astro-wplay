@@ -1,8 +1,8 @@
 {
   "printWidth": 80,
-  "singleQuote": true,
   "trailingComma": "all",
   "jsxBracketSameLine": false,
-  "parser": "babel",
-  "semi": false
+  "semi": false,
+  "astroSortOrder": "markup | styles",
+  "astroAllowShorthand": false
 }

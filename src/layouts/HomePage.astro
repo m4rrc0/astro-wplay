@@ -1,14 +1,13 @@
 ---
 // import { Img } from "astro-imagetools/components";
-import { SkeletonPage, BasicPage } from '@layouts'
-import { BelgiumMap } from '@partials'
-import { SEO, IO, ImgDirectus, Img } from '@components'
+import { SkeletonPage, BasicPage } from "@layouts"
+import { BelgiumMap } from "@partials"
+import { SEO, IO, ImgDirectus, Img } from "@components"
 // import logo from '@images/LOGO-1024px.png?w=600'
 
 const { lang, areas, articles: as } = Astro.props || {}
 
 const articles = as.slice(0, 3)
-
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -26,133 +25,169 @@ const articles = as.slice(0, 3)
     <main class="center max">
       <div class="stack gap-down-h0 box no-border">
         <header class="max-width-measure-h2 stack center intrinsic gap-down-h0">
-            <h1>
-              <!-- <img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" id="logo-main" width="4265" height="1834" loading="lazy" /> -->
-              <!-- <Img
+          <h1>
+            <!-- <img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" id="logo-main" width="4265" height="1834" loading="lazy" /> -->
+            <!-- <Img
                 src="/src/assets/images/LOGO-1024px.png"
                 alt="Wanna Play - Connecte les joueurs"
                 id="logo-main"
                 width="4265"
                 height="1834"
                 loading="lazy" /> -->
-              <img
-                src="/assets/images/Wanna-Play_ASBL-Animation-mod.gif"
-                alt="Wanna Play - Connecte les joueurs"
-                id="logo-main"
-                width="400"
-                height="193"
-                loading="lazy" />
-            </h1>
-            <p class="h1 color-palette-variation-funky">Connecte les joueurs</p>
+            <img
+              src="/assets/images/Wanna-Play_ASBL-Animation-mod.gif"
+              alt="Wanna Play - Connecte les joueurs"
+              id="logo-main"
+              width="400"
+              height="193"
+              loading="lazy"
+            />
+          </h1>
+          <p class="h1 color-palette-variation-funky">Connecte les joueurs</p>
         </header>
-  
+
         <div class="max-width-measure-h2 center text">
-          <p>Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un club, ...?</p>
-          <p>Retrouve toute l'info liée au monde du jeu de société sur Wanna Play!</p>
+          <p>
+            Tu cherches une soirée jeux, un événement, un magasin, une
+            ludothèque, un bar à jeux, un club, ...?
+          </p>
+          <p>
+            Retrouve toute l'info liée au monde du jeu de société sur Wanna
+            Play!
+          </p>
         </div>
-  
+
         <div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
           <h2 class="center text">Où veux-tu jouer?</h2>
           <div class="cluster gap-down-h6" style="--justify-content: center;">
-              <ul class="reset">
-                  {areas.map(area => {
-                      return (
-                          <li><a href={'/' + area.path[lang.code]} class={`area-${area.code_name}`}>{area.name[lang.code]}</a></li>
-                      )
-                  })}
-              </ul>
+            <ul class="reset">
+              {areas.map((area) => {
+                return (
+                  <li>
+                    <a
+                      href={"/" + area.path[lang.code]}
+                      class={`area-${area.code_name}`}
+                    >
+                      {area.name[lang.code]}
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
           <div>
-              <BelgiumMap {lang} {areas} />
+            <BelgiumMap {lang} {areas} />
           </div>
         </div>
-  
-        <section class="articles center max text stack gap-down-h1
+
+        <section
+          class="articles center max text stack gap-down-h1
           full-bleed-before full-bleed-after skew-border-before skew-border-after
           color-palette-variation-funky-contrast
-        ">
+        "
+        >
           <h2>Derniers articles</h2>
-          <div class="grid gap-down-h4" style="--width-column: var(--width-col-4);">
+          <div
+            class="grid gap-down-h4"
+            style="--width-column: var(--width-col-4);"
+          >
             <div>
-                {articles.map(a => {
-                    const headerT = a?.header?.[0].translations.find(({ languages_code }) => languages_code === lang.code )
-                    return (
-                        <article
-                            class="card-article
+              {articles.map((a) => {
+                const headerT = a?.header?.[0].translations.find(
+                  ({ languages_code }) => languages_code === lang.code,
+                )
+                return (
+                  <article
+                    class="card-article
                                 breakout-clickable
                                 box no-border stack gap-down-h2 split-after-2
                                 color-palette-variation-contrast
                                 border-radius-m"
+                  >
+                    <IO div $skipNoInner>
+                      <ImgDirectus
+                        $skip={!headerT?.featured_image?.src}
+                        src={headerT?.featured_image?.src}
+                        alt={headerT?.title}
+                        loading="lazy"
+                        class="featured-image"
+                        width="590"
+                        height="400"
+                        fit="cover"
+                        quality="99"
+                      />
+                    </IO>
+                    <h3 class="h4">
+                      <a href={`/${a.path}`} class="reset clickable">
+                        {headerT?.title}
+                      </a>
+                    </h3>
+                    <IO div $skipNoInner class="stack gap-down-h7">
+                      <IO div $skipNoInner class="cluster">
+                        <IO ul $skipNoInner class="reset">
+                          {a?.authors?.map((author) => (
+                            <IO
+                              li
+                              $skipNoInner
+                              class="stack horizontal gap-down-h7"
                             >
-                            <IO div $skipNoInner>
+                              <IO
+                                div
+                                $skip={!author?.avatar?.src}
+                                class="box no-padding border-radius-circle border-width-1"
+                              >
                                 <ImgDirectus
-                                    $skip={!headerT?.featured_image?.src}
-                                    src={headerT?.featured_image?.src}
-                                    alt={headerT?.title}
-                                    loading="lazy"
-                                    class="featured-image"
-                                    width="590"
-                                    height="400"
-                                    fit="cover"
-                                    quality="99" />
+                                  $skip={!author?.avatar?.src}
+                                  src={author?.avatar?.src}
+                                  alt={author?.display_name}
+                                  loading="lazy"
+                                  class="border-radius-circle"
+                                  style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
+                                  width="32"
+                                  height="32"
+                                  fit="cover"
+                                  quality="99"
+                                />
+                              </IO>
+                              <IO p $skipNoInner class="author-name">
+                                {author?.display_name}
+                              </IO>
                             </IO>
-                            <h3 class="h4">
-                                <a href={`/${a.path}`} class="reset clickable">{headerT?.title}</a>
-                            </h3>
-                            <IO div $skipNoInner class="stack gap-down-h7">
-                                <IO div $skipNoInner class="cluster">
-                                    <IO ul $skipNoInner class="reset">
-                                        {a?.authors?.map(author => (
-                                            <IO li $skipNoInner class="stack horizontal gap-down-h7">
-                                                <IO div $skip={!author?.avatar?.src} class="box no-padding border-radius-circle border-width-1">
-                                                    <ImgDirectus
-                                                        $skip={!author?.avatar?.src}
-                                                        src={author?.avatar?.src}
-                                                        alt={author?.display_name}
-                                                        loading="lazy"
-                                                        class="border-radius-circle"
-                                                        style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
-                                                        width="32"
-                                                        height="32"
-                                                        fit="cover"
-                                                        quality="99" />
-                                                </IO>
-                                                <IO p $skipNoInner class="author-name">{author?.display_name}</IO>
-                                            </IO>
-                                        ))}
-                                    </IO>
-                                </IO>
-                                <hr />
-                                <IO p $skip={!a?.date_published?.fr?.date}>Publié le <strong>{a?.date_published?.fr?.date}</strong></IO>
-                            </IO>
-                        </article>
-                    )
-                })}
+                          ))}
+                        </IO>
+                      </IO>
+                      <hr />
+                      <IO p $skip={!a?.date_published?.fr?.date}>
+                        Publié le <strong>{a?.date_published?.fr?.date}</strong>
+                      </IO>
+                    </IO>
+                  </article>
+                )
+              })}
             </div>
           </div>
           <p><a href={`/${lang.code}/a`} class="h3">Tous les articles</a></p>
         </section>
       </div>
-    </main>                    
-
+    </main>
   </BasicPage>
 </SkeletonPage>
 
 <style>
-#logo-main {
-  width: var(--width-col-3);
-  max-width: 100%;
-  height: auto;
-}
-section.articles {
-  margin-top: 4vw;
-  margin-bottom: 4vw;
-  padding-top: 4vw;
-  padding-bottom: 4vw;
+  #logo-main {
+    width: var(--width-col-3);
+    max-width: 100%;
+    height: auto;
+  }
+  section.articles {
+    margin-top: 4vw;
+    margin-bottom: 4vw;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
 
-  --skew-before: 0.7deg;
-  --skew-before-origin: top right;
-  --skew-after: -1deg;
-  --skew-after-origin: bottom right;
-}
+    --skew-before: 0.7deg;
+    --skew-before-origin: top right;
+    --skew-after: -1deg;
+    --skew-after-origin: bottom right;
+  }
 </style>

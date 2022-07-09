@@ -26,7 +26,8 @@
     "postcss-import": "^14.0.2",
     "postcss-mixins": "^9.0.1",
     "postcss-preset-env": "^7.4.1",
-    "prettier-plugin-astro": "^0.0.12",
+    "prettier": "^2.7.1",
+    "prettier-plugin-astro": "^0.1.1",
     "protect-email": "^0.1.2"
   },
   "dependencies": {

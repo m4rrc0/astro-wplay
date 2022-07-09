@@ -1,27 +1,31 @@
 ---
-import { SkeletonPage, BasicPage } from '@layouts'
+import { SkeletonPage, BasicPage } from "@layouts"
 // import FourOFour from '@pages/404.astro'
 const PUBLIC_HOOK_PROD = import.meta.env.PUBLIC_HOOK_PROD || null
 
 const { lang } = Astro.props || {}
-
 ---
 
 <SkeletonPage lang={lang.code}>
-    <Fragment slot="head">
-        <meta name="robots" content="noindex">
-    </Fragment>
-    <BasicPage {lang}>
-        {PUBLIC_HOOK_PROD ? (
-            <main class="center box no-border">
-                <p>
-                    <a href={`javascript:fetch('${PUBLIC_HOOK_PROD}',{method: 'POST'});`} class='reset button'>Build production website</a>
-                </p>
-            </main>
-        ) : (
-            <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
-                <p class="h3">Oops. Il n'y à rien à cette adresse.</p>
-            </main>
-        )}
-    </BasicPage>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+  <BasicPage {lang}>
+    {PUBLIC_HOOK_PROD ? (
+      <main class="center box no-border">
+        <p>
+          <a
+            href={`javascript:fetch('${PUBLIC_HOOK_PROD}',{method: 'POST'});`}
+            class="reset button"
+          >
+            Build production website
+          </a>
+        </p>
+      </main>
+    ) : (
+      <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
+        <p class="h3">Oops. Il n'y à rien à cette adresse.</p>
+      </main>
+    )}
+  </BasicPage>
 </SkeletonPage>

@@ -11,7 +11,10 @@
 ---
 
 <div
-  class={`box stack color-palette-${palette} color-palette-variation-${variation}`}
+  data-c-p={palette}
+  data-c-p-var={variation}
+  cclass={`box stack color-palette-${palette} color-palette-variation-${variation}`}
+  class={`box stack`}
   {style}
 >
   <p class="h3">Palette {palette} - Variation {variation}</p>
@@ -33,15 +36,13 @@
         <button>Magnificent</button>
       </li>
       <li>
-        <button class="color-palette-variation-contrast"> Wondeful </button>
+        <button data-c-p-var="contrast">Wondeful</button>
       </li>
       <li>
-        <button class="color-palette-variation-funky">Marvelous</button>
+        <button data-c-p-var="funky">Marvelous</button>
       </li>
       <li>
-        <button class="color-palette-variation-funky-contrast">
-          Glorious
-        </button>
+        <button data-c-p-var="funky-contrast">Glorious</button>
       </li>
     </ul>
   </div>

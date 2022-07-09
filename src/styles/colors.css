@@ -3,178 +3,94 @@
 
 :root {
   /* All the colors we might want to use throughout the site with their respective variable names */
-  --color-white-hsl: 0deg, 0%, 100%;
-  --color-white: hsl(var(--color-white-hsl));
-  --color-blue-hsl: 221deg, 55%, 41%;
-  --color-blue: hsl(var(--color-blue-hsl));
-  --color-blue-trans: hsla(var(--color-blue-hsl), 0.8);
-  --color-teal-hsl: 181deg, 100%, 34%;
-  --color-teal: hsl(var(--color-teal-hsl));
-  --color-red-hsl: 347, 78%, 60%;
-  --color-red: hsl(var(--color-red-hsl));
-  --color-orange-hsl: 19deg, 100%, 64%;
-  --color-orange: hsl(var(--color-orange-hsl));
-  --color-purple-hsl: 273deg, 40%, 49%;
-  --color-purple: hsl(var(--color-purple-hsl));
-  --color-green-hsl: 111deg, 48%, 54%;
-  --color-green: hsl(var(--color-green-hsl));
+  --hsl-white: 0deg, 0%, 100%;
+  --color-white: hsl(var(--hsl-white));
+  --hsl-blue: 221deg, 55%, 41%;
+  --color-blue: hsl(var(--hsl-blue));
+  --color-blue-trans: hsla(var(--hsl-blue), 0.8);
+  --hsl-teal: 181deg, 100%, 34%;
+  --color-teal: hsl(var(--hsl-teal));
+  --hsl-red: 347, 78%, 60%;
+  --color-red: hsl(var(--hsl-red));
+  --hsl-orange: 19deg, 100%, 64%;
+  --color-orange: hsl(var(--hsl-orange));
+  --hsl-purple: 273deg, 40%, 49%;
+  --color-purple: hsl(var(--hsl-purple));
+  --hsl-green: 111deg, 48%, 54%;
+  --color-green: hsl(var(--hsl-green));
   --color-black: hsl(0, 0%, 7%);
   --color-dark: hsl(0, 0%, 20%);
   --color-grey: hsl(0, 0%, 53%);
+
+  color: var(--color-text, hsl(221deg, 55%, 41%));
 }
 
+/* Assign the palette colors to elements */
 body,
-*[class*="color-palette-"] {
-  /* How the palette should be used */
-  /* Example with first line: The primary color (as defined in the palettes later) is used for text color */
+:--c-p--any {
+  /* --- DEFAULTS --- */
   --color-text: var(--color-primary);
   --color-bg: var(--color-neutral);
-  --color-selection-text: var(--color-neutral);
-  --color-selection-bg: var(--color-secondary);
-  --color-a-text: var(--color-text);
-  /* --color-a-bg: var(--color-bg); */
-  --color-a-bg: transparent;
-  --color-a_hover-text: var(--color-secondary);
-  /* --color-a_hover-bg: var(--color-neutral); */
-  --color-button-text: var(--color-text);
-  --color-button-bg: var(--color-bg);
-  --color-button_hover-text: var(--color-secondary);
-  --color-button_hover-bg: var(--color-bg);
-  --color-shadow: var(--color-blue-trans);
+  /* --color-border: var(); */
+  /* --color-outline: var(); */
   --color-text-decoration: var(--color-secondary);
-  /* TODO */
-  /* --color-button_disabled-text: var(--color-secondary); */
-  /* --color-button_disabled-bg: var(--color-bg); */
-  /* --color-code-text: var(--color-bg); */
-  /* --color-code-bg: var(--color-secondary); */
-  /* --color-code-border: var(--color-primary); */
+  /* --color-text-emphasis: var(); */
+  --color-shadow: var(--color-blue-trans); /* has to be used manually in box-shadow definitions */
+  /* --color-caret: var(); */
+  /* --color-column-rule: var(); */
+  /* --color-fill: var(); */
+  /* --color-stroke: var(); */
 
-  /* Fallback values if custom properties are not supported */
-  /* OPTIONAL: Change the following defaults if needed (otherwise, these are stated as is in colors-defaults.css) */
-  /* color: #111; */
-  /* background-color: transparent; */
-  /* border-color: currentcolor; */
-  /* outline-color: currentcolor; */
-  /* text-decoration-color: var(--color-secondary); */
-  /* text-emphasis-color: currentcolor; */
-  /* caret-color: currentcolor; */
-  /* column-rule-color: currentcolor; */
+  /* --- FOCUS --- */
+  /* --color-outline--focus: var(); */
 
-  /* Default variable names and fallback values for every css color-related properties */
-  /* OPTIONAL: If we want to change variable names or provide different fallback values, we need to change these rules */
-  /* color: var(--color-text, #111); */
-  /* background-color: var(--color-bg, transparent); */
-  /* border-color: var(--color-border, currentcolor); */
-  /* outline-color: var(--color-outline, currentcolor); */
-  text-decoration-color: var(--color-text-decoration, currentcolor);
-  /* text-emphasis-color: var(--color-text-emphasis, currentcolor); */
-  /* caret-color: var(--color-caret, currentcolor); */
-  /* column-rule-color: var(--color-column-rule, currentcolor); */
+  /* --- SELECTION --- */
+  --color-text--selection: var(--color-neutral);
+  --color-bg--selection: var(--color-secondary);
+
+  /* --- A --- */
+  /* --color-text__a: var(--color-text); */
+  /* --color-bg__a: transparent; */
+  --color-text__a--hover: var(--color-secondary);
+  /* --color-bg__a--hover: var(--color-neutral); */
+
+  /* --- BUTTON --- */
+  --color-text__button: var(--color-text);
+  --color-bg__button: var(--color-bg);
+  --color-text__button--hover: var(--color-secondary);
+  --color-bg__button--hover: var(--color-bg);
+  /* --color-text__button--disabled: var(--color-secondary); */
+  /* --color-bg__button--disabled: var(--color-bg); */
+
+  /* --- CODE --- */
+  /* --color-text__code: var(--color-bg); */
+  /* --color-bg__code: var(--color-secondary); */
+  /* --color-border__code: var(--color-primary); */
 }
-
-/* More variable names definitions and fallback values for css selectors */
-/* OPTIONAL: If we want to change variable names or provide different fallback values, we need to change these rules */
-/* *:focus,
-*[class^="color-palette-"]:focus,
-*[class^="color-palette-"] *:focus {
-  outline-color: var(--color-outline, currentcolor);
-} */
-/* *::selection,
-*[class^="color-palette-"]::selection,
-*[class^="color-palette-"] *::selection {
-  color: #ffffff;
-  color: var(--color-selection-text, #ffffff);
-  background-color: #111111;
-  background-color: var(--color-selection-bg, #111111);
-} */
-/* a,
-a[class^="color-palette-"],
-*[class^="color-palette-"] a {
-  color: currentcolor;
-  color: var(--color-a-text, #111111);
-  background-color: transparent;
-  background-color: var(--color-a-bg, transparent);
-} */
-/* a:hover,
-a[class^="color-palette-"]:hover,
-*[class^="color-palette-"] a:hover {
-  color: #888888;
-  color: var(--color-a_hover-text, #888888);
-  background-color: transparent;
-  background-color: var(--color-a_hover-bg, transparent);
-} */
-/* button,
-.button,
-button[class*="color-palette-"],
-.button[class*="color-palette-"],
-*[class*="color-palette-"] button,
-*[class*="color-palette-"] .button {
-  color: currentcolor;
-  color: var(--color-button-text, #111111);
-  background-color: transparent;
-  background-color: var(--color-button-bg, transparent);
-  border-color: var(--color-button-border, currentcolor);
-} */
-/* button:hover,
-.button:hover,
-button[class*="color-palette-"]:hover,
-.button[class*="color-palette-"]:hover,
-*[class*="color-palette-"] button:hover,
-*[class*="color-palette-"] .button:hover {
-  color: #888;
-  color: var(--color-button_hover-text, #888);
-  background-color: transparent;
-  background-color: var(--color-button_hover-bg, transparent);
-  border-color: var(--color-button_hover-border, currentcolor);
-} */
-/* button:disabled,
-.button:disabled,
-button[class*="color-palette-"]:disabled,
-.button[class*="color-palette-"]:disabled,
-*[class*="color-palette-"] button:disabled,
-*[class*="color-palette-"] .button:disabled {
-  color: #999;
-  color: var(--color-button_disabled-text, #999);
-  background-color: #eee;
-  background-color: var(--color-button_disabled-bg, #eee);
-  border-color: var(--color-button_disabled-border, currentcolor);
-} */
-/* tt,
-tt[class^="color-palette-"],
-*[class^="color-palette-"] tt,
-code,
-code[class^="color-palette-"],
-*[class^="color-palette-"] code,
-kbd,
-kbd[class^="color-palette-"],
-*[class^="color-palette-"] kbd,
-pre,
-pre[class^="color-palette-"],
-*[class^="color-palette-"] pre,
-samp,
-samp[class^="color-palette-"],
-*[class^="color-palette-"] samp {
-  color: var(--color-code-text, currentcolor);
-  background-color: var(--color-code-bg, transparent);
-  border-color: var(--color-code-border, currentcolor);
-} */
-/* End of variables assignation and default values */
 
 /* color PALETTES */
 :root,
 body,
+[data-c-p="main"],
+[data-c-p="blue"],
 .color-palette-main,
 .color-palette-blue {
   --color-neutral-palette: var(--color-white);
   --color-primary-palette: var(--color-blue);
   --color-secondary-palette: var(--color-teal);
 }
+[data-c-p="teal"],
+[data-c-p="shop"],
 .color-palette-teal,
 .color-palette-shop {
   --color-neutral-palette: var(--color-white);
   --color-primary-palette: var(--color-teal);
   --color-secondary-palette: var(--color-blue);
 }
+[data-c-p="red"],
+[data-c-p="danger"],
+[data-c-p="escape_room"],
+[data-c-p="festival"],
 .color-palette-red,
 .color-palette-danger,
 .color-palette-escape_room,
@@ -183,12 +99,17 @@ body,
   --color-primary-palette: var(--color-red);
   --color-secondary-palette: var(--color-blue);
 }
+[data-c-p="trans"],
+[data-c-p="blue-trans"],
 .color-palette-trans,
 .color-palette-blue-trans {
   --color-neutral-palette: var(--color-blue-trans);
   --color-primary-palette: var(--color-white);
   --color-secondary-palette: var(--color-teal);
 }
+[data-c-p="purple"],
+[data-c-p="club"],
+[data-c-p="association"],
 .color-palette-purple,
 .color-palette-club,
 .color-palette-association {
@@ -196,6 +117,9 @@ body,
   --color-primary-palette: var(--color-purple);
   --color-secondary-palette: var(--color-orange);
 }
+[data-c-p="orange"],
+[data-c-p="warning"],
+[data-c-p="toy_library"],
 .color-palette-orange,
 .color-palette-warning,
 .color-palette-toy_library {
@@ -203,6 +127,10 @@ body,
   --color-primary-palette: var(--color-orange);
   --color-secondary-palette: var(--color-purple);
 }
+[data-c-p="green"],
+[data-c-p="success"],
+[data-c-p="bar"],
+[data-c-p="restaurant"],
 .color-palette-green,
 .color-palette-success,
 .color-palette-bar,
@@ -213,32 +141,45 @@ body,
 }
 
 /* color palette VARIATIONS */
+[data-c-p-var="classic"],
 .color-palette-variation-classic,
-*[class*="color-palette-"] {
+[data-c-p],
+[data-c-p-var],
+[class*="color-palette-"] {
   --color-neutral: var(--color-neutral-palette);
   --color-primary: var(--color-primary-palette);
   --color-secondary: var(--color-secondary-palette);
 }
+[data-c-p-var="contrast"],
 .color-palette-variation-contrast {
   --color-neutral: var(--color-primary-palette);
   --color-primary: var(--color-neutral-palette);
   --color-secondary: var(--color-secondary-palette);
 }
+[data-c-p-var="funky"],
 .color-palette-variation-funky {
   --color-neutral: var(--color-neutral-palette);
   --color-primary: var(--color-secondary-palette);
   --color-secondary: var(--color-primary-palette);
 }
+[data-c-p-var="funky-contrast"],
 .color-palette-variation-funky-contrast {
   --color-neutral: var(--color-secondary-palette);
   --color-primary: var(--color-neutral-palette);
   --color-secondary: var(--color-primary-palette);
 }
+/* we can manage exceptions on a variation basis if necessary
+  or with more complex selectors */
+/* :--button[data-c-p~="contrast"], */
+button[data-c-p-var$="contrast"],
 button[class*="color-palette-"][class*="-contrast"] {
-  /* we can manage exceptions on a variation basis if necessary
-    or with more complex selectors */
-  --color-button_hover-text: var(--color-bg);
-  --color-button_hover-bg: var(--color-text);
-  --color-button-border: var(--color-bg);
+  --color-text__button--hover: var(--color-bg);
+  --color-bg__button--hover: var(--color-text);
+  --color-border__button: var(--color-bg);
   --color-outline: var(--color-bg);
 }
+
+/* If you use unexpected names for palette colors AND you use variations, you need to specify them here */
+/* :root {
+  --color-special-name: var(--color-special-name-palette);
+} */

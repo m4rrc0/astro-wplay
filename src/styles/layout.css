@@ -1,3 +1,5 @@
+@custom-selector :--stack .stack, [data-l-stack], [data-layout~="stack"];
+
 /* -------- STACK ------------ */
 /*
 gap: var dimension
@@ -10,7 +12,7 @@ NEW: justify-content: var keyword
 NEW: align-items: var keyword
 NEW: align-content: var keyword
 */
-.stack {
+:--stack {
   /* --gap-stack: var(--gap); */
 
   /* --gap: 0.618em; */
@@ -24,52 +26,52 @@ NEW: align-content: var keyword
   align-content: stretch;
   align-content: var(--align-content, stretch);
 }
-.stack:not(.horizontal) > *,
-.stack.recursive:not(.horizontal) * {
+:--stack:not(.horizontal) > *,
+:--stack.recursive:not(.horizontal) * {
   margin-top: 0;
   margin-bottom: 0;
 }
-.stack:not(.horizontal) > * + *,
-.stack.recursive:not(.horizontal) * + * {
+:--stack:not(.horizontal) > * + *,
+:--stack.recursive:not(.horizontal) * + * {
   margin-top: var(--gap);
 }
 /* horizontal mod */
-.stack.horizontal {
+:--stack.horizontal {
   flex-direction: row;
   align-items: center;
   align-items: var(--align-items, center);
 }
-.stack.horizontal > *,
-.stack.horizontal.recursive * {
+:--stack.horizontal > *,
+:--stack.horizontal.recursive * {
   margin-left: 0;
   margin-right: 0;
 }
-.stack.horizontal > * + *,
-.stack.horizontal.recursive * + * {
+:--stack.horizontal > * + *,
+:--stack.horizontal.recursive * + * {
   margin-left: var(--gap);
 }
 /* split-after */
-.stack[class^='split-after']:only-child,
-.stack.split:only-child {
+:--stack[class^='split-after']:only-child,
+:--stack.split:only-child {
   height: 100%;
 }
 /* NOTE: could be better to just set margin-bottom: auto; inline on the element */
 /* TODO: Could use a mixin */
 /* prettier-ignore */
-.stack:not(.horizontal).split-after-1 > :nth-child(1) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-1 > :nth-child(1) { margin-right: auto; } /* prettier-ignore */
-.stack:not(.horizontal).split-after-2 > :nth-child(2) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-2 > :nth-child(2) { margin-right: auto; } /* prettier-ignore */
-.stack:not(.horizontal).split-after-3 > :nth-child(3) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-3 > :nth-child(3) { margin-right: auto; } /* prettier-ignore */
-.stack:not(.horizontal).split-after-4 > :nth-child(4) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-4 > :nth-child(4) { margin-right: auto; } /* prettier-ignore */
-.stack:not(.horizontal).split-after-5 > :nth-child(5) { margin-bottom: auto; } /* prettier-ignore */
-.stack.horizontal.split-after-5 > :nth-child(5) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-1 > :nth-child(1) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-1 > :nth-child(1) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-2 > :nth-child(2) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-2 > :nth-child(2) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-3 > :nth-child(3) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-3 > :nth-child(3) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-4 > :nth-child(4) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-4 > :nth-child(4) { margin-right: auto; } /* prettier-ignore */
+:--stack:not(.horizontal).split-after-5 > :nth-child(5) { margin-bottom: auto; } /* prettier-ignore */
+:--stack.horizontal.split-after-5 > :nth-child(5) { margin-right: auto; } /* prettier-ignore */
 /* --- ... --- */
 
-.stack:not(.horizontal).recursive.stop * + *,
-.stack.horizontal.recursive.stop * + * {
+:--stack:not(.horizontal).recursive.stop * + *,
+:--stack.horizontal.recursive.stop * + * {
   margin-top: 0;
   margin-left: 0;
 }

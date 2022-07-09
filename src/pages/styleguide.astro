@@ -84,27 +84,27 @@ let list6 = ['main', 'danger', 'trans'];
         <h2>Spacing</h2>
         <p class="size-h9">size-h9</p>
         <div
-          class="color-palette-variation-contrast"
+          data-c-p-var="contrast"
           style="height: var(--size-h9); display: flex; align-items: center;"></div>
         <p class="size-h8">size-h8</p>
         <div
-          class="color-palette-variation-contrast"
+          data-c-p-var="contrast"
           style="height: var(--size-h8); display: flex; align-items: center;"></div>
         <p class="size-h7">size-h7</p>
         <div
-          class="color-palette-variation-contrast"
+          data-c-p-var="contrast"
           style="height: var(--size-h7); display: flex; align-items: center;"></div>
         <p class="size-h6">size-h6</p>
         <div
-          class="color-palette-variation-contrast"
+          data-c-p-var="contrast"
           style="height: var(--size-h6); display: flex; align-items: center;"></div>
         <p class="size-h5">size-h5</p>
         <div
-          class="color-palette-variation-contrast"
+          data-c-p-var="contrast"
           style="height: var(--size-h5); display: flex; align-items: center;"></div>
         <p class="size-h4">size-h4</p>
         <div
-          class="color-palette-variation-contrast"
+          data-c-p-var="contrast"
           style="height: var(--size-h4); display: flex; align-items: center;"></div>
       </section>
 
@@ -116,7 +116,8 @@ let list6 = ['main', 'danger', 'trans'];
           <div>
             {list6.map(i => (
               <article
-                class={`box no-border stack gap-down color-palette-${i}`}
+                data-c-p={i}
+                class={`box no-border stack gap-down`}
                 style="--padding: var(--size-h5); --gap-down: 1em;">
                 <p class="h3">An h3 fox jumps over the fence or whatever</p>
                 <Paragraph />

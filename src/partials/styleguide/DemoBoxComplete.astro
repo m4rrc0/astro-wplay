@@ -1,28 +1,15 @@
 ---
-  import Paragraph from "@partials/styleguide/Paragraph.astro";
+import Paragraph from "@partials/styleguide/Paragraph.astro"
 
-  const {
-    style = "",
-    i = 1,
-    palette = i,
-    variation = "classic"
-  } = Astro.props
-  
+const { style = "", i = 1, palette = i, variation = "classic" } = Astro.props
 ---
 
-<div
-  data-c-p={palette}
-  data-c-p-var={variation}
-  cclass={`box stack color-palette-${palette} color-palette-variation-${variation}`}
-  class={`box stack`}
-  {style}
->
+<div data-c-p={palette} data-c-p-var={variation} class={`box stack`} {style}>
   <p class="h3">Palette {palette} - Variation {variation}</p>
   <Paragraph />
   <p>Don't forget to select some text to test colors</p>
   <code class="code-block">
-    <pre>
-      <p class="h2">An h2 fox jumps over the fence or whatever</p><p class="h3">An h3 fox jumps over the fence or whatever</p><p class="h4">An h4 fox jumps over the fence or whatever</p>
+    <pre>      <p class="h2">An h2 fox jumps over the fence or whatever</p><p class="h3">An h3 fox jumps over the fence or whatever</p><p class="h4">An h4 fox jumps over the fence or whatever</p>
     </pre>
   </code>
   <blockquote>

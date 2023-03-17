@@ -1,45 +1,53 @@
 ---
-import { Icon } from 'astro-icon'
-import { Md } from '@components'
-import { Markdown } from 'astro/components';
+import { Icon } from "astro-icon"
+import { Md } from "@components"
+import Markdown from "@astrojs/markdown-component"
 
-const header = 'Hello world'
+const header = "Hello world"
 const content = `
 ## {header}
 <br />
 <Icon name="gridicons:share-computer" size="1em" />
 `
 
-const {
-    privateRenderMarkdownDoNotUse: renderMd,
-} = Astro
+const { privateRenderMarkdownDoNotUse: renderMd } = Astro
 
 const remoteContent = await renderMd(content)
 // console.log({content})
-
 ---
+
 <Markdown>
-### {header}
-<br />
-<Icon name="gridicons:share-computer" size="1em" />
+  ### {header}
+
+  <br />
+  <Icon name="gridicons:share-computer" size="1em" />
 </Markdown>
 
-<Markdown {header} content={`
+<Markdown
+  {header}
+  content={`
 ### {header}
 <br />
 <Icon name="gridicons:share-computer" size="1em" />
-`} />
+`}
+>
+
+</Markdown>
 
 <Markdown {header}>
   {content}
 </Markdown>
 
-<Markdown {header} {content} />
+<Markdown {header} {content}>
 
-<Markdown {header}>
-{remoteContent}
 </Markdown>
 
-<Markdown {header} content={remoteContent} />
+<Markdown {header}>
+  {remoteContent}
+</Markdown>
+
+<Markdown {header} content={remoteContent}>
+
+</Markdown>
 
 <div set:html={remoteContent}></div>

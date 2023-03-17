@@ -8,6 +8,8 @@ import { SEO, IO, ImgDirectus, Img } from "@components"
 const { lang, areas, articles: as } = Astro.props || {}
 
 const articles = as.slice(0, 3)
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -16,7 +18,7 @@ const articles = as.slice(0, 3)
     ogType="website"
     title="Connecte les joueurs"
     description="Wanna Play a pour mission de connecter les joueurs en live et en ligne. Toute l'info du jeu de société en Belgique."
-    canonicalUrl={Astro.canonicalURL.href}
+    canonicalUrl={canonicalURL.href}
     socialImage="/assets/images/LOGO-1024px.png"
     ogVideo={false}
     twitterCard="summary"

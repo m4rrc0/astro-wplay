@@ -1,6 +1,6 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
-import { Markdown } from 'astro/components';
+import Markdown from '@astrojs/markdown-component';
 import { Icon } from 'astro-icon'
 import { SEO, IO, ImgDirectus, Img } from '@components'
 import { imageDirectusSrc } from '@utils'
@@ -43,6 +43,7 @@ const startLong = day && monthLong && year && `${day} ${monthLong} ${year}`
 const metaTitle = [startLong, name].filter(z => z).join(' - ')
 const metaDescription = [presentation, startLong].filter(z => z).join(' le ')
 
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 <SkeletonPage lang={lang.code}>
   <SEO
@@ -50,7 +51,7 @@ const metaDescription = [presentation, startLong].filter(z => z).join(' le ')
     ogType="website"
     title={metaTitle}
     description={metaDescription || description}
-    canonicalUrl={Astro.canonicalURL.href}
+    canonicalUrl={canonicalURL.href}
     socialImage={srcSocial}
     ogVideo={false}
     twitterCard="summary"

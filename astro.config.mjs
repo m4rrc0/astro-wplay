@@ -1,13 +1,13 @@
 // Full Astro Configuration API Documentation:
 // https://astro.build/config
-import 'dotenv/config'
-import { defineConfig } from 'astro/config'
-import svelte from '@astrojs/svelte'
-import sitemap from '@astrojs/sitemap'
-import robotsTxt from 'astro-robots-txt'
+import "dotenv/config"
+import { defineConfig } from "astro/config"
+import svelte from "@astrojs/svelte"
+import sitemap from "@astrojs/sitemap"
+import robotsTxt from "astro-robots-txt"
 // import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
-import critters from 'astro-critters'
-import { astroImageTools } from 'astro-imagetools'
+import critters from "astro-critters"
+import { astroImageTools } from "astro-imagetools"
 // import compress from 'astro-compress'
 
 const PAGE_ADMIN = process.env.PAGE_ADMIN || null
@@ -19,10 +19,7 @@ const PAGE_ADMIN = process.env.PAGE_ADMIN || null
 
 // @ts-check
 export default defineConfig({
-  experimental: {
-    integrations: true,
-  },
-  site: 'https://www.wanna-play.be/',
+  site: "https://www.wanna-play.be/",
   integrations: [
     svelte(),
     sitemap({
@@ -33,9 +30,9 @@ export default defineConfig({
     robotsTxt({
       policy: [
         {
-          userAgent: '*',
-          allow: '/',
-          disallow: ['/styleguide', '/email-error'],
+          userAgent: "*",
+          allow: "/",
+          disallow: ["/styleguide", "/email-error"],
         },
       ],
     }),
@@ -59,7 +56,7 @@ export default defineConfig({
   vite: {
     // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)
     ssr: {
-      external: ['svgo'],
+      external: ["svgo"],
     },
     // plugins: [viteCommonjs()],
   },

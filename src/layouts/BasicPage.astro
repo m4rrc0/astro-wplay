@@ -1,21 +1,36 @@
 ---
-import { Icon } from 'astro-icon'
-import { MtObf } from '@components'
+import { Icon } from "astro-icon"
+import { MtObf } from "@components"
 
 const { lang } = Astro.props
 
 const email = import.meta.env.CONTACT_EMAIL
 
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
-<div id="layout-page-base" class="stack split-after-2 gap-down-h1 justify-start" style="min-height: 100vh;">
+<div
+  id="layout-page-base"
+  class="stack split-after-2 gap-down-h1 justify-start"
+  style="min-height: 100vh;"
+>
   <div id="menu-main" class="color-palette-">
     <div class="center width-max">
       <nav class="box no-border cluster overflow gap-h6-down ">
         <ul class="reset reset-down-a size-h3">
           <li>
-            <a href={`/${lang.code}`} class="stack horizontal align-items-center" aria-label="Page d'accueil">
-              <img src="/assets/images/favicons/favicon-32x32.png" alt="logo" width="32" height="32" style="display: inline;" />
+            <a
+              href={`/${lang.code}`}
+              class="stack horizontal align-items-center"
+              aria-label="Page d'accueil"
+            >
+              <img
+                src="/assets/images/favicons/favicon-32x32.png"
+                alt="logo"
+                width="32"
+                height="32"
+                style="display: inline;"
+              />
               <span>Wanna Play</span>
             </a>
           </li>
@@ -29,63 +44,107 @@ const email = import.meta.env.CONTACT_EMAIL
           <li><a href={`/${lang.code}/contact`}>Contact</a></li>
           <!-- <li><a href="/styleguide">Styleguide</a></li> -->
           <li class="color-palette-teal">
-            <strong><a href="https://talk.wanna-play.be/" target="_blank">Wanna Talk?</a></strong>
+            <strong
+              ><a href="https://talk.wanna-play.be/" target="_blank"
+                >Wanna Talk?
+              </a>
+            </strong>
           </li>
         </ul>
       </nav>
     </div>
   </div>
 
-  <slot />
+  <slot></slot>
 
-  <footer id="footer-main" class="
+  <footer
+    id="footer-main"
+    class="
     skew-border-before
     color-palette-variation-contrast
-    ">
-    <div class="
+    "
+  >
+    <div
+      class="
       box no-border center intrinsic text stack gap-down-h7
-    ">
+    "
+    >
       <div class="cluster justify-center size-h3">
         <div>
           <a
             href="https://www.facebook.com/WannaPlayBE/"
             target="_blank"
             rel="noopener noreferrer"
-          >Facebook</a><a
+            >Facebook
+          </a><a
             href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
             target="_blank"
             rel="noopener noreferrer"
-          >Youtube</a><a
+            >Youtube
+          </a><a
             href="https://www.instagram.com/wannaplay_be/"
             target="_blank"
             rel="noopener noreferrer"
-          >Instagram</a><a
+            >Instagram
+          </a><a
             href="http://eepurl.com/cM3shf"
             target="_blank"
             rel="noopener noreferrer"
-          >Newsletter</a><a
+            >Newsletter
+          </a><a
             href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
             target="_blank"
             rel="noopener noreferrer"
-          >Spotify</a>
+            >Spotify
+          </a>
         </div>
       </div>
       <div>
-        <p>Site web créé avec <Icon name="carbon:fire" title="enthousiasme" role="img" /> et <Icon name="ph:coffee" title="caféine" role="img" /> par <a href="http://www.m4rr.co/" target="_blank" rel="noopener noreferrer">m4rrc0</a></p>
-        <p>Identité graphique créée avec <Icon name="ci:heart-outline" title="passion" role="img" /> et <Icon name="simple-line-icons:magic-wand" title="magie" role="img" /> par <a href="http://www.tess-h.be/" target="_blank" rel="noopener noreferrer">Tess h.</a></p>
+        <p>
+          Site web créé avec <Icon
+            name="carbon:fire"
+            title="enthousiasme"
+            role="img"
+          /> et <Icon name="ph:coffee" title="caféine" role="img" /> par <a
+            href="http://www.m4rr.co/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >m4rrc0
+          </a>
+        </p>
+        <p>
+          Identité graphique créée avec <Icon
+            name="ci:heart-outline"
+            title="passion"
+            role="img"
+          /> et <Icon
+            name="simple-line-icons:magic-wand"
+            title="magie"
+            role="img"
+          /> par <a
+            href="http://www.tess-h.be/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Tess h.
+          </a>
+        </p>
       </div>
       <p class="size-h6">
-        <span>© Wanna Play ASBL - </span>
-        <span>0695.574.033 - </span>
+        <span>© Wanna Play ASBL -</span>
+        <span>0695.574.033 -</span>
         <span>IBAN BE54 5230 8139 4997</span>
-        <br>
-        <span>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - <MtObf {email} /></span>
+        <br />
+        <span
+          >Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - <MtObf
+            {email}
+          />
+        </span>
       </p>
       <!-- <div class="cluster justify-center size-h6">
         <div>
           <span>Tester cette page: </span>
-          <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${Astro.canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Performance</a>
-          <a href={`https://ecograder.com/report?site_submitted=${Astro.canonicalURL.href.replaceAll(/\//g, '%2F').replaceAll(':', '%3A')}`} target="_blank" rel="noopener noreferrer">Indice écologique</a>
+          <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Performance</a>
+          <a href={`https://ecograder.com/report?site_submitted=${canonicalURL.href.replaceAll(/\//g, '%2F').replaceAll(':', '%3A')}`} target="_blank" rel="noopener noreferrer">Indice écologique</a>
         </div>
       </div> -->
     </div>

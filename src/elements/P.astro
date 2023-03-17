@@ -1,7 +1,14 @@
 ---
-import { io } from '@utils'
-const { props, $render } = await io(Astro)
-
+// import { io } from '@utils'
+// const { props, $render } = await io(Astro)
+const {
+  props: { $skip, $skipNoInner, ...props },
+} = Astro
+const $render = true
 ---
 
-{$render && <p {...props}><slot /></p>}
+{$render && (
+  <p {...props}>
+    <slot />
+  </p>
+)}

@@ -1,20 +1,28 @@
 ---
-// import { Markdown } from 'astro/components';
-import { IO, Md } from '@components'
+// import Markdown from '@astrojs/markdown-component';
+import { IO, Md } from "@components"
 
-const { block, lang, tag = 'div' } = Astro.props;
-const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
+const { block, lang, tag = "div" } = Astro.props
+const t = block?.translations.find(
+  ({ languages_code }) => languages_code === lang.code,
+)
 
 // const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
 ---
 
 <IO {tag} $skipNoInner>
+  <IO div $skipNoInner>
+    <IO
+      img
+      $skip={!t.featured_image?.src}
+      src={t.featured_image?.src}
+      class=""
+      style="max-width: 100px;"
+    />
     <IO div $skipNoInner>
-        <IO img $skip={!t.featured_image?.src} src={t.featured_image?.src} class="" style="max-width: 100px;" />
-        <IO div $skipNoInner>
-            <IO h2 $skipNoInner>{t.title}</IO>
-            <IO p $skipNoInner>{t.subtitle}</IO>
-        </IO>
+      <IO h2 $skipNoInner>{t.title}</IO>
+      <IO p $skipNoInner>{t.subtitle}</IO>
     </IO>
-    <Md $skip={!t.text} content={t.text} />
+  </IO>
+  <Md $skip={!t.text} content={t.text} />
 </IO>

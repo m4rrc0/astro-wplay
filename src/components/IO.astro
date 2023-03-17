@@ -1,25 +1,102 @@
 ---
-import { io } from '@utils'
-const { props: allProps, $render } = await io(Astro)
+// import { io } from "@utils"
+// const { props: allProps, $render } = await io(Astro)
+const {
+  props: { $skip, $skipNoInner, ...allProps },
+} = Astro
+const $render = true
 
-const { wrapper, tag,
-    div, p, span, ul, li, img, h1, h2, h3, h4, h5, h6,
-    header, main, footer, ...props } = allProps
+const {
+  wrapper,
+  tag,
+  div,
+  p,
+  span,
+  ul,
+  li,
+  img,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  header,
+  main,
+  footer,
+  ...props
+} = allProps
 ---
 
-{(wrapper || tag === 'wrapper') && $render && <slot />}
-{(div || tag === 'div') && $render && <div {...props}><slot /></div>}
-{(p || tag === 'p') && $render && <p {...props}><slot /></p>}
-{(span || tag === 'span') && $render && <span {...props}><slot /></span>}
-{(ul || tag === 'ul') && $render && <ul {...props}><slot /></ul>}
-{(li || tag === 'li') && $render && <li {...props}><slot /></li>}
-{(img || tag === 'img') && $render && <img {...props}><slot /></img>}
-{(h1 || tag === 'h1') && $render && <h1 {...props}><slot /></h1>}
-{(h2 || tag === 'h2') && $render && <h2 {...props}><slot /></h2>}
-{(h3 || tag === 'h3') && $render && <h3 {...props}><slot /></h3>}
-{(h4 || tag === 'h4') && $render && <h4 {...props}><slot /></h4>}
-{(h5 || tag === 'h5') && $render && <h5 {...props}><slot /></h5>}
-{(h6 || tag === 'h6') && $render && <h6 {...props}><slot /></h6>}
-{(header || tag === 'header') && $render && <header {...props}><slot /></header>}
-{(main || tag === 'main') && $render && <main {...props}><slot /></main>}
-{(footer || tag === 'footer') && $render && <footer {...props}><slot /></footer>}
+{(wrapper || tag === "wrapper") && $render && <slot />}
+{(div || tag === "div") && $render && (
+  <div {...props}>
+    <slot />
+  </div>
+)}
+{(p || tag === "p") && $render && (
+  <p {...props}>
+    <slot />
+  </p>
+)}
+{(span || tag === "span") && $render && (
+  <span {...props}>
+    <slot />
+  </span>
+)}
+{(ul || tag === "ul") && $render && (
+  <ul {...props}>
+    <slot />
+  </ul>
+)}
+{(li || tag === "li") && $render && (
+  <li {...props}>
+    <slot />
+  </li>
+)}
+{(img || tag === "img") && $render && <img {...props} />}
+{(h1 || tag === "h1") && $render && (
+  <h1 {...props}>
+    <slot />
+  </h1>
+)}
+{(h2 || tag === "h2") && $render && (
+  <h2 {...props}>
+    <slot />
+  </h2>
+)}
+{(h3 || tag === "h3") && $render && (
+  <h3 {...props}>
+    <slot />
+  </h3>
+)}
+{(h4 || tag === "h4") && $render && (
+  <h4 {...props}>
+    <slot />
+  </h4>
+)}
+{(h5 || tag === "h5") && $render && (
+  <h5 {...props}>
+    <slot />
+  </h5>
+)}
+{(h6 || tag === "h6") && $render && (
+  <h6 {...props}>
+    <slot />
+  </h6>
+)}
+{(header || tag === "header") && $render && (
+  <header {...props}>
+    <slot />
+  </header>
+)}
+{(main || tag === "main") && $render && (
+  <main {...props}>
+    <slot />
+  </main>
+)}
+{(footer || tag === "footer") && $render && (
+  <footer {...props}>
+    <slot />
+  </footer>
+)}

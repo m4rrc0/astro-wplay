@@ -4,6 +4,8 @@ import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO, MtObf } from "@components"
 
 const email = import.meta.env.CONTACT_EMAIL
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <SkeletonPage lang="fr">
@@ -12,7 +14,7 @@ const email = import.meta.env.CONTACT_EMAIL
     ogType="website"
     title="Contact"
     description="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici."
-    canonicalUrl={Astro.canonicalURL.href}
+    canonicalUrl={canonicalURL.href}
     socialImage="/assets/images/LOGO-1024px.png"
     ogVideo={false}
     twitterCard="summary"

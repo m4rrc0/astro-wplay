@@ -1,47 +1,64 @@
 ---
-import Debug from 'astro/debug';
-import { Markdown } from 'astro/components';
-import { Icon } from 'astro-icon'
-import { SkeletonPage, BasicPage } from '@layouts'
-import { SEO, IO, ImgDirectus } from '@components'
-import { imageDirectusSrc } from '@utils'
+import Markdown from "@astrojs/markdown-component"
+import { Icon } from "astro-icon"
+import { SkeletonPage, BasicPage } from "@layouts"
+import { SEO, IO, ImgDirectus } from "@components"
+import { imageDirectusSrc } from "@utils"
 
-const {lang, organization: {
-      // status,
-      // date_updated,
-      name,
-      // slug,
-      // types,
-      typesTranslated,
-      logo,
-      cover_image,
-      // opening_hours,
-      opening_hours_strings,
-      // games_services,
-      games_services_translated,
-      address,
-      // amenities,
-      amenities_translated,
-      website,
-      facebook_page,
-      instagram,
-      twitter,
-      youtube_channel,
-      translations,
-      // opening_hours_remark,
-      // description,
-      // gallery,
-      links
-}} = Astro.props;
+const {
+  lang,
+  organization: {
+    // status,
+    // date_updated,
+    name,
+    // slug,
+    // types,
+    typesTranslated,
+    logo,
+    cover_image,
+    // opening_hours,
+    opening_hours_strings,
+    // games_services,
+    games_services_translated,
+    address,
+    // amenities,
+    amenities_translated,
+    website,
+    facebook_page,
+    instagram,
+    twitter,
+    youtube_channel,
+    translations,
+    // opening_hours_remark,
+    // description,
+    // gallery,
+    links,
+  },
+} = Astro.props
 
-const { description, opening_hours_remark } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
-const presentation = typesTranslated?.[0] && address?.city && address?.area?.name?.fr
-  && typesTranslated?.map(({ [lang.code]: typeTranslated }) => typeTranslated).join(', ')
-  + ` à ${address.city}`
-  + (address.city !== address?.area?.name?.fr ? ` dans la ${address?.area?.code_name === 'brussels' ? 'région' : 'province'} de ${address?.area?.name?.fr}` : '')
-const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: 'cover', quality: '50' })
+const { description, opening_hours_remark } =
+  translations?.find(({ languages_code }) => languages_code === lang.code) || {}
+const presentation =
+  typesTranslated?.[0] &&
+  address?.city &&
+  address?.area?.name?.fr &&
+  typesTranslated
+    ?.map(({ [lang.code]: typeTranslated }) => typeTranslated)
+    .join(", ") +
+    ` à ${address.city}` +
+    (address.city !== address?.area?.name?.fr
+      ? ` dans la ${
+          address?.area?.code_name === "brussels" ? "région" : "province"
+        } de ${address?.area?.name?.fr}`
+      : "")
+const srcCover = imageDirectusSrc({
+  src: cover_image?.src,
+  width: "1300",
+  fit: "cover",
+  quality: "50",
+})
 
-
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <!-- <Debug {name} /> -->
@@ -51,7 +68,7 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
     ogType="website"
     title={name}
     description={presentation || description}
-    canonicalUrl={Astro.canonicalURL.href}
+    canonicalUrl={canonicalURL.href}
     socialImage={logo}
     ogVideo={false}
     twitterCard="summary"
@@ -66,16 +83,23 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
             h1 padding-y-relative-xl
             background-overlay
             "
-          style={srcCover ? `background-image: url("${srcCover}");` : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}>
-          <h1 class="centered" set:html={name} />
+          style={srcCover
+            ? `background-image: url("${srcCover}");`
+            : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}
+        >
+          <h1 class="centered" set:html={name}></h1>
           {presentation && <p class="h3">{presentation}</p>}
-          {
-            address?.string && (
-              <p class="h6">
-                <a href={address.gMapLink} target="_blank" rel="noopener noreferrer">{address.string}</a>
-              </p>)
-          }
-
+          {address?.string && (
+            <p class="h6">
+              <a
+                href={address.gMapLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {address.string}
+              </a>
+            </p>
+          )}
         </div>
         {logo?.src && (
           <div
@@ -90,71 +114,80 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
               box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
               max-height: var(--width-col-6);
               overflow: hidden;
-              ">
-
-              <ImgDirectus
-                  image={logo}
-                  src={logo?.src}
-                  alt={name}
-                  loading="lazy"
-                  class=""
-                  style={`width: ${logo.width}; max-width: 100%; height: auto; max-height: ${logo.height}; object-fit: contain;`}
-                  width={logo.width}
-                  height={logo.height}
-                  fit="contain"
-                  quality="99" />
+              "
+          >
+            <ImgDirectus
+              image={logo}
+              src={logo?.src}
+              alt={name}
+              loading="lazy"
+              class=""
+              style={`width: ${logo.width}; max-width: 100%; height: auto; max-height: ${logo.height}; object-fit: contain;`}
+              width={logo.width}
+              height={logo.height}
+              fit="contain"
+              quality="99"
+            />
           </div>
         )}
       </header>
 
-      {(games_services_translated?.[0] || amenities_translated?.[0]) &&
+      {(games_services_translated?.[0] || amenities_translated?.[0]) && (
         <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
           <ul class="reset">
             <>
               {games_services_translated?.map(({ [lang.code]: code }) => (
-                <li class="
+                <li
+                  class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-contrast
                   border-radius-s
-                ">{code}</li>
+                "
+                >
+                  {code}
+                </li>
               ))}
 
               {amenities_translated?.map(({ [lang.code]: code }) => (
-                <li class="
+                <li
+                  class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-funky-contrast
                   border-radius-s
-                ">{code}</li>
+                "
+                >
+                  {code}
+                </li>
               ))}
             </>
           </ul>
         </div>
-      }
+      )}
 
-      {(opening_hours_strings?.[0] || opening_hours_remark) && <div class="
+      {(opening_hours_strings?.[0] || opening_hours_remark) && (
+        <div
+          class="
         box no-border
         color-palette-variation-funky-contrast
-      ">
-        <div class="center max-width-measure-h4 stack gap-down-h7 recursive">
-          <h2>Horaires</h2>
-          {
-            opening_hours_strings?.[0] && (
+      "
+        >
+          <div class="center max-width-measure-h4 stack gap-down-h7 recursive">
+            <h2>Horaires</h2>
+            {opening_hours_strings?.[0] && (
               <div class="stack gap-down-h9">
-                  {opening_hours_strings.map(str => (
-                    <p set:html={str} />
-                  ))}
+                {opening_hours_strings.map((str) => (
+                  <p set:html={str} />
+                ))}
               </div>
-            )
-          }
-          {
-            opening_hours_remark && (
+            )}
+            {opening_hours_remark && (
               <div class="">
-                  <Markdown content={opening_hours_remark} />
+                <Markdown content={opening_hours_remark} />
               </div>
-            )
-          }
+            )}
+          </div>
         </div>
-      </div>}
+      )}
       <!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
         <ul class="reset">
             {amenities_translated?.map(({ [lang.code]: code }) => (
@@ -162,23 +195,32 @@ const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: '
             ))}
         </ul>
       </div>} -->
-      {description && <div class="
+      {description && (
+        <div
+          class="
         box no-border center
         max-width-measure-h4
         stack gap-down-h7
-      ">
+      "
+        >
           <h2>Description</h2>
           <Markdown content={description} />
-      </div>}
+        </div>
+      )}
 
       {links?.[0] && (
         <div class="box no-border cluster center max-width-measure-h4">
           <ul class="reset justify-content-space-around">
-            {links.map(({name, url, iconName}) => (
+            {links.map(({ name, url, iconName }) => (
               <li>
-                <a href={url} target="_blank" rel="noopener noreferrer" class="
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="
                   box no-border stack center intrinsic gap-down-h8
-                ">
+                "
+                >
                   <Icon name={iconName} size="1em" class="size-h1" />
                   <div class="size-h4">{name.fr}</div>
                 </a>

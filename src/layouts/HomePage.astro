@@ -8,6 +8,36 @@ import { SEO, IO, ImgDirectus, Img } from "@components"
 const { lang, areas, articles: as } = Astro.props || {}
 
 const articles = as.slice(0, 3)
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const description =
+  "Wanna Play a pour mission de connecter les joueurs en live et en ligne. Toute l'info du jeu de société en Belgique."
+const imagePath = "/assets/images/LOGO-1024px.png"
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  url: "https://www.wanna-play.be/",
+  name: "Wanna Play",
+  legalName: "Wanna Play ASBL",
+  description,
+  logo: imagePath,
+  image: imagePath,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Avenue Armand Huysmans 47 Bte 2",
+    postalCode: "1050",
+    addressLocality: "Ixelles",
+    addressCountry: "BE",
+  },
+  areaServed: "Belgium",
+  sameAs: [
+    "https://www.facebook.com/WannaPlayBE/",
+    "https://www.youtube.com/@WannaPlayBE",
+    "https://www.instagram.com/wannaplay_be/",
+  ],
+  knowsAbout: "board games",
+}
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -15,9 +45,9 @@ const articles = as.slice(0, 3)
     slot="head"
     ogType="website"
     title="Connecte les joueurs"
-    description="Wanna Play a pour mission de connecter les joueurs en live et en ligne. Toute l'info du jeu de société en Belgique."
-    canonicalUrl={Astro.canonicalURL.href}
-    socialImage="/assets/images/LOGO-1024px.png"
+    description={description}
+    canonicalUrl={canonicalURL.href}
+    socialImage={imagePath}
     ogVideo={false}
     twitterCard="summary"
   />
@@ -169,6 +199,16 @@ const articles = as.slice(0, 3)
           <p><a href={`/${lang.code}/a`} class="h3">Tous les articles</a></p>
         </section>
       </div>
+      <!-- <Fragment
+        set:html={`<script type="application/ld+json">${}</script>`}
+      /> -->
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(jsonLd)}
+      >
+
+      </script>
     </main>
   </BasicPage>
 </SkeletonPage>

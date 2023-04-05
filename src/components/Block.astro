@@ -1,29 +1,26 @@
 ---
-import { Markdown } from 'astro/components';
+import Markdown from "@astrojs/markdown-component"
 
-const { block, lang } = Astro.props;
-const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
+const { block, lang } = Astro.props
+const t = block?.translations.find(
+  ({ languages_code }) => languages_code === lang.code,
+)
 
-const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
+const hasSomethingToShow =
+  t?.title || t?.subtitle || t?.featured_image?.src || t?.text
 ---
 
 {hasSomethingToShow && (
-    <div>
-        {t.title && (
-            <h2>{t.title}</h2>
+  <div>
+    {t.title && <h2>{t.title}</h2>}
+    {t.subtitle && <p>{t.subtitle}</p>}
+    {(t.featured_image?.src || t.text) && (
+      <div>
+        {t.featured_image?.src && (
+          <img src={t.featured_image?.src} class="" style="max-width: 100px;" />
         )}
-        {t.subtitle && (
-            <p>{t.subtitle}</p>
-        )}
-        {(t.featured_image?.src || t.text) && (
-            <div>
-                {t.featured_image?.src && (
-                    <img src={t.featured_image?.src} class="" style="max-width: 100px;" />
-                )}
-                {t.text && (
-                    <Markdown content={t.text} />
-                )}
-            </div>
-        )}
-    </div>
+        {t.text && <Markdown content={t.text} />}
+      </div>
+    )}
+  </div>
 )}

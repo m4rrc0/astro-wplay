@@ -1,35 +1,48 @@
 ---
-// import { Markdown } from 'astro/components';
-import { IO, Md, ImgDirectus } from '@components'
+// import Markdown from '@astrojs/markdown-component';
+import { IO, Md, ImgDirectus } from "@components"
 
-const { block, lang } = Astro.props;
-const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
+const { block, lang } = Astro.props
+const t = block?.translations.find(
+  ({ languages_code }) => languages_code === lang.code,
+)
 
 // const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
 ---
 
-<IO div $skipNoInner class="center stack gap-down-h5" style="max-width: calc(var(--width-measure-h4) + var(--width-col-4));">
-    <div>
-        <IO h2 $skipNoInner>{t.title}</IO>
-        <IO p $skipNoInner>{t.subtitle}</IO>
-    </div>
-    <IO div $skipNoInner class="with-sidebar gap-down-h4" style="--side-width: 200px; --content-min: 60%;">
-        <IO div $skipNoInner>
-            <IO div $skipNoInner class="" style="">
-                <!-- <IO img $skip={!t.featured_image?.src} src={t.featured_image?.src} class="" style="max-width: var(--width-col-4);" /> -->
-                <ImgDirectus
-                    $skip={!t.featured_image?.src}
-                    src={t.featured_image?.src}
-                    alt={t.title}
-                    loading="lazy"
-                    class=""
-                    style="width: 200px; height: 200px; max-width: 100%;"
-                    width="200"
-                    height="200"
-                    fit="cover"
-                    quality="99" />
-            </IO>
-            <Md $skip={!t.text} content={t.text} class="" />
-        </IO>
+<IO
+  div
+  $skipNoInner
+  class="center stack gap-down-h5"
+  style="max-width: calc(var(--width-measure-h4) + var(--width-col-4));"
+>
+  <div>
+    <IO h2 $skipNoInner>{t.title}</IO>
+    <IO p $skipNoInner>{t.subtitle}</IO>
+  </div>
+  <IO
+    div
+    $skipNoInner
+    class="with-sidebar gap-down-h4"
+    style="--side-width: 200px; --content-min: 60%;"
+  >
+    <IO div $skipNoInner>
+      <IO div $skipNoInner class="" style="">
+        <!-- <IO img $skip={!t.featured_image?.src} src={t.featured_image?.src} class="" style="max-width: var(--width-col-4);" /> -->
+        <ImgDirectus
+          $skip={!t.featured_image?.src}
+          src={t.featured_image?.src}
+          alt={t.title}
+          loading="lazy"
+          class=""
+          style="width: 200px; height: 200px; max-width: 100%;"
+          width="200"
+          height="200"
+          fit="cover"
+          quality="99"
+        />
+      </IO>
+      <Md $skip={!t.text} content={t.text} class="" />
     </IO>
+  </IO>
 </IO>

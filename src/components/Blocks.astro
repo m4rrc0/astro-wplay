@@ -1,40 +1,43 @@
 ---
-import { Markdown } from 'astro/components';
+import Markdown from "@astrojs/markdown-component"
 
-const {
-    blocks
-} = Astro.props;
+const { blocks } = Astro.props
 
 const l = blocks.length
-
 ---
 
-{
-    l === 1 && (
-        <div>
-            {t.title && <h2>{t.title}</h2>}
-            {t.subtitle && <p>{t.subtitle}</p>}
-            <div>
-                {t.featured_image && <img src={t.featured_image.src} class="" style="max-width: 100px;" />}
-                {t.text && <Markdown content={t.text} />}
-            </div>
-        </div>
-    )
-}
+{l === 1 && (
+  <div>
+    {t.title && <h2>{t.title}</h2>}
+    {t.subtitle && <p>{t.subtitle}</p>}
+    <div>
+      {t.featured_image && (
+        <img src={t.featured_image.src} class="" style="max-width: 100px;" />
+      )}
+      {t.text && <Markdown content={t.text} />}
+    </div>
+  </div>
+)}
 <div>
-        {
-          footer.map(block => {
-            const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
-            return (
-              <div>
-                {t.title && <h2>{t.title}</h2>}
-                {t.subtitle && <p>{t.subtitle}</p>}
-                <div>
-                  {t.featured_image && <img src={t.featured_image.src} class="" style="max-width: 100px;" />}
-                  {t.text && <Markdown content={t.text} />}
-                </div>
-              </div>
-            )
-          })
-        }
+  {footer.map((block) => {
+    const t = block?.translations.find(
+      ({ languages_code }) => languages_code === lang.code,
+    )
+    return (
+      <div>
+        {t.title && <h2>{t.title}</h2>}
+        {t.subtitle && <p>{t.subtitle}</p>}
+        <div>
+          {t.featured_image && (
+            <img
+              src={t.featured_image.src}
+              class=""
+              style="max-width: 100px;"
+            />
+          )}
+          {t.text && <Markdown content={t.text} />}
+        </div>
       </div>
+    )
+  })}
+</div>

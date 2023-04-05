@@ -5,7 +5,7 @@ import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, IO, Md, ImgDirectus } from '@components'
 import { BlockImgLeft, BlockImgLeftHeading, BlockStack } from '@layouts'
 import { imageDirectusSrc } from '@utils'
-// import { Markdown } from 'astro/components';
+// import Markdown from '@astrojs/markdown-component';
 // import { Icon } from 'astro-icon'
 
 // import TestMd from '@components/TestMd.astro'
@@ -32,6 +32,7 @@ const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
 
 const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fit: 'cover', quality: '99' })
 
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!-- <TestMd /> -->
@@ -41,7 +42,7 @@ const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fi
     ogType="article"
     title={title}
     description={text}
-    canonicalUrl={Astro.canonicalURL.href}
+    canonicalUrl={canonicalURL.href}
     socialImage={srcSocial}
     ogVideo={false}
     twitterCard="summary"

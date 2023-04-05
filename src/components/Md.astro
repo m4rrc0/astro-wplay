@@ -1,16 +1,21 @@
 ---
-import { Markdown } from 'astro/components'
+import Markdown from "@astrojs/markdown-component"
 
-import { io } from '@utils'
-const { props: allProps, $render } = await io(Astro)
-const { remoteMd, ...props} = allProps
+// import { io } from '@utils'
+// const { props: allProps, $render } = await io(Astro)
+const {
+  props: { $skip, $skipNoInner, ...allProps },
+} = Astro
+const $render = true
+
+const { remoteMd, ...props } = allProps
 
 // const {
 //     slots,
 //     privateRenderMarkdownDoNotUse: renderMd,
 // } = Astro
 
-let content = props.content 
+let content = props.content
 // || remoteMd && await renderMd(remoteMd) || ''
 
 // if (slots.has('default')) {
@@ -21,4 +26,4 @@ let content = props.content
 // console.log({ remoteMd, content, props: { content, ...props} })
 ---
 
-{($render || content) && <Markdown {...{ content, ...props}} />}
+{($render || content) && <Markdown {...{ content, ...props }} />}

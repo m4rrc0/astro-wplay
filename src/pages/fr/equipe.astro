@@ -2,6 +2,7 @@
 // import Fragment from 'astro/components'
 import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO, Img } from "@components"
+import pictureTeam from "@images/team.jpg"
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
@@ -23,7 +24,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       <h1 class="center text">L'équipe</h1>
       <!-- <img src="/assets/images/team.jpg" alt="L'équipe" width="3334" height="1250" loading="lazy" /> -->
       <Img
-        src="/src/assets/images/team.jpg"
+        src={pictureTeam}
         alt="L'équipe"
         width="3334"
         height="1250"

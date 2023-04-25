@@ -7,6 +7,7 @@ import sitemap from "@astrojs/sitemap"
 import robotsTxt from "astro-robots-txt"
 // import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import critters from "astro-critters"
+import image from "@astrojs/image"
 import { astroImageTools } from "astro-imagetools"
 // import compress from 'astro-compress'
 
@@ -36,8 +37,15 @@ export default defineConfig({
         },
       ],
     }),
-    critters({ fonts: true }),
-    astroImageTools,
+    // critters({ fonts: true }),
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
+      // supported levels: 'debug' | 'info' | 'warn' | 'error' | 'silent' / default: 'info'
+      // logLevel: "debug",
+      // may be useful if your hosting provider allows caching between CI builds
+      cacheDir: "./_cache/images",
+    }),
+    // astroImageTools,
     // compress({
     //   css: false,
 

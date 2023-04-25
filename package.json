@@ -11,6 +11,7 @@
     "format": "npx prettier -w ."
   },
   "devDependencies": {
+    "@astrojs/image": "^0.16.6",
     "@astrojs/markdown-component": "^1.0.3",
     "@astrojs/sitemap": "^1.2.1",
     "@astrojs/svelte": "^2.1.0",
@@ -23,12 +24,14 @@
     "astro-robots-txt": "^0.4.0",
     "cssnano": "^5.0.17",
     "dotenv": "^16.0.1",
+    "netlify-plugin-cache-folder": "^0.0.8",
     "postcss-functions": "^4.0.2",
     "postcss-import": "^14.0.2",
     "postcss-mixins": "^9.0.1",
     "postcss-preset-env": "^7.4.1",
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.1.1",
-    "protect-email": "^0.1.2"
+    "protect-email": "^0.1.2",
+    "sharp": "^0.32.0"
   }
 }

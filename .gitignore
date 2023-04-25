@@ -1,6 +1,9 @@
 # build output
 dist
 
+# Cache directory
+_cache
+
 # dependencies
 node_modules/
 .snowpack/

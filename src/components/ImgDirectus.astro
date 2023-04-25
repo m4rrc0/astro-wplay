@@ -1,8 +1,8 @@
 ---
-import { Img } from "astro-imagetools/components";
+import { Image, Picture } from "@astrojs/image/components"
+// import { Img } from "astro-imagetools/components";
 import { imageDirectusSrc } from '@utils'
 import { IO } from '@components'
-
 
 const {
     $skip, id, class: _class, style, onload, image, src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
@@ -15,7 +15,7 @@ const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('
 ---
 
 <!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> -->
-<IO wrapper {$skip}>
+<!-- <IO wrapper {$skip}>
     {
         !src ?
             null : (
@@ -33,6 +33,31 @@ const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('
                                 onload: `this.style.background = 'transparent';${onload || ''}`
                             },
                         }} /> :
+                    <img {...props} {src} {width} {height} {id} class={_class} {style} />
+            )
+    }
+</IO> -->
+<IO wrapper {$skip}>
+    {
+        !src ?
+            null : (
+                useImageTools ?
+                    <Image
+                        {...props}
+                        {src}
+                        {format}
+                        {quality}
+                        {width}
+                        {height}
+                        {fit}
+                        {/* default is 'center' */}
+                        position="center"
+                        background="rgba(100,100,100, 0)"
+                        {...(id ? { id } : {})}
+                        {...(_class ? { class: _class } : {})}
+                        {...(style ? { style } : {})}
+                        onload={`this.style.background = 'transparent';${onload || ""}`}
+                        /> :
                     <img {...props} {src} {width} {height} {id} class={_class} {style} />
             )
     }

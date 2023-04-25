@@ -2,8 +2,11 @@
 import { SkeletonPage, BasicPage } from "@layouts"
 // import FourOFour from '@pages/404.astro'
 const PUBLIC_HOOK_PROD = import.meta.env.PUBLIC_HOOK_PROD || null
+const PUBLIC_HOOK_STAGE = import.meta.env.PUBLIC_HOOK_STAGE || null
 
 const { lang } = Astro.props || {}
+
+const srcBadge = "https://api.netlify.com/api/v1/badges/86fec8f0-ba93-4c84-9ce3-f127abc16dea/deploy-status"
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -12,15 +15,44 @@ const { lang } = Astro.props || {}
   </Fragment>
   <BasicPage {lang}>
     {PUBLIC_HOOK_PROD ? (
-      <main class="center box no-border">
-        <p>
-          <a
-            href={`javascript:fetch('${PUBLIC_HOOK_PROD}',{method: 'POST'});`}
-            class="reset button"
-          >
-            Build production website
-          </a>
-        </p>
+      <main class="stack center box no-border">
+        {
+          [{
+            branch: "Prod",
+            hook: PUBLIC_HOOK_PROD,
+            src: srcBadge + "?branch=master"
+          }, {
+            branch: "Stage",
+            hook: PUBLIC_HOOK_STAGE,
+            src: srcBadge + "?branch=stage"
+          }].map(({ branch, hook, src }) => (
+            <div class="cluster">
+              <div>
+                <button
+                  onclick={`fetch('${hook}',{method: 'POST'});`}
+                  style="padding: 0.5rem 1rem;"
+                >
+                  Reconstruire le site {branch}
+                </button>
+                <img
+                  {src}
+                  data-original-src={src}
+                  alt="Netlify Status"
+                  class="netlify-status"
+                  onload="reloadImage(this)"
+                  width="124"
+                  height="20"
+                />
+                <a
+                  href="https://app.netlify.com/sites/wanna-play/deploys"
+                  target="_blank"
+                >
+                  Vérifier le log
+                </a>
+              </div>
+            </div>
+          ))
+        }
       </main>
     ) : (
       <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
@@ -29,3 +61,19 @@ const { lang } = Astro.props || {}
     )}
   </BasicPage>
 </SkeletonPage>
+
+<script is:inline>
+  // var images = document.getElementsByClassName('netlify-status');
+
+  function reloadImage(img) {
+    setTimeout(function() {
+      img.src = img.dataset.originalSrc + '&' + new Date().getTime();
+      // reloadImage(img);
+    }, 5000);
+  }
+
+  // function reloadImageOnClick() {
+  //   img.src = img.dataset.originalSrc + '&' + new Date().getTime();
+  // }
+
+</script>

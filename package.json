@@ -1,14 +1,16 @@
 {
-  "name": "@example/minimal",
+  "name": "astro-wplay",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build --experimental-static-build",
+    "postbuild": "npm run encrypt",
     "preview": "astro preview",
     "serve": "astro preview",
-    "format": "npx prettier -w ."
+    "format": "npx prettier -w .",
+    "encrypt": ". ./.env && npx staticrypt dist/$PAGE_ADMIN -r -d dist/"
   },
   "devDependencies": {
     "@astrojs/image": "^0.16.6",
@@ -33,6 +35,7 @@
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.1.1",
     "protect-email": "^0.1.2",
-    "sharp": "^0.31.3"
+    "sharp": "^0.31.3",
+    "staticrypt": "^3.3.0"
   }
 }

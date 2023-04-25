@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "serve": "astro preview",
     "format": "npx prettier -w .",
-    "encrypt": ". ./.env && npx staticrypt dist/$PAGE_ADMIN -r -d dist/"
+    "encrypt": "[ -z $PAGE_ADMIN ] || npx staticrypt dist/$PAGE_ADMIN -r -d dist/",
+    "encrypt:local": ". ./.env && npx staticrypt dist/$PAGE_ADMIN -r -d dist/"
   },
   "devDependencies": {
     "@astrojs/image": "^0.16.6",

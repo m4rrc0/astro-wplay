@@ -9,7 +9,7 @@ import robotsTxt from "astro-robots-txt"
 import critters from "astro-critters"
 import image from "@astrojs/image"
 // import { astroImageTools } from "astro-imagetools"
-// import compress from 'astro-compress'
+import compress from "astro-compress"
 
 const PAGE_ADMIN = process.env.PAGE_ADMIN || null
 
@@ -37,7 +37,7 @@ export default defineConfig({
         },
       ],
     }),
-    // critters({ fonts: true }),
+    critters({ fonts: true }),
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
       // supported levels: 'debug' | 'info' | 'warn' | 'error' | 'silent' / default: 'info'
@@ -46,20 +46,20 @@ export default defineConfig({
       cacheDir: "./_cache/images",
     }),
     // astroImageTools,
-    // compress({
-    //   css: false,
+    compress({
+      css: false,
 
-    //   // html: {
-    //   //   // minify: true,
-    //   //   collapseInlineTagWhitespace: false,
-    //   //   // collapseWhitespace: false,
-    //   //   decodeEntities: false,
-    //   //   removeComments: true,
-    //   // },
-    //   js: false,
-    //   img: false,
-    //   svg: false,
-    // }),
+      // html: {
+      //   // minify: true,
+      //   collapseInlineTagWhitespace: false,
+      //   // collapseWhitespace: false,
+      //   decodeEntities: false,
+      //   removeComments: true,
+      // },
+      js: false,
+      img: false,
+      svg: false,
+    }),
   ],
   vite: {
     // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)

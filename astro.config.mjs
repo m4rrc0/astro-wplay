@@ -8,7 +8,7 @@ import robotsTxt from "astro-robots-txt"
 // import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import critters from "astro-critters"
 import image from "@astrojs/image"
-import { astroImageTools } from "astro-imagetools"
+// import { astroImageTools } from "astro-imagetools"
 // import compress from 'astro-compress'
 
 const PAGE_ADMIN = process.env.PAGE_ADMIN || null

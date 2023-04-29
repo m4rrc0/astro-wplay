@@ -65,7 +65,7 @@ export default defineConfig({
     //   img: false,
     //   svg: false,
     // }),
-    minifyHtml(),
+    // minifyHtml(),
   ],
   vite: {
     // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)

@@ -20,12 +20,14 @@ const srcBadge = "https://api.netlify.com/api/v1/badges/86fec8f0-ba93-4c84-9ce3-
           [{
             branch: "Prod",
             hook: PUBLIC_HOOK_PROD,
-            src: srcBadge + "?branch=master"
+            src: srcBadge + "?branch=master",
+            url: "https://www.wanna-play.be/"
           }, {
             branch: "Stage",
             hook: PUBLIC_HOOK_STAGE,
-            src: srcBadge + "?branch=stage"
-          }].map(({ branch, hook, src }) => (
+            src: srcBadge + "?branch=stage",
+            url: "https://stage--wanna-play.netlify.app/"
+          }].map(({ branch, hook, src, url }) => (
             <div class="cluster">
               <div>
                 <button
@@ -43,6 +45,9 @@ const srcBadge = "https://api.netlify.com/api/v1/badges/86fec8f0-ba93-4c84-9ce3-
                   width="124"
                   height="20"
                 />
+                <a href={url} target="_blank">
+                  Voir le site
+                </a>
                 <a
                   href="https://app.netlify.com/sites/wanna-play/deploys"
                   target="_blank"

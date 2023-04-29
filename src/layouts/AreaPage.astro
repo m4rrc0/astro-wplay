@@ -1,6 +1,6 @@
 ---
-import Debug from "astro/debug"
-import { renderBackgroundImage } from "astro-imagetools/api"
+// import Debug from "astro/debug"
+// import { renderBackgroundImage } from "astro-imagetools/api"
 import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO, IO, ImgDirectus, Img } from "@components"
 import { imageDirectusSrc } from "@utils"
@@ -74,17 +74,52 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   />
   <BasicPage {lang}>
     <main class="center width-max">
-      <div class="box no-border stack gap-down-h1">
+      <div id="events-list-container" class="box no-border stack gap-down-h1">
         <h1 class="center text">{areaName}</h1>
         <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
         <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
+        <!-- TODO: HERE -->
+        <script>
+          import List from "list.js"
+
+          var options = {
+            valueNames: [
+              // "timestart",
+              { name: "timestart", attr: "datetime" },
+              "name",
+              { name: "zip", attr: "data-zip" },
+              { name: "city", attr: "data-city" },
+            ],
+          }
+
+          var eventsList = new List("events-list-container", options)
+        </script>
+
+        <div class="center intrinsic stack" style="--gap: var(--size-h5);">
+          <input type="search" class="fuzzy-search" placeholder="Recherche" />
+          <p>Trier par...</p>
+          <div class="cluster" style="--gap: var(--size-h7);">
+            <div>
+              <button
+                class="sort asc"
+                data-sort="timestart"
+                data-default-order="asc"
+                >Début
+              </button>
+              <!-- <button class="sort" data-sort="name">Nom</button> -->
+              <button class="sort" data-sort="zip">Code postal</button>
+              <!-- <button class="sort" data-sort="city">Sort by city</button> -->
+            </div>
+          </div>
+        </div>
+
         <IO
           div
           $skipNoInner
           class="grid gap-down-h4"
           style="--width-column: var(--width-col-3);"
         >
-          <IO ul $skip={!events?.[0]?.name} class="reset">
+          <IO ul $skip={!events?.[0]?.name} class="list reset">
             {events?.map((event) => {
               const {
                 name,
@@ -123,7 +158,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     <div>
                       <time
                         datetime={time_start.dateTimeRaw}
-                        class="stack gap-down-h8 center intrinsic"
+                        class="timestart stack gap-down-h8 center intrinsic"
                         style="line-height: 1;"
                       >
                         <span class="size-h1">{time_start?.fr?.day}</span>
@@ -137,7 +172,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                           <h2 class="h3 centered">
                             <a
                               href={`/${event.path}`}
-                              class="reset clickable"
+                              class="name reset clickable"
                               set:html={name}
                             />
                           </h2>
@@ -146,7 +181,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     </div>
                   </div>
                   <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
-                    <IO p $skipNoInner class="h5">
+                    <IO
+                      p
+                      $skipNoInner
+                      class="zip city h5"
+                      data-zip={address.zip}
+                      data-city={address.city}
+                    >
                       {address?.string}
                     </IO>
                     <ul class="reset stack horizontal">
@@ -291,5 +332,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   .breakout-clickable:hover,
   .breakout-clickable:focus-within {
     /* box-shadow: inherit; */
+  }
+
+  .sort.asc::after {
+    content: "\002B06";
+    padding-left: 3px;
+  }
+  .sort.desc::after {
+    content: "\002B07";
+    padding-left: 3px;
   }
 </style>

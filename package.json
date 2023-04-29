@@ -28,6 +28,7 @@
     "astro-robots-txt": "^0.4.0",
     "cssnano": "^5.0.17",
     "dotenv": "^16.0.1",
+    "list.js": "^2.3.1",
     "netlify-plugin-cache-folder": "^0.0.8",
     "postcss-functions": "^4.0.2",
     "postcss-import": "^14.0.2",

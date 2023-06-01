@@ -59,6 +59,8 @@ const eventsPhrase =
 // }))
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+
+// TODO: changer "province" quand c'est Bruxelles
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -95,7 +97,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           var eventsList = new List("events-list-container", options)
         </script>
 
-        <div class="center intrinsic stack" style="--gap: var(--size-h5);">
+        <!-- TODO: enable searchin and filtering -->
+        <!-- <div class="center intrinsic stack" style="--gap: var(--size-h5);">
           <input type="search" class="fuzzy-search" placeholder="Recherche" />
           <p>Trier par...</p>
           <div class="cluster" style="--gap: var(--size-h7);">
@@ -106,12 +109,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 data-default-order="asc"
                 >Début
               </button>
-              <!-- <button class="sort" data-sort="name">Nom</button> -->
               <button class="sort" data-sort="zip">Code postal</button>
-              <!-- <button class="sort" data-sort="city">Sort by city</button> -->
             </div>
           </div>
-        </div>
+        </div> -->
 
         <IO
           div

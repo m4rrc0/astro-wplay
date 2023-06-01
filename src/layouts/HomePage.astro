@@ -5,8 +5,25 @@ import { BelgiumMap } from "@partials"
 import { SEO, IO, ImgDirectus, Img } from "@components"
 // import logo from '@images/LOGO-1024px.png?w=600'
 
+import gagBack from "@images/photos-Festival-2022/gag_back.jpg"
+import hoplaFlorent from "@images/photos-Festival-2022/hopla-florent.jpg"
+import kidsStoryTime from "@images/photos-Festival-2022/kids-story-time.jpg"
+import kids from "@images/photos-Festival-2022/kids.jpg"
+import londonPierre from "@images/photos-Festival-2022/london-pierre.jpg"
+import moonArea from "@images/photos-Festival-2022/moon-area.jpg"
+import speedGamingYves from "@images/photos-Festival-2022/speed-gaming-yves.jpg"
+
 const { lang, areas, articles: as } = Astro.props || {}
 
+const festivalPics = [
+  gagBack,
+  hoplaFlorent,
+  kidsStoryTime,
+  kids,
+  londonPierre,
+  moonArea,
+  speedGamingYves,
+]
 const articles = as.slice(0, 3)
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
@@ -65,11 +82,11 @@ const jsonLd = {
                 height="1834"
                 loading="lazy" /> -->
             <img
-              src="/assets/images/Wanna-Play_ASBL-Animation-mod.gif"
+              src="/assets/images/Wanna-Play_ASBL-Animation-1x.gif"
               alt="Wanna Play - Connecte les joueurs"
               id="logo-main"
               width="400"
-              height="193"
+              height="190.5"
               loading="lazy"
             />
           </h1>
@@ -86,6 +103,40 @@ const jsonLd = {
             Play!
           </p>
         </div>
+
+        <section
+          class="countdown-section color-palette-variation-funky-contrast full-bleed"
+        >
+          <div class="center text stack gap-down-h3">
+            <p>
+              <span class="h3">Festival</span><br />
+              <a
+                class="h2"
+                href="https://www.wanna-play.be/fr/e/wanna-play-in-brussels-free-board-game-festival-2023-07-08/"
+                >Wanna Play in Brussels 2023
+              </a><br />
+              <!-- <span class="h3">arrive</span> -->
+            </p>
+            <div class="grid" style="--width-column: 8rem;">
+              <div>
+                {festivalPics.map((pic) => {
+                  return (
+                    <Img
+                      src={pic}
+                      alt=""
+                      loading="lazy"
+                      class=""
+                      style="width: 15rem; max-height: 15rem; max-width: 100%; height: auto;"
+                      width="240"
+                      height="240"
+                    />
+                  )
+                })}
+              </div>
+            </div>
+            <p id="countdown" class="h1">-J -H -m -s</p>
+          </div>
+        </section>
 
         <div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
           <h2 class="center text">Où veux-tu jouer?</h2>
@@ -110,7 +161,7 @@ const jsonLd = {
           </div>
         </div>
 
-        <section
+        <!-- <section
           class="articles center max text stack gap-down-h1
           full-bleed-before full-bleed-after skew-border-before skew-border-after
           color-palette-variation-funky-contrast
@@ -197,7 +248,7 @@ const jsonLd = {
             </div>
           </div>
           <p><a href={`/${lang.code}/a`} class="h3">Tous les articles</a></p>
-        </section>
+        </section> -->
       </div>
       <!-- <Fragment
         set:html={`<script type="application/ld+json">${}</script>`}
@@ -230,4 +281,38 @@ const jsonLd = {
     --skew-after: -1deg;
     --skew-after-origin: bottom right;
   }
+  .countdown-section {
+    padding: var(--padding);
+  }
 </style>
+
+<script>
+  // Fonction pour le décompte
+  function countdown() {
+    var eventDate = new Date("2023-07-08T10:00:00Z") // Date de l'événement (à adapter si nécessaire)
+    var currentDate = new Date()
+    var timeDifference = eventDate - currentDate
+
+    var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+    var hours = Math.floor(
+      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+    )
+    var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60))
+    var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000)
+
+    // document.getElementById("countdown").innerHTML =
+    //   days +
+    //   " jours, " +
+    //   hours +
+    //   " heures, " +
+    //   minutes +
+    //   " minutes, " +
+    //   seconds +
+    //   " secondes restantes"
+    document.getElementById("countdown").innerHTML =
+      days + "J " + hours + "H " + minutes + "m " + seconds + "s"
+  }
+
+  // Appeler la fonction de décompte toutes les secondes
+  setInterval(countdown, 1000)
+</script>

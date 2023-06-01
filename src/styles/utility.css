@@ -14,7 +14,7 @@
   box-shadow: var(--shadow-breakout-clickable);
 }
 .breakout-clickable .clickable::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -39,19 +39,23 @@
 
 /* Full Bleed: break out of a reduced width */
 /* As seen here: https://piccalil.li/tutorial/creating-a-full-bleed-css-utility/ */
-.full-bleed, .full-bleed-before::before, .full-bleed-after::after {
+.full-bleed,
+.full-bleed-before::before,
+.full-bleed-after::after {
   width: 100vw;
   margin-left: calc(50% - 50vw);
 }
 
 /* Skew border */
-.skew-border-after, .skew-border-before {
+.skew-border-after,
+.skew-border-before {
   position: relative;
   z-index: 0;
 }
-.skew-border-after:after, .skew-border-before::before {
+.skew-border-after:after,
+.skew-border-before::before {
   background: inherit;
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;

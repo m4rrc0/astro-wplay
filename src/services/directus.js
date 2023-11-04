@@ -209,7 +209,7 @@ export async function start() {
     // const email = DIRECTUS_EMAIL;
     // const password = DIRECTUS_EMAIL;
 
-    await directus.auth
+        await directus.auth
       .login({ email: DIRECTUS_EMAIL, password: DIRECTUS_PW })
       .then(() => {
         authenticated = true
@@ -440,6 +440,57 @@ export function transformOrganization(o) {
   // Transform links
   const links = o.links?.map(transformLink)
 
+  const d = new Date()
+  const today = d.toISOString().substring(0, 10)
+  const inSixMonths = new Date(d.setMonth(d.getMonth() + 6))
+    .toISOString()
+    .substring(0, 10)
+
+  const events = o.events?.map(({ events_id: e }) => {
+    const nameSlug = slugify(e.name)
+    const hasNoSchedule = !e.schedule?.[0]?.time_start
+    // Transform datetimes
+    const scheduleFormatted = !hasNoSchedule
+      ? e.schedule.map(({ time_start: tsRaw, time_end: teRaw }) => {
+          const time_start = transformDateTime(tsRaw)
+          const time_end = transformDateTime(teRaw)
+          const isSameDay = time_start?.fr?.date === time_end?.fr?.date
+  
+          return {
+            time_start,
+            time_end,
+            isSameDay,
+          }
+        })
+      : null
+    const dateSlug = scheduleFormatted?.[0].time_start.dateTimeRaw.substring(
+      0,
+      10,
+    )
+    const slug = `${nameSlug}-${dateSlug}`
+    const address = transformAddress(e.address)
+    
+    return {
+      ...e,
+      path: createPath({ type: 'event', slug }),
+      cover_image: transformImage(e.cover_image),
+      address,
+      time_start: scheduleFormatted?.[0].time_start,
+      time_end: scheduleFormatted?.[0].time_end
+    }
+  }).filter((event) => {
+    return (
+      event?.time_end?.dateTimeRaw > today &&
+      event?.time_end?.dateTimeRaw < inSixMonths
+    )
+  }).sort((prev, next) => {
+    const a = prev?.time_start?.dateTimeRaw
+    const b = next?.time_start?.dateTimeRaw
+    if (a > b) return 1
+    if (a < b) return -1
+    return 0
+  })
+
   return {
     ...o,
     path,
@@ -455,6 +506,7 @@ export function transformOrganization(o) {
     gallery,
     cover_image,
     links,
+    events
   }
 }
 
@@ -487,6 +539,14 @@ export async function fetchOrganizations() {
       // "gallery.*",
       ...imageFields('gallery.*.'),
       // "*",
+      'events.events_id.status',
+      'events.events_id.date_updated',
+      'events.events_id.name',
+      'events.events_id.address',
+      ...imageFields('events.events_id.cover_image.'),
+      'events.events_id.recurring',
+      'events.events_id.schedule',
+      'events.events_id.links',
     ],
   })
 

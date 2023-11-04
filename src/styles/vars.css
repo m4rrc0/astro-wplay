@@ -1,29 +1,31 @@
+@design-tokens url('./tokens.json') format('style-dictionary3');
+
 :root {
   /* --- FONTS --- */
-  --font-body-prefered: env(--font-body-prefered);
-  --font-body-critical: env(--font-body-critical);
-  --font-body-fallback: env(--font-body-fallback);
-  --font-heading-prefered: env(--font-heading-prefered);
-  --font-heading-critical: env(--font-heading-critical);
-  --font-heading-fallback: env(--font-heading-fallback);
-  --font-mono-prefered: env(--font-mono-prefered);
-  --font-mono-critical: env(--font-mono-critical);
-  --font-mono-fallback: env(--font-mono-fallback);
+  --font-body-prefered: design-token('font-body-prefered');
+  --font-body-critical: design-token('font-body-critical');
+  --font-body-fallback: design-token('font-body-fallback');
+  --font-heading-prefered: design-token('font-heading-prefered');
+  --font-heading-critical: design-token('font-heading-critical');
+  --font-heading-fallback: design-token('font-heading-fallback');
+  --font-mono-prefered: design-token('font-mono-prefered');
+  --font-mono-critical: design-token('font-mono-critical');
+  --font-mono-fallback: design-token('font-mono-fallback');
 
   /* --- SIZES --- */
-  --size-base-px: env(--size-base-px); /* unitless px value (if necessary) */
+  --size-base-px: design-token('size-base-px'); /* unitless px value (if necessary) */
   /* unitless px value of max size cross site (if necessary) */
-  --size-max-px: env(--size-max-px);
-  --size-scale-steps: env(--size-scale-steps);
+  --size-max-px: design-token('size-max-px');
+  --size-scale-steps: design-token('size-scale-steps');
   --size-base: calc(var(--size-base-px) / 16); /* unitless rem value */
   /* can be computed by (maxSize / baseSize) ** (1 / steps) */
   /* (baseSize = 16, maxSize = 100, steps = 12) => 1.16499 */
   /* --size-scale-ratio: sizeScaleRatio(); */
-  --size-scale-ratio: env(--size-scale-ratio);
-  --size-relative-ratio: env(--size-relative-ratio);
+  --size-scale-ratio: design-token('size-scale-ratio');
+  --size-relative-ratio: design-token('size-relative-ratio');
   
-  --size-lock-screen-min: env(--size-lock-screen-min);
-  --size-lock-screen-max: env(--size-lock-screen-max);
+  --size-lock-screen-min: design-token('size-lock-screen-min');
+  --size-lock-screen-max: design-token('size-lock-screen-max');
   /* TODO: does not work */
   /* --fluid-min-screen-px: 400;
   --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
@@ -31,19 +33,19 @@
   --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
   
 
-  --width-measure: env(--width-measure);
-  --width-measure-relative: env(--width-measure-relative);
-  --width-measure-ratio: env(--width-measure-ratio);
-  --width-max: env(--width-max);
-  --width-relative-ratio: env(--width-relative-ratio);
-  --width-narrow: env(--width-narrow);
-  /* --width-main: env(--width-main); */
-  /* --width-aside: env(--width-aside); */
+  --width-measure: design-token('width-measure' to rem);
+  --width-measure-relative: design-token('width-measure-relative' to em);
+  --width-measure-ratio: design-token('width-measure-ratio');
+  --width-max: design-token('width-max' to rem);
+  --width-relative-ratio: design-token('width-relative-ratio');
+  --width-narrow: design-token('width-narrow' to rem);
+  /* --width-main: design-token(--width-main); */
+  /* --width-aside: design-token(--width-aside); */
 
-  --border-radius-s: env(--border-radius-s);
-  --border-radius-m: env(--border-radius-m);
-  --border-radius-l: env(--border-radius-l);
-  --border-radius-circle: env(--border-radius-circle);
+  --border-radius-s: design-token('border-radius-s' to rem);
+  --border-radius-m: design-token('border-radius-m' to rem);
+  --border-radius-l: design-token('border-radius-l' to rem);
+  --border-radius-circle: design-token(--border-radius-circle);
 
   /* --shadow-raised-s: 0 0px 6px rgb(0 0 0 / 30%);
   --shadow-raised-m: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
@@ -74,7 +76,7 @@
 @custom-selector :--button button, .button, input[type='submit'], input[type='button'], input[type='reset'];
 
 /* :--headings {
-  color: env(--main-color) !important;
+  color: design-token(--main-color) !important;
 } */
 
 /* @mixin border; */

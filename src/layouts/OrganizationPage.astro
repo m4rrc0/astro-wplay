@@ -1,5 +1,5 @@
 ---
-import Markdown from "@astrojs/markdown-component"
+import {Markdown} from "astro-remote"
 import { Icon } from "astro-icon"
 import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO, IO, ImgDirectus } from "@components"
@@ -33,6 +33,7 @@ const {
     // description,
     // gallery,
     links,
+    events
   },
 } = Astro.props
 
@@ -228,6 +229,88 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             ))}
           </ul>
         </div>
+      )}
+      {events?.[0] && (
+        <IO
+          div
+          $skipNoInner
+          class="grid gap-down-h4"
+          style="--width-column: var(--width-col-3);"
+        >
+          <IO ul $skip={!events?.[0]?.name} class="list reset">
+            {events?.map((event) => {
+              const {
+                name,
+                address,
+                cover_image,
+                time_start,
+              } = event
+
+              const srcCover = imageDirectusSrc({
+                src: cover_image?.src,
+                width: "1000",
+                fit: "cover",
+                quality: "50",
+              })
+
+              return (
+                <li
+                  class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                  style=""
+                >
+                  <div
+                    class="box no-border padding-h4 with-sidebar gap-h4
+                                        color-palette-trans
+                                        background-overlay
+                                        "
+                    style={
+                      (srcCover
+                        ? `background-image: url("${srcCover}"); `
+                        : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                      `--content-min: 80%;`
+                    }
+                  >
+                    <div>
+                      <time
+                        datetime={time_start.dateTimeRaw}
+                        class="timestart stack gap-down-h8 center intrinsic"
+                        style="line-height: 1;"
+                      >
+                        <span class="size-h1">{time_start?.fr?.day}</span>
+                        <span class="size-h2">
+                          {time_start?.fr?.monthShort}
+                        </span>
+                        <span class="size-h2">{time_start?.fr?.year}</span>
+                      </time>
+                      <div>
+                        <div class="cover no-gap" style="--min-height: 100%;">
+                          <h2 class="h3 centered">
+                            <a
+                              href={`/${event.path}`}
+                              class="name reset clickable"
+                              set:html={name}
+                            />
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                    <IO
+                      p
+                      $skipNoInner
+                      class="zip city h5"
+                      data-zip={address.zip}
+                      data-city={address.city}
+                    >
+                      {address?.string}
+                    </IO>
+                  </div>
+                </li>
+              )
+            })}
+          </IO>
+        </IO>
       )}
     </main>
 

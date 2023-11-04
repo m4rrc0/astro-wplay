@@ -7,10 +7,8 @@ import sitemap from "@astrojs/sitemap"
 import robotsTxt from "astro-robots-txt"
 // import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 import critters from "astro-critters"
-import image from "@astrojs/image"
 // import { astroImageTools } from "astro-imagetools"
 // import compress from "astro-compress"
-import minifyHtml from "astro-html-minifier"
 
 const PAGE_ADMIN = process.env.PAGE_ADMIN || null
 
@@ -43,13 +41,13 @@ export default defineConfig({
       fonts: true,
       exclude: [(file) => file.startsWith("./dist/fr/e")],
     }),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
+    // image({
+    //   serviceEntryPoint: "@astrojs/image/sharp",
       // supported levels: 'debug' | 'info' | 'warn' | 'error' | 'silent' / default: 'info'
       // logLevel: "debug",
       // may be useful if your hosting provider allows caching between CI builds
-      cacheDir: "./_cache/images",
-    }),
+    //   cacheDir: "./_cache/images",
+    // }),
     // astroImageTools,
     // compress({
     //   css: false,

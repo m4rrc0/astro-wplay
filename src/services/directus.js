@@ -1,8 +1,6 @@
 import { Directus } from '@directus/sdk'
 import { slugify, createPath, areasBe } from '@utils'
 
-// const DIRECTUS_EMAIL = import.meta.env.PUBLIC_DIRECTUS_EMAIL
-// const DIRECTUS_PW = import.meta.env.PUBLIC_DIRECTUS_PW
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL || process.env.DIRECTUS_URL
 const DIRECTUS_EMAIL =
   import.meta.env.DIRECTUS_EMAIL || process.env.DIRECTUS_EMAIL
@@ -13,7 +11,6 @@ export const directus = new Directus(DIRECTUS_URL)
 
 // --- STATIC VALUES --- //
 
-// const cmsBaseUrl = `http://localhost:8055`
 const cmsBaseUrl = DIRECTUS_URL
 const cmsAssetsUrl = `${cmsBaseUrl}/assets`
 
@@ -128,22 +125,6 @@ const dico = [
   { code_name: 'children', fr: 'Enfants bienvenus' },
 ]
 
-// const localImages = {
-//   cover_image: {
-//     filename_download: 'WannaPlay-banner-paper.jpeg',
-//     title: 'WannaPlay-banner-paper',
-//     type: 'image/jpeg',
-//     width: 2000,
-//     height: 1333,
-//     description: null,
-//     src: '/assets/images/WannaPlay-banner-paper.jpeg',
-//   },
-// }
-
-// const iconsDico = [
-//   { code_name: 'facebook', iconName: 'brandico:facebook-rect' },
-// ]
-
 // --- UTILITY FUNCTIONS --- //
 
 const translateFromCodeName = (code_name) => {
@@ -173,7 +154,6 @@ const reduceTranslatedMarkdown = ({ translations, fieldName }) =>
 
 function removeEmptyPropOnObject(obj) {
   if (typeof obj === 'object' && !Array.isArray(obj)) {
-    // return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
     return Object.fromEntries(
       Object.entries(obj).filter(([_, v]) => v || v === false),
     )
@@ -202,14 +182,7 @@ export async function start() {
 
   // Let's login in case we don't have token or it is invalid / expired
   while (!authenticated) {
-    // const email = window.prompt('Email:');
-    // const password = window.prompt('Password:');
-    // const email = "marcoet@gmail.com";
-    // const password = "sheron";
-    // const email = DIRECTUS_EMAIL;
-    // const password = DIRECTUS_EMAIL;
-
-        await directus.auth
+    await directus.auth
       .login({ email: DIRECTUS_EMAIL, password: DIRECTUS_PW })
       .then(() => {
         authenticated = true
@@ -290,7 +263,6 @@ function transformAddress(address) {
   const a = (address?.[0]?.zip && address?.[0]) || (address?.zip && address)
   if (!a) return null
 
-  // const string = `${a.street} ${a.number}, ${a.zip} ${a.city}`
   const string = [
     [a.street, a.number].filter((z) => z).join(' '),
     [a.zip, a.city].filter((z) => z).join(' '),
@@ -356,9 +328,6 @@ export const fetchLanguages = async () => {
 export async function fetchPages() {
   return directus.items('Pages').readByQuery({
     limit: -1,
-    // filter: { status: { _eq: 'published' } },
-    // fields: [ "*", "translations.*", "main.*", "main.item.*", "main.item.translations.*", "main.item.content.*", "main.item.content.item.*", "main.item.content.item.*" ]
-    // fields: [ "*", "translations.*", "main.*", "main.*.*", "main.*.*.*", "main.*.*.*.*", "main.*.*.*.*.*" ]
     fields: [
       '*',
       'translations.*',
@@ -380,7 +349,6 @@ export function transformOrganization(o) {
     slug,
     types,
     opening_hours,
-    translations,
     games_services,
     amenities,
   } = o
@@ -403,13 +371,7 @@ export function transformOrganization(o) {
       const timeSlotString = [
         time_start?.substring(0, 5),
         time_end?.substring(0, 5),
-      ]
-        .filter((z) => z)
-        .join(' → ')
-      // const timeSlotString = `${time_start.substring(
-      //   0,
-      //   5,
-      // )} → ${time_end.substring(0, 5)}`
+      ].filter((z) => z).join(' → ')
       return { time_start, time_end, str: timeSlotString }
     })
     const timeSlotsString = timeSlotsFormatted?.map(({ str }) => str).join(', ')
@@ -419,16 +381,7 @@ export function transformOrganization(o) {
     )
   })
 
-  // // Transform opening_hours_remark
-  // const opening_hours_remark = reduceTranslatedMarkdown({
-  //   translations,
-  //   fieldName: 'opening_hours_remark',
-  // })
-  // // Transform description
-  // const description = reduceTranslatedMarkdown({
-  //   translations,
-  //   fieldName: 'description',
-  // })
+
   // Transform games_services
   const games_services_translated = games_services?.map(translateFromCodeName)
   // Transform amenities
@@ -498,8 +451,6 @@ export function transformOrganization(o) {
     address,
     typesTranslated,
     opening_hours_strings,
-    // opening_hours_remark,
-    // description,
     games_services_translated,
     amenities_translated,
     logo,
@@ -521,24 +472,15 @@ export async function fetchOrganizations() {
       'name',
       'slug',
       'types',
-      // "logo.*",
       ...imageFields('logo.'),
-      // "cover_image.*",
       ...imageFields('cover_image.'),
       'opening_hours',
       'games_services',
       'address',
       'amenities',
       'links',
-      // 'website',
-      // 'facebook_page',
-      // 'instagram',
-      // 'twitter',
-      // 'youtube_channel',
       'translations.*',
-      // "gallery.*",
       ...imageFields('gallery.*.'),
-      // "*",
       'events.events_id.status',
       'events.events_id.date_updated',
       'events.events_id.name',
@@ -588,7 +530,6 @@ function fallbackOnParentsOfEvent({
         ...(organizerFields || {}),
         ...(parentFields || {}),
         ...(eventFields || {}),
-        // fallback_language: eventFields?.fallback_language,
         fallback_language: undefined,
       }
     })
@@ -609,22 +550,13 @@ function fallbackOnParentsOfEvent({
       ? removeEmptyPropOnObject({
           name: parent.name,
           address: parent.address,
-          cover_image: parent.cover_image,
-          // organizers: parent.organizers,
+          cover_image: parent.cover_image
         })
       : {}),
     ...removeEmptyPropOnObject(eventRaw),
     organizers,
     translations,
   }
-
-  // console.log({
-  //   name: eventRaw.name,
-  //   eR: eventRaw?.address,
-  //   p: parent?.address,
-  //   o: mainOrganizer?.address,
-  //   e: e.address,
-  // })
 
   return e
 }
@@ -651,7 +583,6 @@ export function transformEvent(eventRaw, languages) {
   const parentIsRecurring = parent?.recurring || parent?.schedule?.length > 0
   const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
   const hasParent = !!parent
-  // const hasDescriptionOrHighlighted = eventRaw.translations.inde
 
   // Fallback values from parent_event or first Organizer
   const e = languages
@@ -749,9 +680,6 @@ export async function fetchEvents() {
         // { date_updated: { _gte: '$NOW(-6 months)' } }, // TODO: change this when we can check the last event time in schedule
       ],
     },
-    // filter: { date_published: { _gte: '$NOW(-1 week)' } },
-    // filter: { schedule: { time_start: { _gte: '$NOW(-1 week)' } } },
-    // sort: 'date_updated',
     fields: [
       '*',
       'status',
@@ -762,10 +690,6 @@ export async function fetchEvents() {
       'recurring',
       'schedule',
       'links',
-      // 'links.web_page',
-      // 'links.facebook_event',
-      // 'links.other_links',
-      // 'organizers.organizations_id.*',
       'organizers.organizations_id.status',
       'organizers.organizations_id.name',
       'organizers.organizations_id.slug',
@@ -777,12 +701,9 @@ export async function fetchEvents() {
       ...imageFields('organizers.organizations_id.gallery.*.'),
       'organizers.organizations_id.translations.languages_code',
       'organizers.organizations_id.translations.description',
-      // 'translations.*',
       'translations.languages_code',
-      // 'translations.fallback_language',
       'translations.highlighted_details',
       'translations.description',
-      // parent_event
       'parent_event',
       'parent_event.status',
       'parent_event.name',
@@ -792,12 +713,8 @@ export async function fetchEvents() {
       'parent_event.links',
       ...imageFields('parent_event.cover_image.'),
       'parent_event.translations.languages_code',
-      // 'parent_event.translations.fallback_language',
       'parent_event.translations.highlighted_details',
       'parent_event.translations.description',
-      // 'parent_event.translations.main_url',
-      // 'parent_event.translations.facebook_event_url',
-      // 'parent_event.translations.other_links',
       'parent_event.organizers.organizations_id.status',
       'parent_event.organizers.organizations_id.name',
       'parent_event.organizers.organizations_id.slug',
@@ -809,7 +726,6 @@ export async function fetchEvents() {
       ...imageFields('parent_event.organizers.organizations_id.gallery.*.'),
       'parent_event.organizers.organizations_id.translations.languages_code',
       'parent_event.organizers.organizations_id.translations.description',
-
       'event_instances',
     ],
   })
@@ -858,7 +774,6 @@ export function transformArticle(articleRaw, languages) {
   const hasNoHeader = !headerRaw || !headerRaw?.[0]
   const hasNoMain = !mainRaw || !mainRaw?.[0]
   const hasNoFooter = !footerRaw || !footerRaw?.[0]
-  const isPage = !!slug
 
   // Early return
   if (hasNoHeader && hasNoMain && hasNoFooter) return null
@@ -894,7 +809,6 @@ export async function fetchArticles() {
     filter: { status: { _eq: 'published' } },
     sort: '-date_published',
     fields: [
-      // '*',
       'status',
       'code_name',
       ...pageDataFields('page_data.'),

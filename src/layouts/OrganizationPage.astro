@@ -300,8 +300,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                       p
                       $skipNoInner
                       class="zip city h5"
-                      data-zip={address.zip}
-                      data-city={address.city}
+                      data-zip={address?.zip}
+                      data-city={address?.city}
                     >
                       {address?.string}
                     </IO>

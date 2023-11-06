@@ -65,13 +65,13 @@ export default defineConfig({
     // }),
     // minifyHtml(),
   ],
-  vite: {
-    // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)
-    ssr: {
-      external: ["svgo"],
-    },
-    // plugins: [viteCommonjs()],
-  },
+  // vite: {
+  //   // NOTE: necessary for astro-icon apparently (https://github.com/natemoo-re/astro-icon)
+  //   ssr: {
+  //     external: ["svgo"],
+  //   },
+  //   // plugins: [viteCommonjs()],
+  // },
 })
 
 // ?? Should I integrate postCSS config here? postCSS + Svelte?

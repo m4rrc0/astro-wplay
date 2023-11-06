@@ -216,7 +216,7 @@ export async function start() {
         console.info('--SELF INFO-- DIRECTUS AUTH = OK')
       })
       .catch(() => {
-        window.alert('Invalid credentials')
+        console.error('Invalid credentials')
       })
   }
 }

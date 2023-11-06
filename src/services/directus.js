@@ -341,7 +341,7 @@ export async function fetchPages() {
 
 // --- F&T ORGANIZATIONS --- //
 
-export function transformOrganization(o) {
+export function transformOrganization(o, languages) {
   if (!o) return o
 
   const {
@@ -393,50 +393,23 @@ export function transformOrganization(o) {
   // Transform links
   const links = o.links?.map(transformLink)
 
+  const eventsUnflat = o.events?.filter(({ events_id: e }) => !!e).map(({ events_id: e }) => transformEvent(e, languages)) || []
+  const eventsUnfiltered = flattenEvents(eventsUnflat)
+
   const d = new Date()
   const today = d.toISOString().substring(0, 10)
   const inSixMonths = new Date(d.setMonth(d.getMonth() + 6))
     .toISOString()
     .substring(0, 10)
 
-  const events = o.events?.filter(({ events_id: e }) => !!e).map(({ events_id: e }) => {
-    const nameSlug = slugify(e.name)
-    const hasNoSchedule = !e.schedule?.[0]?.time_start
-    // Transform datetimes
-    const scheduleFormatted = !hasNoSchedule
-      ? e.schedule.map(({ time_start: tsRaw, time_end: teRaw }) => {
-          const time_start = transformDateTime(tsRaw)
-          const time_end = transformDateTime(teRaw)
-          const isSameDay = time_start?.fr?.date === time_end?.fr?.date
-  
-          return {
-            time_start,
-            time_end,
-            isSameDay,
-          }
-        })
-      : null
-    const dateSlug = scheduleFormatted?.[0].time_start.dateTimeRaw.substring(
-      0,
-      10,
-    )
-    const slug = `${nameSlug}-${dateSlug}`
-    const address = transformAddress(e.address)
-    
-    return {
-      ...e,
-      path: createPath({ type: 'event', slug }),
-      cover_image: transformImage(e.cover_image),
-      address,
-      time_start: scheduleFormatted?.[0].time_start,
-      time_end: scheduleFormatted?.[0].time_end
-    }
-  }).filter((event) => {
+  const events = eventsUnfiltered.filter((event) => {
     return (
       event?.time_end?.dateTimeRaw > today &&
       event?.time_end?.dateTimeRaw < inSixMonths
     )
-  }).sort((prev, next) => {
+  })
+
+  events.sort((prev, next) => {
     const a = prev?.time_start?.dateTimeRaw
     const b = next?.time_start?.dateTimeRaw
     if (a > b) return 1
@@ -489,10 +462,19 @@ export async function fetchOrganizations() {
       'events.events_id.recurring',
       'events.events_id.schedule',
       'events.events_id.links',
+      'events.events_id.parent_event.status',
+      'events.events_id.parent_event.date_updated',
+      'events.events_id.parent_event.name',
+      'events.events_id.parent_event.address',
+      ...imageFields('events.events_id.parent_event.cover_image.'),
+      'events.events_id.parent_event.recurring',
+      'events.events_id.parent_event.schedule',
+      'events.events_id.parent_event.links',
     ],
   })
 
-  const organizations = organizationsRaw.data?.map(transformOrganization)
+  const languages = await fetchLanguages()
+  const organizations = organizationsRaw.data?.map(organization => transformOrganization(organization, languages))
 
   return organizations
 }
@@ -575,7 +557,6 @@ export function transformEvent(eventRaw, languages) {
       ))
 
   const mainOrganizer = organizers?.[0]
-
   // Inject booleans
   const isRecurring =
     eventRaw.recurring ||

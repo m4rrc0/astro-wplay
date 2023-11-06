@@ -446,7 +446,7 @@ export function transformOrganization(o) {
     .toISOString()
     .substring(0, 10)
 
-  const events = o.events?.map(({ events_id: e }) => {
+  const events = o.events?.filter(({ events_id: e }) => !!e).map(({ events_id: e }) => {
     const nameSlug = slugify(e.name)
     const hasNoSchedule = !e.schedule?.[0]?.time_start
     // Transform datetimes

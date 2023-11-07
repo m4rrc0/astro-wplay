@@ -393,7 +393,9 @@ export function transformOrganization(o, languages) {
   // Transform links
   const links = o.links?.map(transformLink)
 
-  const eventsUnflat = o.events?.filter(({ events_id: e }) => !!e).map(({ events_id: e }) => transformEvent(e, languages)) || []
+  const eventsUnflat = o.events?.filter(({ events_id: e }) => !!e).map(({ events_id: e }) =>
+    transformEvent({...e, organizers: [{organizations_id: {cover_image}}]}, languages)
+  ) || []
   const eventsUnfiltered = flattenEvents(eventsUnflat)
 
   const d = new Date()

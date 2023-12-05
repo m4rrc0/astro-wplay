@@ -1,9 +1,10 @@
 ---
-import {Markdown} from "astro-remote"
+import { Markdown } from "astro-remote"
 import { Icon } from "astro-icon"
 import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO, IO, ImgDirectus } from "@components"
 import { imageDirectusSrc } from "@utils"
+import { Div } from "@src/elements"
 
 const {
   lang,
@@ -33,7 +34,7 @@ const {
     // description,
     // gallery,
     links,
-    events
+    events,
   },
 } = Astro.props
 
@@ -82,113 +83,120 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           class="center text box no-border
             color-palette-trans
             h1 padding-y-relative-xl
-            background-overlay
-            "
+            background-overlay"
           style={srcCover
             ? `background-image: url("${srcCover}");`
             : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}
         >
-          <h1 class="centered" set:html={name}></h1>
+          <h1 class="centered" set:html={name} />
           {presentation && <p class="h3">{presentation}</p>}
-          {address?.string && (
-            <p class="h6">
-              <a
-                href={address.gMapLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {address.string}
-              </a>
-            </p>
-          )}
+          {
+            address?.string && (
+              <p class="h6">
+                <a
+                  href={address.gMapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {address.string}
+                </a>
+              </p>
+            )
+          }
         </div>
-        {logo?.src && (
-          <div
-            class="center intrinsic box no-border
+        {
+          logo?.src && (
+            <div
+              class="center intrinsic box no-border
               color-palette-main
               width-col-6
               border-radius-s
               "
-            style="
+              style="
               margin-top: calc(var(--size-h2) * -1);
               margin-bottom: var(--size-h2);
               box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
               max-height: var(--width-col-6);
               overflow: hidden;
               "
-          >
-            <ImgDirectus
-              image={logo}
-              src={logo?.src}
-              alt={name}
-              loading="lazy"
-              class=""
-              style={`width: ${logo.width}; max-width: 100%; height: auto; max-height: ${logo.height}; object-fit: contain;`}
-              width={logo.width}
-              height={logo.height}
-              fit="contain"
-              quality="99"
-            />
-          </div>
-        )}
+            >
+              <ImgDirectus
+                image={logo}
+                src={logo?.src}
+                alt={name}
+                loading="lazy"
+                class=""
+                style={`width: ${logo.width}; max-width: 100%; height: auto; max-height: ${logo.height}; object-fit: contain;`}
+                width={logo.width}
+                height={logo.height}
+                fit="contain"
+                quality="99"
+              />
+            </div>
+          )
+        }
       </header>
 
-      {(games_services_translated?.[0] || amenities_translated?.[0]) && (
-        <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
-          <ul class="reset">
-            <>
-              {games_services_translated?.map(({ [lang.code]: code }) => (
-                <li
-                  class="
+      {
+        (games_services_translated?.[0] || amenities_translated?.[0]) && (
+          <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
+            <ul class="reset">
+              <>
+                {games_services_translated?.map(({ [lang.code]: code }) => (
+                  <li
+                    class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-contrast
                   border-radius-s
                 "
-                >
-                  {code}
-                </li>
-              ))}
+                  >
+                    {code}
+                  </li>
+                ))}
 
-              {amenities_translated?.map(({ [lang.code]: code }) => (
-                <li
-                  class="
+                {amenities_translated?.map(({ [lang.code]: code }) => (
+                  <li
+                    class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-funky-contrast
                   border-radius-s
                 "
-                >
-                  {code}
-                </li>
-              ))}
-            </>
-          </ul>
-        </div>
-      )}
+                  >
+                    {code}
+                  </li>
+                ))}
+              </>
+            </ul>
+          </div>
+        )
+      }
 
-      {(opening_hours_strings?.[0] || opening_hours_remark) && (
-        <div
-          class="
+      {
+        (opening_hours_strings?.[0] || opening_hours_remark) && (
+          <div
+            class="
         box no-border
         color-palette-variation-funky-contrast
       "
-        >
-          <div class="center max-width-measure-h4 stack gap-down-h7 recursive">
-            <h2>Horaires</h2>
-            {opening_hours_strings?.[0] && (
-              <div class="stack gap-down-h9">
-                {opening_hours_strings.map((str) => (
-                  <p set:html={str} />
-                ))}
-              </div>
-            )}
-            {opening_hours_remark && (
-              <div class="">
-                <Markdown content={opening_hours_remark} />
-              </div>
-            )}
+          >
+            <div class="center max-width-measure-h4 stack gap-down-h7 recursive">
+              <h2>Horaires</h2>
+              {opening_hours_strings?.[0] && (
+                <div class="stack gap-down-h9">
+                  {opening_hours_strings.map((str) => (
+                    <p set:html={str} />
+                  ))}
+                </div>
+              )}
+              {opening_hours_remark && (
+                <div class="">
+                  <Markdown content={opening_hours_remark} />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
       <!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
         <ul class="reset">
             {amenities_translated?.map(({ [lang.code]: code }) => (
@@ -196,122 +204,129 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             ))}
         </ul>
       </div>} -->
-      {description && (
-        <div
-          class="
+      {
+        description && (
+          <div
+            class="
         box no-border center
         max-width-measure-h4
         stack gap-down-h7
       "
-        >
-          <h2>Description</h2>
-          <Markdown content={description} />
-        </div>
-      )}
+          >
+            <h2>Description</h2>
+            <Markdown content={description} />
+          </div>
+        )
+      }
 
-      {links?.[0] && (
-        <div class="box no-border cluster center max-width-measure-h4">
-          <ul class="reset justify-content-space-around">
-            {links.map(({ name, url, iconName }) => (
-              <li>
-                <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="
+      {
+        links?.[0] && (
+          <div class="box no-border cluster center max-width-measure-h4">
+            <ul class="reset justify-content-space-around">
+              {links.map(({ name, url, iconName }) => (
+                <li>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="
                   box no-border stack center intrinsic gap-down-h8
                 "
-                >
-                  <Icon name={iconName} size="1em" class="size-h1" />
-                  <div class="size-h4">{name.fr}</div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {events?.[0] && (
-        <IO
-          div
-          $skipNoInner
-          class="box no-border grid gap-down-h4"
-          style="--width-column: var(--width-col-3);"
-        >
-          <IO ul $skip={!events?.[0]?.name} class="list reset">
-            {events?.map((event) => {
-              const {
-                name,
-                address,
-                cover_image,
-                time_start,
-              } = event
-
-              const srcCover = imageDirectusSrc({
-                src: cover_image?.src,
-                width: "1000",
-                fit: "cover",
-                quality: "50",
-              })
-
-              return (
-                <li
-                  class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                  style=""
-                >
-                  <div
-                    class="box no-border padding-h4 with-sidebar gap-h4
-                                        color-palette-trans
-                                        background-overlay
-                                        "
-                    style={
-                      (srcCover
-                        ? `background-image: url("${srcCover}"); `
-                        : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
-                      `--content-min: 80%;`
-                    }
                   >
-                    <div>
-                      <time
-                        datetime={time_start.dateTimeRaw}
-                        class="timestart stack gap-down-h8 center intrinsic"
-                        style="line-height: 1;"
+                    <Icon name={iconName} size="1em" class="size-h1" />
+                    <div class="size-h4">{name.fr}</div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+      {
+        events?.[0] && (
+          <div class="box no-border stack gap-down-h4">
+            <h2>Prochains événements</h2>
+            <IO
+              div
+              $skipNoInner
+              class="grid gap-down-h4"
+              style="--width-column: var(--width-col-3);"
+            >
+              <IO ul $skip={!events?.[0]?.name} class="list reset">
+                {events?.map((event) => {
+                  const { name, address, cover_image, time_start } = event
+
+                  const srcCover = imageDirectusSrc({
+                    src: cover_image?.src,
+                    width: "1000",
+                    fit: "cover",
+                    quality: "50",
+                  })
+
+                  return (
+                    <li
+                      class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                      style=""
+                    >
+                      <div
+                        class="box no-border padding-h4 with-sidebar gap-h4
+                                          color-palette-trans
+                                          background-overlay
+                                          "
+                        style={
+                          (srcCover
+                            ? `background-image: url("${srcCover}"); `
+                            : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                          `--content-min: 80%;`
+                        }
                       >
-                        <span class="size-h1">{time_start?.fr?.day}</span>
-                        <span class="size-h2">
-                          {time_start?.fr?.monthShort}
-                        </span>
-                        <span class="size-h2">{time_start?.fr?.year}</span>
-                      </time>
-                      <div>
-                        <div class="cover no-gap" style="--min-height: 100%;">
-                          <h2 class="h3 centered">
-                            <a
-                              href={`/${event.path}`}
-                              class="name reset clickable"
-                              set:html={name}
-                            />
-                          </h2>
+                        <div>
+                          <time
+                            datetime={time_start.dateTimeRaw}
+                            class="timestart stack gap-down-h8 center intrinsic"
+                            style="line-height: 1;"
+                          >
+                            <span class="size-h1">{time_start?.fr?.day}</span>
+                            <span class="size-h2">
+                              {time_start?.fr?.monthShort}
+                            </span>
+                            <span class="size-h2">{time_start?.fr?.year}</span>
+                          </time>
+                          <div>
+                            <div
+                              class="cover no-gap"
+                              style="--min-height: 100%;"
+                            >
+                              <h2 class="h3 centered">
+                                <a
+                                  href={`/${event.path}`}
+                                  class="name reset clickable"
+                                  set:html={name}
+                                />
+                              </h2>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
-                    <IO
-                      p
-                      $skipNoInner
-                      class="zip city h5"
-                      data-zip={address?.zip}
-                      data-city={address?.city}
-                    >
-                      {address?.string}
-                    </IO>
-                  </div>
-                </li>
-              )
-            })}
-          </IO>
-        </IO>
-      )}
+                      <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                        <IO
+                          p
+                          $skipNoInner
+                          class="zip city h5"
+                          data-zip={address?.zip}
+                          data-city={address?.city}
+                        >
+                          {address?.string}
+                        </IO>
+                      </div>
+                    </li>
+                  )
+                })}
+              </IO>
+            </IO>
+          </div>
+        )
+      }
     </main>
 
     <!-- </div> -->

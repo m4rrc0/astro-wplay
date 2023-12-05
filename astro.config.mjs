@@ -17,6 +17,11 @@ const PAGE_ADMIN = process.env.PAGE_ADMIN || null
 // @ts-check
 export default defineConfig({
   site: "https://www.wanna-play.be/",
+  image: {
+    // Allow Astro image optimization on CMS images.
+    // NOTE: Only usefull if we want to process images with Astro instead of serving directly from the CMS.
+    domains: ["cms.wanna-play.be"],
+  },
   integrations: [
     svelte(),
     sitemap({

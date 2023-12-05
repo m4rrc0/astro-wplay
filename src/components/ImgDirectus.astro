@@ -1,21 +1,46 @@
 ---
 import { Image, Picture } from "astro:assets"
 // import { Img } from "astro-imagetools/components";
-import { imageDirectusSrc } from '@utils'
-import { IO } from '@components'
+import { imageDirectusSrc } from "@utils"
+import { IO } from "@components"
 
+// TODO: Check props of the new astro:assets service: https://docs.astro.build/en/guides/images/#properties
 const {
-    $skip, id, class: _class, style, onload, image, src: srcRaw, fit, width, height, quality, withoutEnlargement, format, ...props
+  $skip,
+  id,
+  class: _class,
+  style,
+  onload,
+  image,
+  src: srcRaw,
+  fit,
+  width,
+  height,
+  quality,
+  withoutEnlargement,
+  format,
+  ...props
 } = Astro.props || {}
 
-const src = imageDirectusSrc({ src: srcRaw, fit, width, height, quality, withoutEnlargement, format, type: image?.type })
+const src = imageDirectusSrc({
+  src: srcRaw,
+  fit,
+  width,
+  height,
+  quality,
+  withoutEnlargement,
+  format,
+  type: image?.type,
+})
 
-const [typePre, typePost] = image?.type?.split('/') || []
-const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('svg')))
+const [typePre, typePost] = image?.type?.split("/") || []
+const useImageTools = !(
+  image?.type &&
+  (typePre !== "image" || typePost?.match("svg"))
+)
 ---
 
-<!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> -->
-<!-- <IO wrapper {$skip}>
+<!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> --><!-- <IO wrapper {$skip}>
     {
         !src ?
             null : (
@@ -38,27 +63,27 @@ const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('
     }
 </IO> -->
 <IO wrapper {$skip}>
-    {
-        !src ?
-            null : (
-                useImageTools ?
-                    <Image
-                        {...props}
-                        {src}
-                        {format}
-                        {quality}
-                        {width}
-                        {height}
-                        {fit}
-                        {/* default is 'center' */}
-                        position="center"
-                        background="rgba(100,100,100, 0)"
-                        {...(id ? { id } : {})}
-                        {...(_class ? { class: _class } : {})}
-                        {...(style ? { style } : {})}
-                        onload={`this.style.background = 'transparent';${onload || ""}`}
-                        /> :
-                    <img {...props} {src} {width} {height} {id} class={_class} {style} />
-            )
-    }
+  {
+    !src ? null : useImageTools ? (
+      <Image
+        {...props}
+        {src}
+        {format}
+        {quality}
+        {width}
+        {height}
+        {fit}
+        {
+        /* default is 'center' */ }
+        position="center"
+        background="rgba(100,100,100, 0)"
+        {...(id ? { id } : {})}
+        {...(_class ? { class: _class } : {})}
+        {...(style ? { style } : {})}
+        onload={`this.style.background = 'transparent';${onload || ""}`}
+      />
+    ) : (
+      <img {...props} {src} {width} {height} {id} class={_class} {style} />
+    )
+  }
 </IO>

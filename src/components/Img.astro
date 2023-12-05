@@ -4,6 +4,7 @@ import { Image, Picture } from "astro:assets"
 
 // import { IO } from '@components'
 
+// TODO: Check props of the new astro:assets service: https://docs.astro.build/en/guides/images/#properties
 const {
   id,
   class: _class,
@@ -52,8 +53,8 @@ const {
   {/* default is 'center' */}
   position="center"
   background="rgba(100,100,100, 0)"
-  {...(id ? { id } : {})}
-  {...(_class ? { class: _class } : {})}
-  {...(style ? { style } : {})}
+  {...id ? { id } : {}}
+  {..._class ? { class: _class } : {}}
+  {...style ? { style } : {}}
   onload={`this.style.background = 'transparent';${onload || ""}`}
 />

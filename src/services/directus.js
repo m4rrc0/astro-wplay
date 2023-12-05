@@ -394,7 +394,7 @@ export function transformOrganization(o, languages) {
   const links = o.links?.map(transformLink)
 
   const eventsUnflat = o.events?.filter(({ events_id: e }) => !!e).map(({ events_id: e }) =>
-    transformEvent({...e, organizers: [{organizations_id: {cover_image}}]}, languages)
+    transformEvent(e, languages)
   ) || []
   const eventsUnfiltered = flattenEvents(eventsUnflat)
 
@@ -456,6 +456,7 @@ export async function fetchOrganizations() {
       'links',
       'translations.*',
       ...imageFields('gallery.*.'),
+      // Related Events
       'events.events_id.status',
       'events.events_id.date_updated',
       'events.events_id.name',
@@ -464,14 +465,43 @@ export async function fetchOrganizations() {
       'events.events_id.recurring',
       'events.events_id.schedule',
       'events.events_id.links',
+      'events.events_id.organizers.organizations_id.status',
+      'events.events_id.organizers.organizations_id.name',
+      'events.events_id.organizers.organizations_id.slug',
+      'events.events_id.organizers.organizations_id.address',
+      ...imageFields('events.events_id.organizers.organizations_id.logo.'),
+      ...imageFields('events.events_id.organizers.organizations_id.cover_image.'),
+      'events.events_id.organizers.organizations_id.games_services',
+      'events.events_id.organizers.organizations_id.amenities',
+      ...imageFields('events.events_id.organizers.organizations_id.gallery.*.'),
+      'events.events_id.organizers.organizations_id.translations.languages_code',
+      'events.events_id.organizers.organizations_id.translations.description',
+      'events.events_id.translations.languages_code',
+      'events.events_id.translations.highlighted_details',
+      'events.events_id.translations.description',
+      'events.events_id.parent_event',
       'events.events_id.parent_event.status',
-      'events.events_id.parent_event.date_updated',
       'events.events_id.parent_event.name',
       'events.events_id.parent_event.address',
-      ...imageFields('events.events_id.parent_event.cover_image.'),
       'events.events_id.parent_event.recurring',
       'events.events_id.parent_event.schedule',
       'events.events_id.parent_event.links',
+      ...imageFields('events.events_id.parent_event.cover_image.'),
+      'events.events_id.parent_event.translations.languages_code',
+      'events.events_id.parent_event.translations.highlighted_details',
+      'events.events_id.parent_event.translations.description',
+      'events.events_id.parent_event.organizers.organizations_id.status',
+      'events.events_id.parent_event.organizers.organizations_id.name',
+      'events.events_id.parent_event.organizers.organizations_id.slug',
+      'events.events_id.parent_event.organizers.organizations_id.address',
+      ...imageFields('events.events_id.parent_event.organizers.organizations_id.logo.'),
+      ...imageFields('events.events_id.parent_event.organizers.organizations_id.cover_image.'),
+      'events.events_id.parent_event.organizers.organizations_id.games_services',
+      'events.events_id.parent_event.organizers.organizations_id.amenities',
+      ...imageFields('events.events_id.parent_event.organizers.organizations_id.gallery.*.'),
+      'events.events_id.parent_event.organizers.organizations_id.translations.languages_code',
+      'events.events_id.parent_event.organizers.organizations_id.translations.description',
+      'events.events_id.event_instances',
     ],
   })
 

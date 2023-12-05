@@ -13,15 +13,20 @@
   --font-mono-fallback: design-token('font-mono-fallback');
 
   /* --- SIZES --- */
-  --size-base-px: design-token('size-base-px'); /* unitless px value (if necessary) */
+  /* const sizeBasePx = 18 */
+  --size-base-px: design-token('size-base-px'); /* unitless px value of base size (if necessary) */
   /* unitless px value of max size cross site (if necessary) */
+  /* const sizeMaxPx = 100 */
   --size-max-px: design-token('size-max-px');
+  /* const sizeScaleSteps = 12 */
   --size-scale-steps: design-token('size-scale-steps');
   --size-base: calc(var(--size-base-px) / 16); /* unitless rem value */
-  /* can be computed by (maxSize / baseSize) ** (1 / steps) */
+  /* size-scale-ratio can be computed by (maxSize / baseSize) ** (1 / steps) */
   /* (baseSize = 16, maxSize = 100, steps = 12) => 1.16499 */
+  /* const sizeScaleRatio = functions.sizeScaleRatio(sizeBasePx, sizeMaxPx, sizeScaleSteps) */
   /* --size-scale-ratio: sizeScaleRatio(); */
   --size-scale-ratio: design-token('size-scale-ratio');
+  /* 1.618 */
   --size-relative-ratio: design-token('size-relative-ratio');
   
   --size-lock-screen-min: design-token('size-lock-screen-min');
@@ -45,7 +50,7 @@
   --border-radius-s: design-token('border-radius-s' to rem);
   --border-radius-m: design-token('border-radius-m' to rem);
   --border-radius-l: design-token('border-radius-l' to rem);
-  --border-radius-circle: design-token(--border-radius-circle);
+  --border-radius-circle: design-token('border-radius-circle');
 
   /* --shadow-raised-s: 0 0px 6px rgb(0 0 0 / 30%);
   --shadow-raised-m: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */

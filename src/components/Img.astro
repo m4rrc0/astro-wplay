@@ -1,8 +1,5 @@
 ---
-import { Image, Picture } from "astro:assets"
-// import { Img } from "astro-imagetools/components"
-
-// import { IO } from '@components'
+import { Image } from "astro:assets"
 
 // TODO: Check props of the new astro:assets service: https://docs.astro.build/en/guides/images/#properties
 const {
@@ -13,6 +10,7 @@ const {
   image,
   src,
   fit,
+  alt,
   width,
   height,
   quality,
@@ -20,28 +18,8 @@ const {
   format,
   ...props
 } = Astro.props || {}
-// const querryParams = { fit, width, height, quality, withoutEnlargement, format }
-// const querryString = Object.entries(querryParams).map(([param, val]) => {
-//     return (typeof val).match(/undefined|null/) ? val : `${param}=${val}`
-// }).filter(e => e).join('&')
-// // console.log({querryParams, querryString})
-// const src = `${srcRaw}${querryString ? '?' + querryString : ''}`
 ---
 
-<!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> --><!-- <Img
-  {...props}
-  {src}
-  {width}
-  {height}
-  attributes={{
-    img: {
-      ...(id ? { id } : {}),
-      ...(_class ? { class: _class } : {}),
-      ...(style ? { style } : {}),
-      onload: `this.style.background = 'transparent';${onload || ""}`,
-    },
-  }}
-/> -->
 <Image
   {...props}
   {src}
@@ -49,10 +27,7 @@ const {
   {quality}
   {width}
   {height}
-  {fit}
-  {/* default is 'center' */}
-  position="center"
-  background="rgba(100,100,100, 0)"
+  {alt}
   {...id ? { id } : {}}
   {..._class ? { class: _class } : {}}
   {...style ? { style } : {}}

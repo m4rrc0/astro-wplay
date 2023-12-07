@@ -1,6 +1,5 @@
 ---
 import { SkeletonPage, BasicPage } from "@layouts"
-// import FourOFour from '@pages/404.astro'
 const PUBLIC_HOOK_PROD = import.meta.env.PUBLIC_HOOK_PROD || null
 const PUBLIC_HOOK_STAGE = import.meta.env.PUBLIC_HOOK_STAGE || null
 
@@ -68,17 +67,9 @@ const srcBadge = "https://api.netlify.com/api/v1/badges/86fec8f0-ba93-4c84-9ce3-
 </SkeletonPage>
 
 <script is:inline>
-  // var images = document.getElementsByClassName('netlify-status');
-
   function reloadImage(img) {
     setTimeout(function() {
       img.src = img.dataset.originalSrc + '&' + new Date().getTime();
-      // reloadImage(img);
     }, 5000);
   }
-
-  // function reloadImageOnClick() {
-  //   img.src = img.dataset.originalSrc + '&' + new Date().getTime();
-  // }
-
 </script>

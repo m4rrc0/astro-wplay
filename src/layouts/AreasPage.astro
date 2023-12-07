@@ -46,19 +46,3 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     </main>
   </BasicPage>
 </SkeletonPage>
-
-<!-- Was just under h1 -->
-<!-- <div class="with-sidebar gap-down-h4" style="--content-min: 65%;">
-    <div>
-        <ul class="reset stack gap-down-h8 justify-center">
-            {areas.map(area => {
-                return (
-                    <li><a href={'/' + area.path[lang.code]} class={`area-${area.code_name}`}>{area.name[lang.code]}</a></li>
-                )
-            })}
-        </ul>
-        <div>
-            <BelgiumMap {lang} {areas} />
-        </div>
-    </div>
-</div> -->

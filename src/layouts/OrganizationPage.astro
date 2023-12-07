@@ -4,35 +4,19 @@ import { Icon } from "astro-icon"
 import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO, IO, ImgDirectus } from "@components"
 import { imageDirectusSrc } from "@utils"
-import { Div } from "@src/elements"
 
 const {
   lang,
   organization: {
-    // status,
-    // date_updated,
     name,
-    // slug,
-    // types,
     typesTranslated,
     logo,
     cover_image,
-    // opening_hours,
     opening_hours_strings,
-    // games_services,
     games_services_translated,
     address,
-    // amenities,
     amenities_translated,
-    website,
-    facebook_page,
-    instagram,
-    twitter,
-    youtube_channel,
     translations,
-    // opening_hours_remark,
-    // description,
-    // gallery,
     links,
     events,
   },
@@ -63,7 +47,6 @@ const srcCover = imageDirectusSrc({
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
-<!-- <Debug {name} /> -->
 <SkeletonPage lang={lang.code}>
   <SEO
     slot="head"
@@ -76,17 +59,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <!-- <div class="stack gap-down-h1"> -->
     <main class="center max" style="margin-top: 0;">
       <header>
         <div
-          class="center text box no-border
+          class="
+            center text box no-border
             color-palette-trans
             h1 padding-y-relative-xl
-            background-overlay"
-          style={srcCover
-            ? `background-image: url("${srcCover}");`
-            : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}
+            background-overlay
+          "
+          style={
+            srcCover
+              ? `background-image: url("${srcCover}");`
+              : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+          }
         >
           <h1 class="centered" set:html={name} />
           {presentation && <p class="h3">{presentation}</p>}
@@ -107,17 +93,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         {
           logo?.src && (
             <div
-              class="center intrinsic box no-border
-              color-palette-main
-              width-col-6
-              border-radius-s
+              class="
+                center intrinsic box no-border
+                color-palette-main
+                width-col-6
+                border-radius-s
               "
               style="
-              margin-top: calc(var(--size-h2) * -1);
-              margin-bottom: var(--size-h2);
-              box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
-              max-height: var(--width-col-6);
-              overflow: hidden;
+                margin-top: calc(var(--size-h2) * -1);
+                margin-bottom: var(--size-h2);
+                box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
+                max-height: var(--width-col-6);
+                overflow: hidden;
               "
             >
               <ImgDirectus
@@ -145,10 +132,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 {games_services_translated?.map(({ [lang.code]: code }) => (
                   <li
                     class="
-                  box no-border padding-x-h7 padding-y-h8
-                  color-palette-variation-contrast
-                  border-radius-s
-                "
+                      box no-border padding-x-h7 padding-y-h8
+                      color-palette-variation-contrast
+                      border-radius-s
+                    "
                   >
                     {code}
                   </li>
@@ -157,10 +144,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 {amenities_translated?.map(({ [lang.code]: code }) => (
                   <li
                     class="
-                  box no-border padding-x-h7 padding-y-h8
-                  color-palette-variation-funky-contrast
-                  border-radius-s
-                "
+                      box no-border padding-x-h7 padding-y-h8
+                      color-palette-variation-funky-contrast
+                      border-radius-s
+                    "
                   >
                     {code}
                   </li>
@@ -197,21 +184,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           </div>
         )
       }
-      <!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
-        <ul class="reset">
-            {amenities_translated?.map(({ [lang.code]: code }) => (
-              <li>{code}</li>
-            ))}
-        </ul>
-      </div>} -->
       {
         description && (
           <div
-            class="
-        box no-border center
-        max-width-measure-h4
-        stack gap-down-h7
-      "
+            class="box no-border center max-width-measure-h4 stack gap-down-h7"
           >
             <h2>Description</h2>
             <Markdown content={description} />
@@ -229,9 +205,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="
-                  box no-border stack center intrinsic gap-down-h8
-                "
+                    class="box no-border stack center intrinsic gap-down-h8"
                   >
                     <Icon name={iconName} size="1em" class="size-h1" />
                     <div class="size-h4">{name.fr}</div>
@@ -266,13 +240,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   return (
                     <li
                       class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                      style=""
                     >
                       <div
-                        class="box no-border padding-h4 with-sidebar gap-h4
-                                          color-palette-trans
-                                          background-overlay
-                                          "
+                        class="
+                          box no-border padding-h4 with-sidebar gap-h4
+                          color-palette-trans
+                          background-overlay
+                        "
                         style={
                           (srcCover
                             ? `background-image: url("${srcCover}"); `
@@ -328,7 +302,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         )
       }
     </main>
-
-    <!-- </div> -->
   </BasicPage>
 </SkeletonPage>

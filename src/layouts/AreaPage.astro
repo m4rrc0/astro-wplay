@@ -1,6 +1,4 @@
 ---
-// import Debug from "astro/debug"
-// import { renderBackgroundImage } from "astro-imagetools/api"
 import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO, IO, ImgDirectus, Img } from "@components"
 import { imageDirectusSrc } from "@utils"
@@ -38,29 +36,8 @@ const eventsPhrase =
     : `${eventsCountPhrase} à ${areaName} entre le ${eventsTimeArr.join(
         " et le ",
       )}`
-// const restosBarsCount = organizations
-//     .filter((o) => o.types.find('bar') || o.types.find('restaurant'))
-
-// const events = await Promise.all(_events?.map(async (_e) => {
-//     const e = _e
-//     if (e?.cover_image?.src) {
-//         const ext = e?.cover_image?.type?.split('/')[1]
-//         console.log(e?.cover_image?.src)
-//         const { link, style, htmlElement, ...rest } = await renderBackgroundImage({
-//           src: e.cover_image.src,
-//           breakpoints: { count: 2, minWidth: 700, maxWidth: 800 }
-//         });
-//         console.log({ link, style, htmlElement, ...rest })
-
-//         // const cover_image_src = await import (e.cover_image.src)
-//         // e.cover_image.src = cover_image_src || e.cover_image.src
-//     }
-//     return e
-// }))
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-
-// TODO: changer "province" quand c'est Bruxelles
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -80,40 +57,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <h1 class="center text">{areaName}</h1>
         <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
         <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
-        <!-- TODO: HERE -->
-        <script>
-          import List from "list.js"
-
-          var options = {
-            valueNames: [
-              // "timestart",
-              { name: "timestart", attr: "datetime" },
-              "name",
-              { name: "zip", attr: "data-zip" },
-              { name: "city", attr: "data-city" },
-            ],
-          }
-
-          var eventsList = new List("events-list-container", options)
-        </script>
-
-        <!-- TODO: enable searchin and filtering -->
-        <!-- <div class="center intrinsic stack" style="--gap: var(--size-h5);">
-          <input type="search" class="fuzzy-search" placeholder="Recherche" />
-          <p>Trier par...</p>
-          <div class="cluster" style="--gap: var(--size-h7);">
-            <div>
-              <button
-                class="sort asc"
-                data-sort="timestart"
-                data-default-order="asc"
-                >Début
-              </button>
-              <button class="sort" data-sort="zip">Code postal</button>
-            </div>
-          </div>
-        </div> -->
-
         <IO
           div
           $skipNoInner
@@ -128,9 +71,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   address,
                   cover_image,
                   organizers,
-                  time_start,
-                  time_end,
-                  isSameDay,
+                  time_start
                 } = event
 
                 const srcCover = imageDirectusSrc({
@@ -143,13 +84,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 return (
                   <li
                     class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                    style=""
                   >
                     <div
-                      class="box no-border padding-h4 with-sidebar gap-h4
-                                        color-palette-trans
-                                        background-overlay
-                                        "
+                      class="
+                        box no-border padding-h4 with-sidebar gap-h4
+                        color-palette-trans
+                        background-overlay
+                      "
                       style={
                         (srcCover
                           ? `background-image: url("${srcCover}"); `
@@ -247,11 +188,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
                 return (
                   <li
-                    class="card-organization
-                                        box no-border stack gap-down-h7 split-after-1
-                                        border-radius-s
-                                        breakout-clickable"
-                    style=""
+                    class="
+                      card-organization
+                      box no-border stack gap-down-h7 split-after-1
+                      border-radius-s
+                      breakout-clickable
+                    "
                   >
                     <div
                       class="center intrinsic"
@@ -300,9 +242,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                           const currentPalette = `color-palette-${type.code_name}`
                           return (
                             <li
-                              class={`box no-border padding-x-h8 padding-y-h9
-                                                            ${currentPalette} color-palette-variation-contrast
-                                                            border-radius-s`}
+                              class={
+                                `box no-border padding-x-h8 padding-y-h9
+                                ${currentPalette} color-palette-variation-contrast
+                                border-radius-s`
+                              }
                             >
                               {type.fr}
                             </li>
@@ -322,23 +266,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 </SkeletonPage>
 
 <style>
-  .card-event {
-    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
-    /* box-shadow: 0 0.05rem 0.05rem var(--color-shadow); */
-    /* Shadow from Directus */
-    /* box-shadow: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
-  }
   .card-event-footer {
     line-height: 32px;
   }
-  .card-organization {
-    /* box-shadow: 0 0px 6px rgb(0 0 0 / 30%); */
-  }
-  .breakout-clickable:hover,
-  .breakout-clickable:focus-within {
-    /* box-shadow: inherit; */
-  }
-
   .sort.asc::after {
     content: "\002B06";
     padding-left: 3px;

@@ -19,7 +19,7 @@ export function slugify(string) {
     .replace(/-+$/, "") // Trim - from end of text
 }
 
-export function createPath({ locale = "fr", type, slug }) {
+export function createPath({ locale = "fr", type, slug = '' }) {
   if (type === "home") return `${locale}`
   if (type === "events") return `${locale}/e`
   if (type === "event") return `${locale}/e/${slug}`
@@ -52,14 +52,14 @@ export const conditionalRendering = io
 
 // Directus API info: https://docs.directus.io/reference/files/#requesting-a-thumbnail
 export function imageDirectusSrc({
-  type,
+  type = undefined,
   src: srcRaw,
   fit,
   width,
-  height,
+  height = undefined,
   quality,
-  withoutEnlargement,
-  format,
+  withoutEnlargement = undefined,
+  format = undefined,
 }) {
   const [typePre, typePost] = type?.split("/") || []
 
@@ -81,7 +81,6 @@ export function imageDirectusSrc({
     })
     .filter((e) => e)
     .join("&")
-  // console.log({querryParams, querryString})
   const src = `${srcRaw}${querryString ? "?" + querryString : ""}`
 
   return src

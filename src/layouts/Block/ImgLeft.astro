@@ -1,13 +1,10 @@
 ---
-// import Markdown from '@astrojs/markdown-component';
 import { IO, Md, ImgDirectus } from "@components"
 
 const { block, lang } = Astro.props
 const t = block?.translations.find(
   ({ languages_code }) => languages_code === lang.code,
 )
-
-// const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
 ---
 
 <IO
@@ -28,7 +25,6 @@ const t = block?.translations.find(
   >
     <IO div $skipNoInner>
       <IO div $skipNoInner class="" style="">
-        <!-- <IO img $skip={!t.featured_image?.src} src={t.featured_image?.src} class="" style="max-width: var(--width-col-4);" /> -->
         <ImgDirectus
           $skip={!t.featured_image?.src}
           src={t.featured_image?.src}

@@ -1,6 +1,5 @@
 ---
-import { Image, Picture } from "astro:assets"
-// import { Img } from "astro-imagetools/components";
+import { Image } from "astro:assets"
 import { imageDirectusSrc } from "@utils"
 import { IO } from "@components"
 
@@ -14,6 +13,7 @@ const {
   image,
   src: srcRaw,
   fit,
+  alt,
   width,
   height,
   quality,
@@ -40,28 +40,6 @@ const useImageTools = !(
 )
 ---
 
-<!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> --><!-- <IO wrapper {$skip}>
-    {
-        !src ?
-            null : (
-                useImageTools ?
-                    <Img
-                        {...props}
-                        {src}
-                        {width}
-                        {height}
-                        attributes={{
-                            img: {
-                                ...(id ? { id } : {}),
-                                ...(_class ? { class: _class } : {}),
-                                ...(style ? { style } : {}),
-                                onload: `this.style.background = 'transparent';${onload || ''}`
-                            },
-                        }} /> :
-                    <img {...props} {src} {width} {height} {id} class={_class} {style} />
-            )
-    }
-</IO> -->
 <IO wrapper {$skip}>
   {
     !src ? null : useImageTools ? (
@@ -72,11 +50,7 @@ const useImageTools = !(
         {quality}
         {width}
         {height}
-        {fit}
-        {
-        /* default is 'center' */ }
-        position="center"
-        background="rgba(100,100,100, 0)"
+        {alt}
         {...(id ? { id } : {})}
         {...(_class ? { class: _class } : {})}
         {...(style ? { style } : {})}

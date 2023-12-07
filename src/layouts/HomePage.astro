@@ -1,30 +1,9 @@
 ---
-// import { Img } from "astro-imagetools/components";
 import { SkeletonPage, BasicPage } from "@layouts"
 import { BelgiumMap } from "@partials"
-import { SEO, IO, ImgDirectus, Img } from "@components"
-// import logo from '@images/LOGO-1024px.png?w=600'
-
-import gagBack from "@images/photos-Festival-2022/gag_back.jpg"
-import hoplaFlorent from "@images/photos-Festival-2022/hopla-florent.jpg"
-import kidsStoryTime from "@images/photos-Festival-2022/kids-story-time.jpg"
-import kids from "@images/photos-Festival-2022/kids.jpg"
-import londonPierre from "@images/photos-Festival-2022/london-pierre.jpg"
-import moonArea from "@images/photos-Festival-2022/moon-area.jpg"
-import speedGamingYves from "@images/photos-Festival-2022/speed-gaming-yves.jpg"
+import { SEO } from "@components"
 
 const { lang, areas, articles: as } = Astro.props || {}
-
-const festivalPics = [
-  gagBack,
-  hoplaFlorent,
-  kidsStoryTime,
-  kids,
-  londonPierre,
-  moonArea,
-  speedGamingYves,
-]
-const articles = as.slice(0, 3)
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const description =
@@ -73,14 +52,6 @@ const jsonLd = {
       <div class="stack gap-down-h0 box no-border">
         <header class="max-width-measure-h2 stack center intrinsic gap-down-h0">
           <h1>
-            <!-- <img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" id="logo-main" width="4265" height="1834" loading="lazy" /> -->
-            <!-- <Img
-                src="/src/assets/images/LOGO-1024px.png"
-                alt="Wanna Play - Connecte les joueurs"
-                id="logo-main"
-                width="4265"
-                height="1834"
-                loading="lazy" /> -->
             <img
               src="/assets/images/Wanna-Play_ASBL-Animation-1x.gif"
               alt="Wanna Play - Connecte les joueurs"
@@ -104,39 +75,6 @@ const jsonLd = {
           </p>
         </div>
 
-        <!-- <section
-          class="countdown-section color-palette-variation-funky-contrast full-bleed"
-        >
-          <div class="center text stack gap-down-h3">
-            <p>
-              <span class="h3">Festival</span><br />
-              <a
-                class="h2"
-                href="/fr/e/wanna-play-in-brussels-free-board-game-festival-2023-07-08/"
-                >Wanna Play in Brussels 2023
-              </a><br />
-            </p>
-            <div class="grid" style="--width-column: 8rem;">
-              <div>
-                {festivalPics.map((pic) => {
-                  return (
-                    <Img
-                      src={pic}
-                      alt=""
-                      loading="lazy"
-                      class=""
-                      style="width: 15rem; max-height: 15rem; max-width: 100%; height: auto;"
-                      width="240"
-                      height="240"
-                    />
-                  )
-                })}
-              </div>
-            </div>
-            <p id="countdown" class="h1">-J -H -m -s</p>
-          </div>
-        </section> -->
-
         <div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
           <h2 class="center text">Où veux-tu jouer?</h2>
           <div class="cluster gap-down-h6" style="--justify-content: center;">
@@ -159,106 +97,13 @@ const jsonLd = {
             <BelgiumMap {lang} {areas} />
           </div>
         </div>
-
-        <!-- <section
-          class="articles center max text stack gap-down-h1
-          full-bleed-before full-bleed-after skew-border-before skew-border-after
-          color-palette-variation-funky-contrast
-        "
-        >
-          <h2>Derniers articles</h2>
-          <div
-            class="grid gap-down-h4"
-            style="--width-column: var(--width-col-4);"
-          >
-            <div>
-              {articles.map((a) => {
-                const headerT = a?.header?.[0].translations.find(
-                  ({ languages_code }) => languages_code === lang.code,
-                )
-                return (
-                  <article
-                    class="card-article
-                                breakout-clickable
-                                box no-border stack gap-down-h2 split-after-2
-                                color-palette-variation-contrast
-                                border-radius-m"
-                  >
-                    <IO div $skipNoInner>
-                      <ImgDirectus
-                        $skip={!headerT?.featured_image?.src}
-                        src={headerT?.featured_image?.src}
-                        alt={headerT?.title}
-                        loading="lazy"
-                        class="featured-image"
-                        width="590"
-                        height="400"
-                        fit="cover"
-                        quality="99"
-                      />
-                    </IO>
-                    <h3 class="h4">
-                      <a href={`/${a.path}`} class="reset clickable">
-                        {headerT?.title}
-                      </a>
-                    </h3>
-                    <IO div $skipNoInner class="stack gap-down-h7">
-                      <IO div $skipNoInner class="cluster">
-                        <IO ul $skipNoInner class="reset">
-                          {a?.authors?.map((author) => (
-                            <IO
-                              li
-                              $skipNoInner
-                              class="stack horizontal gap-down-h7"
-                            >
-                              <IO
-                                div
-                                $skip={!author?.avatar?.src}
-                                class="box no-padding border-radius-circle border-width-1"
-                              >
-                                <ImgDirectus
-                                  $skip={!author?.avatar?.src}
-                                  src={author?.avatar?.src}
-                                  alt={author?.display_name}
-                                  loading="lazy"
-                                  class="border-radius-circle"
-                                  style="max-width: 32px; max-height: 32px; width: 100%; height: 100%;"
-                                  width="32"
-                                  height="32"
-                                  fit="cover"
-                                  quality="99"
-                                />
-                              </IO>
-                              <IO p $skipNoInner class="author-name">
-                                {author?.display_name}
-                              </IO>
-                            </IO>
-                          ))}
-                        </IO>
-                      </IO>
-                      <hr />
-                      <IO p $skip={!a?.date_published?.fr?.date}>
-                        Publié le <strong>{a?.date_published?.fr?.date}</strong>
-                      </IO>
-                    </IO>
-                  </article>
-                )
-              })}
-            </div>
-          </div>
-          <p><a href={`/${lang.code}/a`} class="h3">Tous les articles</a></p>
-        </section> -->
       </div>
-      <!-- <Fragment
-        set:html={`<script type="application/ld+json">${}</script>`}
-      /> -->
+      
       <script
         is:inline
         type="application/ld+json"
         set:html={JSON.stringify(jsonLd)}
-      >
-
-      </script>
+      ></script>
     </main>
   </BasicPage>
 </SkeletonPage>
@@ -280,38 +125,4 @@ const jsonLd = {
     --skew-after: -1deg;
     --skew-after-origin: bottom right;
   }
-  /* .countdown-section {
-    padding: var(--padding);
-  } */
 </style>
-
-<!-- <script>
-  // Fonction pour le décompte
-  function countdown() {
-    var eventDate = new Date("2023-07-08T10:00:00Z") // Date de l'événement (à adapter si nécessaire)
-    var currentDate = new Date()
-    var timeDifference = eventDate - currentDate
-
-    var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
-    var hours = Math.floor(
-      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-    )
-    var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60))
-    var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000)
-
-    // document.getElementById("countdown").innerHTML =
-    //   days +
-    //   " jours, " +
-    //   hours +
-    //   " heures, " +
-    //   minutes +
-    //   " minutes, " +
-    //   seconds +
-    //   " secondes restantes"
-    document.getElementById("countdown").innerHTML =
-      days + "J " + hours + "H " + minutes + "m " + seconds + "s"
-  }
-
-  // Appeler la fonction de décompte toutes les secondes
-  setInterval(countdown, 1000)
-</script> -->

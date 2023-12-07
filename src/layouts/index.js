@@ -9,5 +9,3 @@ export { default as ArticlesPage } from './ArticlesPage.astro'
 export { default as ArticlePage } from './ArticlePage.astro'
 export { default as AreasPage } from './AreasPage.astro'
 export { default as AreaPage } from './AreaPage.astro'
-
-// export { default as BlogLayout } from './BlogLayout.astro'

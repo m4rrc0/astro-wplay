@@ -1,18 +1,10 @@
 ---
-// import Debug from 'astro/debug';
 import { SkeletonPage, BasicPage } from '@layouts'
-// import { Div, P } from '@elements'
 import { SEO, IO, Md, ImgDirectus } from '@components'
-import { BlockImgLeft, BlockImgLeftHeading, BlockStack } from '@layouts'
+import { BlockImgLeft, BlockStack } from '@layouts'
 import { imageDirectusSrc } from '@utils'
-// import Markdown from '@astrojs/markdown-component';
-// import { Icon } from 'astro-icon'
-
-// import TestMd from '@components/TestMd.astro'
 
 const {lang, article: {
-  code_name,
-  page_data,
   authors,
   date_published,
   date_modified,
@@ -25,8 +17,6 @@ const header = headerList?.[0]
 const headerT = header.translations.find(({ languages_code }) => languages_code === lang.code )
 const { title, text, featured_image } = headerT || {}
 
-// const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
-
 const { width, height } = featured_image || {}
 const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
 
@@ -35,7 +25,6 @@ const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fi
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
-<!-- <TestMd /> -->
 <SkeletonPage lang={lang.code}>
   <SEO
     slot="head"
@@ -49,16 +38,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     meta={[
       {property: 'article:published_time', content: date_published?.dateTimeRaw},
       {property: 'article:modified_time', content: date_modified?.dateTimeRaw},
-      // {property: 'article:expiration_time', content: ''},
       {property: 'article:author', content: authors?.[0]?.display_name},
-      {property: 'article:section', content: 'Board Game'},
-      // {property: 'article:tag', content: ''},
+      {property: 'article:section', content: 'Board Game'}
     ].filter(({ content }) => content)}
   />
   <BasicPage {lang}>
     <main class="center max stack gap-down-h1">
-      <!-- <BlockImgLeftHeading block={header} {lang} tag={'header'} /> -->
-
       <!-- HEADER -->
       {
         headerLayout === 'sideImage' ? (
@@ -110,8 +95,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
               </IO>
             </IO>
 
-            <IO div $skipNoInner class={`box no-border center | h3
-            `}>
+            <IO div $skipNoInner class={`box no-border center | h3`}>
               <Md $skipNoInner content={headerT?.text} />
             </IO>
           </header>
@@ -170,7 +154,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       
 
       <IO div $skip={!main?.[0]?.id} class="box no-border center stack gap-down-h2">
-        {main.map((block, i) => {
+        {main.map(block => {
           const blockT = block.translations.find(({ languages_code }) => languages_code === lang.code )
           return !blockT.featured_image ? (
             <BlockStack {block} {lang} />
@@ -189,4 +173,3 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </main>
   </BasicPage>
 </SkeletonPage>
-<!-- <Debug {main} /> -->

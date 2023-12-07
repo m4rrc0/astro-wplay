@@ -5,8 +5,6 @@ import { MtObf } from "@components"
 const { lang } = Astro.props
 
 const email = import.meta.env.CONTACT_EMAIL
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <div
@@ -35,14 +33,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             </a>
           </li>
           <li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
-          <!-- <li><a href={`/${lang.code}/o`}>Organisations</a></li> -->
-          <!-- <li><a href={`/${lang.code}/e`}>Événements</a></li> -->
           <li><a href={`/${lang.code}/a`}>Articles</a></li>
-          <!-- <li><a href={`/${lang.code}/annuaire`}>Annuaire</a></li> -->
           <li><a href={`/${lang.code}/projet`}>Projet</a></li>
           <li><a href={`/${lang.code}/equipe`}>Équipe</a></li>
           <li><a href={`/${lang.code}/contact`}>Contact</a></li>
-          <!-- <li><a href="/styleguide">Styleguide</a></li> -->
           <li class="color-palette-teal">
             <strong
               ><a href="https://talk.wanna-play.be/" target="_blank"
@@ -145,21 +139,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           />
         </span>
       </p>
-      <!-- <div class="cluster justify-center size-h6">
-        <div>
-          <span>Tester cette page: </span>
-          <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Performance</a>
-          <a href={`https://ecograder.com/report?site_submitted=${canonicalURL.href.replaceAll(/\//g, '%2F').replaceAll(':', '%3A')}`} target="_blank" rel="noopener noreferrer">Indice écologique</a>
-        </div>
-      </div> -->
     </div>
   </footer>
 </div>
 
 <style>
-  /* #template-global {
-    margin-bottom: var(--gap-xxl);
-  } */
   #menu-main {
     position: sticky;
     top: 0;
@@ -167,8 +151,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
   }
   nav {
-    /* --gap: var(--size-h6); */
-    /* margin: var(--gap) 0; */
     --justify-content: flex-end;
   }
   nav > ul > li:first-child {

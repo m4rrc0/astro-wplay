@@ -1,5 +1,4 @@
 ---
-// import Fragment from 'astro/components'
 import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO } from "@components"
 
@@ -273,8 +272,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     display: inline-block;
     position: relative;
     margin-bottom: 1.382rem;
-    /* text-decoration: underline;
-    text-decoration-color: var(--color-neutral); */
   }
   .title-label::after {
     background-color: inherit;
@@ -286,14 +283,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     bottom: -0.691rem;
     right: -1.382rem;
     left: -9999rem;
-
-    /* Trial with box shadow not conclusive: https://css-tricks.com/full-browser-width-bars/ */
-    /* top: 0; */
-    /* bottom: 0; */
-    /* left: -9999px; */
-    /* right: 0; */
-    /* border-left: 9999px solid var(--color-neutral); */
-    /* box-shadow: 9999px 0 0 var(--color-neutral); */
   }
   main > div:nth-of-type(even) {
     text-align: right;
@@ -305,8 +294,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     --color-neutral: var(--color-red);
   }
   main > div:nth-of-type(even) .title-label::after {
-    /* border-left: 9999px solid var(--color-neutral); */
-    /* box-shadow: 99px 0 0 var(--color-neutral); */
     right: -9999rem;
     left: -1.382rem;
   }

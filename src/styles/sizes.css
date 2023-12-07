@@ -128,19 +128,6 @@ body,
       --size-h9: calc(var(--size-h9-min) * 1rem);
     }
   }
-
-  /* --lh-h0: calc(var(--size-h0) * 1.45);
-  --lh-h1: calc(var(--size-h1) * 1.45);
-  --lh-h2: calc(var(--size-h2) * 1.45);
-  --lh-h3: calc(var(--size-h3) * 1.45);
-  --lh-h4: calc(var(--size-h4) * 1.45);
-  --lh-p: calc(var(--size-p) * 1.45);
-  --lh-h5: calc(var(--size-h5) * 1.45);
-  --lh-h6: calc(var(--size-h6) * 1.45);
-  --lh-h7: calc(var(--size-h7) * 1.45);
-  --lh-h8: calc(var(--size-h8) * 1.45);
-  --lh-h9: calc(var(--size-h9) * 1.45);
-   */
 }
 
 /* 3. ------------------------------------
@@ -166,7 +153,6 @@ body,
   --width-measure-h4: calc(var(--size-h4) * var(--width-measure-ratio));
   --width-measure-h5: calc(var(--size-h5) * var(--width-measure-ratio));
   --width-measure-h6: calc(var(--size-h6) * var(--width-measure-ratio));
-  /* --width-max: ; */ /* already defined in tokens and vars */
 
   /* ----------------------------------------------- */
   /* TODO: better way to handle widths. does not scale nice. see logo on org page */
@@ -189,30 +175,10 @@ body,
   --width-col-14: calc(var(--width-max) / 14);
   --width-col-15: calc(var(--width-max) / 15);
   --width-col-16: calc(var(--width-max) / 16);
-  /* --width-min: ; */ /* min block width */
 
-  /* gap is for margins, paddings, grid-gap, ... */
-  /* --gap-xxs: var(--size-h7);
-  --gap-xs: var(--size-h6);
-  --gap-s: var(--size-h5);
-  --gap-l: var(--size-h3);
-  --gap-xl: var(--size-h2);
-  --gap-xxl: var(--size-h1); */
   --gap-m: var(--size-h4);
-  /* --gap: var(--gap-m); */
 
-  /* useful vars for layout primitives */
-  /* --gutters: var(--gap-m); */
-  /* --space: var(--gap-m); */
   --padding: var(--size-relative);
-  /* --width-border: var(--gap-xxs); */
-  /* --width-max: var(--gap-xxs); */
-  /* --width-min: var(--gap-xxs); */
-  /* --width-item: var(--gap-xxs); */
-  /* --width-side: var(--gap-xxs); */
-  /* --width-main-min: var(--gap-xxs); */
-  /* --height: var(--gap-xxs); */
-  /* --threshold: var(--gap-xxs); */
 
   --size-border-button: var(--size-h8);
   /* --- Border widths --- */
@@ -225,7 +191,6 @@ body,
 
   /* --- outline ---
   (Used for :focus. Should probably be fixed for the whole site, whatever the context) */
-  /* --size-outline: var(--size-h9); */
   --size-outline: calc(var(--s-14) * 1rem);
 
   /* --- Gutters ---

@@ -5,8 +5,6 @@
 *::after {
   box-sizing: border-box;
   overflow-wrap: break-word;
-  /* margin: 0; */
-  /* padding: 0; */
 }
 /* ul[class], */
 /* ol[class] { */
@@ -26,8 +24,6 @@ h4,
 h5,
 h6,
 p,
-/* ul[class], /* [class] can cause specificity issues. For example, it overrides .cluster > * { margin: ... } */
-/* ol[class], */
 ul.reset,
 ol.reset,
 li,
@@ -101,12 +97,9 @@ a.reset *,
 .reset-a a *,
 .reset-down-a a,
 .reset-down-a a * {
-  /* color: inherit; */
   text-decoration: inherit;
-  /* border-bottom: none; */
 }
 p svg {
   height: 1em;
   vertical-align: middle;
-  /* display: inline-block; */
 }

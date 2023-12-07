@@ -13,30 +13,16 @@
   --font-mono-fallback: design-token('font-mono-fallback');
 
   /* --- SIZES --- */
-  /* const sizeBasePx = 18 */
   --size-base-px: design-token('size-base-px'); /* unitless px value of base size (if necessary) */
-  /* unitless px value of max size cross site (if necessary) */
-  /* const sizeMaxPx = 100 */
   --size-max-px: design-token('size-max-px');
-  /* const sizeScaleSteps = 12 */
   --size-scale-steps: design-token('size-scale-steps');
   --size-base: calc(var(--size-base-px) / 16); /* unitless rem value */
-  /* size-scale-ratio can be computed by (maxSize / baseSize) ** (1 / steps) */
-  /* (baseSize = 16, maxSize = 100, steps = 12) => 1.16499 */
-  /* const sizeScaleRatio = functions.sizeScaleRatio(sizeBasePx, sizeMaxPx, sizeScaleSteps) */
-  /* --size-scale-ratio: sizeScaleRatio(); */
   --size-scale-ratio: design-token('size-scale-ratio');
   /* 1.618 */
   --size-relative-ratio: design-token('size-relative-ratio');
   
   --size-lock-screen-min: design-token('size-lock-screen-min');
   --size-lock-screen-max: design-token('size-lock-screen-max');
-  /* TODO: does not work */
-  /* --fluid-min-screen-px: 400;
-  --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
-  --fluid-max-screen-px: 600;
-  --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
-  
 
   --width-measure: design-token('width-measure' to rem);
   --width-measure-relative: design-token('width-measure-relative' to em);
@@ -44,16 +30,12 @@
   --width-max: design-token('width-max' to rem);
   --width-relative-ratio: design-token('width-relative-ratio');
   --width-narrow: design-token('width-narrow' to rem);
-  /* --width-main: design-token(--width-main); */
-  /* --width-aside: design-token(--width-aside); */
 
   --border-radius-s: design-token('border-radius-s' to rem);
   --border-radius-m: design-token('border-radius-m' to rem);
   --border-radius-l: design-token('border-radius-l' to rem);
   --border-radius-circle: design-token('border-radius-circle');
 
-  /* --shadow-raised-s: 0 0px 6px rgb(0 0 0 / 30%);
-  --shadow-raised-m: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
   --shadow-raised-s: 0px 5px 10px 0px rgba(0,0,0,0.3);
   --shadow-raised-m: 0px 5px 10px 5px rgba(0,0,0,0.3);
 
@@ -79,9 +61,3 @@
 @custom-selector :--em em, .em, .italic;
 @custom-selector :--em_ :--em, :--em *;
 @custom-selector :--button button, .button, input[type='submit'], input[type='button'], input[type='reset'];
-
-/* :--headings {
-  color: design-token(--main-color) !important;
-} */
-
-/* @mixin border; */

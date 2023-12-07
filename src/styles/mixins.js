@@ -1,6 +1,5 @@
 module.exports = {
-  border: function(mixin, path) {
-    // console.log({ mixin, path });
+  border: function() {
     return {
       div: {
         border: 'solid 2px currentcolor',
@@ -8,9 +7,6 @@ module.exports = {
     };
   },
   locks: (mixin, ...attrs) => {
-    // console.log({ mixin, attrs });
-    // const { start, input, end } = mixin.source;
-    // console.log({ start, input, end });
     const o = {};
     attrs.forEach(attr => {
       const key = `--lock${attr === 'lock' ? '' : `-${attr}`}`;

@@ -78,8 +78,6 @@ a:--c-p--any:hover,
 body *,
 :--c-p--any * {
   color: inherit;
-  /* ... except for the background that should probably just remain transparent */
-  /* background-color: inherit; */
   /* Note: if we want to enforce an inherited background, we can set a class of "color-palette-" on an element */
   border-color: inherit;
   outline-color: inherit;

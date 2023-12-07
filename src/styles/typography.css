@@ -26,51 +26,23 @@
 html {
   font-family: var(--font-body-prefered), var(--font-body-critical),
     var(--font-body-fallback), sans-serif;
-    /* --font-body-prefered: env(--font-body-prefered);
-    --font-body-critical: env(--font-body-critical);
-    --font-body-fallback: env(--font-body-fallback); */
-  /* font-family: var(--font-body-fallback, sans-serif); */
 }
-
-/* html.fonts-stage-1 {
-  --font-body: var(--font-body-critical, var(--font-body-fallback, sans-serif));
-  --font-heading: var(--font-heading-critical, var(--font-heading-fallback, sans-serif));
-  --font-mono: var(--font-mono-critical, var(--font-mono-fallback, monospace));
-}
-@supports (font-variation-settings: 'wght' 700) {
-  html.fonts-stage-2 {
-    --font-body: var(--font-body-prefered, var(--font-body-critical,
-    var(--font-body-fallback, sans-serif)));
-    --font-heading: var(--font-heading-prefered, var(--font-heading-critical,
-    var(--font-heading-fallback, sans-serif)));
-    --font-mono: var(--font-mono-prefered, var(--font-mono-critical,
-    var(--font-mono-fallback, monospace)));
-  }
-} */
 
 * {
   /* apply axis values with CSS custom properties */
   font-variation-settings: 'MONO' var(--mono), 'CASL' var(--casl),
     'wght' var(--wght), 'slnt' var(--slnt), 'ital' var(--ital);
-
-  /* font-family: var(--font-body); */
 }
 
 :--headings {
   font-weight: 700;
   --wght: 700;
-  /* --casl: 0.2; */
-  /* --slnt: -2; */
-  /* font-family: var(--font-heading); */
   font-family: var(--font-heading-prefered), var(--font-heading-critical),
     var(--font-heading-fallback), sans-serif;
 }
 
 :--code {
   --mono: 1;
-  /* --casl: 1; */
-  /* --ital: 1; */
-  /* font-family: var(--font-mono); */
   font-family: var(--font-mono-prefered), var(--font-mono-critical),
     var(--font-mono-fallback), monospace;
 }
@@ -90,6 +62,3 @@ html {
 body {
   line-height: 1.45;
 }
-/* :--headings {
-  line-height: 1.3;
-} */

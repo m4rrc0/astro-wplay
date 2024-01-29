@@ -1,5 +1,5 @@
-import { Directus } from '@directus/sdk'
-import { slugify, createPath, areasBe } from '@utils'
+import { createDirectus, rest, authentication, readItems } from "@directus/sdk"
+import { slugify, createPath, areasBe } from "@utils"
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL || process.env.DIRECTUS_URL
 const DIRECTUS_EMAIL =
@@ -7,7 +7,10 @@ const DIRECTUS_EMAIL =
 const DIRECTUS_PW = import.meta.env.DIRECTUS_PW || process.env.DIRECTUS_PW
 const ENV = import.meta.env.MODE || process.env.NODE_ENV // 'development' or 'production'
 
-export const directus = new Directus(DIRECTUS_URL)
+// export const directus = new Directus(DIRECTUS_URL)
+export const client = createDirectus(DIRECTUS_URL)
+  .with(rest())
+  .with(authentication("json"))
 
 // --- STATIC VALUES --- //
 
@@ -15,16 +18,16 @@ const cmsBaseUrl = DIRECTUS_URL
 const cmsAssetsUrl = `${cmsBaseUrl}/assets`
 
 const imageFields = (preString) => [
-  preString + 'id',
-  preString + 'filename_download',
-  preString + 'title',
-  preString + 'type',
-  preString + 'filesize',
-  preString + 'width',
-  preString + 'height',
-  preString + 'description',
-  preString + 'image_alt',
-  preString + 'image_title',
+  preString + "id",
+  preString + "filename_download",
+  preString + "title",
+  preString + "type",
+  preString + "filesize",
+  preString + "width",
+  preString + "height",
+  preString + "description",
+  preString + "image_alt",
+  preString + "image_title",
 ]
 const blockFields = (preString) => [
   preString + `id`,
@@ -51,20 +54,20 @@ const pageDataFields = (preString) => [
   `${preString}translations.redirect_here`,
 ]
 export const areas = [
-  { code_name: 'antwerp', fr: 'Anvers' },
-  { code_name: 'flemish-brabant', fr: 'Brabant Flamand' },
-  { code_name: 'walloon-brabant', fr: 'Brabant Wallon' },
-  { code_name: 'brussels', fr: 'Bruxelles' },
-  { code_name: 'west-flanders', fr: 'Flandre Occidentale' },
-  { code_name: 'east-flanders', fr: 'Flandre Orientale' },
-  { code_name: 'hainaut', fr: 'Hainaut' },
-  { code_name: 'liege', fr: 'Liège' },
-  { code_name: 'limburg', fr: 'Limbourg' },
-  { code_name: 'luxembourg', fr: 'Luxembourg' },
-  { code_name: 'namur', fr: 'Namur' },
+  { code_name: "antwerp", fr: "Anvers" },
+  { code_name: "flemish-brabant", fr: "Brabant Flamand" },
+  { code_name: "walloon-brabant", fr: "Brabant Wallon" },
+  { code_name: "brussels", fr: "Bruxelles" },
+  { code_name: "west-flanders", fr: "Flandre Occidentale" },
+  { code_name: "east-flanders", fr: "Flandre Orientale" },
+  { code_name: "hainaut", fr: "Hainaut" },
+  { code_name: "liege", fr: "Liège" },
+  { code_name: "limburg", fr: "Limbourg" },
+  { code_name: "luxembourg", fr: "Luxembourg" },
+  { code_name: "namur", fr: "Namur" },
 ].map((a) => {
   const slug = { fr: slugify(a.fr) }
-  const path = { fr: createPath({ type: 'area', slug: slug.fr }) }
+  const path = { fr: createPath({ type: "area", slug: slug.fr }) }
   const name = { fr: a.fr }
   return {
     code_name: a.code_name,
@@ -153,7 +156,7 @@ const reduceTranslatedMarkdown = ({ translations, fieldName }) =>
   )
 
 function removeEmptyPropOnObject(obj) {
-  if (typeof obj === 'object' && !Array.isArray(obj)) {
+  if (typeof obj === "object" && !Array.isArray(obj)) {
     return Object.fromEntries(
       Object.entries(obj).filter(([_, v]) => v || v === false),
     )
@@ -173,7 +176,7 @@ export async function start() {
   let authenticated = false
 
   // Try to authenticate with token if exists
-  await directus.auth
+  await client
     .refresh()
     .then(() => {
       authenticated = true
@@ -182,14 +185,14 @@ export async function start() {
 
   // Let's login in case we don't have token or it is invalid / expired
   while (!authenticated) {
-    await directus.auth
-      .login({ email: DIRECTUS_EMAIL, password: DIRECTUS_PW })
+    await client
+      .login(DIRECTUS_EMAIL, DIRECTUS_PW)
       .then(() => {
         authenticated = true
-        console.info('--SELF INFO-- DIRECTUS AUTH = OK')
+        console.info("--SELF INFO-- DIRECTUS AUTH = OK")
       })
       .catch(() => {
-        console.error('Invalid credentials')
+        console.error("Invalid credentials")
       })
   }
 }
@@ -204,32 +207,32 @@ const transformDateTime = (str) => {
   const hasTime = str?.length > 10
 
   const dateOptions = {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   }
-  const timeOptions = { hour: '2-digit', minute: '2-digit' }
+  const timeOptions = { hour: "2-digit", minute: "2-digit" }
 
   const date = new Date(str)
   return {
     dateTimeRaw: str,
     hasTime,
     fr: {
-      date: date.toLocaleDateString('fr', dateOptions),
+      date: date.toLocaleDateString("fr", dateOptions),
       ...(hasTime
         ? {
-            time: date.toLocaleTimeString('fr', timeOptions),
-            hours: date.toLocaleTimeString('fr', { hour: '2-digit' }),
-            minutes: date.toLocaleTimeString('fr', { minute: '2-digit' }),
+            time: date.toLocaleTimeString("fr", timeOptions),
+            hours: date.toLocaleTimeString("fr", { hour: "2-digit" }),
+            minutes: date.toLocaleTimeString("fr", { minute: "2-digit" }),
           }
         : {}),
-      weekday: date.toLocaleDateString('fr', { weekday: 'short' }),
-      day: date.toLocaleDateString('fr', { day: 'numeric' }),
-      month: date.toLocaleDateString('fr', { month: 'short' }),
-      monthShort: date.toLocaleDateString('fr', { month: 'short' }),
-      monthLong: date.toLocaleDateString('fr', { month: 'long' }),
-      year: date.toLocaleDateString('fr', { year: 'numeric' }),
+      weekday: date.toLocaleDateString("fr", { weekday: "short" }),
+      day: date.toLocaleDateString("fr", { day: "numeric" }),
+      month: date.toLocaleDateString("fr", { month: "short" }),
+      monthShort: date.toLocaleDateString("fr", { month: "short" }),
+      monthLong: date.toLocaleDateString("fr", { month: "long" }),
+      year: date.toLocaleDateString("fr", { year: "numeric" }),
     },
   }
 }
@@ -240,7 +243,7 @@ const transformLink = ({ name, url }) => {
 
   if (!iconName) {
     console.warn(`--SELF WARNING-- No icon found with code_name '${name}'`)
-    iconName = 'ph:question'
+    iconName = "ph:question"
   }
 
   return {
@@ -264,14 +267,14 @@ function transformAddress(address) {
   if (!a) return null
 
   const string = [
-    [a.street, a.number].filter((z) => z).join(' '),
-    [a.zip, a.city].filter((z) => z).join(' '),
+    [a.street, a.number].filter((z) => z).join(" "),
+    [a.zip, a.city].filter((z) => z).join(" "),
   ]
     .filter((z) => z)
-    .join(', ')
+    .join(", ")
   const gMapLink = `https://maps.google.com/maps?q=${string.replace(
     /\s/g,
-    '+',
+    "+",
   )}+belgium`
 
   let area = areasBe.find(
@@ -316,27 +319,48 @@ function transformBlock(blockRaw, languages) {
 
 // --- FETCH LANGUAGES --- //
 export const fetchLanguages = async () => {
-  const { data: languages } = await directus.items('languages').readByQuery({
-    limit: -1,
-    fields: ['*'],
-  })
-  return languages
+  await client.refresh()
+  const result = await client.request(readItems("languages"))
+
+  return result
+
+  // TODO: Remove implementation from old sdk when ready
+  // const { data: languages } = await directus.items("languages").readByQuery({
+  //   limit: -1,
+  //   fields: ["*"],
+  // })
 }
 
 // --- F&T PAGES --- //
 
 export async function fetchPages() {
-  return directus.items('Pages').readByQuery({
-    limit: -1,
-    fields: [
-      '*',
-      'translations.*',
-      'main.collection',
-      'main.item.*',
-      'main.item.layout.markup',
-      'main.item.translations.*',
-    ],
-  })
+  await client.refresh()
+  // const result = await client.request(readItems("languages"))
+  return await client.request(
+    readItems("Pages", {
+      fields: [
+        "*",
+        "translations.*",
+        "main.collection",
+        "main.item.*",
+        "main.item.layout.markup",
+        "main.item.translations.*",
+      ],
+    }),
+  )
+
+  // TODO: Remove implementation from old sdk when ready
+  // return directus.items("Pages").readByQuery({
+  //   limit: -1,
+  //   fields: [
+  //     "*",
+  //     "translations.*",
+  //     "main.collection",
+  //     "main.item.*",
+  //     "main.item.layout.markup",
+  //     "main.item.translations.*",
+  //   ],
+  // })
 }
 
 // --- F&T ORGANIZATIONS --- //
@@ -344,19 +368,12 @@ export async function fetchPages() {
 export function transformOrganization(o, languages) {
   if (!o) return o
 
-  const {
-    status,
-    slug,
-    types,
-    opening_hours,
-    games_services,
-    amenities,
-  } = o
+  const { status, slug, types, opening_hours, games_services, amenities } = o
   // Create Path
-  const path = createPath({ type: 'organization', slug })
+  const path = createPath({ type: "organization", slug })
   // Distort Name if not published
   const name =
-    status !== 'published' && ENV !== 'production'
+    status !== "published" && ENV !== "production"
       ? `_${status?.toUpperCase()}_${o.name}`
       : o.name
   // Transform Address
@@ -366,21 +383,22 @@ export function transformOrganization(o, languages) {
   // Transform opening_hours
   const opening_hours_strings = opening_hours?.map(({ days, time_slots }) => {
     const daysTranslated = days?.map(translateFromCodeName)
-    const daysString = daysTranslated?.map(({ fr }) => fr).join(', ')
+    const daysString = daysTranslated?.map(({ fr }) => fr).join(", ")
     const timeSlotsFormatted = time_slots?.map(({ time_start, time_end }) => {
       const timeSlotString = [
         time_start?.substring(0, 5),
         time_end?.substring(0, 5),
-      ].filter((z) => z).join(' → ')
+      ]
+        .filter((z) => z)
+        .join(" → ")
       return { time_start, time_end, str: timeSlotString }
     })
-    const timeSlotsString = timeSlotsFormatted?.map(({ str }) => str).join(', ')
+    const timeSlotsString = timeSlotsFormatted?.map(({ str }) => str).join(", ")
     return (
-      (daysString ? `<strong>${daysString}</strong>` : '') +
-      (timeSlotsString ? `: ${timeSlotsString}` : '')
+      (daysString ? `<strong>${daysString}</strong>` : "") +
+      (timeSlotsString ? `: ${timeSlotsString}` : "")
     )
   })
-
 
   // Transform games_services
   const games_services_translated = games_services?.map(translateFromCodeName)
@@ -393,9 +411,10 @@ export function transformOrganization(o, languages) {
   // Transform links
   const links = o.links?.map(transformLink)
 
-  const eventsUnflat = o.events?.filter(({ events_id: e }) => !!e).map(({ events_id: e }) =>
-    transformEvent(e, languages)
-  ) || []
+  const eventsUnflat =
+    o.events
+      ?.filter(({ events_id: e }) => !!e)
+      .map(({ events_id: e }) => transformEvent(e, languages)) || []
   const eventsUnfiltered = flattenEvents(eventsUnflat)
 
   const d = new Date()
@@ -432,81 +451,173 @@ export function transformOrganization(o, languages) {
     gallery,
     cover_image,
     links,
-    events
+    events,
   }
 }
 
 export async function fetchOrganizations() {
-  const organizationsRaw = await directus.items('organizations').readByQuery({
-    limit: -1,
-    sort: '-date_updated',
-    filter: { status: { _in: ['published', 'to_check'] } },
-    fields: [
-      'status',
-      'date_updated',
-      'name',
-      'slug',
-      'types',
-      ...imageFields('logo.'),
-      ...imageFields('cover_image.'),
-      'opening_hours',
-      'games_services',
-      'address',
-      'amenities',
-      'links',
-      'translations.*',
-      ...imageFields('gallery.*.'),
-      // Related Events
-      'events.events_id.status',
-      'events.events_id.date_updated',
-      'events.events_id.name',
-      'events.events_id.address',
-      ...imageFields('events.events_id.cover_image.'),
-      'events.events_id.recurring',
-      'events.events_id.schedule',
-      'events.events_id.links',
-      'events.events_id.organizers.organizations_id.status',
-      'events.events_id.organizers.organizations_id.name',
-      'events.events_id.organizers.organizations_id.slug',
-      'events.events_id.organizers.organizations_id.address',
-      ...imageFields('events.events_id.organizers.organizations_id.logo.'),
-      ...imageFields('events.events_id.organizers.organizations_id.cover_image.'),
-      'events.events_id.organizers.organizations_id.games_services',
-      'events.events_id.organizers.organizations_id.amenities',
-      ...imageFields('events.events_id.organizers.organizations_id.gallery.*.'),
-      'events.events_id.organizers.organizations_id.translations.languages_code',
-      'events.events_id.organizers.organizations_id.translations.description',
-      'events.events_id.translations.languages_code',
-      'events.events_id.translations.highlighted_details',
-      'events.events_id.translations.description',
-      'events.events_id.parent_event',
-      'events.events_id.parent_event.status',
-      'events.events_id.parent_event.name',
-      'events.events_id.parent_event.address',
-      'events.events_id.parent_event.recurring',
-      'events.events_id.parent_event.schedule',
-      'events.events_id.parent_event.links',
-      ...imageFields('events.events_id.parent_event.cover_image.'),
-      'events.events_id.parent_event.translations.languages_code',
-      'events.events_id.parent_event.translations.highlighted_details',
-      'events.events_id.parent_event.translations.description',
-      'events.events_id.parent_event.organizers.organizations_id.status',
-      'events.events_id.parent_event.organizers.organizations_id.name',
-      'events.events_id.parent_event.organizers.organizations_id.slug',
-      'events.events_id.parent_event.organizers.organizations_id.address',
-      ...imageFields('events.events_id.parent_event.organizers.organizations_id.logo.'),
-      ...imageFields('events.events_id.parent_event.organizers.organizations_id.cover_image.'),
-      'events.events_id.parent_event.organizers.organizations_id.games_services',
-      'events.events_id.parent_event.organizers.organizations_id.amenities',
-      ...imageFields('events.events_id.parent_event.organizers.organizations_id.gallery.*.'),
-      'events.events_id.parent_event.organizers.organizations_id.translations.languages_code',
-      'events.events_id.parent_event.organizers.organizations_id.translations.description',
-      'events.events_id.event_instances',
-    ],
-  })
+  await client.refresh()
+  const organizationsRaw = await client.request(
+    readItems("organizations", {
+      limit: -1,
+      sort: "-date_updated",
+      filter: { status: { _in: ["published", "to_check"] } },
+      fields: [
+        "status",
+        "date_updated",
+        "name",
+        "slug",
+        "types",
+        ...imageFields("logo."),
+        ...imageFields("cover_image."),
+        "opening_hours",
+        "games_services",
+        "address",
+        "amenities",
+        "links",
+        "translations.*",
+        ...imageFields("gallery.*."),
+        // Related Events
+        "events.events_id.status",
+        "events.events_id.date_updated",
+        "events.events_id.name",
+        "events.events_id.address",
+        ...imageFields("events.events_id.cover_image."),
+        "events.events_id.recurring",
+        "events.events_id.schedule",
+        "events.events_id.links",
+        "events.events_id.organizers.organizations_id.status",
+        "events.events_id.organizers.organizations_id.name",
+        "events.events_id.organizers.organizations_id.slug",
+        "events.events_id.organizers.organizations_id.address",
+        ...imageFields("events.events_id.organizers.organizations_id.logo."),
+        ...imageFields(
+          "events.events_id.organizers.organizations_id.cover_image.",
+        ),
+        "events.events_id.organizers.organizations_id.games_services",
+        "events.events_id.organizers.organizations_id.amenities",
+        ...imageFields(
+          "events.events_id.organizers.organizations_id.gallery.*.",
+        ),
+        "events.events_id.organizers.organizations_id.translations.languages_code",
+        "events.events_id.organizers.organizations_id.translations.description",
+        "events.events_id.translations.languages_code",
+        "events.events_id.translations.highlighted_details",
+        "events.events_id.translations.description",
+        "events.events_id.parent_event",
+        "events.events_id.parent_event.status",
+        "events.events_id.parent_event.name",
+        "events.events_id.parent_event.address",
+        "events.events_id.parent_event.recurring",
+        "events.events_id.parent_event.schedule",
+        "events.events_id.parent_event.links",
+        ...imageFields("events.events_id.parent_event.cover_image."),
+        "events.events_id.parent_event.translations.languages_code",
+        "events.events_id.parent_event.translations.highlighted_details",
+        "events.events_id.parent_event.translations.description",
+        "events.events_id.parent_event.organizers.organizations_id.status",
+        "events.events_id.parent_event.organizers.organizations_id.name",
+        "events.events_id.parent_event.organizers.organizations_id.slug",
+        "events.events_id.parent_event.organizers.organizations_id.address",
+        ...imageFields(
+          "events.events_id.parent_event.organizers.organizations_id.logo.",
+        ),
+        ...imageFields(
+          "events.events_id.parent_event.organizers.organizations_id.cover_image.",
+        ),
+        "events.events_id.parent_event.organizers.organizations_id.games_services",
+        "events.events_id.parent_event.organizers.organizations_id.amenities",
+        ...imageFields(
+          "events.events_id.parent_event.organizers.organizations_id.gallery.*.",
+        ),
+        "events.events_id.parent_event.organizers.organizations_id.translations.languages_code",
+        "events.events_id.parent_event.organizers.organizations_id.translations.description",
+        "events.events_id.event_instances",
+      ],
+    }),
+  )
+
+  // TODO: Remove implementation from old sdk when ready
+  // const organizationsRaw = await directus.items("organizations").readByQuery({
+  //   limit: -1,
+  //   sort: "-date_updated",
+  //   filter: { status: { _in: ["published", "to_check"] } },
+  //   fields: [
+  //     "status",
+  //     "date_updated",
+  //     "name",
+  //     "slug",
+  //     "types",
+  //     ...imageFields("logo."),
+  //     ...imageFields("cover_image."),
+  //     "opening_hours",
+  //     "games_services",
+  //     "address",
+  //     "amenities",
+  //     "links",
+  //     "translations.*",
+  //     ...imageFields("gallery.*."),
+  //     // Related Events
+  //     "events.events_id.status",
+  //     "events.events_id.date_updated",
+  //     "events.events_id.name",
+  //     "events.events_id.address",
+  //     ...imageFields("events.events_id.cover_image."),
+  //     "events.events_id.recurring",
+  //     "events.events_id.schedule",
+  //     "events.events_id.links",
+  //     "events.events_id.organizers.organizations_id.status",
+  //     "events.events_id.organizers.organizations_id.name",
+  //     "events.events_id.organizers.organizations_id.slug",
+  //     "events.events_id.organizers.organizations_id.address",
+  //     ...imageFields("events.events_id.organizers.organizations_id.logo."),
+  //     ...imageFields(
+  //       "events.events_id.organizers.organizations_id.cover_image.",
+  //     ),
+  //     "events.events_id.organizers.organizations_id.games_services",
+  //     "events.events_id.organizers.organizations_id.amenities",
+  //     ...imageFields("events.events_id.organizers.organizations_id.gallery.*."),
+  //     "events.events_id.organizers.organizations_id.translations.languages_code",
+  //     "events.events_id.organizers.organizations_id.translations.description",
+  //     "events.events_id.translations.languages_code",
+  //     "events.events_id.translations.highlighted_details",
+  //     "events.events_id.translations.description",
+  //     "events.events_id.parent_event",
+  //     "events.events_id.parent_event.status",
+  //     "events.events_id.parent_event.name",
+  //     "events.events_id.parent_event.address",
+  //     "events.events_id.parent_event.recurring",
+  //     "events.events_id.parent_event.schedule",
+  //     "events.events_id.parent_event.links",
+  //     ...imageFields("events.events_id.parent_event.cover_image."),
+  //     "events.events_id.parent_event.translations.languages_code",
+  //     "events.events_id.parent_event.translations.highlighted_details",
+  //     "events.events_id.parent_event.translations.description",
+  //     "events.events_id.parent_event.organizers.organizations_id.status",
+  //     "events.events_id.parent_event.organizers.organizations_id.name",
+  //     "events.events_id.parent_event.organizers.organizations_id.slug",
+  //     "events.events_id.parent_event.organizers.organizations_id.address",
+  //     ...imageFields(
+  //       "events.events_id.parent_event.organizers.organizations_id.logo.",
+  //     ),
+  //     ...imageFields(
+  //       "events.events_id.parent_event.organizers.organizations_id.cover_image.",
+  //     ),
+  //     "events.events_id.parent_event.organizers.organizations_id.games_services",
+  //     "events.events_id.parent_event.organizers.organizations_id.amenities",
+  //     ...imageFields(
+  //       "events.events_id.parent_event.organizers.organizations_id.gallery.*.",
+  //     ),
+  //     "events.events_id.parent_event.organizers.organizations_id.translations.languages_code",
+  //     "events.events_id.parent_event.organizers.organizations_id.translations.description",
+  //     "events.events_id.event_instances",
+  //   ],
+  // })
 
   const languages = await fetchLanguages()
-  const organizations = organizationsRaw.data?.map(organization => transformOrganization(organization, languages))
+  const organizations = organizationsRaw?.map((organization) =>
+    transformOrganization(organization, languages),
+  )
 
   return organizations
 }
@@ -564,7 +675,7 @@ function fallbackOnParentsOfEvent({
       ? removeEmptyPropOnObject({
           name: parent.name,
           address: parent.address,
-          cover_image: parent.cover_image
+          cover_image: parent.cover_image,
         })
       : {}),
     ...removeEmptyPropOnObject(eventRaw),
@@ -632,7 +743,7 @@ export function transformEvent(eventRaw, languages) {
   )
   const slug = `${nameSlug}-${dateSlug}`
   // TODO: should probably create "paths" for translated paths
-  const path = createPath({ type: 'event', slug })
+  const path = createPath({ type: "event", slug })
   // Transform images
   const cover_image = transformImage(e?.cover_image)
   // Transform Address
@@ -683,67 +794,129 @@ const flattenEvents = (eventsUnflat) => {
 }
 
 export async function fetchEvents() {
+  await client.refresh()
+
   const languages = await fetchLanguages()
 
-  const eventsRaw = await directus.items('events').readByQuery({
-    limit: -1,
-    filter: {
-      _and: [
-        { status: { _eq: 'published' } },
-        // { date_updated: { _gte: '$NOW(-6 months)' } }, // TODO: change this when we can check the last event time in schedule
+  const eventsRaw = await client.request(
+    readItems("events", {
+      limit: -1,
+      filter: {
+        _and: [
+          { status: { _eq: "published" } },
+          // { date_updated: { _gte: '$NOW(-6 months)' } }, // TODO: change this when we can check the last event time in schedule
+        ],
+      },
+      fields: [
+        "*",
+        "status",
+        "date_updated",
+        "name",
+        "address",
+        ...imageFields("cover_image."),
+        "recurring",
+        "schedule",
+        "links",
+        "organizers.organizations_id.status",
+        "organizers.organizations_id.name",
+        "organizers.organizations_id.slug",
+        "organizers.organizations_id.address",
+        ...imageFields("organizers.organizations_id.logo."),
+        ...imageFields("organizers.organizations_id.cover_image."),
+        "organizers.organizations_id.games_services",
+        "organizers.organizations_id.amenities",
+        ...imageFields("organizers.organizations_id.gallery.*."),
+        "organizers.organizations_id.translations.languages_code",
+        "organizers.organizations_id.translations.description",
+        "translations.languages_code",
+        "translations.highlighted_details",
+        "translations.description",
+        "parent_event",
+        "parent_event.status",
+        "parent_event.name",
+        "parent_event.address",
+        "parent_event.recurring",
+        "parent_event.schedule",
+        "parent_event.links",
+        ...imageFields("parent_event.cover_image."),
+        "parent_event.translations.languages_code",
+        "parent_event.translations.highlighted_details",
+        "parent_event.translations.description",
+        "parent_event.organizers.organizations_id.status",
+        "parent_event.organizers.organizations_id.name",
+        "parent_event.organizers.organizations_id.slug",
+        "parent_event.organizers.organizations_id.address",
+        ...imageFields("parent_event.organizers.organizations_id.logo."),
+        ...imageFields("parent_event.organizers.organizations_id.cover_image."),
+        "parent_event.organizers.organizations_id.games_services",
+        "parent_event.organizers.organizations_id.amenities",
+        ...imageFields("parent_event.organizers.organizations_id.gallery.*."),
+        "parent_event.organizers.organizations_id.translations.languages_code",
+        "parent_event.organizers.organizations_id.translations.description",
+        "event_instances",
       ],
-    },
-    fields: [
-      '*',
-      'status',
-      'date_updated',
-      'name',
-      'address',
-      ...imageFields('cover_image.'),
-      'recurring',
-      'schedule',
-      'links',
-      'organizers.organizations_id.status',
-      'organizers.organizations_id.name',
-      'organizers.organizations_id.slug',
-      'organizers.organizations_id.address',
-      ...imageFields('organizers.organizations_id.logo.'),
-      ...imageFields('organizers.organizations_id.cover_image.'),
-      'organizers.organizations_id.games_services',
-      'organizers.organizations_id.amenities',
-      ...imageFields('organizers.organizations_id.gallery.*.'),
-      'organizers.organizations_id.translations.languages_code',
-      'organizers.organizations_id.translations.description',
-      'translations.languages_code',
-      'translations.highlighted_details',
-      'translations.description',
-      'parent_event',
-      'parent_event.status',
-      'parent_event.name',
-      'parent_event.address',
-      'parent_event.recurring',
-      'parent_event.schedule',
-      'parent_event.links',
-      ...imageFields('parent_event.cover_image.'),
-      'parent_event.translations.languages_code',
-      'parent_event.translations.highlighted_details',
-      'parent_event.translations.description',
-      'parent_event.organizers.organizations_id.status',
-      'parent_event.organizers.organizations_id.name',
-      'parent_event.organizers.organizations_id.slug',
-      'parent_event.organizers.organizations_id.address',
-      ...imageFields('parent_event.organizers.organizations_id.logo.'),
-      ...imageFields('parent_event.organizers.organizations_id.cover_image.'),
-      'parent_event.organizers.organizations_id.games_services',
-      'parent_event.organizers.organizations_id.amenities',
-      ...imageFields('parent_event.organizers.organizations_id.gallery.*.'),
-      'parent_event.organizers.organizations_id.translations.languages_code',
-      'parent_event.organizers.organizations_id.translations.description',
-      'event_instances',
-    ],
-  })
+    }),
+  )
+  // TODO: Remove implementation from old sdk when ready
+  // const eventsRaw = await directus.items("events").readByQuery({
+  //   limit: -1,
+  //   filter: {
+  //     _and: [
+  //       { status: { _eq: "published" } },
+  //       // { date_updated: { _gte: '$NOW(-6 months)' } }, // TODO: change this when we can check the last event time in schedule
+  //     ],
+  //   },
+  //   fields: [
+  //     "*",
+  //     "status",
+  //     "date_updated",
+  //     "name",
+  //     "address",
+  //     ...imageFields("cover_image."),
+  //     "recurring",
+  //     "schedule",
+  //     "links",
+  //     "organizers.organizations_id.status",
+  //     "organizers.organizations_id.name",
+  //     "organizers.organizations_id.slug",
+  //     "organizers.organizations_id.address",
+  //     ...imageFields("organizers.organizations_id.logo."),
+  //     ...imageFields("organizers.organizations_id.cover_image."),
+  //     "organizers.organizations_id.games_services",
+  //     "organizers.organizations_id.amenities",
+  //     ...imageFields("organizers.organizations_id.gallery.*."),
+  //     "organizers.organizations_id.translations.languages_code",
+  //     "organizers.organizations_id.translations.description",
+  //     "translations.languages_code",
+  //     "translations.highlighted_details",
+  //     "translations.description",
+  //     "parent_event",
+  //     "parent_event.status",
+  //     "parent_event.name",
+  //     "parent_event.address",
+  //     "parent_event.recurring",
+  //     "parent_event.schedule",
+  //     "parent_event.links",
+  //     ...imageFields("parent_event.cover_image."),
+  //     "parent_event.translations.languages_code",
+  //     "parent_event.translations.highlighted_details",
+  //     "parent_event.translations.description",
+  //     "parent_event.organizers.organizations_id.status",
+  //     "parent_event.organizers.organizations_id.name",
+  //     "parent_event.organizers.organizations_id.slug",
+  //     "parent_event.organizers.organizations_id.address",
+  //     ...imageFields("parent_event.organizers.organizations_id.logo."),
+  //     ...imageFields("parent_event.organizers.organizations_id.cover_image."),
+  //     "parent_event.organizers.organizations_id.games_services",
+  //     "parent_event.organizers.organizations_id.amenities",
+  //     ...imageFields("parent_event.organizers.organizations_id.gallery.*."),
+  //     "parent_event.organizers.organizations_id.translations.languages_code",
+  //     "parent_event.organizers.organizations_id.translations.description",
+  //     "event_instances",
+  //   ],
+  // })
 
-  const eventsUnflat = eventsRaw.data?.map((e) => transformEvent(e, languages))
+  const eventsUnflat = eventsRaw?.map((e) => transformEvent(e, languages))
   const eventsUnfiltered = flattenEvents(eventsUnflat)
 
   const d = new Date()
@@ -792,7 +965,7 @@ export function transformArticle(articleRaw, languages) {
   if (hasNoHeader && hasNoMain && hasNoFooter) return null
 
   // Computed fields
-  const path = createPath({ type: 'article', slug })
+  const path = createPath({ type: "article", slug })
   const authors = authorsRaw?.map((authorRaw) =>
     transformUserProfile(authorRaw?.user_profiles_id),
   )
@@ -815,33 +988,61 @@ export function transformArticle(articleRaw, languages) {
 }
 
 export async function fetchArticles() {
+  await client.refresh()
+
   const languages = await fetchLanguages()
 
-  const articlesRaw = await directus.items('articles').readByQuery({
-    limit: -1,
-    filter: { status: { _eq: 'published' } },
-    sort: '-date_published',
-    fields: [
-      'status',
-      'code_name',
-      ...pageDataFields('page_data.'),
-      'authors.user_profiles_id.id',
-      'authors.user_profiles_id.status',
-      'authors.user_profiles_id.display_name',
-      ...imageFields('authors.user_profiles_id.avatar.'),
-      'authors.user_profiles_id.directus_user.id',
-      'authors.user_profiles_id.directus_user.first_name',
-      'authors.user_profiles_id.directus_user.last_name',
-      ...imageFields('authors.user_profiles_id.directus_user.avatar.'),
-      'date_published',
-      'date_modified',
-      ...blockFields('header.'),
-      ...blockFields('main.'),
-      ...blockFields('footer.'),
-    ],
-  })
+  const articlesRaw = await client.request(
+    readItems("articles", {
+      limit: -1,
+      filter: { status: { _eq: "published" } },
+      sort: "-date_published",
+      fields: [
+        "status",
+        "code_name",
+        ...pageDataFields("page_data."),
+        "authors.user_profiles_id.id",
+        "authors.user_profiles_id.status",
+        "authors.user_profiles_id.display_name",
+        ...imageFields("authors.user_profiles_id.avatar."),
+        "authors.user_profiles_id.directus_user.id",
+        "authors.user_profiles_id.directus_user.first_name",
+        "authors.user_profiles_id.directus_user.last_name",
+        ...imageFields("authors.user_profiles_id.directus_user.avatar."),
+        "date_published",
+        "date_modified",
+        ...blockFields("header."),
+        ...blockFields("main."),
+        ...blockFields("footer."),
+      ],
+    }),
+  )
+  // TODO: Remove implementation from old sdk when ready
+  // const articlesRaw = await directus.items("articles").readByQuery({
+  //   limit: -1,
+  //   filter: { status: { _eq: "published" } },
+  //   sort: "-date_published",
+  //   fields: [
+  //     "status",
+  //     "code_name",
+  //     ...pageDataFields("page_data."),
+  //     "authors.user_profiles_id.id",
+  //     "authors.user_profiles_id.status",
+  //     "authors.user_profiles_id.display_name",
+  //     ...imageFields("authors.user_profiles_id.avatar."),
+  //     "authors.user_profiles_id.directus_user.id",
+  //     "authors.user_profiles_id.directus_user.first_name",
+  //     "authors.user_profiles_id.directus_user.last_name",
+  //     ...imageFields("authors.user_profiles_id.directus_user.avatar."),
+  //     "date_published",
+  //     "date_modified",
+  //     ...blockFields("header."),
+  //     ...blockFields("main."),
+  //     ...blockFields("footer."),
+  //   ],
+  // })
 
-  const articles = articlesRaw.data?.map((a) => transformArticle(a, languages))
+  const articles = articlesRaw?.map((a) => transformArticle(a, languages))
 
   return articles
 }

@@ -17,7 +17,7 @@
     "@astrojs/sitemap": "^3.0.3",
     "@astrojs/svelte": "^4.0.3",
     "@csstools/postcss-design-tokens": "^3.1.1",
-    "@directus/sdk": "^9.12.2",
+    "@directus/sdk": "^14.0.0",
     "astro": "^3.4.3",
     "astro-compress": "^2.2.3",
     "astro-critters": "^2.0.11",

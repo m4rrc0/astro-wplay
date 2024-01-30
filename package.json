@@ -14,14 +14,14 @@
     "encrypt:local": ". ./.env && npx staticrypt dist/$PAGE_ADMIN -r -d dist/"
   },
   "devDependencies": {
-    "@astrojs/sitemap": "^3.0.3",
-    "@astrojs/svelte": "^4.0.3",
+    "@astrojs/sitemap": "^3.0.5",
+    "@astrojs/svelte": "^5.0.3",
     "@csstools/postcss-design-tokens": "^3.1.1",
     "@directus/sdk": "^14.0.0",
-    "astro": "^3.4.3",
-    "astro-compress": "^2.2.3",
+    "astro": "^4.2.6",
+    "astro-compress": "^2.2.8",
     "astro-critters": "^2.0.11",
-    "astro-icon": "^0.8.1",
+    "astro-icon": "^1.0.4",
     "astro-imagetools": "^0.9.0",
     "astro-remote": "^0.2.4",
     "astro-robots-txt": "^1.0.0",
@@ -34,7 +34,7 @@
     "postcss-mixins": "^9.0.4",
     "postcss-preset-env": "^9.3.0",
     "prettier": "^3.0.3",
-    "prettier-plugin-astro": "^0.12.1",
+    "prettier-plugin-astro": "^0.13.0",
     "protect-email": "^0.1.2",
     "sharp": "^0.32.6",
     "staticrypt": "^3.3.2"

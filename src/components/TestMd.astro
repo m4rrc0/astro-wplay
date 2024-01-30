@@ -1,7 +1,7 @@
 ---
-import { Icon } from "astro-icon"
+import { Icon } from "astro-icon/components"
 import { Md } from "@components"
-import {Markdown} from "astro-remote"
+import { Markdown } from "astro-remote"
 
 const header = "Hello world"
 const content = `
@@ -30,24 +30,18 @@ const remoteContent = await renderMd(content)
 <br />
 <Icon name="gridicons:share-computer" size="1em" />
 `}
->
-
-</Markdown>
+/>
 
 <Markdown {header}>
   {content}
 </Markdown>
 
-<Markdown {header} {content}>
-
-</Markdown>
+<Markdown {header} {content} />
 
 <Markdown {header}>
   {remoteContent}
 </Markdown>
 
-<Markdown {header} content={remoteContent}>
+<Markdown {header} content={remoteContent} />
 
-</Markdown>
-
-<div set:html={remoteContent}></div>
+<div set:html={remoteContent} />

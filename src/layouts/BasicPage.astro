@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon"
+import { Icon } from "astro-icon/components"
 import { MtObf } from "@components"
 
 const { lang } = Astro.props
@@ -16,7 +16,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 >
   <div id="menu-main" class="color-palette-">
     <div class="center width-max">
-      <nav class="box no-border cluster overflow gap-h6-down ">
+      <nav class="box no-border cluster overflow gap-h6-down">
         <ul class="reset reset-down-a size-h3">
           <li>
             <a
@@ -55,20 +55,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     </div>
   </div>
 
-  <slot></slot>
+  <slot />
 
   <footer
     id="footer-main"
-    class="
-    skew-border-before
-    color-palette-variation-contrast
-    "
+    class="skew-border-before
+    color-palette-variation-contrast"
   >
-    <div
-      class="
-      box no-border center intrinsic text stack gap-down-h7
-    "
-    >
+    <div class="box no-border center intrinsic text stack gap-down-h7">
       <div class="cluster justify-center size-h3">
         <div>
           <a

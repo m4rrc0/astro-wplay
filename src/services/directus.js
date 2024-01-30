@@ -174,6 +174,8 @@ const translationFromCode = (translations, code) =>
 export async function start() {
   // But, we need to authenticate if data is private
   let authenticated = false
+  let authFailedNumber = 0
+  const allowedAuthFail = 20
 
   // Try to authenticate with token if exists
   await client
@@ -184,7 +186,7 @@ export async function start() {
     .catch(() => {})
 
   // Let's login in case we don't have token or it is invalid / expired
-  while (!authenticated) {
+  while (!authenticated && authFailedNumber < allowedAuthFail) {
     await client
       .login(DIRECTUS_EMAIL, DIRECTUS_PW)
       .then(() => {
@@ -193,7 +195,11 @@ export async function start() {
       })
       .catch(() => {
         console.error("Invalid credentials")
+        authFailedNumber += 1
       })
+  }
+  if (authFailedNumber >= allowedAuthFail) {
+    throw `Auth failed ${allowedAuthFail} times. Exiting Build.`
   }
 }
 

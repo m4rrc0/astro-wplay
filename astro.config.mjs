@@ -6,6 +6,7 @@ import svelte from "@astrojs/svelte"
 import sitemap from "@astrojs/sitemap"
 import robotsTxt from "astro-robots-txt"
 import critters from "astro-critters"
+import icon from "astro-icon"
 
 const PAGE_ADMIN = process.env.PAGE_ADMIN || null
 
@@ -42,6 +43,7 @@ export default defineConfig({
       logger: 1, // default is 2
       fonts: true,
       exclude: [(file) => file.startsWith("./dist/fr/e")],
-    })
-  ]
+    }),
+    icon(),
+  ],
 })

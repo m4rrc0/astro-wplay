@@ -61,6 +61,9 @@ export function imageDirectusSrc({
   withoutEnlargement,
   format,
 }) {
+  return srcRaw
+
+  // TODO: Reinstate directus URL when it does not crash the build anymore
   const [typePre, typePost] = type?.split("/") || []
 
   if (!srcRaw) return srcRaw

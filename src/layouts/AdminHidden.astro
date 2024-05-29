@@ -1,12 +1,24 @@
 ---
 import { SkeletonPage, BasicPage } from "@layouts"
+import { IO, ImgDirectus, Img } from "@components"
+import { imageDirectusSrc } from "@utils"
+import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png"
 // import FourOFour from '@pages/404.astro'
 const PUBLIC_HOOK_PROD = import.meta.env.PUBLIC_HOOK_PROD || null
 const PUBLIC_HOOK_STAGE = import.meta.env.PUBLIC_HOOK_STAGE || null
 
-const { lang } = Astro.props || {}
+const { lang, events: eventsRaw } = Astro.props || {}
 
-const srcBadge = "https://api.netlify.com/api/v1/badges/86fec8f0-ba93-4c84-9ce3-f127abc16dea/deploy-status"
+const events = [
+  ...eventsRaw?.sort(function (a, b) {
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return new Date(b.date_updated) - new Date(a.date_updated)
+  }),
+]
+
+const srcBadge =
+  "https://api.netlify.com/api/v1/badges/86fec8f0-ba93-4c84-9ce3-f127abc16dea/deploy-status"
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -14,71 +26,232 @@ const srcBadge = "https://api.netlify.com/api/v1/badges/86fec8f0-ba93-4c84-9ce3-
     <meta name="robots" content="noindex" />
   </Fragment>
   <BasicPage {lang}>
-    {PUBLIC_HOOK_PROD ? (
-      <main class="stack center box no-border">
-        {
-          [{
-            branch: "Prod",
-            hook: PUBLIC_HOOK_PROD,
-            src: srcBadge + "?branch=master",
-            url: "https://www.wanna-play.be/"
-          }, {
-            branch: "Stage",
-            hook: PUBLIC_HOOK_STAGE,
-            src: srcBadge + "?branch=stage",
-            url: "https://stage--wanna-play.netlify.app/"
-          }].map(({ branch, hook, src, url }) => (
-            <div class="cluster">
-              <div>
-                <button
-                  onclick={`fetch('${hook}',{method: 'POST'});`}
-                  style="padding: 0.5rem 1rem;"
-                >
-                  Reconstruire le site {branch}
-                </button>
-                <img
-                  {src}
-                  data-original-src={src}
-                  alt="Netlify Status"
-                  class="netlify-status"
-                  onload="reloadImage(this)"
-                  width="124"
-                  height="20"
-                />
-                <a href={url} target="_blank">
-                  Voir le site
-                </a>
-                <a
-                  href="https://app.netlify.com/sites/wanna-play/deploys"
-                  target="_blank"
-                >
-                  Vérifier le log
-                </a>
+    <main class="stack gap-down-h-1">
+      <div class="center box" style="--max-width: 50rem; width: 100%;">
+        <details open>
+          <summary><h2>Build Hooks</h2></summary>
+          {
+            PUBLIC_HOOK_PROD ? (
+              <div class="stack gap-down-h4 center box no-border">
+                {[
+                  {
+                    branch: "Prod",
+                    hook: PUBLIC_HOOK_PROD,
+                    src: srcBadge + "?branch=master",
+                    url: "https://www.wanna-play.be/",
+                  },
+                  {
+                    branch: "Stage",
+                    hook: PUBLIC_HOOK_STAGE,
+                    src: srcBadge + "?branch=stage",
+                    url: "https://stage--wanna-play.netlify.app/",
+                  },
+                ].map(({ branch, hook, src, url }) => (
+                  <div class="cluster">
+                    <div>
+                      <button
+                        onclick={`fetch('${hook}',{method: 'POST'});`}
+                        style="padding: 0.5rem 1rem;"
+                      >
+                        Reconstruire le site {branch}
+                      </button>
+                      <img
+                        {src}
+                        data-original-src={src}
+                        alt="Netlify Status"
+                        class="netlify-status"
+                        onload="reloadImage(this)"
+                        width="124"
+                        height="20"
+                      />
+                      <a href={url} target="_blank">
+                        Voir le site
+                      </a>
+                      <a
+                        href="https://app.netlify.com/sites/wanna-play/deploys"
+                        target="_blank"
+                      >
+                        Vérifier le log
+                      </a>
+                    </div>
+                  </div>
+                ))}
               </div>
+            ) : (
+              <div class="max-width-measure-h2 center stack gap-down-h1 box no-border">
+                <p class="h3">PUBLIC_HOOK_PROD est indéfini.</p>
+              </div>
+            )
+          }
+        </details>
+      </div>
+      <div class="box no-border stack gap-down-h1">
+        <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
+        <!-- TODO: HERE -->
+        <!-- <script is:inline>
+          import List from "list.js"
+
+          var options = {
+            valueNames: [
+              // "timestart",
+              { name: "timestart", attr: "datetime" },
+              "name",
+              { name: "zip", attr: "data-zip" },
+              { name: "city", attr: "data-city" },
+            ],
+          }
+
+          var eventsList = new List("events-list-container", options)
+        </script> -->
+
+        <!-- TODO: enable searchin and filtering -->
+        <!-- <div class="center intrinsic stack" style="--gap: var(--size-h5);">
+          <input type="search" class="fuzzy-search" placeholder="Recherche" />
+          <p>Trier par...</p>
+          <div class="cluster" style="--gap: var(--size-h7);">
+            <div>
+              <button
+                class="sort asc"
+                data-sort="timestart"
+                data-default-order="asc"
+                >Début
+              </button>
+              <button class="sort" data-sort="zip">Code postal</button>
             </div>
-          ))
-        }
-      </main>
-    ) : (
-      <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
-        <p class="h3">Oops. Il n'y à rien à cette adresse.</p>
-      </main>
-    )}
+          </div>
+        </div> -->
+
+        <IO
+          div
+          $skipNoInner
+          class="grid gap-down-h4"
+          style="--width-column: var(--width-col-3);"
+        >
+          <IO ul $skip={!events?.[0]?.name} class="list reset">
+            {
+              events?.map((event) => {
+                const {
+                  name,
+                  address,
+                  cover_image,
+                  organizers,
+                  time_start,
+                  time_end,
+                  isSameDay,
+                } = event
+
+                const srcCover = imageDirectusSrc({
+                  src: cover_image?.src,
+                  width: "1000",
+                  fit: "cover",
+                  quality: "50",
+                })
+
+                return (
+                  <li
+                    class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                    style=""
+                  >
+                    <div
+                      class="box no-border padding-h4 with-sidebar gap-h4
+                                        color-palette-trans
+                                        background-overlay
+                                        "
+                      style={
+                        (srcCover
+                          ? `background-image: url("${srcCover}"); `
+                          : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                        `--content-min: 80%;`
+                      }
+                    >
+                      <div>
+                        <time
+                          datetime={time_start.dateTimeRaw}
+                          class="timestart stack gap-down-h8 center intrinsic"
+                          style="line-height: 1;"
+                        >
+                          <span class="size-h1">{time_start?.fr?.day}</span>
+                          <span class="size-h2">
+                            {time_start?.fr?.monthShort}
+                          </span>
+                          <span class="size-h2">{time_start?.fr?.year}</span>
+                        </time>
+                        <div>
+                          <div class="cover no-gap" style="--min-height: 100%;">
+                            <h2 class="h3 centered">
+                              <a
+                                href={`/${event.path}`}
+                                class="name reset clickable"
+                                set:html={name}
+                              />
+                            </h2>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                      <IO
+                        p
+                        $skipNoInner
+                        class="zip city h5"
+                        data-zip={address?.zip}
+                        data-city={address?.city}
+                      >
+                        {address?.string}
+                      </IO>
+                      <ul class="reset stack horizontal">
+                        {organizers?.map(({ name, logo }) => (
+                          <li>
+                            {logo?.src ? (
+                              <ImgDirectus
+                                image={logo}
+                                src={logo?.src}
+                                alt={name}
+                                loading="lazy"
+                                class=""
+                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                width="32"
+                                height="32"
+                                fit="inside"
+                                quality="99"
+                              />
+                            ) : (
+                              <Img
+                                src={placeholderWPlayCircleBlue}
+                                alt="logo"
+                                loading="lazy"
+                                class=""
+                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                width="32"
+                                height="32"
+                              />
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                )
+              })
+            }
+          </IO>
+        </IO>
+      </div>
+    </main>
+
+    <script is:inline>
+      // var images = document.getElementsByClassName('netlify-status');
+
+      function reloadImage(img) {
+        setTimeout(function () {
+          img.src = img.dataset.originalSrc + "&" + new Date().getTime()
+          // reloadImage(img);
+        }, 5000)
+      }
+
+      // function reloadImageOnClick() {
+      //   img.src = img.dataset.originalSrc + '&' + new Date().getTime();
+      // }
+    </script>
   </BasicPage>
 </SkeletonPage>
-
-<script is:inline>
-  // var images = document.getElementsByClassName('netlify-status');
-
-  function reloadImage(img) {
-    setTimeout(function() {
-      img.src = img.dataset.originalSrc + '&' + new Date().getTime();
-      // reloadImage(img);
-    }, 5000);
-  }
-
-  // function reloadImageOnClick() {
-  //   img.src = img.dataset.originalSrc + '&' + new Date().getTime();
-  // }
-
-</script>

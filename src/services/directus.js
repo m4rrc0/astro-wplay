@@ -756,6 +756,8 @@ export function transformEvent(eventRaw, languages) {
   const address = transformAddress(e.address)
   // Transform links
   const links = e.links?.map(transformLink)
+  // date_updated can be undefined if never had modifications
+  const date_updated = e.date_updated ?? e.date_created
 
   return {
     ...e,
@@ -770,6 +772,7 @@ export function transformEvent(eventRaw, languages) {
     cover_image,
     address,
     links,
+    date_updated,
   }
 }
 

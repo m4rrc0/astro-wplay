@@ -5,8 +5,7 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
-		"build": "astro build",
-		"build:bun": "bun --bun astro build",
+		"build": "astro build --experimental-static-build",
 		"postbuild": "npm run encrypt",
 		"preview": "astro preview",
 		"serve": "astro preview",

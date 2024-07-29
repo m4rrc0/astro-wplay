@@ -1,0 +1,183 @@
+---
+// import Fragment from 'astro/components'
+import { SkeletonPage, BasicPage } from "@layouts"
+import { SEO } from "@components"
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+---
+
+<SkeletonPage lang="fr">
+  <SEO
+    slot="head"
+    ogType="website"
+    title="L'histoire du projet"
+    description="Au service de la communauté du jeu de société en Belgique depuis 2017"
+    canonicalUrl={canonicalURL.href}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage lang={{ code: "fr" }}>
+    <main class="max-width-measure-h3 center stack gap-down-h1 box no-border">
+      <header class="stack center text">
+        <h1>Le projet Wanna Play</h1>
+        <p class="h2 color-palette-variation-funky">
+          Au service de la communauté du jeu de société!
+        </p>
+      </header>
+      
+
+      <form method="get" action="">
+        <fieldset class ="ajout_evenement">
+            <legend>Ajouter un évènement</legend>
+            <label>Nom de l'évènement</label>
+            <br>
+                <input type="text" name = "nom de l'event">
+                <br>
+            <label>Date de début </label>
+            <br>
+                <input type="datetime-local" name = "date début">
+            <label>Date de fin </label>
+                <input type="datetime-local" name = "date de fin" >
+                <br>
+            <!-- <label>Heure de début </label>
+            <br>
+                <input type="time" name = "date début">
+            <label>Heure de fin </label>
+                <input type="time" name = "date de fin" start = "date de début">
+                <br> -->
+            <br>
+            <label>Cover</label>
+                <input type="file" name = "cover">
+                <br>
+            <label>Liens de l'event</label>
+                <select name="type de lien" id="">
+                    <option>Evènement facebook</option>
+                    <option>Réservation</option>
+                    <option>Autre</option>
+                </select>
+                <input type ="url" name ="url">
+                <button type ="submit">Ajouter</button>
+            <br>
+        </fieldset>
+
+        <fieldset class = "Adresse">
+            <legend>Adresse </legend>
+            <label> Rue </label>
+                <input type="text" name = "street">
+            <label>N°</label>
+                <input type="number" name = "N°">
+            <label> Boîte </label>
+            <input type="text" name = "boîte">
+        <label>Code Postal</label>
+            <input type="number" name = "postal code">
+            <label> Commune </label>
+                <input type="text" name = "commune">
+            <label> Pays </label>
+            <select>
+                <option>Belgique</option>
+            </select>
+        </fieldset>
+
+        <fieldset class = "price">
+            <legend>Prix</legend>
+            <input type = "radio" name= "payant?">Gratuit</input>
+            <input type="radio" name= "payant?">Payant</input>
+            <input type ="number"> euros
+        </fieldset>
+
+        <fieldset> 
+            <legend>Description</legend>            
+                <textarea aria-setsize="1000"></textarea>
+        </fieldset>
+
+        <fieldset class = "tags">
+            <legend>Tag</legend>
+            <label>Accès PMR</label>
+                <select>
+                    <option>oui</option>
+                    <option>non</option>
+                </select>
+            <label>Type de jeu</label>
+                <select>
+                    <option>stratégie</option>
+                    <option>coopératif</option>
+                    <option>familial</option>
+                    <option>expert</option>
+                </select>
+            <label>Type d'évènement</label>
+            <select>
+                <option>Bourse</option>
+                <option>Tournoi</option>
+                <option>Festival</option>
+                <option>Moment jeu</option>
+                <option>Autre</option>
+            </select>
+        </fieldset>
+        <br>
+        <button type ="submit">Ajouter l'évènement</button>
+        <button type ="submit">Modifier l'évènement</button>
+
+        
+    </form>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+  #project-intro {
+    margin-top: 4vw;
+    margin-bottom: 4vw;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+
+    --skew-before: -1.2deg;
+    --skew-before-origin: top left;
+    --skew-after: 1deg;
+    --skew-after-origin: bottom left;
+  }
+  .title-label {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 1.382rem;
+    /* text-decoration: underline;
+    text-decoration-color: var(--color-neutral); */
+  }
+  .title-label::after {
+    background-color: inherit;
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: var(--border-radius-l);
+    top: -0.691rem;
+    bottom: -0.691rem;
+    right: -1.382rem;
+    left: -9999rem;
+
+    /* Trial with box shadow not conclusive: https://css-tricks.com/full-browser-width-bars/ */
+    /* top: 0; */
+    /* bottom: 0; */
+    /* left: -9999px; */
+    /* right: 0; */
+    /* border-left: 9999px solid var(--color-neutral); */
+    /* box-shadow: 9999px 0 0 var(--color-neutral); */
+  }
+  main > div:nth-of-type(even) {
+    text-align: right;
+  }
+  main > div:nth-of-type(2n) .title-label {
+    --color-neutral: var(--color-teal);
+  }
+  main > div:nth-of-type(3n) .title-label {
+    --color-neutral: var(--color-red);
+  }
+  main > div:nth-of-type(even) .title-label::after {
+    /* border-left: 9999px solid var(--color-neutral); */
+    /* box-shadow: 99px 0 0 var(--color-neutral); */
+    right: -9999rem;
+    left: -1.382rem;
+  }
+  main > div:nth-of-type(even) p {
+    text-align: left;
+  }
+</style>

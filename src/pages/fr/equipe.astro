@@ -5,20 +5,23 @@ import { SEO, Img } from "@components"
 import pictureTeam from "@images/team.jpg"
 
 import jenny from "@images/team/WannaPlayTeam_Jenny.png"
-import jo from "@images/team/WannaPlayTeam_Jo.jpg"
+// import jo from "@images/team/WannaPlayTeam_Jo.jpg"
 import marc from "@images/team/WannaPlayTeam_Marc.jpg"
-import pierre from "@images/team/WannaPlayTeam_Pierre.png"
+// import pierre from "@images/team/WannaPlayTeam_Pierre.png"
 import tess from "@images/team/WannaPlayTeam_Tess.jpg"
 import yves from "@images/team/WannaPlayTeam_Yves.jpg"
+import roxane from "@images/team/WannaPlayTeam_Roxane.jpg"
 
 const team = [
   //
   { pic: marc, name: "Marc" },
   { pic: tess, name: "Tess" },
-  { pic: jo, name: "Jo" },
+  // { pic: jo, name: "Jo" },
   { pic: yves, name: "Yves" },
   { pic: jenny, name: "Jenny" },
-  { pic: pierre, name: "Pierre" },
+  { pic: roxane, name: "Roxane" },
+
+  // { pic: pierre, name: "Pierre" },
 ]
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
@@ -39,7 +42,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   <BasicPage lang={{ code: "fr" }}>
     <main class="max-width-measure-h2 center max stack gap-down-h1">
       <!-- <main class="max-width-measure-h2 center stack gap-down-h1 box no-border"> -->
-      <h1 class="center text">L'équipe</h1>
+      <h1 class="center text">L'équipe 2024</h1>
       <!-- <img src="/assets/images/team.jpg" alt="L'équipe" width="3334" height="1250" loading="lazy" /> -->
       <!-- <Img
         src={pictureTeam}
@@ -63,7 +66,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   width="240"
                   height="240"
                 />
-                <p class="center text">{name}</p>
+                <p class="center text"><a href="">{name}</a></p>
               </div>
             )
           })}

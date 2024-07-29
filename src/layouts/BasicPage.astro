@@ -64,6 +64,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   >
     <div class="box no-border center intrinsic text stack gap-down-h7">
       <div class="cluster justify-center size-h3">
+        <h3>Nous suivre:</h3>
         <div>
           <a
             href="https://www.facebook.com/WannaPlayBE/"
@@ -80,12 +81,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             target="_blank"
             rel="noopener noreferrer"
             >Instagram
-          </a><a
+          </a>
+          <!-- <a
             href="http://eepurl.com/cM3shf"
             target="_blank"
             rel="noopener noreferrer"
             >Newsletter
-          </a><a
+          </a> -->
+          <a
             href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
             target="_blank"
             rel="noopener noreferrer"
@@ -128,6 +131,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           </a>
         </p>
       </div>
+      <div class = "copyright">
       <p class="size-h6">
         <span>© Wanna Play ASBL -</span>
         <span>0695.574.033 -</span>
@@ -139,6 +143,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           />
         </span>
       </p>
+    </div>
       <!-- <div class="cluster justify-center size-h6">
         <div>
           <span>Tester cette page: </span>
@@ -176,5 +181,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     margin-top: 4vw;
     --skew-before: -1.5deg;
     --skew-before-origin: top left;
+  }
+  .copyright{
+    border-top: 1px solid white;
   }
 </style>

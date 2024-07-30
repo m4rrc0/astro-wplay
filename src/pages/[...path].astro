@@ -22,6 +22,7 @@ import {
   AreasPage,
   AreaPage,
 } from "@layouts"
+import TeamMemberPage from "@src/layouts/TeamMemberPage.astro"
 
 const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
@@ -100,6 +101,13 @@ export async function getStaticPaths() {
       },
     ]
 
+    const teamMemberStaticPaths = [
+      {
+        params: { path:"fr/equipe/jenny" },
+        props: { lang },
+      },
+    ]
+
     staticPaths = [
       ...staticPaths,
       // ...pagesStaticPaths,
@@ -108,6 +116,7 @@ export async function getStaticPaths() {
       ...articlesStaticPaths,
       ...areasStaticPaths,
       ...listsStaticPaths,
+      ...teamMemberStaticPaths
     ]
   })
 
@@ -172,4 +181,9 @@ const {
   {article && <ArticlePage {article} {lang} />}
   {area && <AreaPage {area} {lang} {events} {organizations} />}
   <!-- <Debug {article} /> -->
+  <!-- Team Member Page -->
+  {
+  path === "fr/equipe/jenny" && (
+  <TeamMemberPage {lang} />
+)}
 </Fragment>

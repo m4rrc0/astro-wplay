@@ -33,7 +33,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 color-palette-variation-funky-contrast"
       >
         <h2>Notre mantra</h2>
-        <p>Connecter les joueurs(et les acteurs du monde ludique belge)</p>
+        <p>Connecter les joueurs et le monde ludique belge de manière générale</p>
         <h2>Nos objectifs</h2>
         <p>
           Centraliser l'info pour permettre aux joueurs avertis et occasionnels
@@ -54,8 +54,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           le soit également. ;)
         </p>
       </section>
-
-      <h2 class = "title">Ligne du temps de l'asbl et évolution du projet</h2>
+      <nav class ="timelineNav">
+        <h2 class = "title">Ligne du temps de l'asbl et évolution du projet</h2>
+        <ul>
+          <li><a href="#2017">2017</a></li>
+          <li><a href="#2018">2018</a></li>
+          <li><a href="#2020">2020</a></li>
+          <li><a href="#2021">2021</a></li>
+          <li><a href="#2022">2022</a></li>
+          <li><a href="#2023">2023</a></li>
+          <li><a href="#2024">2024</a></li>
+        </ul>       
+      </nav>
 
       <div>
         <div class="title-label color-palette-variation-contrast">
@@ -69,7 +79,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           démarrer cette grande aventure.
         </p>
       </div>
-      <div>
+      <div id = "2017" class = "ancre">
         <div class="title-label color-palette-variation-contrast">
           <h2>3 mai 2017</h2>
         </div>
@@ -86,12 +96,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         </p>
       </div>
       <div>
-        <details>
-          <summary>
-            <div class="title-label color-palette-variation-contrast">
-              <h2>août 2017</h2>
-            </div>
-        </summary>
+
+        <div class="title-label color-palette-variation-contrast">
+          <h2>août 2017</h2>
+        </div>
         <p>
           On teste pour la première fois à grande échelle le concept des
           réservations de parties durant <a
@@ -149,10 +157,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             >Belgoludiconews 90
           </a> du 30 mai, notamment pour annoncer...
         </p>
-      </details>
       </div>
     
-      <div> 
+      <div id ="2018" class = "ancre"> 
         <div class="title-label color-palette-variation-contrast">          
           <h2>10 juin 2018</h2>            
         </div>
@@ -168,7 +175,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           dire, cet événement a été un franc succès, une belle dose de stress et
           une tonne de rencontres passionnantes!
         </p>
-        Pour voir la vidéo de L'inauguration c'est par <a href="https://youtu.be/laySniWhIU4">ici</a>
+        <p>Pour voir la vidéo de L'inauguration c'est par <a href="https://youtu.be/laySniWhIU4">ici</a></p>
       </div>
       <div>
         <div class="title-label color-palette-variation-contrast">
@@ -210,12 +217,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <p>Wouaw! Un truc de fou cette nocturne ! Mate un peu <a href="https://youtu.be/Z895F3XZ-sg">l'aftermovie</a>!</p>
       </div>
       <div>
-        <details>
-          <summary>
-            <div class="title-label color-palette-variation-contrast">
-              <h2>septembre 2018</h2>
-            </div>
-          </summary>       
+        <div class="title-label color-palette-variation-contrast">
+          <h2>septembre 2018</h2>
+        </div>    
         <p>
           On les a rencontrés lors du BGF... l'équipe de <a
             href="https://www.ulule.com/megalithe/"
@@ -266,9 +270,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           C'est l'heure de se recentrer sur nos atouts et de montrer de quel
           bois on se chauffe ! :)
         </p>
-      </details>
+
       </div>
-      <div>
+      <div id = "2020" class = "ancre">
         <div class="title-label color-palette-variation-contrast">
           <h2> Mars 2020...et son confinement</h2>
         </div>
@@ -285,7 +289,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       <p>Un peu déçus du peu de retours du BGF par rapport au travail fourni, avec en plus le travail et la vie privée qui nous rattrape, le projet et le site web ont été mis de côté jusqu'en 2021. </p>
     </div>
 
-    <div>
+    <div id ="2021" class = "ancre">
       <div class="title-label color-palette-variation-contrast">
         <h2> 2021</h2>
       </div>
@@ -293,7 +297,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       <p>Cela nous a permis aussi de renconter 3 nouveaux membres: Maryse et Louis. Ça nous rebooste, nous remotive: on décide de reprendre le projet en main et, dès que les conditions sanitaires le permettent, de pouvoir se retrouver et refaire des évènements.</p>
     </div>
 
-      <div>
+      <div id = "2022" class = "ancre">
         <div class="title-label color-palette-variation-contrast">
           <h2> 2022</h2>
         </div>
@@ -306,32 +310,33 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           <h2>Juillet 2022: Notre Premier Festival!</h2>
         </div>
         <p>...on se donne à fond et en deux mois on organise le premier festival <a href ="https://www.youtube.com/watch?v=-QKaLnTcTr0">Wanna Play in Brussels</a> qui a eu lieu aux Jardins de l'Hospice au centre de Bruxelles.</p>
-        <p>
-          Le festival en chiffres:
-          <ul>
-            <li>Aprem et soirée ludique au centre de Bruxelles de 12h à 23h.</li>
-            <li>3500m² de jardins, d’allées et de tonnelles dédiés au jeu le temps d’une journée</li>
-            <li>Événement gratuit pour tous</li>
-            <li>70 tables animées pour l’occasion par des créateurs ou éditeurs de jeux belges et des clubs ou associations ludiques de Bruxelles et alentours.</li>
-            <li>Environ 2500 participants sur l'après-midi!</li>
-            <li>20 partenaires</li>
-            <li>25 bénévoles</li>
-            <li>36 animateurs</li>
-            <li>1 mascotte pelucheuse</li>
-            <li>165 jeux présentés</li>
-            <li>2 sessions de Speed Gaming</li>
-            <li>20 minis <a href="https://www.youtube.com/watch?v=PMNHLvEaFm4&t=306s">interviews</a></li>
-            <li>Un soleil magnifique</li>
-            <li>50: c'est le nombre de jours qu'on a eu pour organiser cette journée de folie!</li>
-          </ul>
-        </p>
+        <br>
+        
+        <p>Le festival en chiffres:</p>
+        <ul class = "align-text-left">
+          <li>Aprem et soirée ludique au centre de Bruxelles de 12h à 23h.</li>
+          <li>3500m² de jardins, d’allées et de tonnelles dédiés au jeu le temps d’une journée</li>
+          <li>Événement gratuit pour tous</li>
+          <li>70 tables animées pour l’occasion par des créateurs ou éditeurs de jeux belges et des clubs ou associations ludiques de Bruxelles et alentours.</li>
+          <li>Environ 2500 participants sur l'après-midi!</li>
+          <li>20 partenaires</li>
+          <li>25 bénévoles</li>
+          <li>36 animateurs</li>
+          <li>1 mascotte pelucheuse</li>
+          <li>165 jeux présentés</li>
+          <li>2 sessions de Speed Gaming</li>
+          <li>20 minis <a href="https://www.youtube.com/watch?v=PMNHLvEaFm4&t=306s">interviews</a></li>
+          <li>Un soleil magnifique</li>
+          <li>50: c'est le nombre de jours qu'on a eu pour organiser cette journée de folie!</li>
+        </ul>
+        
         <p>L’événement était un franc succès. L’alchimie entre participants,
           partenaires, bénévoles et l’équipe était idéale. L’accueil était
           chaleureux et la bonne humeur généralisée.
         </p>
         <br>
         <p>Bilan du festival: </p>
-        <ul>
+        <ul class = "align-text-left">
           <li>Le public drainé correspondait exactement au public ciblé. La majorité
             étaient des non-joueurs ou des joueurs occasionnels qui voulaient en
             apprendre d’avantage sur le jeu de société et découvrir ce hobby en
@@ -343,21 +348,81 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             5 années de “montée en puissance” progressive.
             </li>
           <li>Il reste beaucoup à faire pour développer la vision de l’ASBL mais ce
-            festival était indéniablement un moment clé de l’association dont tout
+            festival est indéniablement un moment clé de l’association dont tout
             le monde se souviendra avec bonheur.</li>
         </ul>
           </p>
       </div>
+      <div id = "2023" class = "ancre">
+          <div class="title-label color-palette-variation-contrast">
+            <h2> 2023, année riche en animations!</h2>
+          </div>
+          <p>Suite au festival, nous avons été approchés par plusieurs personnes pour organiser des évènements ludiques sur Bruxelles, notamment par Lise de la Bibliothèque-ludothèque Muntpunt:</p>
+          <p>Elle nous invite à co-organiser les soirées <a href="https://muntpunt.be/all-you-can-play">"All you can play"</a> afin de faire découvrir leur ludothèque. La première édition fût un gros succès: plus de 80 participants! Nous sommes donc partis pour faire une soirée jeux par mois avec eux. Cela nous permet de développer notre créativité, tester des concepts et d'inviter des intervenants surprenants:
+            <ul class = "align-text-left">
+              <li>
+                <p>
+                  <a href="https://www.instagram.com/cabinet_de_letrange/?__d=1">Le Cabinet de l'Etrange</a>
+                  : leur équipe nous accompagne pour une soirée et nous permet de tester leurs énigmes et leur concept: un chouette mélange entre mystère, enquête et matériel qualitatif&nbsp;!
+                </p>
+                <img src="/src/assets/images/projet/cabinetEtrange.jpg" alt="Puzzle Cabinet de l'Etrange">
+                <img src="/src/assets/images/projet/cabinetEtrange2.jpg" alt="Puzzle2 Cabinet de l'Etrange">
+                <img src="/src/assets/images/projet/cabinetEtrange3.jpg" alt="Equipe Cabinet de l'Etrange">
+                
+              </li>
+              <li>
+                <p>
+                  <a href="http://www.catherinebreyer.be/">Catherine Breyer</a>
+                  : archéologue de formation, elle est venue nous présenter des reconstitutions de jeux de sociétés qui se pratiquaient dans l'antiquité. </li>
+                </p>
+                <img src="/src/assets/images/projet/catherine1.jpg" alt="Jeu antique 1">
+                <img src="/src/assets/images/projet/catherine2.jpg" alt="Jeu antique 2">
+
+              <li>Parce qu'on aime se compliquer la vie et se torturer l'esprit, on voulait trouver une manière originale de présenter les jeux. Nous en sommes donc arrivés à créer un gigantesque tableau qui permettait de classer les jeux entre le niveau de difficulté, la part de hasard du jeu et sa mécanique. L'objectif était de permettre aux joueurs de choisir leur prochain jeu en fonction de leur goût et des jeux testés précédemment. Cela leur a permis de découvrir des jeux qui a priori ne les tentait pas. Expérience réussie! </li>
+              <img src="/src/assets/images/projet/echelleLudique.jpg" alt="Echelle ludique1">
+              <img src="/src/assets/images/projet/echelleLudique2.jpg" alt="Echelle ludique2">
+              <img src="/src/assets/images/projet/echelleLudique3.jpg" alt="Echelle ludique3">
+            </ul>
+          </p>
+      </div>
+      <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2> Printemps 2023</h2>
+        </div>
+        <p>Pour éviter le stress lié au timing pour l'organisation du festival, on décide de s'y prendre le plus tôt possible, ceci étant un compromis entre les "cool Raoul" et les "stressés de l'organisation" de l'équipe. On s'y met tranquilou, on décide de ce qu'on veut présenter au public, des horaires, mais cette fois on voit grand: on veut occuper les 2 jardins. Les discussions vont bon train et l'équipe des Jardins nous contacte pour faire des <a href ="https://www.facebook.com/media/set/?set=a.665532155583405&type=3">soirées jeux</a> avant le festival. On saute sur l'occasion: cela nous permet de pouvoir parler du festival de nous présenter et d'amener plus de monde. On décide de faire 3 soirées à thème: nature, fantastique et couleurs. Cela nous permet de sortir des (très bons)jeux qui ne sortent pas en temps normal.</p>
+        <img src="/src/assets/images/projet/jardins4.jpg" alt="soirée jeux jardins4">
+        <img src="/src/assets/images/projet/jardins2.jpg" alt="soirée jeux jardins2">
+        <img src="/src/assets/images/projet/jardins.jpg" alt="soirée jeux jardins">
+        
+        <p>Vient alors l'idée loufoque du "Ludicomètre": sorte de thermomètre ludique qui permet de mesurer l'ambiance et l'amusement lors de la soirée. On s'est bien marrés à le faire mais en pratique, sur place, c'était compliqué de faire adhérer le public. On le garde dans nos tiroirs, on trouvera bien un moment pour le ressortir.</p>
+        <img src="/src/assets/images/projet/ludicometre.jpg" alt="ludicometre">
+        <img src="/src/assets/images/projet/jardins3.jpg" alt="bar au jardin">
+        
+
+      </div>
+      
       <div>
         <div class="title-label color-palette-variation-contrast">
           <h2> juillet 2023: On rempile pour une deuxième édition</h2>
         </div>
       </div>
+
       <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2> Après l'effort...encore plus de projets!</h2>
+        </div>
+        <p>A nouveau, suite au festival, beaucoup de prises de contact pour l'organisation d'évènements ludiques sur Bruxelles.</p>
+        <p>L'année 2023 a été riche en activités et en rencontres: on fait le bilan: une trentaine de projets ont été assumés sur l'année! On est fiers et heureux, mais épuisés. On n'a pas vraiment eu l'occasion de se poser après le festival, tout s'est enchaîné.</p>
+
+         
+      </div>
+
+      <div id = "2024">
         <div class="title-label color-palette-variation-contrast">
           <h2> 2024</h2>          
         </div>
-        <p>Nouvelle année, nouveaux projets pour certains, de gros changements d'équipe qui nous poussent à un retour aux sources: le site internet.
+        <p>Qui dit nouvelle année, dit nouvelles résolutions et pour certains de nouveaux projets de vie. De gros changements d'équipe nous poussent à un retour aux sources: le site internet qui, faute de temps, était un peu à l'abandon.
+
         </p>
       </div>
       <div>
@@ -428,5 +493,33 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
   .title {
     text-align: center;
+  }
+
+  .align-text-left {
+    text-align: left;
+  }
+
+  .timelineNav ul {
+    text-align: center;
+  }
+  .timelineNav ul li{
+    display: inline;
+    list-style: none;
+  }
+  .timelineNav a{
+    display: inline-block;
+    margin: 5px;
+  }
+  .ancre{
+    /* position: relative; */
+    top: -30px;
+  }
+
+  img{
+    width: 200px;
+    height: 200px;
+    border-radius: 30px;
+    display: inline-block;
+    margin: 15px 5px 15px 5px;
   }
 </style>

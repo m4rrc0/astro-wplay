@@ -78,54 +78,273 @@ export const areas = [
 })
 /* prettier-ignore */
 const dico = [
-  // links names
-  { code_name: 'website', fr: 'Site web', iconName: 'ph:link' },
-  { code_name: 'web_page', fr: 'Page web', iconName: 'ph:link' },
-  { code_name: 'facebook_page', fr: 'Page Facebook', iconName: 'ph:facebook-logo' },
-  { code_name: 'facebook_event', fr: 'Événement Facebook', iconName: 'ph:facebook-logo' },
-  { code_name: 'twitter', fr: 'Twitter', iconName: 'ph:twitter-logo' },
-  { code_name: 'instagram', fr: 'Instagram', iconName: 'ph:instagram-logo' },
-  { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'ph:youtube-logo' },
+	// links names
+	{ code_name: "website", fr: "Site web", iconName: "ph:link" },
+	{ code_name: "web_page", fr: "Page web", iconName: "ph:link" },
+	{
+		code_name: "facebook_page",
+		fr: "Page Facebook",
+		iconName: "ph:facebook-logo",
+	},
+	{
+		code_name: "facebook_event",
+		fr: "Événement Facebook",
+		iconName: "ph:facebook-logo",
+	},
+	{ code_name: "twitter", fr: "Twitter", iconName: "ph:twitter-logo" },
+	{ code_name: "instagram", fr: "Instagram", iconName: "ph:instagram-logo" },
+	{ code_name: "youtube_channel", fr: "Youtube", iconName: "ph:youtube-logo" },
 
-  { code_name: 'spotify', fr: 'Spotify', iconName: 'ph:spotify-logo' },
-  { code_name: 'shop', fr: 'Boutique', iconName: 'ph:shopping-cart-simple' },
-  { code_name: 'tripadvisor', fr: 'Tripadvisor', iconName: 'cib:tripadvisor' },
-  { code_name: 'facebook_group', fr: 'Groupe Facebook', iconName: 'ph:facebook-logo' },
-  { code_name: 'forum', fr: 'Forum', iconName: 'ph:chats' },
-  { code_name: 'talk', fr: 'Le Talk', iconName: 'ri:kakao-talk-line' },
-  // Areas
-  ...areas,
-  // Organization types
-  { code_name: 'association', fr: 'Association' },
-  { code_name: 'club', fr: 'Club' },
-  { code_name: 'bar', fr: 'Bar' },
-  { code_name: 'restaurant', fr: 'Restaurant' },
-  { code_name: 'toy_library', fr: 'Ludothèque' },
-  { code_name: 'shop', fr: 'Boutique' },
-  { code_name: 'festival', fr: 'Festival' },
-  { code_name: 'escape_room', fr: 'Escape Room' },
-  // Days of week
-  { code_name: 'monday', fr: 'Lundi' },
-  { code_name: 'tuesday', fr: 'Mardi' },
-  { code_name: 'wednesday', fr: 'Mercredi' },
-  { code_name: 'thursday', fr: 'Jeudi' },
-  { code_name: 'friday', fr: 'Vendredi' },
-  { code_name: 'saturday', fr: 'Samedi' },
-  { code_name: 'sunday', fr: 'Dimanche' },
-  // Games services
-  { code_name: 'yes_games', fr: 'Jeux sur place' },
-  { code_name: 'animators', fr: 'Animateurs' },
-  { code_name: 'buy_new', fr: 'Achat neuf' },
-  { code_name: 'buy_used', fr: "Achat d'occasion" },
-  { code_name: 'video_games', fr: 'Jeux vidéos' },
-  // Amenities
-  { code_name: 'snacks', fr: 'Snacks' },
-  { code_name: 'drinks', fr: 'Boissons' },
-  { code_name: 'food', fr: 'Nourriture' },
-  { code_name: 'vegetarian', fr: 'Végétarien' },
-  { code_name: 'vegan', fr: 'Végan' },
-  { code_name: 'handicapped', fr: 'Accessible' },
-  { code_name: 'children', fr: 'Enfants bienvenus' },
+	{ code_name: "spotify", fr: "Spotify", iconName: "ph:spotify-logo" },
+	{ code_name: "shop", fr: "Boutique", iconName: "ph:shopping-cart-simple" },
+	{ code_name: "tripadvisor", fr: "Tripadvisor", iconName: "cib:tripadvisor" },
+	{
+		code_name: "facebook_group",
+		fr: "Groupe Facebook",
+		iconName: "ph:facebook-logo",
+	},
+	{ code_name: "forum", fr: "Forum", iconName: "ph:chats" },
+	{ code_name: "talk", fr: "Le Talk", iconName: "ri:kakao-talk-line" },
+
+	// --SELF WARNING-- No match in dico for code_name 'Linkedin'
+	// --SELF WARNING-- No icon found with code_name 'Linkedin'
+	// --SELF WARNING-- No match in dico for code_name 'Twitch'
+	// --SELF WARNING-- No icon found with code_name 'Twitch'
+	// --SELF WARNING-- No match in dico for code_name 'TikTok'
+	// --SELF WARNING-- No icon found with code_name 'TikTok'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'TikTok'
+	// --SELF WARNING-- No icon found with code_name 'TikTok'
+	// --SELF WARNING-- No match in dico for code_name 'Collection jeux du Club'
+	// --SELF WARNING-- No icon found with code_name 'Collection jeux du Club'
+	// --SELF WARNING-- No match in dico for code_name 'Board Game Geek Collection'
+	// --SELF WARNING-- No icon found with code_name 'Board Game Geek Collection'
+	// --SELF WARNING-- No match in dico for code_name 'TikTok'
+	// --SELF WARNING-- No icon found with code_name 'TikTok'
+	// --SELF WARNING-- No match in dico for code_name 'LinkedIn'
+	// --SELF WARNING-- No icon found with code_name 'LinkedIn'
+	// --SELF WARNING-- No match in dico for code_name 'Discord'
+	// --SELF WARNING-- No icon found with code_name 'Discord'
+	// --SELF WARNING-- No match in dico for code_name 'Tickets'
+	// --SELF WARNING-- No icon found with code_name 'Tickets'
+	// --SELF WARNING-- No match in dico for code_name 'Billeterie'
+	// --SELF WARNING-- No icon found with code_name 'Billeterie'
+	// --SELF WARNING-- No match in dico for code_name 'TikTok'
+	// --SELF WARNING-- No icon found with code_name 'TikTok'
+	// --SELF WARNING-- No match in dico for code_name 'Discord'
+	// --SELF WARNING-- No icon found with code_name 'Discord'
+	// --SELF WARNING-- No match in dico for code_name 'Events Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Events Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Page web'
+	// --SELF WARNING-- No icon found with code_name 'Page web'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Board game geek'
+	// --SELF WARNING-- No icon found with code_name 'Board game geek'
+	// --SELF WARNING-- No match in dico for code_name 'Board game geek collection'
+	// --SELF WARNING-- No icon found with code_name 'Board game geek collection'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription Weekend'
+	// --SELF WARNING-- No icon found with code_name 'Inscription Weekend'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Discord'
+	// --SELF WARNING-- No icon found with code_name 'Discord'
+	// --SELF WARNING-- No match in dico for code_name 'Pinterest'
+	// --SELF WARNING-- No icon found with code_name 'Pinterest'
+	// --SELF WARNING-- No match in dico for code_name 'Ticket'
+	// --SELF WARNING-- No icon found with code_name 'Ticket'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook article'
+	// --SELF WARNING-- No icon found with code_name 'Facebook article'
+	// --SELF WARNING-- No match in dico for code_name 'LinkedIn'
+	// --SELF WARNING-- No icon found with code_name 'LinkedIn'
+	// --SELF WARNING-- No match in dico for code_name 'undefined'
+	// --SELF WARNING-- No icon found with code_name 'undefined'
+	// --SELF WARNING-- No match in dico for code_name 'Dates des soirées jeux'
+	// --SELF WARNING-- No icon found with code_name 'Dates des soirées jeux'
+	// --SELF WARNING-- No match in dico for code_name 'myLudo'
+	// --SELF WARNING-- No icon found with code_name 'myLudo'
+	// --SELF WARNING-- No match in dico for code_name 'My Ludo'
+	// --SELF WARNING-- No icon found with code_name 'My Ludo'
+	// --SELF WARNING-- No match in dico for code_name 'LinkedIn'
+	// --SELF WARNING-- No icon found with code_name 'LinkedIn'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Billets'
+	// --SELF WARNING-- No icon found with code_name 'Billets'
+	// --SELF WARNING-- No match in dico for code_name 'Event 11/09/2024'
+	// --SELF WARNING-- No icon found with code_name 'Event 11/09/2024'
+	// --SELF WARNING-- No match in dico for code_name 'Event 13/11/2024'
+	// --SELF WARNING-- No icon found with code_name 'Event 13/11/2024'
+	// --SELF WARNING-- No match in dico for code_name 'Linkedin'
+	// --SELF WARNING-- No icon found with code_name 'Linkedin'
+	// --SELF WARNING-- No match in dico for code_name 'Billets'
+	// --SELF WARNING-- No icon found with code_name 'Billets'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Réservation'
+	// --SELF WARNING-- No icon found with code_name 'Réservation'
+	// --SELF WARNING-- No match in dico for code_name 'Linkedin'
+	// --SELF WARNING-- No icon found with code_name 'Linkedin'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription exposant'
+	// --SELF WARNING-- No icon found with code_name 'Inscription exposant'
+	// --SELF WARNING-- No match in dico for code_name 'Event 11/09/2024'
+	// --SELF WARNING-- No icon found with code_name 'Event 11/09/2024'
+	// --SELF WARNING-- No match in dico for code_name 'Event 13/11/2024'
+	// --SELF WARNING-- No icon found with code_name 'Event 13/11/2024'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Twitch'
+	// --SELF WARNING-- No icon found with code_name 'Twitch'
+	// --SELF WARNING-- No match in dico for code_name 'Billeterie'
+	// --SELF WARNING-- No icon found with code_name 'Billeterie'
+	// --SELF WARNING-- No match in dico for code_name 'Linktr.ee'
+	// --SELF WARNING-- No icon found with code_name 'Linktr.ee'
+	// --SELF WARNING-- No match in dico for code_name 'Event 11/09/2024'
+	// --SELF WARNING-- No icon found with code_name 'Event 11/09/2024'
+	// --SELF WARNING-- No match in dico for code_name 'Event 13/11/2024'
+	// --SELF WARNING-- No icon found with code_name 'Event 13/11/2024'
+	// --SELF WARNING-- No match in dico for code_name 'Ticket'
+	// --SELF WARNING-- No icon found with code_name 'Ticket'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Dates des soirées jeux'
+	// --SELF WARNING-- No icon found with code_name 'Dates des soirées jeux'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription exposant'
+	// --SELF WARNING-- No icon found with code_name 'Inscription exposant'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Billeterie'
+	// --SELF WARNING-- No icon found with code_name 'Billeterie'
+	// --SELF WARNING-- No match in dico for code_name 'Billeterie'
+	// --SELF WARNING-- No icon found with code_name 'Billeterie'
+	// --SELF WARNING-- No match in dico for code_name 'Billets'
+	// --SELF WARNING-- No icon found with code_name 'Billets'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription Weekend'
+	// --SELF WARNING-- No icon found with code_name 'Inscription Weekend'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Tickets'
+	// --SELF WARNING-- No icon found with code_name 'Tickets'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook article'
+	// --SELF WARNING-- No icon found with code_name 'Facebook article'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription/resgistration'
+	// --SELF WARNING-- No icon found with code_name 'Inscription/resgistration'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Billets'
+	// --SELF WARNING-- No icon found with code_name 'Billets'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'undefined'
+	// --SELF WARNING-- No icon found with code_name 'undefined'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+	// --SELF WARNING-- No match in dico for code_name 'Réservation'
+	// --SELF WARNING-- No icon found with code_name 'Réservation'
+	// --SELF WARNING-- No match in dico for code_name 'Réservation'
+	// --SELF WARNING-- No icon found with code_name 'Réservation'
+	// --SELF WARNING-- No match in dico for code_name 'Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
+	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
+	// --SELF WARNING-- No match in dico for code_name 'Inscription'
+	// --SELF WARNING-- No icon found with code_name 'Inscription'
+
+	// Areas
+	...areas,
+	// Organization types
+	{ code_name: "association", fr: "Association", colorPalette: "purple" },
+	{ code_name: "club", fr: "Club", colorPalette: "purple" },
+	{ code_name: "bar", fr: "Bar", colorPalette: "green" },
+	{ code_name: "restaurant", fr: "Restaurant", colorPalette: "green" },
+	{ code_name: "toy_library", fr: "Ludothèque", colorPalette: "orange" },
+	{ code_name: "shop", fr: "Boutique", colorPalette: "teal" },
+	{ code_name: "festival", fr: "Festival", colorPalette: "red" },
+	{ code_name: "escape_room", fr: "Escape Room", colorPalette: "red" },
+	// Event types
+	{ code_name: "gameTime", fr: "Moment ludique", colorPalette: "purple" },
+	{ code_name: "tournament", fr: "Tournoi", colorPalette: "green" },
+	{ code_name: "gamesMarket", fr: "Bourse aux jeux", colorPalette: "teal" },
+	{ code_name: "festival", fr: "Festival", colorPalette: "red" },
+	{ code_name: "training", fr: "Formation", colorPalette: "red" },
+	{ code_name: "pro", fr: "Événement professionnel", colorPalette: "red" },
+	// Days of week
+	{ code_name: "monday", fr: "Lundi" },
+	{ code_name: "tuesday", fr: "Mardi" },
+	{ code_name: "wednesday", fr: "Mercredi" },
+	{ code_name: "thursday", fr: "Jeudi" },
+	{ code_name: "friday", fr: "Vendredi" },
+	{ code_name: "saturday", fr: "Samedi" },
+	{ code_name: "sunday", fr: "Dimanche" },
+	// Games services
+	{ code_name: "yes_games", fr: "Jeux sur place" },
+	{ code_name: "animators", fr: "Animateurs" },
+	{ code_name: "buy_new", fr: "Achat neuf" },
+	{ code_name: "buy_used", fr: "Achat d'occasion" },
+	{ code_name: "video_games", fr: "Jeux vidéos" },
+	// Amenities
+	{ code_name: "snacks", fr: "Snacks" },
+	{ code_name: "drinks", fr: "Boissons" },
+	{ code_name: "food", fr: "Nourriture" },
+	{ code_name: "vegetarian", fr: "Végétarien" },
+	{ code_name: "vegan", fr: "Végan" },
+	{ code_name: "handicapped", fr: "Accessible" },
+	{ code_name: "children", fr: "Enfants bienvenus" },
 ]
 
 // --- UTILITY FUNCTIONS --- //
@@ -325,7 +544,7 @@ function transformBlock(blockRaw, languages) {
 
 // --- FETCH LANGUAGES --- //
 export const fetchLanguages = async () => {
-	await client.refresh()
+	// await client.refresh()
 	const result = await client.request(readItems("languages"))
 
 	return result
@@ -340,7 +559,7 @@ export const fetchLanguages = async () => {
 // --- F&T PAGES --- //
 
 export async function fetchPages() {
-	await client.refresh()
+	// await client.refresh()
 	// const result = await client.request(readItems("languages"))
 	return await client.request(
 		readItems("Pages", {
@@ -462,7 +681,7 @@ export function transformOrganization(o, languages) {
 }
 
 export async function fetchOrganizations() {
-	await client.refresh()
+	// await client.refresh()
 	const organizationsRaw = await client.request(
 		readItems("organizations", {
 			limit: -1,
@@ -555,11 +774,11 @@ export async function fetchOrganizations() {
 
 function fallbackOnParentsOfEvent({
 	eventRaw,
-	parent,
+	// parent,
 	organizers,
 	mainOrganizer,
 	languages,
-	hasParent,
+	// hasParent,
 }) {
 	// process translations fields first
 	const translations = languages
@@ -567,9 +786,9 @@ function fallbackOnParentsOfEvent({
 			const eventFields = removeEmptyPropOnObject(
 				translationFromCode(eventRaw?.translations, code),
 			)
-			const parentFields = removeEmptyPropOnObject(
-				translationFromCode(parent?.translations, code),
-			)
+			// const parentFields = removeEmptyPropOnObject(
+			// 	translationFromCode(parent?.translations, code),
+			// )
 			const organizerFields = translationFromCode(
 				mainOrganizer?.translations,
 				code,
@@ -578,11 +797,16 @@ function fallbackOnParentsOfEvent({
 			// TODO: account for fallback language on a node level (only)
 
 			// don't create a translation if no one has it
-			if (!eventFields && !parentFields && !organizerFields) return null
+			if (
+				!eventFields &&
+				// !parentFields &&
+				!organizerFields
+			)
+				return null
 
 			return {
 				...(organizerFields || {}),
-				...(parentFields || {}),
+				// ...(parentFields || {}),
 				...(eventFields || {}),
 				fallback_language: undefined,
 			}
@@ -600,13 +824,13 @@ function fallbackOnParentsOfEvent({
 					gallery: mainOrganizer.gallery,
 			  })
 			: {}),
-		...(hasParent
-			? removeEmptyPropOnObject({
-					name: parent.name,
-					address: parent.address,
-					cover_image: parent.cover_image,
-			  })
-			: {}),
+		// ...(hasParent
+		// 	? removeEmptyPropOnObject({
+		// 			name: parent.name,
+		// 			address: parent.address,
+		// 			cover_image: parent.cover_image,
+		// 	  })
+		// 	: {}),
 		...removeEmptyPropOnObject(eventRaw),
 		organizers,
 		translations,
@@ -616,36 +840,37 @@ function fallbackOnParentsOfEvent({
 }
 
 export function transformEvent(eventRaw, languages) {
-	const parent =
-		eventRaw?.parent_event && transformEvent(eventRaw?.parent_event)
+	// const parent =
+	// 	eventRaw?.parent_event && transformEvent(eventRaw?.parent_event)
 	const organizers =
-		(eventRaw?.organizers?.[0]?.organizations_id &&
-			eventRaw?.organizers?.map(({ organizations_id: o }) =>
-				transformOrganization(o),
-			)) ||
-		(parent?.organizers?.[0] &&
-			parent?.organizers?.map(({ organizations_id: o }) =>
-				transformOrganization(o),
-			))
+		eventRaw?.organizers?.[0]?.organizations_id &&
+		eventRaw?.organizers?.map(({ organizations_id: o }) =>
+			transformOrganization(o),
+		)
+	// 	||
+	// (parent?.organizers?.[0] &&
+	// 	parent?.organizers?.map(({ organizations_id: o }) =>
+	// 		transformOrganization(o),
+	// 	))
 
 	const mainOrganizer = organizers?.[0]
 	// Inject booleans
 	const isRecurring =
 		eventRaw.recurring ||
 		eventRaw.schedule?.length + eventRaw.event_instances?.length > 1
-	const parentIsRecurring = parent?.recurring || parent?.schedule?.length > 0
+	// const parentIsRecurring = parent?.recurring || parent?.schedule?.length > 0
 	const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
-	const hasParent = !!parent
+	// const hasParent = !!parent
 
 	// Fallback values from parent_event or first Organizer
 	const e = languages
 		? fallbackOnParentsOfEvent({
 				eventRaw,
-				parent,
+				// parent,
 				organizers,
 				mainOrganizer,
 				languages,
-				hasParent,
+				// hasParent,
 		  })
 		: eventRaw
 
@@ -685,10 +910,10 @@ export function transformEvent(eventRaw, languages) {
 	return {
 		...e,
 		isRecurring,
-		parentIsRecurring,
+		// parentIsRecurring,
 		hasNoSchedule,
-		hasParent,
-		parent_event: parent,
+		// hasParent,
+		// parent_event: parent,
 		scheduleFormatted,
 		slug,
 		path,
@@ -726,7 +951,7 @@ const flattenEvents = (eventsUnflat) => {
 }
 
 export async function fetchEvents() {
-	await client.refresh()
+	// await client.refresh()
 
 	const languages = await fetchLanguages()
 
@@ -740,13 +965,48 @@ export async function fetchEvents() {
 				],
 			},
 			fields: [
-				"*",
+				// "*",
 				"status",
 				"date_updated",
 				"name",
+				"types",
+				{
+					location: [
+						// "*",
+						"name",
+						"streetAddress",
+						"postalCode",
+						"addressLocality",
+						"addressRegion",
+						"geo",
+					],
+				},
 				"address",
 				...imageFields("cover_image."),
-				"recurring",
+				"startDate",
+				"endDate",
+				"startTime",
+				"endTime",
+				{
+					eventSchedule: [
+						// "*",
+						"status",
+						"description",
+						"startDate",
+						"endDate",
+						"startTime",
+						"endTime",
+						"repeatCount",
+						"frequency",
+						"interval",
+						"byDay",
+						"byMonth",
+						"byMonthWeek",
+						"byMonthDay",
+						"bySetPos",
+						"exceptDate",
+					],
+				},
 				"schedule",
 				"links",
 				"organizers.organizations_id.status",
@@ -789,6 +1049,14 @@ export async function fetchEvents() {
 			],
 		}),
 	)
+
+	// TODO: transform eventSchedule
+	// TODO: merge location and address
+	eventsRaw.forEach((event) => {
+		if (event.name === "Soirée jeux de Société @ Idées Bleues") {
+			console.log(event)
+		}
+	})
 
 	const eventsUnflat = eventsRaw?.map((e) => transformEvent(e, languages))
 	const eventsUnfiltered = flattenEvents(eventsUnflat)
@@ -862,7 +1130,7 @@ export function transformArticle(articleRaw, languages) {
 }
 
 export async function fetchArticles() {
-	await client.refresh()
+	// await client.refresh()
 
 	const languages = await fetchLanguages()
 

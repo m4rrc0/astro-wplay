@@ -17,7 +17,7 @@
 		"@astrojs/sitemap": "^3.0.5",
 		"@astrojs/svelte": "^5.0.3",
 		"@csstools/postcss-design-tokens": "^3.1.1",
-		"@directus/sdk": "^14.0.0",
+		"@directus/sdk": "^16.1.1",
 		"@iconify-json/carbon": "^1.1.28",
 		"@iconify-json/cib": "^1.1.8",
 		"@iconify-json/gridicons": "^1.1.14",

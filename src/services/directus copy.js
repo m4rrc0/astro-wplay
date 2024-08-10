@@ -1,6 +1,7 @@
 import { createDirectus, rest, authentication, readItems } from "@directus/sdk"
 import rrule from "rrule"
 import { slugify, createPath, areasBe, toDateArray } from "@utils"
+import { log } from "astro/dist/core/logger/core"
 
 const { datetime, RRule, RRuleSet, rrulestr } = rrule
 
@@ -29,8 +30,8 @@ const imageFields = (preString) => [
 	preString + "width",
 	preString + "height",
 	preString + "description",
-	//   preString + "image_alt",
-	//   preString + "image_title",
+	preString + "image_alt",
+	preString + "image_title",
 ]
 const blockFields = (preString) => [
 	preString + `id`,
@@ -42,7 +43,7 @@ const blockFields = (preString) => [
 	...imageFields(`${preString}translations.featured_image.`),
 	`${preString}translations.text`,
 	...imageFields(`${preString}translations.background_image.`),
-	// ...imageFields(`${preString}translations.gallery.*.`),
+	...imageFields(`${preString}translations.gallery.*.`),
 ]
 const pageDataFields = (preString) => [
 	`${preString}id`,
@@ -704,7 +705,7 @@ export async function fetchOrganizations() {
 				"amenities",
 				"links",
 				"translations.*",
-				// ...imageFields("gallery.*."),
+				...imageFields("gallery.*."),
 				// Related Events
 				"events.events_id.status",
 				"events.events_id.date_updated",
@@ -724,9 +725,9 @@ export async function fetchOrganizations() {
 				),
 				"events.events_id.organizers.organizations_id.games_services",
 				"events.events_id.organizers.organizations_id.amenities",
-				// ...imageFields(
-				// 	"events.events_id.organizers.organizations_id.gallery.*.",
-				// ),
+				...imageFields(
+					"events.events_id.organizers.organizations_id.gallery.*.",
+				),
 				"events.events_id.organizers.organizations_id.translations.languages_code",
 				"events.events_id.organizers.organizations_id.translations.description",
 				"events.events_id.translations.languages_code",
@@ -755,15 +756,92 @@ export async function fetchOrganizations() {
 				),
 				"events.events_id.parent_event.organizers.organizations_id.games_services",
 				"events.events_id.parent_event.organizers.organizations_id.amenities",
-				// ...imageFields(
-				// 	"events.events_id.parent_event.organizers.organizations_id.gallery.*.",
-				// ),
+				...imageFields(
+					"events.events_id.parent_event.organizers.organizations_id.gallery.*.",
+				),
 				"events.events_id.parent_event.organizers.organizations_id.translations.languages_code",
 				"events.events_id.parent_event.organizers.organizations_id.translations.description",
 				"events.events_id.event_instances",
 			],
 		}),
 	)
+
+	// TODO: Remove implementation from old sdk when ready
+	// const organizationsRaw = await directus.items("organizations").readByQuery({
+	//   limit: -1,
+	//   sort: "-date_updated",
+	//   filter: { status: { _in: ["published", "to_check"] } },
+	//   fields: [
+	//     "status",
+	//     "date_updated",
+	//     "name",
+	//     "slug",
+	//     "types",
+	//     ...imageFields("logo."),
+	//     ...imageFields("cover_image."),
+	//     "opening_hours",
+	//     "games_services",
+	//     "address",
+	//     "amenities",
+	//     "links",
+	//     "translations.*",
+	//     ...imageFields("gallery.*."),
+	//     // Related Events
+	//     "events.events_id.status",
+	//     "events.events_id.date_updated",
+	//     "events.events_id.name",
+	//     "events.events_id.address",
+	//     ...imageFields("events.events_id.cover_image."),
+	//     "events.events_id.recurring",
+	//     "events.events_id.schedule",
+	//     "events.events_id.links",
+	//     "events.events_id.organizers.organizations_id.status",
+	//     "events.events_id.organizers.organizations_id.name",
+	//     "events.events_id.organizers.organizations_id.slug",
+	//     "events.events_id.organizers.organizations_id.address",
+	//     ...imageFields("events.events_id.organizers.organizations_id.logo."),
+	//     ...imageFields(
+	//       "events.events_id.organizers.organizations_id.cover_image.",
+	//     ),
+	//     "events.events_id.organizers.organizations_id.games_services",
+	//     "events.events_id.organizers.organizations_id.amenities",
+	//     ...imageFields("events.events_id.organizers.organizations_id.gallery.*."),
+	//     "events.events_id.organizers.organizations_id.translations.languages_code",
+	//     "events.events_id.organizers.organizations_id.translations.description",
+	//     "events.events_id.translations.languages_code",
+	//     "events.events_id.translations.highlighted_details",
+	//     "events.events_id.translations.description",
+	//     "events.events_id.parent_event",
+	//     "events.events_id.parent_event.status",
+	//     "events.events_id.parent_event.name",
+	//     "events.events_id.parent_event.address",
+	//     "events.events_id.parent_event.recurring",
+	//     "events.events_id.parent_event.schedule",
+	//     "events.events_id.parent_event.links",
+	//     ...imageFields("events.events_id.parent_event.cover_image."),
+	//     "events.events_id.parent_event.translations.languages_code",
+	//     "events.events_id.parent_event.translations.highlighted_details",
+	//     "events.events_id.parent_event.translations.description",
+	//     "events.events_id.parent_event.organizers.organizations_id.status",
+	//     "events.events_id.parent_event.organizers.organizations_id.name",
+	//     "events.events_id.parent_event.organizers.organizations_id.slug",
+	//     "events.events_id.parent_event.organizers.organizations_id.address",
+	//     ...imageFields(
+	//       "events.events_id.parent_event.organizers.organizations_id.logo.",
+	//     ),
+	//     ...imageFields(
+	//       "events.events_id.parent_event.organizers.organizations_id.cover_image.",
+	//     ),
+	//     "events.events_id.parent_event.organizers.organizations_id.games_services",
+	//     "events.events_id.parent_event.organizers.organizations_id.amenities",
+	//     ...imageFields(
+	//       "events.events_id.parent_event.organizers.organizations_id.gallery.*.",
+	//     ),
+	//     "events.events_id.parent_event.organizers.organizations_id.translations.languages_code",
+	//     "events.events_id.parent_event.organizers.organizations_id.translations.description",
+	//     "events.events_id.event_instances",
+	//   ],
+	// })
 
 	const languages = await fetchLanguages()
 	const organizations = organizationsRaw?.map((organization) =>
@@ -898,109 +976,48 @@ export function transformEvent(eventRaw, languages) {
 		  })
 		: null
 
-	const scheduleRuleSet = new RRuleSet()
-	// - Populate RuleSet with eventsSchedule(s)
-	eventRaw?.eventSchedule?.forEach(
-		({
-			status,
-			description,
-			startDate,
-			endDate,
-			startTime,
-			endTime,
-			repeatCount,
-			frequency, // yearly, monthly, weekly
-			interval,
-			byDay,
-			bySetPos,
-			exceptDate,
-			addDate,
-			// Are the following useful?
-			byMonthDay,
-			byMonth, // [int]
-			// byMonthWeek,
-		}) => {
-			if (status !== "published") {
-				return null
-			}
-			if (!startDate) {
-				console.error("ERROR: schedule must have a startDate")
-				return null
-			}
-			const [Y, M, D] = (startDate || "").split("-")
-			const [h, m] = (startTime || "").split(":")
+	const sched = eventRaw.eventSchedule
+	// const scheduleRuleSet = new RRuleSet()
+	// eventRaw?.eventSchedule?.forEach(
+	// 	({
+	// 		status,
+	// 		description,
+	// 		startDate,
+	// 		endDate,
+	// 		startTime,
+	// 		endTime,
+	// 		repeatCount,
+	// 		frequency,
+	// 		interval,
+	// 		byDay,
+	// 		byMonth,
+	// 		byMonthWeek,
+	// 		byMonthDay,
+	// 		bySetPos,
+	// 		exceptDate,
+	// 	}) => {
+	// 		if (status !== "published") {
+	// 			return null
+	// 		}
 
-			console.log({ startDate, startTime, exceptDate, byDay })
+	// 		// console.log(startDate, toDateArray(startDate))
 
-			// Recurring events
-			if (frequency) {
-				scheduleRuleSet.rrule(
-					new RRule({
-						freq: RRule[frequency.toUpperCase()],
-						dtstart: datetime(Y, M, D, h, m),
-						// dtstart: new Date(startDate),
-						// TODO: what happens if both repeatCount and endDate are set ???
-						count: repeatCount,
-						...(endDate && { until: new Date(endDate) }),
-						interval,
-						bysetpos: bySetPos,
-						...(byDay && {
-							byweekday:
-								RRule[byDay.map((day) => day.slice(0, 2).toUpperCase())],
-						}),
-						// Are the following useful?
-						bymonthday: byMonthDay,
-						bymonth: byMonth,
-					}),
-				)
-
-				// Exceptions: Exclude dates
-				for (const { date } of exceptDate || []) {
-					const [eY, eM, eD] = date.split("-")
-					scheduleRuleSet.exdate(datetime(eY, eM, eD, h, m))
-				}
-				// Exceptions: Add dates manualy
-				for (const { date } of addDate || []) {
-					const [aY, aM, aD] = date.split("-")
-					scheduleRuleSet.rdate(datetime(aY, aM, aD, h, m))
-				}
-				// Event spanning multiple days has no frequency but multiple schedules with unique dates+times
-			} else if (startDate) {
-				scheduleRuleSet.rdate(datetime(Y, M, D, h, m))
-			}
-		},
-	)
+	// 		// scheduleRuleSet.rrule(
+	// 		// 	new RRule({
+	// 		// 		freq: RRule[frequency.toUpperCase()],
+	// 		// 		count: repeatCount,
+	// 		// 		dtstart: datetime(...toDateArray(startDate)),
+	// 		// 	}),
+	// 		// )
+	// 	},
+	// )
 	// TODO:
+	// - Populate RuleSet
 	// - Add legacy schedule if date is in the future
-	if (scheduleFormatted?.length) {
-		for (const { time_start, time_end, isSameDay } of scheduleFormatted) {
-			const startDateTime = time_start.dateTimeRaw
-			const endDateTime = time_end?.dateTimeRaw
-			const nowDateTime = new Date().toISOString().split(".").shift()
-
-			// Compare time_end with now to skip old events
-			if (nowDateTime > (endDateTime || startDateTime)) {
-				continue
-			}
-
-			const [sY, sM, sD, sh, sm] = startDateTime
-				.split("T")
-				?.map((dateOrTime) => dateOrTime.split(/[:-]/))
-				.flat(Infinity)
-
-			// console.log(nowDateTime, startDateTime, endDateTime, [sY, sM, sD, sh, sm])
-
-			scheduleRuleSet.rdate(datetime(sY, sM, sD, sh, sm))
-		}
-	}
 	// - prepare useful properties (list them here next)
 
-	if (eventRaw?.eventSchedule?.length) {
-		console.log({
-			// scheduleFormatted,
-			// eventSched: eventRaw?.eventSchedule,
-			all: scheduleRuleSet.all(),
-		})
+	if (sched?.length) {
+		console.log({ scheduleFormatted, sched, all: scheduleRuleSet.all() })
 	}
 
 	// // Add a rrule to rruleSet
@@ -1172,7 +1189,6 @@ export async function fetchEvents() {
 						"byMonthDay",
 						"bySetPos",
 						"exceptDate",
-						"addDate",
 					],
 				},
 				"schedule",
@@ -1185,7 +1201,7 @@ export async function fetchEvents() {
 				...imageFields("organizers.organizations_id.cover_image."),
 				"organizers.organizations_id.games_services",
 				"organizers.organizations_id.amenities",
-				// ...imageFields("organizers.organizations_id.gallery.*."),
+				...imageFields("organizers.organizations_id.gallery.*."),
 				"organizers.organizations_id.translations.languages_code",
 				"organizers.organizations_id.translations.description",
 				"translations.languages_code",
@@ -1210,7 +1226,7 @@ export async function fetchEvents() {
 				...imageFields("parent_event.organizers.organizations_id.cover_image."),
 				"parent_event.organizers.organizations_id.games_services",
 				"parent_event.organizers.organizations_id.amenities",
-				// ...imageFields("parent_event.organizers.organizations_id.gallery.*."),
+				...imageFields("parent_event.organizers.organizations_id.gallery.*."),
 				"parent_event.organizers.organizations_id.translations.languages_code",
 				"parent_event.organizers.organizations_id.translations.description",
 				"event_instances",

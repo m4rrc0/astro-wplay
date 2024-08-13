@@ -105,3 +105,29 @@ export function restructureEmail(_str) {
 export const toDateArray = (dateStr) => {
 	return dateStr ? dateStr?.split("-").map(parseInt) : []
 }
+
+export const toTzDate = (dateRaw) => {
+	let date = dateRaw
+
+	if (typeof dateRaw === "string") {
+		date = new Date(dateRaw.endsWith("Z") ? dateRaw : dateRaw + "Z")
+	}
+	if (!(date instanceof Date && !isNaN(date))) {
+		console.error(`Unexpected date:`)
+		console.error(dateRaw)
+		return dateRaw
+	}
+	return date
+}
+export const stripDate = (dateRaw) => {
+	const date = toTzDate(dateRaw)
+
+	return date.toISOString().split(".").shift()
+}
+
+export const datePlus1Day = (dateRaw) => {
+	const date = toTzDate(dateRaw)
+	date.setDate(date.getDate() + 1)
+	const string = date.toISOString()
+	return { date, string }
+}

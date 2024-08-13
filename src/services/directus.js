@@ -1,6 +1,13 @@
 import { createDirectus, rest, authentication, readItems } from "@directus/sdk"
 import rrule from "rrule"
-import { slugify, createPath, areasBe, toDateArray } from "@utils"
+import {
+	slugify,
+	createPath,
+	areasBe,
+	toTzDate,
+	stripDate,
+	datePlus1Day,
+} from "@utils"
 
 const { datetime, RRule, RRuleSet, rrulestr } = rrule
 
@@ -29,8 +36,8 @@ const imageFields = (preString) => [
 	preString + "width",
 	preString + "height",
 	preString + "description",
-	//   preString + "image_alt",
-	//   preString + "image_title",
+	// preString + "image_alt",
+	// preString + "image_title",
 ]
 const blockFields = (preString) => [
 	preString + `id`,
@@ -109,205 +116,6 @@ const dico = [
 	{ code_name: "forum", fr: "Forum", iconName: "ph:chats" },
 	{ code_name: "talk", fr: "Le Talk", iconName: "ri:kakao-talk-line" },
 
-	// --SELF WARNING-- No match in dico for code_name 'Linkedin'
-	// --SELF WARNING-- No icon found with code_name 'Linkedin'
-	// --SELF WARNING-- No match in dico for code_name 'Twitch'
-	// --SELF WARNING-- No icon found with code_name 'Twitch'
-	// --SELF WARNING-- No match in dico for code_name 'TikTok'
-	// --SELF WARNING-- No icon found with code_name 'TikTok'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'TikTok'
-	// --SELF WARNING-- No icon found with code_name 'TikTok'
-	// --SELF WARNING-- No match in dico for code_name 'Collection jeux du Club'
-	// --SELF WARNING-- No icon found with code_name 'Collection jeux du Club'
-	// --SELF WARNING-- No match in dico for code_name 'Board Game Geek Collection'
-	// --SELF WARNING-- No icon found with code_name 'Board Game Geek Collection'
-	// --SELF WARNING-- No match in dico for code_name 'TikTok'
-	// --SELF WARNING-- No icon found with code_name 'TikTok'
-	// --SELF WARNING-- No match in dico for code_name 'LinkedIn'
-	// --SELF WARNING-- No icon found with code_name 'LinkedIn'
-	// --SELF WARNING-- No match in dico for code_name 'Discord'
-	// --SELF WARNING-- No icon found with code_name 'Discord'
-	// --SELF WARNING-- No match in dico for code_name 'Tickets'
-	// --SELF WARNING-- No icon found with code_name 'Tickets'
-	// --SELF WARNING-- No match in dico for code_name 'Billeterie'
-	// --SELF WARNING-- No icon found with code_name 'Billeterie'
-	// --SELF WARNING-- No match in dico for code_name 'TikTok'
-	// --SELF WARNING-- No icon found with code_name 'TikTok'
-	// --SELF WARNING-- No match in dico for code_name 'Discord'
-	// --SELF WARNING-- No icon found with code_name 'Discord'
-	// --SELF WARNING-- No match in dico for code_name 'Events Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Events Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Page web'
-	// --SELF WARNING-- No icon found with code_name 'Page web'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Board game geek'
-	// --SELF WARNING-- No icon found with code_name 'Board game geek'
-	// --SELF WARNING-- No match in dico for code_name 'Board game geek collection'
-	// --SELF WARNING-- No icon found with code_name 'Board game geek collection'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription Weekend'
-	// --SELF WARNING-- No icon found with code_name 'Inscription Weekend'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Discord'
-	// --SELF WARNING-- No icon found with code_name 'Discord'
-	// --SELF WARNING-- No match in dico for code_name 'Pinterest'
-	// --SELF WARNING-- No icon found with code_name 'Pinterest'
-	// --SELF WARNING-- No match in dico for code_name 'Ticket'
-	// --SELF WARNING-- No icon found with code_name 'Ticket'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook article'
-	// --SELF WARNING-- No icon found with code_name 'Facebook article'
-	// --SELF WARNING-- No match in dico for code_name 'LinkedIn'
-	// --SELF WARNING-- No icon found with code_name 'LinkedIn'
-	// --SELF WARNING-- No match in dico for code_name 'undefined'
-	// --SELF WARNING-- No icon found with code_name 'undefined'
-	// --SELF WARNING-- No match in dico for code_name 'Dates des soirées jeux'
-	// --SELF WARNING-- No icon found with code_name 'Dates des soirées jeux'
-	// --SELF WARNING-- No match in dico for code_name 'myLudo'
-	// --SELF WARNING-- No icon found with code_name 'myLudo'
-	// --SELF WARNING-- No match in dico for code_name 'My Ludo'
-	// --SELF WARNING-- No icon found with code_name 'My Ludo'
-	// --SELF WARNING-- No match in dico for code_name 'LinkedIn'
-	// --SELF WARNING-- No icon found with code_name 'LinkedIn'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Billets'
-	// --SELF WARNING-- No icon found with code_name 'Billets'
-	// --SELF WARNING-- No match in dico for code_name 'Event 11/09/2024'
-	// --SELF WARNING-- No icon found with code_name 'Event 11/09/2024'
-	// --SELF WARNING-- No match in dico for code_name 'Event 13/11/2024'
-	// --SELF WARNING-- No icon found with code_name 'Event 13/11/2024'
-	// --SELF WARNING-- No match in dico for code_name 'Linkedin'
-	// --SELF WARNING-- No icon found with code_name 'Linkedin'
-	// --SELF WARNING-- No match in dico for code_name 'Billets'
-	// --SELF WARNING-- No icon found with code_name 'Billets'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Réservation'
-	// --SELF WARNING-- No icon found with code_name 'Réservation'
-	// --SELF WARNING-- No match in dico for code_name 'Linkedin'
-	// --SELF WARNING-- No icon found with code_name 'Linkedin'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription exposant'
-	// --SELF WARNING-- No icon found with code_name 'Inscription exposant'
-	// --SELF WARNING-- No match in dico for code_name 'Event 11/09/2024'
-	// --SELF WARNING-- No icon found with code_name 'Event 11/09/2024'
-	// --SELF WARNING-- No match in dico for code_name 'Event 13/11/2024'
-	// --SELF WARNING-- No icon found with code_name 'Event 13/11/2024'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Twitch'
-	// --SELF WARNING-- No icon found with code_name 'Twitch'
-	// --SELF WARNING-- No match in dico for code_name 'Billeterie'
-	// --SELF WARNING-- No icon found with code_name 'Billeterie'
-	// --SELF WARNING-- No match in dico for code_name 'Linktr.ee'
-	// --SELF WARNING-- No icon found with code_name 'Linktr.ee'
-	// --SELF WARNING-- No match in dico for code_name 'Event 11/09/2024'
-	// --SELF WARNING-- No icon found with code_name 'Event 11/09/2024'
-	// --SELF WARNING-- No match in dico for code_name 'Event 13/11/2024'
-	// --SELF WARNING-- No icon found with code_name 'Event 13/11/2024'
-	// --SELF WARNING-- No match in dico for code_name 'Ticket'
-	// --SELF WARNING-- No icon found with code_name 'Ticket'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Dates des soirées jeux'
-	// --SELF WARNING-- No icon found with code_name 'Dates des soirées jeux'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription exposant'
-	// --SELF WARNING-- No icon found with code_name 'Inscription exposant'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Billeterie'
-	// --SELF WARNING-- No icon found with code_name 'Billeterie'
-	// --SELF WARNING-- No match in dico for code_name 'Billeterie'
-	// --SELF WARNING-- No icon found with code_name 'Billeterie'
-	// --SELF WARNING-- No match in dico for code_name 'Billets'
-	// --SELF WARNING-- No icon found with code_name 'Billets'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription Weekend'
-	// --SELF WARNING-- No icon found with code_name 'Inscription Weekend'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Tickets'
-	// --SELF WARNING-- No icon found with code_name 'Tickets'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook article'
-	// --SELF WARNING-- No icon found with code_name 'Facebook article'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription/resgistration'
-	// --SELF WARNING-- No icon found with code_name 'Inscription/resgistration'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Billets'
-	// --SELF WARNING-- No icon found with code_name 'Billets'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'undefined'
-	// --SELF WARNING-- No icon found with code_name 'undefined'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-	// --SELF WARNING-- No match in dico for code_name 'Réservation'
-	// --SELF WARNING-- No icon found with code_name 'Réservation'
-	// --SELF WARNING-- No match in dico for code_name 'Réservation'
-	// --SELF WARNING-- No icon found with code_name 'Réservation'
-	// --SELF WARNING-- No match in dico for code_name 'Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Page Facebook'
-	// --SELF WARNING-- No icon found with code_name 'Page Facebook'
-	// --SELF WARNING-- No match in dico for code_name 'Inscription'
-	// --SELF WARNING-- No icon found with code_name 'Inscription'
-
 	// Areas
 	...areas,
 	// Organization types
@@ -348,13 +156,85 @@ const dico = [
 	{ code_name: "vegan", fr: "Végan" },
 	{ code_name: "handicapped", fr: "Accessible" },
 	{ code_name: "children", fr: "Enfants bienvenus" },
+
+	// More generic matches last just to be sure to match the rest first
+	{
+		code_name: "facebook",
+		fr: "Page Facebook",
+		iconName: "ph:facebook-logo",
+	},
+	{ code_name: "youtube", fr: "Youtube", iconName: "ph:youtube-logo" },
+	{
+		code_name: "linkedin",
+		fr: "LinkedIn",
+		iconName: "ph:linkedin-logo",
+	},
+	{
+		code_name: "linktr.ee|linktree",
+		fr: "Linktree",
+		iconName: "ph:linktree-logo",
+	},
+	{
+		code_name: "pinterest",
+		fr: "Pinterest",
+		iconName: "ph:pinterest-logo",
+	},
+	{
+		code_name: "discord",
+		fr: "Discord",
+		iconName: "ph:discord-logo",
+	},
+	{
+		code_name: "tiktok",
+		fr: "TikTok",
+		iconName: "ph:tiktok-logo",
+	},
+	{
+		code_name: "twitch",
+		fr: "Twitch",
+		iconName: "ph:twitch-logo",
+	},
+	{
+		code_name:
+			"ticket|tickets|inscription|réservation|billets|billet|billeterie",
+		// fr: "LinkedIn",
+		iconName: "ph:ticket-light",
+	},
+	{
+		code_name:
+			"date|dates|agenda|calendrier|calendrier|agenda|planning|plannings|event",
+		iconName: "ph:calendar-dots-light",
+	},
+	{
+		code_name:
+			"my ludo|myludo|Board game geek|boardgamegeek|jeux",
+		fr: "My Ludo",
+		iconName: "ph:checkerboard-thin",
+	},
+	{
+		code_name: "catalogue",
+		iconName: "ph:book-open-text-thin",
+	},
+	{ code_name: "web", fr: "Web", iconName: "ph:link" },
 ]
 
 // --- UTILITY FUNCTIONS --- //
 
 const translateFromCodeName = (code_name) => {
-	const match = dico.find((el) => el.code_name === code_name)
+	const codeNameLow = code_name?.toLowerCase()
 
+	let match = dico.find((el) => el.code_name === code_name)
+
+	if (!match) {
+		// Wider matching logic to match more generic strings
+		match = dico.find((el) => {
+			const dicoRex = new RegExp(el.code_name, "i")
+			return dicoRex.test(codeNameLow)
+		})
+		if (match) {
+			match.fr = code_name
+		}
+	}
 	if (!match) {
 		console.warn(
 			`--SELF WARNING-- No match in dico for code_name '${code_name}'`,
@@ -429,38 +309,52 @@ export async function start() {
 
 // --- TRANSFORM FIELDS --- //
 
-const transformDateTime = (str) => {
-	if (!str) return str
+const transformDateTime = (dateRaw) => {
+	if (!dateRaw) return dateRaw
 
-	const hasTime = str?.length > 10
+	const date = toTzDate(dateRaw)
 
 	const dateOptions = {
+		timeZone: "UTC",
 		weekday: "short",
 		year: "numeric",
 		month: "short",
 		day: "numeric",
 	}
-	const timeOptions = { hour: "2-digit", minute: "2-digit" }
+	const timeOptions = { timeZone: "UTC", hour: "2-digit", minute: "2-digit" }
 
-	const date = new Date(str)
+	// date = new Date(dateRaw)
+	const dateStr = stripDate(date).slice(0, -3)
+	const hasTime = dateStr?.length > 10
+
 	return {
-		dateTimeRaw: str,
+		dateTimeRaw: dateRaw,
+		dateStr,
 		hasTime,
 		fr: {
-			date: date.toLocaleDateString("fr", dateOptions),
+			date: date.toLocaleString("fr", dateOptions),
 			...(hasTime
 				? {
-						time: date.toLocaleTimeString("fr", timeOptions),
-						hours: date.toLocaleTimeString("fr", { hour: "2-digit" }),
-						minutes: date.toLocaleTimeString("fr", { minute: "2-digit" }),
+						time: date.toLocaleString("fr", timeOptions),
+						hours: date.toLocaleString("fr", {
+							timeZone: "UTC",
+							hour: "2-digit",
+						}),
+						minutes: date.toLocaleString("fr", {
+							timeZone: "UTC",
+							minute: "2-digit",
+						}),
 				  }
 				: {}),
-			weekday: date.toLocaleDateString("fr", { weekday: "short" }),
-			day: date.toLocaleDateString("fr", { day: "numeric" }),
-			month: date.toLocaleDateString("fr", { month: "short" }),
-			monthShort: date.toLocaleDateString("fr", { month: "short" }),
-			monthLong: date.toLocaleDateString("fr", { month: "long" }),
-			year: date.toLocaleDateString("fr", { year: "numeric" }),
+			weekday: date.toLocaleString("fr", { timeZone: "UTC", weekday: "short" }),
+			day: date.toLocaleString("fr", { timeZone: "UTC", day: "numeric" }),
+			month: date.toLocaleString("fr", { timeZone: "UTC", month: "short" }),
+			monthShort: date.toLocaleString("fr", {
+				timeZone: "UTC",
+				month: "short",
+			}),
+			monthLong: date.toLocaleString("fr", { timeZone: "UTC", month: "long" }),
+			year: date.toLocaleString("fr", { timeZone: "UTC", year: "numeric" }),
 		},
 	}
 }
@@ -706,12 +600,49 @@ export async function fetchOrganizations() {
 				"translations.*",
 				// ...imageFields("gallery.*."),
 				// Related Events
+				"events.events_id.id",
 				"events.events_id.status",
 				"events.events_id.date_updated",
 				"events.events_id.name",
+				{
+					"events.events_id.location": [
+						// "*",
+						"name",
+						"streetAddress",
+						"postalCode",
+						"addressLocality",
+						"addressRegion",
+						"geo",
+					],
+				},
 				"events.events_id.address",
 				...imageFields("events.events_id.cover_image."),
-				"events.events_id.recurring",
+				"events.events_id.recurrence",
+				"events.events_id.startDate",
+				"events.events_id.endDate",
+				"events.events_id.startTime",
+				"events.events_id.endTime",
+				{
+					"events.events_id.eventSchedule": [
+						// "*",
+						"status",
+						"description",
+						"startDate",
+						"endDate",
+						"startTime",
+						"endTime",
+						"repeatCount",
+						"frequency",
+						"interval",
+						"byDay",
+						"byMonth",
+						"byMonthWeek",
+						"byMonthDay",
+						"bySetPos",
+						"exceptDate",
+						"addDate",
+					],
+				},
 				"events.events_id.schedule",
 				"events.events_id.links",
 				"events.events_id.organizers.organizations_id.status",
@@ -732,35 +663,35 @@ export async function fetchOrganizations() {
 				"events.events_id.translations.languages_code",
 				"events.events_id.translations.highlighted_details",
 				"events.events_id.translations.description",
-				"events.events_id.parent_event",
-				"events.events_id.parent_event.status",
-				"events.events_id.parent_event.name",
-				"events.events_id.parent_event.address",
-				"events.events_id.parent_event.recurring",
-				"events.events_id.parent_event.schedule",
-				"events.events_id.parent_event.links",
-				...imageFields("events.events_id.parent_event.cover_image."),
-				"events.events_id.parent_event.translations.languages_code",
-				"events.events_id.parent_event.translations.highlighted_details",
-				"events.events_id.parent_event.translations.description",
-				"events.events_id.parent_event.organizers.organizations_id.status",
-				"events.events_id.parent_event.organizers.organizations_id.name",
-				"events.events_id.parent_event.organizers.organizations_id.slug",
-				"events.events_id.parent_event.organizers.organizations_id.address",
-				...imageFields(
-					"events.events_id.parent_event.organizers.organizations_id.logo.",
-				),
-				...imageFields(
-					"events.events_id.parent_event.organizers.organizations_id.cover_image.",
-				),
-				"events.events_id.parent_event.organizers.organizations_id.games_services",
-				"events.events_id.parent_event.organizers.organizations_id.amenities",
+				// "events.events_id.parent_event",
+				// "events.events_id.parent_event.status",
+				// "events.events_id.parent_event.name",
+				// "events.events_id.parent_event.address",
+				// "events.events_id.parent_event.recurring",
+				// "events.events_id.parent_event.schedule",
+				// "events.events_id.parent_event.links",
+				// ...imageFields("events.events_id.parent_event.cover_image."),
+				// "events.events_id.parent_event.translations.languages_code",
+				// "events.events_id.parent_event.translations.highlighted_details",
+				// "events.events_id.parent_event.translations.description",
+				// "events.events_id.parent_event.organizers.organizations_id.status",
+				// "events.events_id.parent_event.organizers.organizations_id.name",
+				// "events.events_id.parent_event.organizers.organizations_id.slug",
+				// "events.events_id.parent_event.organizers.organizations_id.address",
+				// ...imageFields(
+				// 	"events.events_id.parent_event.organizers.organizations_id.logo.",
+				// ),
+				// ...imageFields(
+				// 	"events.events_id.parent_event.organizers.organizations_id.cover_image.",
+				// ),
+				// "events.events_id.parent_event.organizers.organizations_id.games_services",
+				// "events.events_id.parent_event.organizers.organizations_id.amenities",
 				// ...imageFields(
 				// 	"events.events_id.parent_event.organizers.organizations_id.gallery.*.",
 				// ),
-				"events.events_id.parent_event.organizers.organizations_id.translations.languages_code",
-				"events.events_id.parent_event.organizers.organizations_id.translations.description",
-				"events.events_id.event_instances",
+				// "events.events_id.parent_event.organizers.organizations_id.translations.languages_code",
+				// "events.events_id.parent_event.organizers.organizations_id.translations.description",
+				// "events.events_id.event_instances",
 			],
 		}),
 	)
@@ -842,6 +773,205 @@ function fallbackOnParentsOfEvent({
 	return e
 }
 
+export function transformSchedule(scheduleRaw) {
+	const {
+		status,
+		description,
+		startDate,
+		endDate: endDateRaw,
+		startTime,
+		endTime,
+		repeatCount,
+		frequency, // yearly, monthly, weekly
+		interval,
+		byDay,
+		bySetPos,
+		exceptDate,
+		addDate,
+		// Are the following useful?
+		byMonthDay,
+		byMonth, // [int]
+		// byMonthWeek,
+	} = scheduleRaw
+
+	// const startDateAsDate = new Date(startDate)
+	// const startDateAsDatePlus1 = new Date(startDate)
+	// startDateAsDatePlus1.setDate(startDateAsDatePlus1.getDate() + 1)
+	// const startDatePlus1 = startDateAsDatePlus1.toISOString().split("T")[0]
+	let { string: startDatePlus1 } = datePlus1Day(startDate)
+	startDatePlus1 = startDatePlus1.split("T")[0]
+
+	let endDate = endDateRaw
+	let moreThan24h = false
+
+	if (!endDate) {
+		// Define endDate
+		if (!endTime) endDate = endDateRaw
+		else if (endTime <= startTime) endDate = startDatePlus1
+		else if (endTime > startTime) endDate = startDate
+	} else if (endDate == startDatePlus1 && endTime > startTime) {
+		moreThan24h = true
+	} else if (endDate > startDatePlus1) {
+		moreThan24h = true
+	}
+
+	let type = undefined // can be 'unique', 'recurring' or 'invalid'
+	let rrule = undefined
+	const [Y, M, D] = (startDate || "").split("-")
+	const [h, m] = (startTime || "").split(":")
+
+	// Define type
+	if (!startDate || !startTime) type = "invalid"
+	// This was wrong because we might define an endDate > startDate if this schedule spans multiple days
+	// else if ((repeatCount > 1 || endDate > startDate) && !frequency)
+	else if (repeatCount > 1 && !frequency) type = "invalid"
+	else if ((repeatCount > 1 || endDate > startDatePlus1) && !!frequency)
+		type = "recurring"
+	else type = "unique"
+
+	const startDateTime =
+		startDate && startDate + (startTime ? `T${startTime}` : "")
+	const endDateTime = endDate && endDate + (endTime ? `T${endTime}` : "")
+
+	const startDateStr = stripDate(startDateTime).slice(0, -3)
+	const endDateStr = stripDate(endDateTime).slice(0, -3)
+
+	// const time_start = transformDateTime(startDateTime)
+	// const time_end = transformDateTime(endDateTime)
+
+	if (type === "recurring") {
+		rrule = new RRule({
+			freq: RRule[frequency.toUpperCase()],
+			dtstart: datetime(Y, M, D, h, m),
+			// dtstart: new Date(startDate),
+			// TODO: what happens if both repeatCount and endDate are set ???
+			count: repeatCount,
+			...(endDate && { until: new Date(endDate) }),
+			interval,
+			bysetpos: bySetPos,
+			...(byDay && {
+				byweekday: RRule[byDay.map((day) => day.slice(0, 2).toUpperCase())],
+			}),
+			// Are the following useful?
+			bymonthday: byMonthDay,
+			bymonth: byMonth,
+		})
+	}
+
+	return {
+		...scheduleRaw,
+		type,
+		rrule,
+		endDate,
+		moreThan24h,
+		startDatePlus1,
+		startDateTime,
+		endDateTime,
+		startDateStr,
+		endDateStr,
+	}
+}
+
+export function transformSchedules(schedulePartsRaw, legacySchedule) {
+	// let type = undefined
+	const purgedScheduleParts = schedulePartsRaw?.filter(
+		({ status, type }) =>
+			type !== "invalid" && (status || "published") === "published",
+	)
+	// if (purgedScheduleParts?.length < 1) type = "invalid"
+	// else if (purgedScheduleParts?.length > 1) type = "recurring"
+	// else if (purgedScheduleParts[0]?.type === "recurring") type = "recurring"
+	// else if (purgedScheduleParts[0]?.type === "unique") type = "unique"
+	// else {
+	// 	console.error("Unexpected schedule type", purgedScheduleParts);
+	// }
+
+	const rRuleSet = new RRuleSet()
+
+	// Populate RuleSet with scheduleParts
+	purgedScheduleParts?.forEach(
+		({
+			status,
+			type,
+			rrule,
+			// description,
+			startDate,
+			endDate,
+			startTime,
+			endTime,
+			repeatCount,
+			frequency, // yearly, monthly, weekly
+			interval,
+			byDay,
+			bySetPos,
+			exceptDate,
+			addDate,
+			// Are the following useful?
+			byMonthDay,
+			byMonth, // [int]
+			// byMonthWeek,
+		}) => {
+			const [Y, M, D] = (startDate || "").split("-")
+			const [h, m] = (startTime || "").split(":")
+
+			// console.log({ startDate, startTime, exceptDate, byMonth })
+
+			// Recurring events
+			if (type === "recurring") {
+				// Main recurrance definition
+				rRuleSet.rrule(rrule)
+
+				// Exceptions: Exclude dates
+				for (const { date } of exceptDate || []) {
+					const [eY, eM, eD] = date.split("-")
+					rRuleSet.exdate(datetime(eY, eM, eD, h, m))
+				}
+				// Exceptions: Add dates manualy
+				for (const { date } of addDate || []) {
+					const [aY, aM, aD] = date.split("-")
+					rRuleSet.rdate(datetime(aY, aM, aD, h, m))
+				}
+				// Event spanning multiple days has no frequency but multiple schedules with unique dates+times
+			} else if (type === "unique") {
+				rRuleSet.rdate(datetime(Y, M, D, h, m))
+			}
+		},
+	)
+
+	// TODO:
+	// - Add legacy schedule if date is in the future
+	if (legacySchedule?.length) {
+		for (const { time_start, time_end, isSameDay } of legacySchedule) {
+			const startDateTime = time_start.dateTimeRaw
+			const endDateTime = time_end?.dateTimeRaw
+			// const nowDateTime = new Date().toISOString().split(".").shift()
+			const nowDateTime = stripDate(new Date())
+
+			// Compare time_end with now to skip old events
+			if (nowDateTime > (endDateTime || startDateTime)) {
+				continue
+			}
+
+			const [sY, sM, sD, sh, sm] = startDateTime
+				.split("T")
+				?.map((dateOrTime) => dateOrTime.split(/[:-]/))
+				.flat(Infinity)
+
+			// console.log(nowDateTime, startDateTime, endDateTime, [sY, sM, sD, sh, sm])
+
+			rRuleSet.rdate(datetime(sY, sM, sD, sh, sm))
+		}
+	}
+	// TODO:
+	// - prepare useful properties (list them here next)
+	// const instances = rRuleSet.all()
+
+	return {
+		rRuleSet,
+		schedule: purgedScheduleParts,
+	}
+}
+
 export function transformEvent(eventRaw, languages) {
 	// const parent =
 	// 	eventRaw?.parent_event && transformEvent(eventRaw?.parent_event)
@@ -863,12 +993,8 @@ export function transformEvent(eventRaw, languages) {
 	// 	eventRaw.recurring ||
 	// 	eventRaw.schedule?.length + eventRaw.event_instances?.length > 1
 
-	// if an event has no startDate, it is recurring
-	const isRecurring = !eventRaw?.startDate
-
 	// TODO: old implementation, will be removed
 	// const parentIsRecurring = parent?.recurring || parent?.schedule?.length > 0
-	const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
 	// const hasParent = !!parent
 
 	// Fallback values from parent_event or first Organizer
@@ -883,6 +1009,10 @@ export function transformEvent(eventRaw, languages) {
 		  })
 		: eventRaw
 
+	// TODO: old implementation, will be removed
+	const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
+
+	// TODO: old implementation, will be removed
 	// Transform datetimes
 	const scheduleFormatted = !hasNoSchedule
 		? e.schedule.map(({ time_start: tsRaw, time_end: teRaw }) => {
@@ -898,173 +1028,179 @@ export function transformEvent(eventRaw, languages) {
 		  })
 		: null
 
-	const scheduleRuleSet = new RRuleSet()
-	// - Populate RuleSet with eventsSchedule(s)
-	eventRaw?.eventSchedule?.forEach(
-		({
-			status,
-			description,
-			startDate,
-			endDate,
-			startTime,
-			endTime,
-			repeatCount,
-			frequency, // yearly, monthly, weekly
-			interval,
-			byDay,
-			bySetPos,
-			exceptDate,
-			addDate,
-			// Are the following useful?
-			byMonthDay,
-			byMonth, // [int]
-			// byMonthWeek,
-		}) => {
-			if (status !== "published") {
-				return null
-			}
-			if (!startDate) {
-				console.error("ERROR: schedule must have a startDate")
-				return null
-			}
-			const [Y, M, D] = (startDate || "").split("-")
-			const [h, m] = (startTime || "").split(":")
+	// 	{
+	//     time_start: { dateTimeRaw: '2023-11-08T18:30:00', hasTime: true, fr: {
+	//   date: 'ven. 6 oct. 2023',
+	//   time: '17:30',
+	//   hours: '17 h',
+	//   minutes: '30',
+	//   weekday: 'ven.',
+	//   day: '6',
+	//   month: 'oct.',
+	//   monthShort: 'oct.',
+	//   monthLong: 'octobre',
+	//   year: '2023'
+	//  },
+	//     time_end: { dateTimeRaw: '2023-11-08T21:30:00', hasTime: true, fr: [Object] },
+	//     isSameDay: true
+	//   }
 
-			console.log({ startDate, startTime, exceptDate, byDay })
+	const scheduleParts = e?.eventSchedule?.map(transformSchedule)
+	const { schedule: eventSchedule, rRuleSet: scheduleRuleSet } =
+		transformSchedules(scheduleParts, scheduleFormatted)
 
-			// Recurring events
-			if (frequency) {
-				scheduleRuleSet.rrule(
-					new RRule({
-						freq: RRule[frequency.toUpperCase()],
-						dtstart: datetime(Y, M, D, h, m),
-						// dtstart: new Date(startDate),
-						// TODO: what happens if both repeatCount and endDate are set ???
-						count: repeatCount,
-						...(endDate && { until: new Date(endDate) }),
-						interval,
-						bysetpos: bySetPos,
-						...(byDay && {
-							byweekday:
-								RRule[byDay.map((day) => day.slice(0, 2).toUpperCase())],
-						}),
-						// Are the following useful?
-						bymonthday: byMonthDay,
-						bymonth: byMonth,
-					}),
-				)
-
-				// Exceptions: Exclude dates
-				for (const { date } of exceptDate || []) {
-					const [eY, eM, eD] = date.split("-")
-					scheduleRuleSet.exdate(datetime(eY, eM, eD, h, m))
-				}
-				// Exceptions: Add dates manualy
-				for (const { date } of addDate || []) {
-					const [aY, aM, aD] = date.split("-")
-					scheduleRuleSet.rdate(datetime(aY, aM, aD, h, m))
-				}
-				// Event spanning multiple days has no frequency but multiple schedules with unique dates+times
-			} else if (startDate) {
-				scheduleRuleSet.rdate(datetime(Y, M, D, h, m))
-			}
-		},
-	)
-	// TODO:
-	// - Add legacy schedule if date is in the future
-	if (scheduleFormatted?.length) {
-		for (const { time_start, time_end, isSameDay } of scheduleFormatted) {
-			const startDateTime = time_start.dateTimeRaw
-			const endDateTime = time_end?.dateTimeRaw
-			const nowDateTime = new Date().toISOString().split(".").shift()
-
-			// Compare time_end with now to skip old events
-			if (nowDateTime > (endDateTime || startDateTime)) {
-				continue
-			}
-
-			const [sY, sM, sD, sh, sm] = startDateTime
-				.split("T")
-				?.map((dateOrTime) => dateOrTime.split(/[:-]/))
-				.flat(Infinity)
-
-			// console.log(nowDateTime, startDateTime, endDateTime, [sY, sM, sD, sh, sm])
-
-			scheduleRuleSet.rdate(datetime(sY, sM, sD, sh, sm))
+	for (const schedulePart of scheduleParts || []) {
+		if (schedulePart?.type === "invalid") {
+			console.error(`ERROR: schedule is invalid in event "${e.name}"`)
+			console.error(schedulePart)
+			return null
 		}
 	}
-	// - prepare useful properties (list them here next)
 
-	if (eventRaw?.eventSchedule?.length) {
-		console.log({
-			// scheduleFormatted,
-			// eventSched: eventRaw?.eventSchedule,
-			all: scheduleRuleSet.all(),
+	// Event can be "unique", "recurring" or "multidays" (or "unplanned")
+	let recurrenceInferredFromData = undefined
+	// here eventSchedule has already been purged of invalid parts
+	if (!!e?.startDate && eventSchedule?.length > 0)
+		recurrenceInferredFromData = "multidays"
+	else if (!!e?.startDate) recurrenceInferredFromData = "unique"
+	else if (eventSchedule?.length > 0) recurrenceInferredFromData = "recurring"
+	// TODO: Remove this check when schedule is fully replaced by eventSchedule
+	else if (e?.schedule?.length > 1) recurrenceInferredFromData = "recurring"
+	else if (!e?.schedule?.[0]?.time_start)
+		recurrenceInferredFromData = "unplanned"
+	else if (e?.schedule?.length === 1) recurrenceInferredFromData = "unique"
+	else recurrenceInferredFromData = undefined
+
+	const recurrence = e?.recurrence ?? recurrenceInferredFromData
+	const isRecurring = recurrence === "recurring"
+
+	if (
+		typeof recurrence === "undefined" ||
+		recurrence !== recurrenceInferredFromData
+	) {
+		console.warn(`Recurrence might be wrong for event '${e.name}'`)
+		console.warn({
+			recurrence,
+			"event.recurrence": e.recurrence,
+			recurrenceInferredFromData,
+			scheduleParts,
+			eventSchedule,
 		})
 	}
 
-	// // Add a rrule to rruleSet
-	// rruleSet.rrule(
-	// 	new RRule({
-	// 		freq: RRule.MONTHLY,
-	// 		count: 5,
-	// 		dtstart: datetime(2012, 2, 1, 10, 30),
-	// 	}),
-	// )
-
-	// // Add a date to rruleSet
-	// rruleSet.rdate(datetime(2012, 7, 1, 10, 30))
-
-	// // Add another date to rruleSet
-	// rruleSet.rdate(datetime(2012, 7, 2, 10, 30))
-
-	// // Add a exclusion rrule to rruleSet
-	// rruleSet.exrule(
-	// 	new RRule({
-	// 		freq: RRule.MONTHLY,
-	// 		count: 2,
-	// 		dtstart: datetime(2012, 3, 1, 10, 30),
-	// 	}),
-	// )
-
-	// // Add a exclusion date to rruleSet
-	// rruleSet.exdate(datetime(2012, 5, 1, 10, 30))
-
-	// // Get all occurrence dates (Date instances):
-	// rruleSet.all()[
-	// 	("2012-02-01T10:30:00.000Z",
-	// 	"2012-05-01T10:30:00.000Z",
-	// 	"2012-07-01T10:30:00.000Z",
-	// 	"2012-07-02T10:30:00.000Z")
-	// ]
-
-	// // Get a slice:
-	// rruleSet.between(datetime(2012, 2, 1), datetime(2012, 6, 2))[
-	// 	("2012-05-01T10:30:00.000Z", "2012-07-01T10:30:00.000Z")
-	// ]
-
-	// // To string
-	// rruleSet.valueOf()[
-	// 	("DTSTART:20120201T023000Z",
-	// 	"RRULE:FREQ=MONTHLY;COUNT=5",
-	// 	"RDATE:20120701T023000Z,20120702T023000Z",
-	// 	"EXRULE:FREQ=MONTHLY;COUNT=2",
-	// 	"EXDATE:20120601T023000Z")
-	// ]
-
-	// // To string
-	// rruleSet.toString()
-	// ;('["DTSTART:20120201T023000Z","RRULE:FREQ=MONTHLY;COUNT=5","RDATE:20120701T023000Z,20120702T023000Z","EXRULE:FREQ=MONTHLY;COUNT=2","EXDATE:20120601T023000Z"]')
-
 	// Create Slug
 	const nameSlug = slugify(e.name)
-	const dateSlug = scheduleFormatted?.[0].time_start.dateTimeRaw.substring(
-		0,
-		10,
-	)
-	const slug = `${nameSlug}-${dateSlug}`
-	// TODO: should probably create "paths" for translated paths
-	const path = createPath({ type: "event", slug })
+	// const dateSlug = scheduleFormatted?.[0].time_start.dateTimeRaw.substring(
+	// 	0,
+	// 	10,
+	// )
+	// const slug = `${nameSlug}-${dateSlug}`
+
+	const shortId = e?.id?.substring(24) // only keep the last 12 characters
+	const slugCanonical = `${nameSlug}-${shortId}`
+
+	// TODO: general start and end dateTime
+	const startDateTime =
+		e.startDate && e.startDate + (e.startTime ? `T${e.startTime}` : "")
+	const endDateTime =
+		e.endDate && e.endDate + (e.endTime ? `T${e.endTime}` : "")
+
+	let time_start = transformDateTime(startDateTime)
+	let time_end = transformDateTime(endDateTime)
+
+	if (!time_start && recurrence === "unique" && scheduleFormatted?.[0]) {
+		time_start = scheduleFormatted[0].time_start
+		time_end = scheduleFormatted[0].time_end
+	}
+
+	const unique = /unique|multidays/.test(recurrence)
+		? {
+				slug: slugCanonical,
+				path: createPath({ type: "event", slug: slugCanonical }),
+		  }
+		: null
+
+	const canonical =
+		recurrence === "recurring"
+			? {
+					slug: slugCanonical,
+					path: createPath({ type: "event", slug: slugCanonical }),
+			  }
+			: null
+
+	const allSchedulesArray = [
+		...(scheduleFormatted || []),
+		...(eventSchedule || []),
+	]
+	allSchedulesArray.reverse()
+
+	const occurences =
+		recurrence === "recurring"
+			? scheduleRuleSet.all().map((date) => {
+					const dateStr = stripDate(date).slice(0, -3)
+					const dateSlug = dateStr.replace(":", "h")
+					const slug = `${nameSlug}-${dateSlug}`
+					const path = createPath({ type: "event", slug })
+
+					// Map an occurance to its corresponding eventSchedule.
+					// eventSchedule of type unique take precedence in this case because we might want to overwrite an occurance to add more data
+					let matchingSchedule = allSchedulesArray.find((schedule) => {
+						// First run looks for more precise eventSchedulePart
+						if (schedule.type === "recurring") return false
+
+						let currentDateStr =
+							schedule?.startDateStr || // in case of eventSchedule
+							schedule?.time_start?.dateStr // in case of formattedSchedule
+
+						return currentDateStr === dateStr
+					})
+
+					if (!matchingSchedule) {
+						// Second run looks for a match in recurring eventSchedulePart
+						matchingSchedule = allSchedulesArray.find((schedule) => {
+							// First run looks for more precise eventSchedulePart
+							if (schedule.type !== "recurring") return false
+
+							return schedule.rrule
+								.all()
+								.some((d) => d.getTime() === date.getTime())
+						})
+					}
+
+					const time_start = transformDateTime(date)
+					let time_end = undefined
+					if (matchingSchedule?.time_end) {
+						time_end = matchingSchedule.time_end
+					} else if (matchingSchedule?.type === "recurring") {
+						const occEndTime = matchingSchedule.endTime
+						let occEndDate = undefined
+						if (matchingSchedule.endTime < matchingSchedule.startTime) {
+							const { string } = datePlus1Day(date)
+							occEndDate = string.split("T")[0]
+						} else {
+							occEndDate = dateStr.split("T")[0]
+						}
+
+						const occEndDateTime = occEndDate + `T${occEndTime}`
+						time_end = transformDateTime(occEndDateTime)
+					} else if (matchingSchedule?.type === "unique") {
+						time_end = transformDateTime(matchingSchedule.endDateStr)
+					}
+
+					return {
+						date,
+						dateStr,
+						dateSlug,
+						slug,
+						path,
+						time_start,
+						time_end,
+					}
+			  })
+			: null
+
+	console.log(canonical?.path)
+
 	// Transform images
 	const cover_image = transformImage(e?.cover_image)
 	// Transform Address
@@ -1076,18 +1212,28 @@ export function transformEvent(eventRaw, languages) {
 
 	return {
 		...e,
+		recurrence,
 		isRecurring,
+		startDateTime,
+		endDateTime,
+		time_start,
+		time_end,
 		// parentIsRecurring,
 		hasNoSchedule,
 		// hasParent,
 		// parent_event: parent,
 		scheduleFormatted,
-		slug,
-		path,
+		eventSchedule,
+		scheduleRuleSet,
+		// slug,
+		// path,
 		cover_image,
 		address,
 		links,
 		date_updated,
+		...unique,
+		canonical,
+		occurences,
 	}
 }
 
@@ -1098,17 +1244,43 @@ const flattenEvents = (eventsUnflat) => {
 	let eventsFlatten = []
 
 	eventsUnflat.forEach((event) => {
-		if (event.hasNoSchedule) {
-			// skip event entirely because it will be used by children if it is a recurring one
+		if (event.recurrence === "unplanned") {
 			return null
-		} else {
-			// TODO: need to verify that code
-			const instancesFromSchedule = event.scheduleFormatted?.map((sched) => ({
+		} else if (event.recurrence === "unique") {
+			eventsFlatten.push(event)
+		} else if (event.recurrence === "multidays") {
+			eventsFlatten.push(event)
+		} else if (event.recurrence === "recurring") {
+			const occurencesExpanded = event.occurences?.map((occ) => ({
 				...event,
-				...sched,
+				...occ,
 			}))
-			eventsFlatten.push(...instancesFromSchedule)
+			const canonicalExpanded = { ...event, ...event.canonical }
+			eventsFlatten.push(canonicalExpanded, ...occurencesExpanded)
+		} else {
+			console.error(
+				`Unexpected recurrence type: ${event.recurrence} for event: ${event.name}`,
+			)
+			// console.error(event)
 		}
+		// recurrence: "recurring"
+		// {
+		// 	recurrence: "unique"
+		// }
+		// {
+		// 	recurrence: "unplanned"
+		// }
+		// if (event?.hasNoSchedule) {
+		// 	// skip event entirely because it will be used by children if it is a recurring one
+		// 	return null
+		// } else {
+		// 	// TODO: NEW: flatten based on occurences
+		// 	const instancesFromSchedule = event.scheduleFormatted?.map((sched) => ({
+		// 		...event,
+		// 		...sched,
+		// 	}))
+		// 	eventsFlatten.push(...instancesFromSchedule)
+		// }
 
 		// TODO: think about data inconsistencies if recurring is true but only one date for example
 		// this is possible if only one date has been provided for now
@@ -1133,10 +1305,10 @@ export async function fetchEvents() {
 			},
 			fields: [
 				// "*",
+				"id",
 				"status",
 				"date_updated",
 				"name",
-				"types",
 				{
 					location: [
 						// "*",
@@ -1150,6 +1322,7 @@ export async function fetchEvents() {
 				},
 				"address",
 				...imageFields("cover_image."),
+				"recurrence",
 				"startDate",
 				"endDate",
 				"startTime",
@@ -1191,29 +1364,29 @@ export async function fetchEvents() {
 				"translations.languages_code",
 				"translations.highlighted_details",
 				"translations.description",
-				"parent_event",
-				"parent_event.status",
-				"parent_event.name",
-				"parent_event.address",
-				"parent_event.recurring",
-				"parent_event.schedule",
-				"parent_event.links",
-				...imageFields("parent_event.cover_image."),
-				"parent_event.translations.languages_code",
-				"parent_event.translations.highlighted_details",
-				"parent_event.translations.description",
-				"parent_event.organizers.organizations_id.status",
-				"parent_event.organizers.organizations_id.name",
-				"parent_event.organizers.organizations_id.slug",
-				"parent_event.organizers.organizations_id.address",
-				...imageFields("parent_event.organizers.organizations_id.logo."),
-				...imageFields("parent_event.organizers.organizations_id.cover_image."),
-				"parent_event.organizers.organizations_id.games_services",
-				"parent_event.organizers.organizations_id.amenities",
-				// ...imageFields("parent_event.organizers.organizations_id.gallery.*."),
-				"parent_event.organizers.organizations_id.translations.languages_code",
-				"parent_event.organizers.organizations_id.translations.description",
-				"event_instances",
+				// "parent_event",
+				// "parent_event.status",
+				// "parent_event.name",
+				// "parent_event.address",
+				// "parent_event.recurring",
+				// "parent_event.schedule",
+				// "parent_event.links",
+				// ...imageFields("parent_event.cover_image."),
+				// "parent_event.translations.languages_code",
+				// "parent_event.translations.highlighted_details",
+				// "parent_event.translations.description",
+				// "parent_event.organizers.organizations_id.status",
+				// "parent_event.organizers.organizations_id.name",
+				// "parent_event.organizers.organizations_id.slug",
+				// "parent_event.organizers.organizations_id.address",
+				// ...imageFields("parent_event.organizers.organizations_id.logo."),
+				// ...imageFields("parent_event.organizers.organizations_id.cover_image."),
+				// "parent_event.organizers.organizations_id.games_services",
+				// "parent_event.organizers.organizations_id.amenities",
+				// // ...imageFields("parent_event.organizers.organizations_id.gallery.*."),
+				// "parent_event.organizers.organizations_id.translations.languages_code",
+				// "parent_event.organizers.organizations_id.translations.description",
+				// "event_instances",
 			],
 		}),
 	)
@@ -1226,8 +1399,17 @@ export async function fetchEvents() {
 	// 	}
 	// })
 
-	const eventsUnflat = eventsRaw?.map((e) => transformEvent(e, languages))
+	const eventsUnflat = eventsRaw
+		?.map((e) => transformEvent(e, languages))
+		.filter((z) => z)
+
 	const eventsUnfiltered = flattenEvents(eventsUnflat)
+
+	// console.log(
+	// 	eventsUnflat[2],
+	// 	eventsUnfiltered[2],
+	// 	eventsUnfiltered[2]?.scheduleFormatted?.[1]?.time_start,
+	// )
 
 	const d = new Date()
 	const today = d.toISOString().substring(0, 10)

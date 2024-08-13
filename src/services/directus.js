@@ -1199,8 +1199,6 @@ export function transformEvent(eventRaw, languages) {
 			  })
 			: null
 
-	console.log(canonical?.path)
-
 	// Transform images
 	const cover_image = transformImage(e?.cover_image)
 	// Transform Address
@@ -1238,9 +1236,6 @@ export function transformEvent(eventRaw, languages) {
 }
 
 const flattenEvents = (eventsUnflat) => {
-	// - can take info from parent event fields
-	// - can take info from first organizer fields
-	// - can take info from first orga from parent event
 	let eventsFlatten = []
 
 	eventsUnflat.forEach((event) => {
@@ -1255,35 +1250,29 @@ const flattenEvents = (eventsUnflat) => {
 				...event,
 				...occ,
 			}))
-			const canonicalExpanded = { ...event, ...event.canonical }
+			const canonicalExpanded = {
+				...event,
+				...event.canonical,
+				isCanonical: true,
+			}
 			eventsFlatten.push(canonicalExpanded, ...occurencesExpanded)
 		} else {
 			console.error(
 				`Unexpected recurrence type: ${event.recurrence} for event: ${event.name}`,
 			)
-			// console.error(event)
 		}
-		// recurrence: "recurring"
-		// {
-		// 	recurrence: "unique"
-		// }
-		// {
-		// 	recurrence: "unplanned"
-		// }
+
+		// TODO: old implemetation to remove
 		// if (event?.hasNoSchedule) {
 		// 	// skip event entirely because it will be used by children if it is a recurring one
 		// 	return null
 		// } else {
-		// 	// TODO: NEW: flatten based on occurences
 		// 	const instancesFromSchedule = event.scheduleFormatted?.map((sched) => ({
 		// 		...event,
 		// 		...sched,
 		// 	}))
 		// 	eventsFlatten.push(...instancesFromSchedule)
 		// }
-
-		// TODO: think about data inconsistencies if recurring is true but only one date for example
-		// this is possible if only one date has been provided for now
 	})
 
 	return eventsFlatten
@@ -1391,7 +1380,6 @@ export async function fetchEvents() {
 		}),
 	)
 
-	// TODO: transform eventSchedule
 	// TODO: merge location and address
 	// eventsRaw.forEach((event) => {
 	// 	if (event.name === "Soirée jeux de Société @ Idées Bleues") {
@@ -1405,12 +1393,6 @@ export async function fetchEvents() {
 
 	const eventsUnfiltered = flattenEvents(eventsUnflat)
 
-	// console.log(
-	// 	eventsUnflat[2],
-	// 	eventsUnfiltered[2],
-	// 	eventsUnfiltered[2]?.scheduleFormatted?.[1]?.time_start,
-	// )
-
 	const d = new Date()
 	const today = d.toISOString().substring(0, 10)
 	const inSixMonths = new Date(d.setMonth(d.getMonth() + 6))
@@ -1422,6 +1404,8 @@ export async function fetchEvents() {
 			event?.time_end?.dateTimeRaw > today &&
 			event?.time_end?.dateTimeRaw < inSixMonths
 		)
+		// TODO: add this when UI is ready to display canonical event pages
+		// || event.isCanonical
 	})
 
 	events.sort((prev, next) => {

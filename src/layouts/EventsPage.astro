@@ -4,6 +4,7 @@ import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png
 import { BasicPage, SkeletonPage } from "@layouts";
 import { imageDirectusSrc } from "@utils";
 import cities from "@utils/areas/cities.json";
+import { Icon } from "astro-icon/components"
 
 const { lang, events } = Astro.props
 
@@ -58,34 +59,61 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <IO h2 $skip={!events?.[0]?.name} class="center text">Agenda Ludique de Belgique</IO>
 
         <script src="/assets/js/events-filter.js" defer type="module"></script>
-        <form id="eventsForm" class="center stack horizontal" style="--gap: var(--size-h5);">
+        <form id="eventsForm" class="stack horizontal" style="--gap: var(--size-h5);">
           <div class="dropdown">
             <button onclick="proximity.classList.toggle('show')" class="dropbtn">A proximité de</button>
             <div id="proximity" class="dropdown-content">
               <div class="stack">
-                <select name="position">
-                  <option value="">A proximité de</option>
-                  <option value="me">Moi</option>
-                  {
-                    cities.map(city => (
-                      <option
-                        id={"city" + city.city}
-                        value={city.city}
-                        data-latitude={city.lat}
-                        data-longitude={city.lng}
-                      >
-                        {city.city}
-                      </option>
-                    ))
-                  }
-                </select>
-                <div>
-                  <label for="distance">Distance</label>
-                  <input type="range" id="distance" name="distance" min="1" max="100" value="10" />
+                <div class="stack horizontal">
+                  <Icon
+                    name="gridicons:location"
+                    title="location"
+                    role="img"
+                  />
+                  <select name="position">
+                    <option value="">Emplacement</option>
+                    <option value="me">
+                      Ma position
+                    </option>
+                    {
+                      cities.map(city => (
+                        <option
+                          id={"city" + city.city}
+                          value={city.city}
+                          data-latitude={city.lat}
+                          data-longitude={city.lng}
+                        >
+                          {city.city}
+                        </option>
+                      ))
+                    }
+                  </select>
+                </div>
+                <div class="stack justify-space-between">
+                  <label for="distance">Distance (km)</label>
+                  <div class="stack gap-0">
+                    <input type="range" id="distance" name="distance" min="1" max="99" value="10" list="distances" />
+                    <datalist id="distances" class="stack horizontal justify-space-between align-items-center h7 padding-x-h9">
+                      <option value="1" label="01"></option>
+                      <option value="25" label="25"></option>
+                      <option value="50" label="50"></option>
+                      <option value="75" label="75"></option>
+                      <option value="99" label="99"></option>
+                    </datalist>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <select name="types" id="types" multiple>
+            <option value="">Type</option>
+            <option value="festival">Festival</option>
+            <option value="moment">Moment ludique</option>
+            <option value="tournament">Tournoi</option>
+            <option value="exchange">Bouse aux jeux</option>
+            <option value="meeting">Rencontre pro</option>
+            <option value="other">Autre</option>
+          </select>
           <!-- <p>Trier par...</p>
           <div class="cluster" style="--gap: var(--size-h7);">
             <div>
@@ -113,6 +141,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               events?.map((event) => {
                 const {
                   name,
+                  type,
                   address,
                   cover_image,
                   organizers,
@@ -132,6 +161,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   <li
                     class="card-event breakout-clickable box no-border no-padding border-radius-s"
                     style=""
+                    data-type={type}
                   >
                     <div
                       class="box no-border padding-h4 with-sidebar gap-h4

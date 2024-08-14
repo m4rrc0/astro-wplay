@@ -1,14 +1,15 @@
-let visitorPosition;
-if ("geolocation" in navigator) {
-  navigator.geolocation.getCurrentPosition((pos) => visitorPosition = pos);
-}
-const eventsForm = document.getElementById('eventsForm');
-eventsForm.addEventListener('submit', (e) => e.preventDefault());
-eventsForm.addEventListener('change', () => {
+const pagefind = await import("/pagefind/pagefind.js");
+
+/**
+ * Filter events in events page using the parameters in the form
+ * @param {*} eventsForm 
+ */
+function filterEvents(eventsForm) {
   const data = new FormData(eventsForm);
   const filterParams = Array.from(data.entries());
   const positionFilter = filterParams.filter(([key,]) => key === 'position').map(([,value]) => value)[0];
   const distanceFilter = filterParams.filter(([key,]) => key === 'distance').map(([,value]) => value)[0];
+  const typesFilter = filterParams.filter(([key,]) => key === 'types').map(([,value]) => value);
 
   let coords;
   if (positionFilter === 'me') {
@@ -27,16 +28,23 @@ eventsForm.addEventListener('change', () => {
       longitude: events[i].getElementsByClassName('zip')[0].dataset.longitude
     };
     if (
-      (positionFilter && distance(coords, eventCoords) > distanceFilter * 1000)
+      (positionFilter && distance(coords, eventCoords) > distanceFilter * 1000) ||
+      (typesFilter && (typesFilter.length > 1 || typesFilter[0] !== '') && !typesFilter.some(type => events[i].dataset.type.split(',').includes(type))) 
     ) {
       events[i].style.display = 'none';
     } else {
       events[i].style.display = 'initial';
     }
   }
-});
+};
 
-const distance = (coords1, coords2) => {
+/**
+ * Calculate the distance between 2 GPS coordinates
+ * @param {*} coords1 
+ * @param {*} coords2 
+ * @returns 
+ */
+function distance(coords1, coords2) {
   const R = 6371e3; // metres
   const φ1 = coords1.latitude * Math.PI/180; // φ, λ in radians
   const φ2 = coords2.latitude * Math.PI/180;
@@ -49,8 +57,11 @@ const distance = (coords1, coords2) => {
   return R * c; // in metres
 };
 
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
+/**
+ * Close the dropdown menu if the user clicks outside of it
+ * @param {*} event 
+ */
+function closeDropdowns(event) {
   if (!event.target.closest('.dropdown')) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
@@ -61,4 +72,14 @@ window.onclick = function(event) {
       }
     }
   }
+};
+
+let visitorPosition;
+if ("geolocation" in navigator) {
+  navigator.geolocation.getCurrentPosition((pos) => visitorPosition = pos);
 }
+const eventsForm = document.getElementById('eventsForm');
+eventsForm.onsubmit = (e) => e.preventDefault();
+eventsForm.onchange = () => filterEvents(eventsForm);
+
+window.onclick = closeDropdowns;

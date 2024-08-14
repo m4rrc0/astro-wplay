@@ -40,8 +40,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           </li>
           <div id="search"></div>
           <script>
-            window.addEventListener('DOMContentLoaded', (event) => {
-              new PagefindUI({ element: '#search', showSubResults: true, resetStyles: false });
+            window.addEventListener('DOMContentLoaded', () => {
+              let search = new PagefindUI({ element: '#search', showSubResults: true, resetStyles: false });
+              window.addEventListener('click', (e) => {
+                if (!e.target.closest('.pagefind-ui') && !document.getElementsByClassName('pagefind-ui__hidden').length) {
+                  search.destroy();
+                  search = new PagefindUI({ element: "#search", showSubResults: true, resetStyles: false });
+                }
+              });
             });
           </script>
           <li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
@@ -189,6 +195,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   }
   nav > ul > #search {
     flex-grow: 1;
+    flex-basis: 0;
   }
   nav > ul > li:first-child > a {
     max-width: max-content;

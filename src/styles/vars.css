@@ -56,7 +56,16 @@
   --shadow-raised-m: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
   --shadow-raised-s: 0px 5px 10px 0px rgba(0,0,0,0.3);
   --shadow-raised-m: 0px 5px 10px 5px rgba(0,0,0,0.3);
+}
 
+body {
+  --pagefind-ui-scale: .8;
+  --pagefind-ui-primary: var(--color-primary);
+  --pagefind-ui-text: var(--color-text);
+  --pagefind-ui-background: var(--color-bg);
+  --pagefind-ui-border: var(--color-secondary);
+  --pagefind-ui-tag: var(--color-secondary);
+  --pagefind-ui-font: var(--font-heading);
 }
 
 @custom-selector :--h1 h1, .h1;

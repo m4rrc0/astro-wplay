@@ -384,8 +384,12 @@ function transformImage(i) {
 		: i
 }
 
-function transformAddress(address) {
-	const a = (address?.[0]?.zip && address?.[0]) || (address?.zip && address)
+function transformAddress(address, location) {
+	const a =
+		(location?.[0]?.zip && location?.[0]) ||
+		(location?.zip && location) ||
+		(address?.[0]?.zip && address?.[0]) ||
+		(address?.zip && address)
 	if (!a) return null
 
 	const string = [
@@ -499,7 +503,18 @@ export function transformOrganization(o, languages) {
 			? `_${status?.toUpperCase()}_${o.name}`
 			: o.name
 	// Transform Address
-	const address = transformAddress(o.address)
+	const address = transformAddress(
+		o.address,
+		o.location
+			? {
+					...o.location,
+					street: o.location?.streetAddress,
+					city: o.location?.addressLocality,
+					zip: o.location?.postalCode,
+					country: "Belgique",
+			  }
+			: undefined,
+	)
 	// Transform types
 	const typesTranslated = types?.map(translateFromCodeName)
 	// Transform opening_hours
@@ -595,6 +610,7 @@ export async function fetchOrganizations() {
 				"opening_hours",
 				"games_services",
 				"address",
+				"location.*",
 				"amenities",
 				"links",
 				"translations.*",
@@ -616,6 +632,7 @@ export async function fetchOrganizations() {
 					],
 				},
 				"events.events_id.address",
+				"events.events_id.location.*",
 				...imageFields("events.events_id.cover_image."),
 				"events.events_id.recurrence",
 				"events.events_id.startDate",
@@ -649,6 +666,7 @@ export async function fetchOrganizations() {
 				"events.events_id.organizers.organizations_id.name",
 				"events.events_id.organizers.organizations_id.slug",
 				"events.events_id.organizers.organizations_id.address",
+				"events.events_id.organizers.organizations_id.location.*",
 				...imageFields("events.events_id.organizers.organizations_id.logo."),
 				...imageFields(
 					"events.events_id.organizers.organizations_id.cover_image.",
@@ -751,7 +769,7 @@ function fallbackOnParentsOfEvent({
 		...(mainOrganizer
 			? removeEmptyPropOnObject({
 					name: mainOrganizer.name,
-					address: mainOrganizer.address,
+					address: { ...mainOrganizer.address, ...mainOrganizer.location },
 					cover_image: mainOrganizer.cover_image,
 					games_services_translated: mainOrganizer.games_services_translated,
 					amenities_translated: mainOrganizer.amenities_translated,
@@ -759,12 +777,12 @@ function fallbackOnParentsOfEvent({
 			  })
 			: {}),
 		// ...(hasParent
-		// 	? removeEmptyPropOnObject({
-		// 			name: parent.name,
-		// 			address: parent.address,
-		// 			cover_image: parent.cover_image,
-		// 	  })
-		// 	: {}),
+		//   ? removeEmptyPropOnObject({
+		//       name: parent.name,
+		//       address: { ...parent.address, ...parent.location},
+		//       cover_image: parent.cover_image,
+		//     })
+		//   : {}),
 		...removeEmptyPropOnObject(eventRaw),
 		organizers,
 		translations,
@@ -1202,7 +1220,18 @@ export function transformEvent(eventRaw, languages) {
 	// Transform images
 	const cover_image = transformImage(e?.cover_image)
 	// Transform Address
-	const address = transformAddress(e.address)
+	const address = transformAddress(
+		e.address,
+		e.location
+			? {
+					...e.location,
+					street: e.location?.streetAddress,
+					city: e.location?.addressLocality,
+					zip: e.location?.postalCode,
+					country: "Belgique",
+			  }
+			: undefined,
+	)
 	// Transform links
 	const links = e.links?.map(transformLink)
 	// date_updated can be undefined if never had modifications
@@ -1343,6 +1372,7 @@ export async function fetchEvents() {
 				"organizers.organizations_id.name",
 				"organizers.organizations_id.slug",
 				"organizers.organizations_id.address",
+				"organizers.organizations_id.location.*",
 				...imageFields("organizers.organizations_id.logo."),
 				...imageFields("organizers.organizations_id.cover_image."),
 				"organizers.organizations_id.games_services",

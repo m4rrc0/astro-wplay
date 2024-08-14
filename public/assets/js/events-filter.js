@@ -1,41 +1,102 @@
-const pagefind = await import("/pagefind/pagefind.js");
+const eventTypes = {
+  festival: 'Festival',
+  gameTime: 'Moment ludique',
+  tournament: 'Tournoi',
+  gamesMarket: 'Bouse aux jeux',
+  training: 'Formation',
+  pro: 'Événement professionnel',
+  other: 'Autre'
+};
+const eventsForm = document.getElementById('eventsForm');
+const resetBtn = document.getElementById('resetBtn');
+const proximityBtn = document.getElementById('proximityBtn');
+const eventTypeBtn = document.getElementById('eventTypeBtn');
+const events = document.getElementsByClassName('card-event');
+const dropdowns = document.getElementsByClassName('dropdown-content');
+const eventsPhrase = document.getElementById('eventsPhrase');
+
+let visitorPosition;
+if ('geolocation' in navigator) {
+  navigator.geolocation.getCurrentPosition((pos) => visitorPosition = pos);
+}
 
 /**
  * Filter events in events page using the parameters in the form
  * @param {*} eventsForm 
  */
 function filterEvents(eventsForm) {
+  // Get the data from the form
   const data = new FormData(eventsForm);
   const filterParams = Array.from(data.entries());
   const positionFilter = filterParams.filter(([key,]) => key === 'position').map(([,value]) => value)[0];
   const distanceFilter = filterParams.filter(([key,]) => key === 'distance').map(([,value]) => value)[0];
   const typesFilter = filterParams.filter(([key,]) => key === 'types').map(([,value]) => value);
 
-  let coords;
-  if (positionFilter === 'me') {
-    coords = visitorPosition.coords;
-  } else if (!!positionFilter) {
-    coords = {
-      latitude: document.getElementById('city' + positionFilter).dataset.latitude,
-      longitude: document.getElementById('city' + positionFilter).dataset.longitude
-    };
+  // Update the reset button display
+  if (!!positionFilter || (!!typesFilter && typesFilter.length)) {
+    resetBtn.style.display = 'initial';
+  } else {
+    resetBtn.style.display = 'none';
   }
-  const events = document.getElementsByClassName('card-event');
 
+  // Update the proximity button
+  let coords;
+  if (!!positionFilter) {
+    proximityBtn.classList.add('color-palette-teal');
+    proximityBtn.innerText = positionFilter;
+
+    // Get the coordinates to check the distance
+    if (positionFilter === 'Ma position') {
+      coords = visitorPosition.coords;
+    } else {
+      coords = {
+        latitude: document.getElementById('city' + positionFilter).dataset.latitude,
+        longitude: document.getElementById('city' + positionFilter).dataset.longitude
+      };
+    }
+  } else {
+    proximityBtn.classList.remove('color-palette-teal');
+    proximityBtn.innerText = 'A proximité de';
+  }
+
+  // Update the event type button
+  if (!!typesFilter && typesFilter.length) {
+    eventTypeBtn.classList.add('color-palette-teal');
+    eventTypeBtn.innerText = typesFilter.map(typeFilter => eventTypes[typeFilter]).join(', ');
+  } else {
+    eventTypeBtn.classList.remove('color-palette-teal');
+    eventTypeBtn.innerText = 'Types';
+  }
+
+  // Filter the events
+  let eventsCount = 0;
   for (let i = 0; i < events.length; i++) {
     const eventCoords = {
       latitude: events[i].getElementsByClassName('zip')[0].dataset.latitude,
       longitude: events[i].getElementsByClassName('zip')[0].dataset.longitude
     };
     if (
-      (positionFilter && distance(coords, eventCoords) > distanceFilter * 1000) ||
-      (typesFilter && (typesFilter.length > 1 || typesFilter[0] !== '') && !typesFilter.some(type => events[i].dataset.type.split(',').includes(type))) 
+      (positionFilter && (!eventCoords.latitude || distance(coords, eventCoords) > distanceFilter * 1000)) ||
+      (typesFilter && typesFilter.length && (typesFilter.length > 1 || typesFilter[0] !== '') && !typesFilter.some(type => {
+        if (events[i].dataset.types) {
+          if (type === 'other') {
+            return events[i].dataset.types.split(',').some(t => !['festival', 'gameTime', 'tournament', 'gamesMarket', 'training', 'pro'].includes(t))
+          }
+          return events[i].dataset.types.split(',').includes(type);
+        }
+        return false;
+      })) 
     ) {
       events[i].style.display = 'none';
     } else {
       events[i].style.display = 'initial';
+      eventsCount++;
     }
   }
+
+  // Update the events phrase
+  const splitedEventsPhrase = eventsPhrase.innerText.split('/');
+  eventsPhrase.innerText = (eventsCount !== events.length ? eventsCount + '/' : '') + (splitedEventsPhrase.length > 1 ? splitedEventsPhrase[1] : splitedEventsPhrase[0]);
 };
 
 /**
@@ -63,7 +124,6 @@ function distance(coords1, coords2) {
  */
 function closeDropdowns(event) {
   if (!event.target.closest('.dropdown')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];
@@ -74,12 +134,12 @@ function closeDropdowns(event) {
   }
 };
 
-let visitorPosition;
-if ("geolocation" in navigator) {
-  navigator.geolocation.getCurrentPosition((pos) => visitorPosition = pos);
-}
-const eventsForm = document.getElementById('eventsForm');
 eventsForm.onsubmit = (e) => e.preventDefault();
 eventsForm.onchange = () => filterEvents(eventsForm);
+resetBtn.onclick = (e) => {
+  e.preventDefault();
+  eventsForm.reset();
+  filterEvents(eventsForm);
+};
 
 window.onclick = closeDropdowns;

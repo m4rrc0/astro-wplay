@@ -59,9 +59,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <IO h2 $skip={!events?.[0]?.name} class="center text">Agenda Ludique de Belgique</IO>
 
         <script src="/assets/js/events-filter.js" defer type="module"></script>
-        <form id="eventsForm" class="stack horizontal" style="--gap: var(--size-h5);">
+        <form id="eventsForm" class="center stack horizontal text" style="display: flex">
           <div class="dropdown">
-            <button onclick="proximity.classList.toggle('show')" class="dropbtn">A proximité de</button>
+            <button id="proximityBtn" onclick="proximity.classList.toggle('show')" class="dropbtn">A proximité de</button>
             <div id="proximity" class="dropdown-content">
               <div class="stack">
                 <div class="stack horizontal">
@@ -72,7 +72,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   />
                   <select name="position">
                     <option value="">Emplacement</option>
-                    <option value="me">
+                    <option value="Ma position">
                       Ma position
                     </option>
                     {
@@ -105,15 +105,41 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               </div>
             </div>
           </div>
-          <select name="types" id="types" multiple>
-            <option value="">Type</option>
-            <option value="festival">Festival</option>
-            <option value="moment">Moment ludique</option>
-            <option value="tournament">Tournoi</option>
-            <option value="exchange">Bouse aux jeux</option>
-            <option value="meeting">Rencontre pro</option>
-            <option value="other">Autre</option>
-          </select>
+          <div class="dropdown">
+            <button id="eventTypeBtn" onclick="eventType.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Types</button>
+            <div id="eventType" class="dropdown-content align-items-start">
+              <div class="stack gap-h3" style="white-space: nowrap">
+                <div class="stack horizontal align-items-center">
+                  <input type="checkbox" id="festival" value="festival" name="types">
+                  <label for="festival">Festival</label>
+                </div>
+                <div class="stack horizontal align-items-center">
+                  <input type="checkbox" id="gameTime" value="gameTime" name="types">
+                  <label for="gameTime">Moment ludique</label>
+                </div>
+                <div class="stack horizontal align-items-center">
+                  <input type="checkbox" id="tournament" value="tournament" name="types">
+                  <label for="tournament">Tournoi</label>
+                </div>
+                <div class="stack horizontal align-items-center">
+                  <input type="checkbox" id="gamesMarket" value="gamesMarket" name="types">
+                  <label for="gamesMarket">Bouse aux jeux</label>
+                </div>
+                <div class="stack horizontal align-items-center">
+                  <input type="checkbox" id="training" value="training" name="types">
+                  <label for="training">Formation</label>
+                </div>
+                <div class="stack horizontal align-items-center">
+                  <input type="checkbox" id="pro" value="pro" name="types">
+                  <label for="pro">Événement professionnel</label>
+                </div>
+                <div class="stack horizontal align-items-center">
+                  <input type="checkbox" id="other" value="other" name="types">
+                  <label for="other">Autre</label>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- <p>Trier par...</p>
           <div class="cluster" style="--gap: var(--size-h7);">
             <div>
@@ -126,9 +152,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               <button class="sort" data-sort="zip">Code postal</button>
             </div>
           </div> -->
+          <input type="reset" id="resetBtn" class="color-palette-teal" style="display: none;">
         </form>
 
-        <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
+        <IO p $skip={!events?.[0]?.name} id="eventsPhrase" class="center text">{eventsPhrase}</IO>
 
         <IO
           div
@@ -141,7 +168,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               events?.map((event) => {
                 const {
                   name,
-                  type,
+                  types,
                   address,
                   cover_image,
                   organizers,
@@ -161,7 +188,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   <li
                     class="card-event breakout-clickable box no-border no-padding border-radius-s"
                     style=""
-                    data-type={type}
+                    data-types={types}
                   >
                     <div
                       class="box no-border padding-h4 with-sidebar gap-h4
@@ -207,10 +234,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                         class="zip city h5"
                         data-zip={address.zip}
                         data-city={address.city}
-                        data-latitude={address.latitude}
-                        data-longitude={address.longitude}
+                        data-latitude={address.geo?.coordinates[1]}
+                        data-longitude={address.geo?.coordinates[0]}
                       >
-                        {address?.city}
+                        {address.city}
                       </IO>
                       <ul class="reset stack horizontal">
                         {organizers?.map(({ name, logo }) => (

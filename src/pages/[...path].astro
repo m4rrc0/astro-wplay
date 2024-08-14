@@ -23,7 +23,7 @@ import {
   AreaPage, 
 } from "@layouts"
 
-import TeamMemberPage from "@src/layouts"
+import TeamMemberPage from "@src/layouts/TeamMemberPage.astro";
 
 const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
@@ -186,6 +186,22 @@ const {
   <!-- Team Member Page -->
   {
   path === "fr/equipe/jenny" && (
+  <TeamMemberPage {lang} />
+)}
+{
+  path === "fr/equipe/marc" && (
+  <TeamMemberPage {lang} />
+)}
+{
+  path === "fr/equipe/tess" && (
+  <TeamMemberPage {lang} />
+)}
+{
+  path === "fr/equipe/roxane" && (
+  <TeamMemberPage {lang} />
+)}
+{
+  path === "fr/equipe/yves" && (
   <TeamMemberPage {lang} />
 )}
 </Fragment>

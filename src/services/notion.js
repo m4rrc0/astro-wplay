@@ -8,7 +8,7 @@ const notion = new Client({auth:NOTION_API});
 async function loadNotionPage() {
     await axios.get(NOTION_URL)
     .then((page) =>{
-        // console.log(page);//for debug
+        console.log(page);//for debug
     })
     .catch((error)=>{
         console.log(error);

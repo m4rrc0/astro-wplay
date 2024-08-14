@@ -15,9 +15,29 @@ const events = document.getElementsByClassName('card-event');
 const dropdowns = document.getElementsByClassName('dropdown-content');
 const eventsPhrase = document.getElementById('eventsPhrase');
 
+// Ask for visitor position
 let visitorPosition;
 if ('geolocation' in navigator) {
   navigator.geolocation.getCurrentPosition((pos) => visitorPosition = pos);
+}
+
+// Update form inputs with URL parameters
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+if (urlParams.size > 0) {
+  const form = document.forms['eventsForm'];
+  for (const param of urlParams) {
+    if (param[0] === 'types') {
+      for (const type in document.forms['eventsForm'].elements[param[0]]) {
+        if (document.forms['eventsForm'].elements[param[0]][type].id === param[1]) {
+          document.forms['eventsForm'].elements[param[0]][type].checked = true;
+        }
+      }
+    } else {
+      form.elements[param[0]].value = param[1];
+    }
+  }
+  filterEvents(eventsForm);
 }
 
 /**
@@ -31,6 +51,17 @@ function filterEvents(eventsForm) {
   const positionFilter = filterParams.filter(([key,]) => key === 'position').map(([,value]) => value)[0];
   const distanceFilter = filterParams.filter(([key,]) => key === 'distance').map(([,value]) => value)[0];
   const typesFilter = filterParams.filter(([key,]) => key === 'types').map(([,value]) => value);
+  
+  // Update the current page URL
+  window.history.replaceState(null, null, filterParams.reduce(
+    (queryString, param, index) => {
+      if (!param[1] || (param[0] === 'distance' && param[1] === '10')) {
+        return queryString;
+      }
+      return queryString + param[0] + "=" + param[1] + (index === filterParams.length - 1 ? "" : "&")
+    },
+    "?"
+  ));
 
   // Update the reset button display
   if (!!positionFilter || (!!typesFilter && typesFilter.length)) {

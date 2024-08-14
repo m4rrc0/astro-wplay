@@ -59,101 +59,103 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <IO h2 $skip={!events?.[0]?.name} class="center text">Agenda Ludique de Belgique</IO>
 
         <script src="/assets/js/events-filter.js" defer type="module"></script>
-        <form id="eventsForm" class="center stack horizontal text" style="display: flex">
-          <div class="dropdown">
-            <button id="proximityBtn" onclick="proximity.classList.toggle('show')" class="dropbtn">A proximité de</button>
-            <div id="proximity" class="dropdown-content">
-              <div class="stack">
-                <div class="stack horizontal">
-                  <Icon
-                    name="gridicons:location"
-                    title="location"
-                    role="img"
-                  />
-                  <select name="position">
-                    <option value="">Emplacement</option>
-                    <option value="Ma position">
-                      Ma position
-                    </option>
-                    {
-                      cities.map(city => (
-                        <option
-                          id={"city" + city.city}
-                          value={city.city}
-                          data-latitude={city.lat}
-                          data-longitude={city.lng}
-                        >
-                          {city.city}
-                        </option>
-                      ))
-                    }
-                  </select>
-                </div>
-                <div class="stack justify-space-between">
-                  <label for="distance">Distance (km)</label>
-                  <div class="stack gap-0">
-                    <input type="range" id="distance" name="distance" min="1" max="99" value="10" list="distances" />
-                    <datalist id="distances" class="stack horizontal justify-space-between align-items-center h7 padding-x-h9">
-                      <option value="1" label="01"></option>
-                      <option value="25" label="25"></option>
-                      <option value="50" label="50"></option>
-                      <option value="75" label="75"></option>
-                      <option value="99" label="99"></option>
-                    </datalist>
+        <div class="center">
+          <form id="eventsForm" class="stack horizontal justify-content-center gap-0" style="flex-wrap: wrap; gap: var(--size-h1)">
+            <div class="dropdown center">
+              <button id="proximityBtn" onclick="proximity.classList.toggle('show')" class="dropbtn">A proximité de</button>
+              <div id="proximity" class="dropdown-content">
+                <div class="stack gap-h3">
+                  <div class="stack horizontal">
+                    <Icon
+                      name="gridicons:location"
+                      title="location"
+                      role="img"
+                    />
+                    <select name="position">
+                      <option value="">Emplacement</option>
+                      <option value="Ma position">
+                        Ma position
+                      </option>
+                      {
+                        cities.map(city => (
+                          <option
+                            id={"city" + city.city}
+                            value={city.city}
+                            data-latitude={city.lat}
+                            data-longitude={city.lng}
+                          >
+                            {city.city}
+                          </option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                  <div class="stack justify-space-between">
+                    <label for="distance">Distance (km)</label>
+                    <div class="stack gap-0">
+                      <input type="range" id="distance" name="distance" min="1" max="99" value="10" list="distances" />
+                      <datalist id="distances" class="stack horizontal justify-space-between align-items-center h7 padding-x-h9">
+                        <option value="1" label="01"></option>
+                        <option value="25" label="25"></option>
+                        <option value="50" label="50"></option>
+                        <option value="75" label="75"></option>
+                        <option value="99" label="99"></option>
+                      </datalist>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="dropdown">
-            <button id="eventTypeBtn" onclick="eventType.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Types</button>
-            <div id="eventType" class="dropdown-content align-items-start">
-              <div class="stack gap-h3" style="white-space: nowrap">
-                <div class="stack horizontal align-items-center">
-                  <input type="checkbox" id="festival" value="festival" name="types">
-                  <label for="festival">Festival</label>
-                </div>
-                <div class="stack horizontal align-items-center">
-                  <input type="checkbox" id="gameTime" value="gameTime" name="types">
-                  <label for="gameTime">Moment ludique</label>
-                </div>
-                <div class="stack horizontal align-items-center">
-                  <input type="checkbox" id="tournament" value="tournament" name="types">
-                  <label for="tournament">Tournoi</label>
-                </div>
-                <div class="stack horizontal align-items-center">
-                  <input type="checkbox" id="gamesMarket" value="gamesMarket" name="types">
-                  <label for="gamesMarket">Bouse aux jeux</label>
-                </div>
-                <div class="stack horizontal align-items-center">
-                  <input type="checkbox" id="training" value="training" name="types">
-                  <label for="training">Formation</label>
-                </div>
-                <div class="stack horizontal align-items-center">
-                  <input type="checkbox" id="pro" value="pro" name="types">
-                  <label for="pro">Événement professionnel</label>
-                </div>
-                <div class="stack horizontal align-items-center">
-                  <input type="checkbox" id="other" value="other" name="types">
-                  <label for="other">Autre</label>
+            <div class="dropdown center">
+              <button id="eventTypeBtn" onclick="eventType.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Types</button>
+              <div id="eventType" class="dropdown-content align-items-start">
+                <div class="stack gap-h3" style="white-space: nowrap">
+                  <div class="stack horizontal align-items-center">
+                    <input type="checkbox" id="festival" value="festival" name="types">
+                    <label for="festival">Festival</label>
+                  </div>
+                  <div class="stack horizontal align-items-center">
+                    <input type="checkbox" id="gameTime" value="gameTime" name="types">
+                    <label for="gameTime">Moment ludique</label>
+                  </div>
+                  <div class="stack horizontal align-items-center">
+                    <input type="checkbox" id="tournament" value="tournament" name="types">
+                    <label for="tournament">Tournoi</label>
+                  </div>
+                  <div class="stack horizontal align-items-center">
+                    <input type="checkbox" id="gamesMarket" value="gamesMarket" name="types">
+                    <label for="gamesMarket">Bouse aux jeux</label>
+                  </div>
+                  <div class="stack horizontal align-items-center">
+                    <input type="checkbox" id="training" value="training" name="types">
+                    <label for="training">Formation</label>
+                  </div>
+                  <div class="stack horizontal align-items-center">
+                    <input type="checkbox" id="pro" value="pro" name="types">
+                    <label for="pro">Événement professionnel</label>
+                  </div>
+                  <div class="stack horizontal align-items-center">
+                    <input type="checkbox" id="other" value="other" name="types">
+                    <label for="other">Autre</label>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- <p>Trier par...</p>
-          <div class="cluster" style="--gap: var(--size-h7);">
-            <div>
-              <button
-                class="sort asc"
-                data-sort="timestart"
-                data-default-order="asc"
-                >Début
-              </button>
-              <button class="sort" data-sort="zip">Code postal</button>
-            </div>
-          </div> -->
-          <input type="reset" id="resetBtn" class="color-palette-teal" style="display: none;">
-        </form>
+            <!-- <p>Trier par...</p>
+            <div class="cluster" style="--gap: var(--size-h7);">
+              <div>
+                <button
+                  class="sort asc"
+                  data-sort="timestart"
+                  data-default-order="asc"
+                  >Début
+                </button>
+                <button class="sort" data-sort="zip">Code postal</button>
+              </div>
+            </div> -->
+            <input type="reset" id="resetBtn" class="color-palette-teal" style="display: none;">
+          </form>
+        </div>
 
         <IO p $skip={!events?.[0]?.name} id="eventsPhrase" class="center text">{eventsPhrase}</IO>
 

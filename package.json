@@ -4,11 +4,11 @@
 	"private": true,
 	"scripts": {
 		"dev": "astro dev",
-    "predev": "pagefind --site dist --output-path ./public/pagefind",
 		"start": "astro dev",
 		"build": "astro build",
 		"build:bun": "bun --bun astro build",
-		"postbuild": "npm run encrypt && pagefind --site dist",
+		"postbuild": "pagefind --site dist && npm run encrypt",
+    "pagefind": "pagefind --site dist --output-path ./public/pagefind",
 		"preview": "astro preview",
 		"serve": "astro preview",
 		"format": "npx prettier -w .",

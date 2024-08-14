@@ -59,7 +59,7 @@
 }
 
 body {
-  --pagefind-ui-scale: .8;
+  --pagefind-ui-scale: 1;
   --pagefind-ui-primary: var(--color-primary);
   --pagefind-ui-text: var(--color-text);
   --pagefind-ui-background: var(--color-bg);

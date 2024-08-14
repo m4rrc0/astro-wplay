@@ -575,7 +575,6 @@ NEW: uncontain: class bool | default to containing the imposter within its posit
 .align-content-space-evenly { --align-content: space-around; align-content: space-evenly; } /* prettier-ignore */
 .align-content-stretch { --align-content: stretch; } /* prettier-ignore */
 
-
 .text-overflow-ellipsis {
   white-space: nowrap;
   overflow: hidden;

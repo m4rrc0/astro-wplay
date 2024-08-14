@@ -1,0 +1,239 @@
+---
+import { IO, Img, ImgDirectus, SEO } from "@components";
+import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png";
+import { BasicPage, SkeletonPage } from "@layouts";
+import { imageDirectusSrc } from "@utils";
+import cities from "@utils/areas/cities.json";
+
+const { lang, events } = Astro.props
+
+const eventsCountPhrase = `${
+  events.length === 1
+    ? `${events.length} événement`
+    : `${events.length} événements`
+} jeu`
+const eventsTimeStart = events?.[0]?.time_start
+const eventsTimeEnd =
+  events.length < 2
+    ? null
+    : events?.[events.length - 1]?.time_end ||
+      events?.[events.length - 1]?.time_start
+const eventsTimeArr = [
+  eventsTimeStart &&
+    `${eventsTimeStart?.[lang.code]?.day} ${
+      eventsTimeStart?.[lang.code]?.monthLong
+    } ${eventsTimeStart?.[lang.code]?.year}`,
+  eventsTimeEnd &&
+    `${eventsTimeEnd?.[lang.code]?.day} ${
+      eventsTimeEnd?.[lang.code]?.monthLong
+    } ${eventsTimeEnd?.[lang.code]?.year}`,
+].filter((z) => z)
+const eventsPhrase =
+  eventsTimeArr.length === 0
+    ? `${eventsCountPhrase} à `
+    : eventsTimeArr.length === 1 || eventsTimeArr?.[0] == eventsTimeArr?.[1]
+    ? `${eventsCountPhrase} à  le ${eventsTimeArr[0]}`
+    : `${eventsCountPhrase} à  entre le ${eventsTimeArr.join(
+        " et le ",
+      )}`
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+
+---
+
+<SkeletonPage lang={lang.code}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title={`Soirées jeux, clubs, bar à jeux, ludothèques dans la province de `}
+    description={`Tu veux jouer dans la province de ? Viens découvrir les lieux ludiques de la région.`}
+    canonicalUrl={canonicalURL.href}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage {lang}>
+    <main class="center width-max">
+      <div id="events-list-container" class="box no-border stack gap-down-h1">
+        <IO h2 $skip={!events?.[0]?.name} class="center text">Agenda Ludique de Belgique</IO>
+
+        <script src="/assets/js/events-filter.js" defer type="module"></script>
+        <form id="eventsForm" class="center stack horizontal" style="--gap: var(--size-h5);">
+          <div class="dropdown">
+            <button onclick="proximity.classList.toggle('show')" class="dropbtn">A proximité de</button>
+            <div id="proximity" class="dropdown-content">
+              <div class="stack">
+                <select name="position">
+                  <option value="">A proximité de</option>
+                  <option value="me">Moi</option>
+                  {
+                    cities.map(city => (
+                      <option
+                        id={"city" + city.city}
+                        value={city.city}
+                        data-latitude={city.lat}
+                        data-longitude={city.lng}
+                      >
+                        {city.city}
+                      </option>
+                    ))
+                  }
+                </select>
+                <div>
+                  <label for="distance">Distance</label>
+                  <input type="range" id="distance" name="distance" min="1" max="100" value="10" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <p>Trier par...</p>
+          <div class="cluster" style="--gap: var(--size-h7);">
+            <div>
+              <button
+                class="sort asc"
+                data-sort="timestart"
+                data-default-order="asc"
+                >Début
+              </button>
+              <button class="sort" data-sort="zip">Code postal</button>
+            </div>
+          </div> -->
+        </form>
+
+        <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
+
+        <IO
+          div
+          $skipNoInner
+          class="grid gap-down-h4"
+          style="--width-column: var(--width-col-3);"
+        >
+          <IO ul $skip={!events?.[0]?.name} class="list reset">
+            {
+              events?.map((event) => {
+                const {
+                  name,
+                  address,
+                  cover_image,
+                  organizers,
+                  time_start,
+                  time_end,
+                  isSameDay,
+                } = event
+
+                const srcCover = imageDirectusSrc({
+                  src: cover_image?.src,
+                  width: "1000",
+                  fit: "cover",
+                  quality: "50",
+                })
+
+                return (
+                  <li
+                    class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                    style=""
+                  >
+                    <div
+                      class="box no-border padding-h4 with-sidebar gap-h4
+                                        color-palette-trans
+                                        background-overlay
+                                        "
+                      style={
+                        (srcCover
+                          ? `background-image: url("${srcCover}"); `
+                          : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                        `--content-min: 80%;`
+                      }
+                    >
+                      <div>
+                        <time
+                          datetime={time_start.dateTimeRaw}
+                          class="timestart stack gap-down-h8 center intrinsic"
+                          style="line-height: 1;"
+                        >
+                          <span class="size-h1">{time_start?.fr?.day}</span>
+                          <span class="size-h2">
+                            {time_start?.fr?.monthShort}
+                          </span>
+                          <span class="size-h2">{time_start?.fr?.year}</span>
+                        </time>
+                        <div>
+                          <div class="cover no-gap" style="--min-height: 100%;">
+                            <h2 class="h3 centered">
+                              <a
+                                href={`/${event.path}`}
+                                class="name reset clickable"
+                                set:html={name}
+                              />
+                            </h2>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                      <IO
+                        p
+                        $skipNoInner
+                        class="zip city h5"
+                        data-zip={address.zip}
+                        data-city={address.city}
+                        data-latitude={address.latitude}
+                        data-longitude={address.longitude}
+                      >
+                        {address?.city}
+                      </IO>
+                      <ul class="reset stack horizontal">
+                        {organizers?.map(({ name, logo }) => (
+                          <li>
+                            {logo?.src ? (
+                              <ImgDirectus
+                                image={logo}
+                                src={logo?.src}
+                                alt={name}
+                                loading="lazy"
+                                class=""
+                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                width="32"
+                                height="32"
+                                fit="inside"
+                                quality="99"
+                              />
+                            ) : (
+                              <Img
+                                src={placeholderWPlayCircleBlue}
+                                alt="logo"
+                                loading="lazy"
+                                class=""
+                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                width="32"
+                                height="32"
+                              />
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                )
+              })
+            }
+          </IO>
+        </IO>
+      </div>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+  .card-event-footer {
+    line-height: 32px;
+  }
+  .sort.asc::after {
+    content: "\002B06";
+    padding-left: 3px;
+  }
+  .sort.desc::after {
+    content: "\002B07";
+    padding-left: 3px;
+  }
+</style>

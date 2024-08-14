@@ -1,6 +1,6 @@
 ---
-import { Icon } from "astro-icon/components"
 import { MtObf } from "@components"
+import { Icon } from "astro-icon/components"
 
 const { lang } = Astro.props
 
@@ -8,7 +8,11 @@ const email = import.meta.env.CONTACT_EMAIL
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
-
+<style>
+  #menu-main li {
+    user-select: none;
+  }
+</style>
 <div
   id="layout-page-base"
   class="stack split-after-2 gap-down-h1 justify-start"
@@ -34,22 +38,37 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               <span>Wanna Play</span>
             </a>
           </li>
+          <div id="search"></div>
+          <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+              new PagefindUI({ element: '#search', showSubResults: true, resetStyles: false });
+            });
+          </script>
           <li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
-          <!-- <li><a href={`/${lang.code}/o`}>Organisations</a></li> -->
-          <!-- <li><a href={`/${lang.code}/e`}>Événements</a></li> -->
-          <li><a href={`/${lang.code}/a`}>Articles</a></li>
-          <!-- <li><a href={`/${lang.code}/annuaire`}>Annuaire</a></li> -->
-          <li><a href={`/${lang.code}/projet`}>Projet</a></li>
-          <li><a href={`/${lang.code}/equipe`}>Équipe</a></li>
+          <li><a href={`/${lang.code}/e`}>Agenda</a></li>
+          <li><a href={`/${lang.code}/o`}>Annuaire</a></li>
+          <li class="dropdown">
+            <a onclick="ressources.classList.toggle('show')" class="dropbtn">Ressources</a>
+            <div id="ressources" class="dropdown-content">
+              <div class="stack">
+                <a href={`/${lang.code}/a`}>Articles</a>
+                <a class="color-palette-teal" href="https://talk.wanna-play.be/" target="_blank">
+                  Wanna Talk?
+                </a>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a onclick="about.classList.toggle('show')" class="dropbtn">A Propos</a>
+            <div id="about" class="dropdown-content">
+              <div class="stack">
+                <a href={`/${lang.code}/projet`}>Projet</a>
+                <a href={`/${lang.code}/equipe`}>Équipe</a>
+              </div>
+            </div>
+          </li>
           <li><a href={`/${lang.code}/contact`}>Contact</a></li>
           <!-- <li><a href="/styleguide">Styleguide</a></li> -->
-          <li class="color-palette-teal">
-            <strong
-              ><a href="https://talk.wanna-play.be/" target="_blank"
-                >Wanna Talk?
-              </a>
-            </strong>
-          </li>
         </ul>
       </nav>
     </div>
@@ -167,6 +186,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   }
   nav > ul > li:first-child {
     --justify-content: flex-start;
+  }
+  nav > ul > #search {
     flex-grow: 1;
   }
   nav > ul > li:first-child > a {

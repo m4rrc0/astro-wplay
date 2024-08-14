@@ -19,8 +19,7 @@ const {
     cover_image,
     // opening_hours,
     opening_hours_strings,
-    // games_services,
-    games_services_translated,
+    servicesTranslated,
     address,
     // amenities,
     amenities_translated,
@@ -138,19 +137,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       </header>
 
       {
-        (games_services_translated?.[0] || amenities_translated?.[0]) && (
+        (servicesTranslated?.[0] || amenities_translated?.[0]) && (
           <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
             <ul class="reset">
               <>
-                {games_services_translated?.map(({ [lang.code]: code }) => (
-                  <li
-                    class="
-                  box no-border padding-x-h7 padding-y-h8
-                  color-palette-variation-contrast
-                  border-radius-s
-                "
-                  >
-                    {code}
+                {servicesTranslated?.map((service) => (
+                  <li class="
+                    box no-border padding-x-h7 padding-y-h8
+                    color-palette-variation-contrast
+                    border-radius-s
+                  ">
+                    {service.translations.find(t => t.language_code === lang.code).default_label}
                   </li>
                 ))}
 

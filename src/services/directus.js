@@ -125,12 +125,6 @@ const dico = [
 	{ code_name: "friday", fr: "Vendredi" },
 	{ code_name: "saturday", fr: "Samedi" },
 	{ code_name: "sunday", fr: "Dimanche" },
-	// Games services
-	{ code_name: "yes_games", fr: "Jeux sur place" },
-	{ code_name: "animators", fr: "Animateurs" },
-	{ code_name: "buy_new", fr: "Achat neuf" },
-	{ code_name: "buy_used", fr: "Achat d'occasion" },
-	{ code_name: "video_games", fr: "Jeux vidéos" },
 	// Amenities
 	{ code_name: "snacks", fr: "Snacks" },
 	{ code_name: "drinks", fr: "Boissons" },
@@ -498,9 +492,9 @@ export function transformOrganization(o, languages) {
 		status,
 		slug,
 		opening_hours,
-		games_services,
 		amenities,
 		organization_types,
+		games_related_services,
 	} = o
 	// Create Path
 	const path = createPath({ type: "organization", slug })
@@ -524,6 +518,8 @@ export function transformOrganization(o, languages) {
 	)
 	// Transform types
 	const typesTranslated = organization_types?.map((t) => t.type)
+	// Transform services
+	const servicesTranslated = games_related_services?.map((t) => t.service)
 	// Transform opening_hours
 	const opening_hours_strings = opening_hours?.map(({ days, time_slots }) => {
 		const daysTranslated = days?.map(translateFromCodeName)
@@ -544,8 +540,6 @@ export function transformOrganization(o, languages) {
 		)
 	})
 
-	// Transform games_services
-	const games_services_translated = games_services?.map(translateFromCodeName)
 	// Transform amenities
 	const amenities_translated = amenities?.map(translateFromCodeName)
 	// Transform images
@@ -588,8 +582,8 @@ export function transformOrganization(o, languages) {
 		name,
 		address,
 		typesTranslated,
+		servicesTranslated,
 		opening_hours_strings,
-		games_services_translated,
 		amenities_translated,
 		logo,
 		gallery,
@@ -618,7 +612,9 @@ export async function fetchOrganizations() {
 				...imageFields("logo."),
 				...imageFields("cover_image."),
 				"opening_hours",
-				"games_services",
+				"games_related_services.service.code_name",
+				"games_related_services.service.translations.language_code",
+				"games_related_services.service.translations.default_label",
 				"address",
 				"location.*",
 				"amenities",
@@ -681,7 +677,9 @@ export async function fetchOrganizations() {
 				...imageFields(
 					"events.events_id.organizers.organizations_id.cover_image.",
 				),
-				"events.events_id.organizers.organizations_id.games_services",
+				"events.events_id.organizers.organizations_id.games_related_services.service.code_name",
+				"events.events_id.organizers.organizations_id.games_related_services.service.translations.language_code",
+				"events.events_id.organizers.organizations_id.games_related_services.service.translations.default_label",
 				"events.events_id.organizers.organizations_id.amenities",
 				// ...imageFields(
 				// 	"events.events_id.organizers.organizations_id.gallery.*.",
@@ -781,7 +779,7 @@ function fallbackOnParentsOfEvent({
 					name: mainOrganizer.name,
 					address: { ...mainOrganizer.address, ...mainOrganizer.location },
 					cover_image: mainOrganizer.cover_image,
-					games_services_translated: mainOrganizer.games_services_translated,
+					games_related_services: mainOrganizer.games_related_services,
 					amenities_translated: mainOrganizer.amenities_translated,
 					gallery: mainOrganizer.gallery,
 			  })
@@ -1393,7 +1391,9 @@ export async function fetchEvents() {
 				"organizers.organizations_id.location.*",
 				...imageFields("organizers.organizations_id.logo."),
 				...imageFields("organizers.organizations_id.cover_image."),
-				"organizers.organizations_id.games_services",
+				"organizers.organizations_id.games_related_services.service.code_name",
+				"organizers.organizations_id.games_related_services.service.translations.language_code",
+				"organizers.organizations_id.games_related_services.service.translations.default_label",
 				"organizers.organizations_id.amenities",
 				// ...imageFields("organizers.organizations_id.gallery.*."),
 				"organizers.organizations_id.translations.languages_code",

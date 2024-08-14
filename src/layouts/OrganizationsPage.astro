@@ -59,13 +59,40 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               <div id="organizationType" class="dropdown-content align-items-start">
                 <div class="stack gap-h3" style="white-space: nowrap">
                   {
-                    dictionary.map(d => {
+                    dictionary.filter(
+                      (d) => d.tag_categories.includes("organization_type")
+                    ).map(d => {
                       return (
                         <div class="stack horizontal align-items-center">
                           <input
                             type="checkbox"
                             id={d.code_name} value={d.code_name}
                             name="types"
+                            data-code={d.code_name}
+                            data-label={d.translations.find(t => t.language_code === lang.code).default_label}
+                          >
+                          <label for={d.code_name}>{d.translations.find(t => t.language_code === lang.code).default_label}</label>
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="dropdown center">
+              <button id="serviceBtn" onclick="service.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Services</button>
+              <div id="service" class="dropdown-content align-items-start">
+                <div class="stack gap-h3" style="white-space: nowrap">
+                  {
+                    dictionary.filter(
+                      (d) => d.tag_categories.includes("games_related_service")
+                    ).map(d => {
+                      return (
+                        <div class="stack horizontal align-items-center">
+                          <input
+                            type="checkbox"
+                            id={d.code_name} value={d.code_name}
+                            name="services"
                             data-code={d.code_name}
                             data-label={d.translations.find(t => t.language_code === lang.code).default_label}
                           >
@@ -90,7 +117,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           <IO ul $skipNoInner class="reset">
             {
               organizations?.map((organization) => {
-                const { name, path, logo, typesTranslated, address } = organization
+                const { name, path, logo, typesTranslated, address, servicesTranslated } = organization
 
                 const nameIsLong = name.length > 30
 
@@ -103,6 +130,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     style=""
                     data-area={address?.area.code_name}
                     data-types={typesTranslated.map(t => t.code_name)}
+                    data-services={servicesTranslated.map(t => t.code_name)}
                   >
                     <div
                       class="center intrinsic"

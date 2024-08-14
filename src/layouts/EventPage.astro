@@ -22,7 +22,7 @@ const {lang, event: {
   // translations.main_url,
   // translations.facebook_event_url,
   // translations.other_links,
-  games_services_translated,
+  servicesTranslated,
   amenities_translated,
   event_instances,
   isRecurring,
@@ -170,16 +170,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           }
         </div>
       </div>} -->
-      {(games_services_translated?.[0] || amenities_translated?.[0]) &&
+      {(servicesTranslated?.[0] || amenities_translated?.[0]) &&
         <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
           <ul class="reset">
             <>
-              {games_services_translated?.map(({ [lang.code]: code }) => (
+              {servicesTranslated?.map((service) => (
                 <li class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-contrast
                   border-radius-s
-                ">{code}</li>
+                ">
+                  {service.translations.find(t => t.language_code === lang.code).default_label}
+                </li>
               ))}
 
               {amenities_translated?.map(({ [lang.code]: code }) => (

@@ -94,9 +94,7 @@ export async function getStaticPaths() {
             (o) => o.boardgame_related
           ),
           areas,
-          dictionary: dictionary?.filter(
-            (d) => d.tag_categories.includes("organization_type")
-          ).sort((d1, d2) => d1.translations.find(t => t.language_code === lang.code).default_label.localeCompare(
+          dictionary: dictionary?.sort((d1, d2) => d1.translations.find(t => t.language_code === lang.code).default_label.localeCompare(
             d2.translations.find(t => t.language_code === lang.code).default_label
           )),
         }

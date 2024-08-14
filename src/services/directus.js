@@ -1327,6 +1327,7 @@ export async function fetchEvents() {
 				"status",
 				"date_updated",
 				"name",
+				"event_types",
 				{
 					location: [
 						// "*",

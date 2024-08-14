@@ -170,7 +170,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               events?.map((event) => {
                 const {
                   name,
-                  types,
+                  event_types,
                   address,
                   cover_image,
                   organizers,
@@ -190,7 +190,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   <li
                     class="card-event breakout-clickable box no-border no-padding border-radius-s"
                     style=""
-                    data-types={types}
+                    data-types={event_types}
                   >
                     <div
                       class="box no-border padding-h4 with-sidebar gap-h4

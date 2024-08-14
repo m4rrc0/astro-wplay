@@ -76,8 +76,7 @@ export async function getStaticPaths() {
           lang,
           area,
           organizations: currentOrgs,
-          events: currentEvents,
-          dictionary
+          events: currentEvents
         },
       }
     })
@@ -169,6 +168,6 @@ const {
   {organization && <OrganizationPage {organization} {lang} />}
   {event && <EventPage {event} {lang} />}
   {article && <ArticlePage {article} {lang} />}
-  {area && <AreaPage {area} {lang} {events} {organizations} {dictionary} />}
+  {area && <AreaPage {area} {lang} {events} {organizations} />}
   <!-- <Debug {article} /> -->
 </Fragment>

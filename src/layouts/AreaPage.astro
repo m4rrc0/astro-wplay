@@ -6,7 +6,7 @@ import { SEO, IO, ImgDirectus, Img } from "@components"
 import { imageDirectusSrc } from "@utils"
 import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png"
 
-const { lang, area, events, organizations, dictionary } = Astro.props
+const { lang, area, events, organizations } = Astro.props
 
 const areaName = area.name[lang.code]
 const eventsCountPhrase = `${
@@ -242,7 +242,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           <IO ul $skipNoInner class="reset">
             {
               organizations?.map((organization) => {
-                const { name, path, logo, types } = organization
+                const { name, path, logo, typesTranslated } = organization
 
                 const nameIsLong = name.length > 30
 
@@ -293,11 +293,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     </h3>
                     <IO
                       div
-                      $skip={!types?.[0]}
+                      $skip={!typesTranslated?.[0]}
                       class="cluster gap-down-h8"
                     >
                       <ul class="reset">
-                        {types?.map((type) => {
+                        {typesTranslated?.map((type) => {
                           const currentPalette = `color-palette-${type.code_name}`
                           return (
                             <li
@@ -305,7 +305,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                                                             ${currentPalette} color-palette-variation-contrast
                                                             border-radius-s`}
                             >
-                              {dictionary.find(d => d.code_name === type).translations.find(t => t.language_code === lang.code).default_label}
+                              {type.translations.find(t => t.language_code === lang.code).default_label}
                             </li>
                           )
                         })}

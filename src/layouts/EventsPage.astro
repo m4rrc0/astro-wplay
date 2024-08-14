@@ -77,7 +77,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                         Ma position
                       </option>
                       {
-                        cities.map(city => (
+                        cities?.map(city => (
                           <option
                             id={"city" + city.city}
                             value={city.city}
@@ -111,7 +111,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               <div id="eventType" class="dropdown-content align-items-start">
                 <div class="stack gap-h3" style="white-space: nowrap">
                   {
-                    dictionary.map(d => {
+                    dictionary?.map(d => {
                       return (
                         <div class="stack horizontal align-items-center">
                           <input
@@ -178,7 +178,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   <li
                     class="card-event breakout-clickable box no-border no-padding border-radius-s"
                     style=""
-                    data-types={typesTranslated.map(t => t.code_name)}
+                    data-types={typesTranslated?.map(t => t.code_name)}
                   >
                     <div
                       class="box no-border padding-h4 with-sidebar gap-h4

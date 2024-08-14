@@ -129,8 +129,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                                         breakout-clickable"
                     style=""
                     data-area={address?.area.code_name}
-                    data-types={typesTranslated.map(t => t.code_name)}
-                    data-services={servicesTranslated.map(t => t.code_name)}
+                    data-types={typesTranslated?.map(t => t.code_name)}
+                    data-services={servicesTranslated?.map(t => t.code_name)}
                   >
                     <div
                       class="center intrinsic"

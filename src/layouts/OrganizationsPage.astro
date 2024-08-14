@@ -3,11 +3,7 @@ import { IO, Img, ImgDirectus, SEO } from "@components";
 import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png";
 import { BasicPage, SkeletonPage } from "@layouts";
 
-const { lang, organizations } = Astro.props
-
-const availableOrganizations = organizations?.filter(
-  (organization) => organization.boardgame_related
-);
+const { lang, organizations, areas, dictionary } = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
@@ -27,9 +23,64 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   <BasicPage {lang}>
     <main class="center width-max">
       <div id="events-list-container" class="box no-border stack gap-down-h1">
-        <IO h2 $skip={!availableOrganizations?.[0]} class="center text">
+        <IO h2 $skip={!organizations?.[0]} class="center text">
           Organisations
         </IO>
+
+        <script src="/assets/js/organizations-filter.js" defer type="module"></script>
+        <div class="center">
+          <form id="organizationsForm" class="stack horizontal justify-content-center gap-0" style="flex-wrap: wrap; gap: var(--size-h1)">
+            <div class="dropdown center">
+              <button id="areaBtn" onclick="area.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Provinces</button>
+              <div id="area" class="dropdown-content align-items-start">
+                <div class="stack gap-h3" style="white-space: nowrap">
+                  {
+                    areas.map(area => {
+                      return (
+                        <div class="stack horizontal align-items-center">
+                          <input
+                            type="checkbox"
+                            id={area.code_name}
+                            value={area.code_name}
+                            name="areas"
+                            data-code={area.code_name}
+                            data-label={area.name[lang.code]}
+                          >
+                          <label for={area.code_name}>{area.name[lang.code]}</label>
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="dropdown center">
+              <button id="typeBtn" onclick="organizationType.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Types</button>
+              <div id="organizationType" class="dropdown-content align-items-start">
+                <div class="stack gap-h3" style="white-space: nowrap">
+                  {
+                    dictionary.map(d => {
+                      return (
+                        <div class="stack horizontal align-items-center">
+                          <input
+                            type="checkbox"
+                            id={d.code_name} value={d.code_name}
+                            name="types"
+                            data-code={d.code_name}
+                            data-label={d.translations.find(t => t.language_code === lang.code).default_label}
+                          >
+                          <label for={d.code_name}>{d.translations.find(t => t.language_code === lang.code).default_label}</label>
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              </div>
+            </div>
+            <input type="reset" id="resetBtn" class="color-palette-teal" style="display: none;">
+          </form>
+        </div>
+
         <IO
           div
           $skipNoInner
@@ -38,8 +89,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         >
           <IO ul $skipNoInner class="reset">
             {
-              availableOrganizations?.map((organization) => {
-                const { name, path, logo, typesTranslated } = organization
+              organizations?.map((organization) => {
+                const { name, path, logo, typesTranslated, address } = organization
 
                 const nameIsLong = name.length > 30
 
@@ -50,6 +101,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                                         border-radius-s
                                         breakout-clickable"
                     style=""
+                    data-area={address?.area.code_name}
+                    data-types={typesTranslated.map(t => t.code_name)}
                   >
                     <div
                       class="center intrinsic"
@@ -102,7 +155,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                                                             ${currentPalette} color-palette-variation-contrast
                                                             border-radius-s`}
                             >
-                              {type.fr}
+                              {type.translations.find(t => t.language_code === lang.code).default_label}
                             </li>
                           )
                         })}

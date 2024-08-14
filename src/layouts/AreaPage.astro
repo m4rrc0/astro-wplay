@@ -6,7 +6,7 @@ import { SEO, IO, ImgDirectus, Img } from "@components"
 import { imageDirectusSrc } from "@utils"
 import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png"
 
-const { lang, area, events, organizations } = Astro.props
+const { lang, area, events, organizations, dictionary } = Astro.props
 
 const areaName = area.name[lang.code]
 const eventsCountPhrase = `${
@@ -39,9 +39,6 @@ const eventsPhrase =
         " et le ",
       )}`
 
-  const availableOrganizations = organizations?.filter(
-    (organization) => organization.boardgame_related
-  );
 // const restosBarsCount = organizations
 //     .filter((o) => o.types.find('bar') || o.types.find('restaurant'))
 
@@ -233,7 +230,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             }
           </IO>
         </IO>
-        <IO h2 $skip={!availableOrganizations?.[0]} class="center text">
+        <IO h2 $skip={!organizations?.[0]} class="center text">
           Organisations
         </IO>
         <IO
@@ -244,8 +241,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         >
           <IO ul $skipNoInner class="reset">
             {
-              availableOrganizations?.map((organization) => {
-                const { name, path, logo, typesTranslated } = organization
+              organizations?.map((organization) => {
+                const { name, path, logo, types } = organization
 
                 const nameIsLong = name.length > 30
 
@@ -296,11 +293,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     </h3>
                     <IO
                       div
-                      $skip={!typesTranslated?.[0]}
+                      $skip={!types?.[0]}
                       class="cluster gap-down-h8"
                     >
                       <ul class="reset">
-                        {typesTranslated?.map((type) => {
+                        {types?.map((type) => {
                           const currentPalette = `color-palette-${type.code_name}`
                           return (
                             <li
@@ -308,7 +305,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                                                             ${currentPalette} color-palette-variation-contrast
                                                             border-radius-s`}
                             >
-                              {type.fr}
+                              {dictionary.find(d => d.code_name === type).translations.find(t => t.language_code === lang.code).default_label}
                             </li>
                           )
                         })}

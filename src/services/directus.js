@@ -115,25 +115,8 @@ const dico = [
 	},
 	{ code_name: "forum", fr: "Forum", iconName: "ph:chats" },
 	{ code_name: "talk", fr: "Le Talk", iconName: "ri:kakao-talk-line" },
-
 	// Areas
 	...areas,
-	// Organization types
-	{ code_name: "association", fr: "Association", colorPalette: "purple" },
-	{ code_name: "club", fr: "Club", colorPalette: "purple" },
-	{ code_name: "bar", fr: "Bar", colorPalette: "green" },
-	{ code_name: "restaurant", fr: "Restaurant", colorPalette: "green" },
-	{ code_name: "toy_library", fr: "Ludothèque", colorPalette: "orange" },
-	{ code_name: "shop", fr: "Boutique", colorPalette: "teal" },
-	{ code_name: "festival", fr: "Festival", colorPalette: "red" },
-	{ code_name: "escape_room", fr: "Escape Room", colorPalette: "red" },
-	// Event types
-	{ code_name: "gameTime", fr: "Moment ludique", colorPalette: "purple" },
-	{ code_name: "tournament", fr: "Tournoi", colorPalette: "green" },
-	{ code_name: "gamesMarket", fr: "Bourse aux jeux", colorPalette: "teal" },
-	{ code_name: "festival", fr: "Festival", colorPalette: "red" },
-	{ code_name: "training", fr: "Formation", colorPalette: "red" },
-	{ code_name: "pro", fr: "Événement professionnel", colorPalette: "red" },
 	// Days of week
 	{ code_name: "monday", fr: "Lundi" },
 	{ code_name: "tuesday", fr: "Mardi" },
@@ -489,12 +472,36 @@ export async function fetchPages() {
 	// })
 }
 
+// --- F&T DICTIONARY --- //
+
+export async function fetchDictionary() {
+	await client.refresh()
+	return await client.request(
+		readItems("dictionary", {
+			limit: -1,
+			fields: [
+				"tag_categories",
+				"code_name",
+				"translations.language_code",
+				"translations.default_label",
+			],
+		}),
+	)
+}
+
 // --- F&T ORGANIZATIONS --- //
 
 export function transformOrganization(o, languages) {
 	if (!o) return o
 
-	const { status, slug, types, opening_hours, games_services, amenities } = o
+	const {
+		status,
+		slug,
+		opening_hours,
+		games_services,
+		amenities,
+		organization_types,
+	} = o
 	// Create Path
 	const path = createPath({ type: "organization", slug })
 	// Distort Name if not published
@@ -516,7 +523,7 @@ export function transformOrganization(o, languages) {
 			: undefined,
 	)
 	// Transform types
-	const typesTranslated = types?.map(translateFromCodeName)
+	const typesTranslated = organization_types?.map((t) => t.type)
 	// Transform opening_hours
 	const opening_hours_strings = opening_hours?.map(({ days, time_slots }) => {
 		const daysTranslated = days?.map(translateFromCodeName)
@@ -604,7 +611,9 @@ export async function fetchOrganizations() {
 				"date_updated",
 				"name",
 				"slug",
-				"types",
+				"organization_types.type.code_name",
+				"organization_types.type.translations.language_code",
+				"organization_types.type.translations.default_label",
 				"boardgame_related",
 				...imageFields("logo."),
 				...imageFields("cover_image."),
@@ -1233,6 +1242,8 @@ export function transformEvent(eventRaw, languages) {
 			  }
 			: undefined,
 	)
+	// Transform types
+	const typesTranslated = e.event_types?.map((t) => t.type)
 	// Transform links
 	const links = e.links?.map(transformLink)
 	// date_updated can be undefined if never had modifications
@@ -1255,6 +1266,7 @@ export function transformEvent(eventRaw, languages) {
 		scheduleRuleSet,
 		// slug,
 		// path,
+		typesTranslated,
 		cover_image,
 		address,
 		links,
@@ -1328,7 +1340,9 @@ export async function fetchEvents() {
 				"status",
 				"date_updated",
 				"name",
-				"event_types",
+				"event_types.type.code_name",
+				"event_types.type.translations.language_code",
+				"event_types.type.translations.default_label",
 				{
 					location: [
 						// "*",

@@ -18,6 +18,7 @@ areas,
 fetchArticles,
 fetchEvents,
 fetchLanguages,
+fetchDictionary,
 fetchOrganizations,
 start as startDirectus
 } from "../services/directus.js"
@@ -30,6 +31,7 @@ export async function getStaticPaths() {
   const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
   const languages = await fetchLanguages()
+  const dictionary = await fetchDictionary()
   const organizations = await fetchOrganizations()
   const events = await fetchEvents()
   const articles = await fetchArticles()
@@ -63,7 +65,7 @@ export async function getStaticPaths() {
     })
     const areasStaticPaths = areas.map((area) => {
       const currentOrgs = organizations.filter(
-        (i) => i?.address?.area.code_name === area.code_name,
+        (i) => i?.address?.area.code_name === area.code_name && i?.boardgame_related,
       )
       const currentEvents = events.filter(
         (i) => i?.address?.area.code_name === area.code_name,
@@ -75,6 +77,7 @@ export async function getStaticPaths() {
           area,
           organizations: currentOrgs,
           events: currentEvents,
+          dictionary
         },
       }
     })
@@ -85,11 +88,30 @@ export async function getStaticPaths() {
       },
       {
         params: { path: createPath({ type: "organizations" }) },
-        props: { lang, organizations }
+        props: {
+          lang,
+          organizations: organizations?.filter(
+            (o) => o.boardgame_related
+          ),
+          areas,
+          dictionary: dictionary?.filter(
+            (d) => d.tag_categories.includes("organization_type")
+          ).sort((d1, d2) => d1.translations.find(t => t.language_code === lang.code).default_label.localeCompare(
+            d2.translations.find(t => t.language_code === lang.code).default_label
+          )),
+        }
       },
       {
         params: { path: createPath({ type: "events" }) },
-        props: { lang, events }
+        props: {
+          lang,
+          events,
+          dictionary: dictionary?.filter(
+            (d) => d.tag_categories.includes("event_type")
+          ).sort((d1, d2) => d1.translations.find(t => t.language_code === lang.code).default_label.localeCompare(
+            d2.translations.find(t => t.language_code === lang.code).default_label
+          )),
+        }
       },
       {
         params: { path: createPath({ type: "articles" }) },
@@ -117,6 +139,7 @@ export async function getStaticPaths() {
 const { path } = Astro.params
 const {
   lang,
+  dictionary,
   organization,
   organizations,
   event,
@@ -142,12 +165,12 @@ const {
     )
   }
   {path === createPath({ type: "areas" }) && <AreasPage {areas} {lang} />}
-  {path === createPath({ type: "events" }) && <EventsPage {events} {lang} />}
-  {path === createPath({ type: "organizations" }) && <OrganizationsPage {organizations} {lang} />}
+  {path === createPath({ type: "events" }) && <EventsPage {events} {lang} {dictionary} />}
+  {path === createPath({ type: "organizations" }) && <OrganizationsPage {organizations} {lang} {areas} {dictionary} />}
   <!-- ITEMS PAGES -->
   {organization && <OrganizationPage {organization} {lang} />}
   {event && <EventPage {event} {lang} />}
   {article && <ArticlePage {article} {lang} />}
-  {area && <AreaPage {area} {lang} {events} {organizations} />}
+  {area && <AreaPage {area} {lang} {events} {organizations} {dictionary} />}
   <!-- <Debug {article} /> -->
 </Fragment>

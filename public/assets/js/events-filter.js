@@ -1,12 +1,6 @@
-const eventTypes = {
-  festival: 'Festival',
-  gameTime: 'Moment ludique',
-  tournament: 'Tournoi',
-  gamesMarket: 'Bouse aux jeux',
-  training: 'Formation',
-  pro: 'Événement professionnel',
-  other: 'Autre'
-};
+const eventTypes = Array.from(document.forms['eventsForm'].elements.types).reduce(
+  (result, t) => ({ ...result, [t.dataset.code]: t.dataset.label}), {}
+);
 const eventsForm = document.getElementById('eventsForm');
 const resetBtn = document.getElementById('resetBtn');
 const proximityBtn = document.getElementById('proximityBtn');
@@ -111,7 +105,10 @@ function filterEvents(eventsForm) {
       (typesFilter && typesFilter.length && (typesFilter.length > 1 || typesFilter[0] !== '') && !typesFilter.some(type => {
         if (events[i].dataset.types) {
           if (type === 'other') {
-            return events[i].dataset.types.split(',').some(t => !['festival', 'gameTime', 'tournament', 'gamesMarket', 'training', 'pro'].includes(t))
+            return events[i].dataset.types.split(',').some(t => {
+              const { other, ...rest } = eventTypes;
+              return !Object.keys(rest).includes(t)
+            })
           }
           return events[i].dataset.types.split(',').includes(type);
         }

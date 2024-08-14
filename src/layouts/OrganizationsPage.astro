@@ -1,9 +1,13 @@
 ---
-import { IO, Img, ImgDirectus, SEO } from "@components"
-import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png"
-import { BasicPage, SkeletonPage } from "@layouts"
+import { IO, Img, ImgDirectus, SEO } from "@components";
+import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png";
+import { BasicPage, SkeletonPage } from "@layouts";
 
 const { lang, organizations } = Astro.props
+
+const availableOrganizations = organizations?.filter(
+  (organization) => organization.boardgame_related
+);
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
@@ -23,7 +27,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   <BasicPage {lang}>
     <main class="center width-max">
       <div id="events-list-container" class="box no-border stack gap-down-h1">
-        <IO h2 $skip={!organizations?.[0]} class="center text">
+        <IO h2 $skip={!availableOrganizations?.[0]} class="center text">
           Organisations
         </IO>
         <IO
@@ -34,7 +38,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         >
           <IO ul $skipNoInner class="reset">
             {
-              organizations?.map((organization) => {
+              availableOrganizations?.map((organization) => {
                 const { name, path, logo, typesTranslated } = organization
 
                 const nameIsLong = name.length > 30

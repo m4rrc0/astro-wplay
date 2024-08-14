@@ -109,11 +109,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             <p class="size-h3">Organisé par</p>
             <div class="box no-border cluster center max-width-measure-h4">
               <ul class="reset justify-content-center">
-                {organizers.map(({name, path, logo}) => (
+                {organizers.map(({name, boardgame_related, links, path, logo}) => (
                   <li>
-                    <a href={`/${path}`} class="
-                      box no-border stack center intrinsic gap-down-h8
-                    ">
+                    <a
+                      href={boardgame_related ? `/${path}` : links?.[0]?.url}
+                      class="box no-border stack center intrinsic gap-down-h8"
+                    >
                       {logo?.src && (
                           <ImgDirectus
                               image={logo}

@@ -38,6 +38,10 @@ const eventsPhrase =
     : `${eventsCountPhrase} à ${areaName} entre le ${eventsTimeArr.join(
         " et le ",
       )}`
+
+  const availableOrganizations = organizations?.filter(
+    (organization) => organization.boardgame_related
+  );
 // const restosBarsCount = organizations
 //     .filter((o) => o.types.find('bar') || o.types.find('restaurant'))
 
@@ -229,7 +233,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             }
           </IO>
         </IO>
-        <IO h2 $skip={!organizations?.[0]} class="center text">
+        <IO h2 $skip={!availableOrganizations?.[0]} class="center text">
           Organisations
         </IO>
         <IO
@@ -240,7 +244,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         >
           <IO ul $skipNoInner class="reset">
             {
-              organizations?.map((organization) => {
+              availableOrganizations?.map((organization) => {
                 const { name, path, logo, typesTranslated } = organization
 
                 const nameIsLong = name.length > 30

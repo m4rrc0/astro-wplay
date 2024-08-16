@@ -122,7 +122,7 @@ export const toTzDate = (dateRaw) => {
 export const stripDate = (dateRaw) => {
 	const date = toTzDate(dateRaw)
 
-	return date.toISOString().split(".").shift()
+	return date && date.toISOString().split(".").shift()
 }
 
 export const datePlus1Day = (dateRaw) => {

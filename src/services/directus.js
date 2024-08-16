@@ -859,8 +859,8 @@ export function transformSchedule(scheduleRaw) {
 		startDate && startDate + (startTime ? `T${startTime}` : "")
 	const endDateTime = endDate && endDate + (endTime ? `T${endTime}` : "")
 
-	const startDateStr = stripDate(startDateTime).slice(0, -3)
-	const endDateStr = stripDate(endDateTime).slice(0, -3)
+	const startDateStr = stripDate(startDateTime)?.slice(0, -3)
+	const endDateStr = stripDate(endDateTime)?.slice(0, -3)
 
 	// const time_start = transformDateTime(startDateTime)
 	// const time_end = transformDateTime(endDateTime)

@@ -166,7 +166,6 @@ NEW: overflow: class
   align-content: stretch;
   align-content: var(--align-content, stretch);
   margin: calc(var(--gap) / 2 * -1);
-  white-space: nowrap;
 }
 .cluster > * > * {
   margin: calc(var(--gap) / 2);

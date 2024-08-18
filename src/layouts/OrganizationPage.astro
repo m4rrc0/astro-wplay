@@ -20,7 +20,7 @@ const {
     // opening_hours,
     opening_hours_strings,
     servicesTranslated,
-    address,
+    location,
     // amenities,
     amenities_translated,
     website,
@@ -41,16 +41,16 @@ const { description, opening_hours_remark } =
   translations?.find(({ languages_code }) => languages_code === lang.code) || {}
 const presentation =
   typesTranslated?.[0] &&
-  address?.city &&
-  address?.area?.name?.fr &&
+  location?.addressLocality &&
+  location?.area?.name?.fr &&
   typesTranslated
     ?.map(({ [lang.code]: typeTranslated }) => typeTranslated)
     .join(", ") +
-    ` à ${address.city}` +
-    (address.city !== address?.area?.name?.fr
+    ` à ${location.addressLocality}` +
+    (location.addressLocality !== location?.area?.name?.fr
       ? ` dans la ${
-          address?.area?.code_name === "brussels" ? "région" : "province"
-        } de ${address?.area?.name?.fr}`
+        location?.area?.code_name === "brussels" ? "région" : "province"
+        } de ${location?.area?.name?.fr}`
       : "")
 const srcCover = imageDirectusSrc({
   src: cover_image?.src,
@@ -90,14 +90,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           <h1 class="centered" set:html={name} />
           {presentation && <p class="h3">{presentation}</p>}
           {
-            address?.string && (
+            location?.string && (
               <p class="h6">
                 <a
-                  href={address.gMapLink}
+                  href={location.gMapLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {address.string}
+                  {location.string}
                 </a>
               </p>
             )
@@ -251,7 +251,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             >
               <IO ul $skip={!events?.[0]?.name} class="list reset">
                 {events?.map((event) => {
-                  const { name, address, cover_image, time_start } = event
+                  const { name, location, cover_image, time_start } = event
 
                   const srcCover = imageDirectusSrc({
                     src: cover_image?.src,
@@ -310,10 +310,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                           p
                           $skipNoInner
                           class="zip city h5"
-                          data-zip={address?.zip}
-                          data-city={address?.city}
+                          data-zip={location?.postalCode}
+                          data-city={location?.addressLocality}
                         >
-                          {address?.string}
+                          {location?.string}
                         </IO>
                       </div>
                     </li>

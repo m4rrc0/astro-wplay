@@ -361,17 +361,13 @@ function transformImage(i) {
 		: i
 }
 
-function transformAddress(address, location) {
-	const a =
-		(location?.[0]?.zip && location?.[0]) ||
-		(location?.zip && location) ||
-		(address?.[0]?.zip && address?.[0]) ||
-		(address?.zip && address)
-	if (!a) return null
+function transformAddress(location) {
+	const l = location?.postalCode && location
+	if (!l) return null
 
 	const string = [
-		[a.street, a.number].filter((z) => z).join(" "),
-		[a.zip, a.city].filter((z) => z).join(" "),
+		[l.streetAddress, l.streetNumber].filter((z) => z).join(" "),
+		[l.postalCode, l.addressLocality].filter((z) => z).join(" "),
 	]
 		.filter((z) => z)
 		.join(", ")
@@ -381,17 +377,17 @@ function transformAddress(address, location) {
 	)}+belgium`
 
 	let area = areasBe.find(
-		(area) => a.zip >= area.zipMin && a.zip <= area.zipMax,
+		(area) => l.postalCode >= area.zipMin && l.postalCode <= area.zipMax,
 	)
 	if (!area)
-		console.warn(`--SELF WARNING-- ZIP missing for address: '${string}'`)
+		console.warn(`--SELF WARNING-- ZIP missing for place: '${string}'`)
 
 	area = area && {
 		...area,
 		...translateFromCodeName(area.code_name),
 	}
 
-	return { ...a, string, gMapLink, area }
+	return { ...l, string, gMapLink, area }
 }
 
 function transformPageData(page_data) {
@@ -503,19 +499,8 @@ export function transformOrganization(o, languages) {
 		status !== "published" && ENV !== "production"
 			? `_${status?.toUpperCase()}_${o.name}`
 			: o.name
-	// Transform Address
-	const address = transformAddress(
-		o.address,
-		o.location
-			? {
-					...o.location,
-					street: o.location?.streetAddress,
-					city: o.location?.addressLocality,
-					zip: o.location?.postalCode,
-					country: "Belgique",
-			  }
-			: undefined,
-	)
+	// Transform Location
+	const location = transformAddress(o.location)
 	// Transform types
 	const typesTranslated = organization_types?.map((t) => t.type)
 	// Transform services
@@ -580,7 +565,7 @@ export function transformOrganization(o, languages) {
 		...o,
 		path,
 		name,
-		address,
+		location,
 		typesTranslated,
 		servicesTranslated,
 		opening_hours_strings,
@@ -615,7 +600,6 @@ export async function fetchOrganizations() {
 				"games_related_services.service.code_name",
 				"games_related_services.service.translations.language_code",
 				"games_related_services.service.translations.default_label",
-				"address",
 				"location.*",
 				"amenities",
 				"links",
@@ -631,14 +615,13 @@ export async function fetchOrganizations() {
 						// "*",
 						"name",
 						"streetAddress",
+						"streetNumber",
 						"postalCode",
 						"addressLocality",
 						"addressRegion",
 						"geo",
 					],
 				},
-				"events.events_id.address",
-				"events.events_id.location.*",
 				...imageFields("events.events_id.cover_image."),
 				"events.events_id.recurrence",
 				"events.events_id.startDate",
@@ -671,7 +654,6 @@ export async function fetchOrganizations() {
 				"events.events_id.organizers.organizations_id.status",
 				"events.events_id.organizers.organizations_id.name",
 				"events.events_id.organizers.organizations_id.slug",
-				"events.events_id.organizers.organizations_id.address",
 				"events.events_id.organizers.organizations_id.location.*",
 				...imageFields("events.events_id.organizers.organizations_id.logo."),
 				...imageFields(
@@ -692,7 +674,6 @@ export async function fetchOrganizations() {
 				// "events.events_id.parent_event",
 				// "events.events_id.parent_event.status",
 				// "events.events_id.parent_event.name",
-				// "events.events_id.parent_event.address",
 				// "events.events_id.parent_event.recurring",
 				// "events.events_id.parent_event.schedule",
 				// "events.events_id.parent_event.links",
@@ -703,7 +684,6 @@ export async function fetchOrganizations() {
 				// "events.events_id.parent_event.organizers.organizations_id.status",
 				// "events.events_id.parent_event.organizers.organizations_id.name",
 				// "events.events_id.parent_event.organizers.organizations_id.slug",
-				// "events.events_id.parent_event.organizers.organizations_id.address",
 				// ...imageFields(
 				// 	"events.events_id.parent_event.organizers.organizations_id.logo.",
 				// ),
@@ -777,7 +757,7 @@ function fallbackOnParentsOfEvent({
 		...(mainOrganizer
 			? removeEmptyPropOnObject({
 					name: mainOrganizer.name,
-					address: { ...mainOrganizer.address, ...mainOrganizer.location },
+					location: mainOrganizer.location,
 					cover_image: mainOrganizer.cover_image,
 					games_related_services: mainOrganizer.games_related_services,
 					amenities_translated: mainOrganizer.amenities_translated,
@@ -787,7 +767,7 @@ function fallbackOnParentsOfEvent({
 		// ...(hasParent
 		//   ? removeEmptyPropOnObject({
 		//       name: parent.name,
-		//       address: { ...parent.address, ...parent.location},
+		//       location: parent.location,
 		//       cover_image: parent.cover_image,
 		//     })
 		//   : {}),
@@ -1227,19 +1207,8 @@ export function transformEvent(eventRaw, languages) {
 
 	// Transform images
 	const cover_image = transformImage(e?.cover_image)
-	// Transform Address
-	const address = transformAddress(
-		e.address,
-		e.location
-			? {
-					...e.location,
-					street: e.location?.streetAddress,
-					city: e.location?.addressLocality,
-					zip: e.location?.postalCode,
-					country: "Belgique",
-			  }
-			: undefined,
-	)
+	// Transform Location
+	const location = transformAddress(e.location)
 	// Transform types
 	const typesTranslated = e.event_types?.map((t) => t.type)
 	// Transform links
@@ -1266,7 +1235,7 @@ export function transformEvent(eventRaw, languages) {
 		// path,
 		typesTranslated,
 		cover_image,
-		address,
+		location,
 		links,
 		date_updated,
 		...unique,
@@ -1346,13 +1315,13 @@ export async function fetchEvents() {
 						// "*",
 						"name",
 						"streetAddress",
+						"streetNumber",
 						"postalCode",
 						"addressLocality",
 						"addressRegion",
 						"geo",
 					],
 				},
-				"address",
 				...imageFields("cover_image."),
 				"recurrence",
 				"startDate",
@@ -1387,7 +1356,6 @@ export async function fetchEvents() {
 				"organizers.organizations_id.boardgame_related",
 				"organizers.organizations_id.links",
 				"organizers.organizations_id.slug",
-				"organizers.organizations_id.address",
 				"organizers.organizations_id.location.*",
 				...imageFields("organizers.organizations_id.logo."),
 				...imageFields("organizers.organizations_id.cover_image."),
@@ -1404,7 +1372,6 @@ export async function fetchEvents() {
 				// "parent_event",
 				// "parent_event.status",
 				// "parent_event.name",
-				// "parent_event.address",
 				// "parent_event.recurring",
 				// "parent_event.schedule",
 				// "parent_event.links",
@@ -1415,7 +1382,6 @@ export async function fetchEvents() {
 				// "parent_event.organizers.organizations_id.status",
 				// "parent_event.organizers.organizations_id.name",
 				// "parent_event.organizers.organizations_id.slug",
-				// "parent_event.organizers.organizations_id.address",
 				// ...imageFields("parent_event.organizers.organizations_id.logo."),
 				// ...imageFields("parent_event.organizers.organizations_id.cover_image."),
 				// "parent_event.organizers.organizations_id.games_services",
@@ -1427,13 +1393,6 @@ export async function fetchEvents() {
 			],
 		}),
 	)
-
-	// TODO: merge location and address
-	// eventsRaw.forEach((event) => {
-	// 	if (event.name === "Soirée jeux de Société @ Idées Bleues") {
-	// 		console.log(event)
-	// 	}
-	// })
 
 	const eventsUnflat = eventsRaw
 		?.map((e) => transformEvent(e, languages))

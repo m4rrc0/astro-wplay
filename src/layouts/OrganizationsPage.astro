@@ -117,7 +117,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           <IO ul $skipNoInner class="reset">
             {
               organizations?.map((organization) => {
-                const { name, path, logo, typesTranslated, address, servicesTranslated } = organization
+                const { name, path, logo, typesTranslated, location, servicesTranslated } = organization
 
                 const nameIsLong = name.length > 30
 
@@ -128,7 +128,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                                         border-radius-s
                                         breakout-clickable"
                     style=""
-                    data-area={address?.area.code_name}
+                    data-area={location?.area.code_name}
                     data-types={typesTranslated?.map(t => t.code_name)}
                     data-services={servicesTranslated?.map(t => t.code_name)}
                   >

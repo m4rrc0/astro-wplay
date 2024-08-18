@@ -159,7 +159,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 const {
                   name,
                   typesTranslated,
-                  address,
+                  location,
                   cover_image,
                   organizers,
                   time_start,
@@ -222,12 +222,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                         p
                         $skipNoInner
                         class="zip city h5"
-                        data-zip={address.zip}
-                        data-city={address.city}
-                        data-latitude={address.geo?.coordinates[1]}
-                        data-longitude={address.geo?.coordinates[0]}
+                        data-zip={location.postalCode}
+                        data-city={location.addressLocality}
+                        data-latitude={location.geo?.coordinates[1]}
+                        data-longitude={location.geo?.coordinates[0]}
                       >
-                        {address.city}
+                        {location.addressLocality}
                       </IO>
                       <ul class="reset stack horizontal">
                         {organizers?.map(({ name, logo }) => (

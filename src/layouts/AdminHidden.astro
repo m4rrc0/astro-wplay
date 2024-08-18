@@ -132,7 +132,7 @@ const srcBadge =
               events?.map((event) => {
                 const {
                   name,
-                  address,
+                  location,
                   cover_image,
                   organizers,
                   time_start,
@@ -194,10 +194,10 @@ const srcBadge =
                         p
                         $skipNoInner
                         class="zip city h5"
-                        data-zip={address?.zip}
-                        data-city={address?.city}
+                        data-zip={location?.postalCode}
+                        data-city={location?.addressLocality}
                       >
-                        {address?.string}
+                        {location?.string}
                       </IO>
                       <ul class="reset stack horizontal">
                         {organizers?.map(({ name, logo }) => (

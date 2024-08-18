@@ -65,10 +65,10 @@ export async function getStaticPaths() {
     })
     const areasStaticPaths = areas.map((area) => {
       const currentOrgs = organizations.filter(
-        (i) => i?.address?.area.code_name === area.code_name && i?.boardgame_related,
+        (i) => i?.location?.area.code_name === area.code_name && i?.boardgame_related,
       )
       const currentEvents = events.filter(
-        (i) => i?.address?.area.code_name === area.code_name,
+        (i) => i?.location?.area.code_name === area.code_name,
       )
       return {
         params: { path: area.path[lang.code] },

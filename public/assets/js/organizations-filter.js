@@ -98,7 +98,7 @@ function filterOrganizations(organizationsForm) {
     serviceBtn.innerText = servicesFilter.map(serviceFilter => services[serviceFilter]).join(', ');
   } else {
     serviceBtn.classList.remove('color-palette-teal');
-    serviceBtn.innerText = 'Types';
+    serviceBtn.innerText = 'Services';
   }
 
   // Filter the organizations

@@ -38,7 +38,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           <li><a href={`/${lang.code}/e`}>Agenda</a></li>
           <li><a href={`/${lang.code}/o`}>Annuaire</a></li>
           <li class="dropdown">
-            <a onclick="ressources.classList.toggle('show')" class="dropbtn">Ressources</a>
+            <a onclick="ressources.classList.toggle('block')" class="dropbtn">Ressources</a>
             <div id="ressources" class="dropdown-content">
               <div class="stack">
                 <a href={`/${lang.code}/a`}>Articles</a>
@@ -49,7 +49,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             </div>
           </li>
           <li class="dropdown">
-            <a onclick="about.classList.toggle('show')" class="dropbtn">A Propos</a>
+            <a onclick="about.classList.toggle('block')" class="dropbtn">A Propos</a>
             <div id="about" class="dropdown-content">
               <div class="stack">
                 <a href={`/${lang.code}/projet`}>Projet</a>

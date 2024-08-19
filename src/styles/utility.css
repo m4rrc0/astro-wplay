@@ -90,8 +90,8 @@
   border-radius: var(--border-radius-s);
 }
 
-.show {
-  display:block;
+.block {
+  display: block;
 }
 
 .pagefind-ui__drawer {

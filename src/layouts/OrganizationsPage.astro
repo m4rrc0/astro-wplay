@@ -31,7 +31,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <div class="center">
           <form id="organizationsForm" class="stack horizontal justify-content-center gap-0" style="flex-wrap: wrap; gap: var(--size-h1)">
             <div class="dropdown center">
-              <button id="areaBtn" onclick="area.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Provinces</button>
+              <button id="areaBtn" onclick="area.classList.toggle('block')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Provinces</button>
               <div id="area" class="dropdown-content align-items-start">
                 <div class="stack gap-h3" style="white-space: nowrap">
                   {
@@ -55,7 +55,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               </div>
             </div>
             <div class="dropdown center">
-              <button id="typeBtn" onclick="organizationType.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Types</button>
+              <button id="typeBtn" onclick="organizationType.classList.toggle('block')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Types</button>
               <div id="organizationType" class="dropdown-content align-items-start">
                 <div class="stack gap-h3" style="white-space: nowrap">
                   {
@@ -80,7 +80,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               </div>
             </div>
             <div class="dropdown center">
-              <button id="serviceBtn" onclick="service.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Services</button>
+              <button id="serviceBtn" onclick="service.classList.toggle('block')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Services</button>
               <div id="service" class="dropdown-content align-items-start">
                 <div class="stack gap-h3" style="white-space: nowrap">
                   {

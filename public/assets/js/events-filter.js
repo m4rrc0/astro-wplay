@@ -9,12 +9,6 @@ const events = document.getElementsByClassName('card-event');
 const dropdowns = document.getElementsByClassName('dropdown-content');
 const eventsPhrase = document.getElementById('eventsPhrase');
 
-// Ask for visitor position
-let visitorPosition;
-if ('geolocation' in navigator) {
-  navigator.geolocation.getCurrentPosition((pos) => visitorPosition = pos);
-}
-
 // Update form inputs with URL parameters
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -38,7 +32,7 @@ if (urlParams.size > 0) {
  * Filter events in events page using the parameters in the form
  * @param {*} eventsForm 
  */
-function filterEvents(eventsForm) {
+async function filterEvents(eventsForm) {
   // Get the data from the form
   const data = new FormData(eventsForm);
   const filterParams = Array.from(data.entries());
@@ -57,13 +51,6 @@ function filterEvents(eventsForm) {
     "?"
   ));
 
-  // Update the reset button display
-  if (!!positionFilter || (!!typesFilter && typesFilter.length)) {
-    resetBtn.style.display = 'initial';
-  } else {
-    resetBtn.style.display = 'none';
-  }
-
   // Update the proximity button
   let coords;
   if (!!positionFilter) {
@@ -72,14 +59,24 @@ function filterEvents(eventsForm) {
 
     // Get the coordinates to check the distance
     if (positionFilter === 'Ma position') {
-      coords = visitorPosition.coords;
+      // Ask for visitor position
+      if ('geolocation' in navigator) {
+        coords = await new Promise((resolve) => navigator.geolocation.getCurrentPosition(
+          (pos) => resolve(pos.coords),
+          () => {
+            document.forms['eventsForm'].elements.position.value = '';
+            resolve(undefined);
+          }
+        ));
+      }
     } else {
       coords = {
         latitude: document.getElementById('city' + positionFilter).dataset.latitude,
         longitude: document.getElementById('city' + positionFilter).dataset.longitude
       };
     }
-  } else {
+  }
+  if (!positionFilter || !coords) {
     proximityBtn.classList.remove('color-palette-teal');
     proximityBtn.children[0].innerText = 'A proximité de';
   }
@@ -93,6 +90,13 @@ function filterEvents(eventsForm) {
     eventTypeBtn.children[0].innerText = 'Types';
   }
 
+  // Update the reset button display
+  if ((!!positionFilter && coords) || (!!typesFilter && typesFilter.length)) {
+    resetBtn.style.display = 'initial';
+  } else {
+    resetBtn.style.display = 'none';
+  }
+
   // Filter the events
   let eventsCount = 0;
   for (let i = 0; i < events.length; i++) {
@@ -101,7 +105,7 @@ function filterEvents(eventsForm) {
       longitude: events[i].getElementsByClassName('zip')[0].dataset.longitude
     };
     if (
-      (positionFilter && (!eventCoords.latitude || distance(coords, eventCoords) > distanceFilter * 1000)) ||
+      (positionFilter && coords && (!eventCoords.latitude || distance(coords, eventCoords) > distanceFilter * 1000)) ||
       (typesFilter && typesFilter.length && (typesFilter.length > 1 || typesFilter[0] !== '') && !typesFilter.some(type => {
         if (events[i].dataset.types) {
           if (type === 'other') {

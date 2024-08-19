@@ -61,73 +61,103 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <script src="/assets/js/events-filter.js" defer type="module"></script>
         <div class="center">
           <form id="eventsForm" class="stack horizontal justify-content-center gap-0" style="flex-wrap: wrap; gap: var(--size-h1)">
-            <div class="dropdown center">
-              <button id="proximityBtn" onclick="proximity.classList.toggle('show')" class="dropbtn">A proximité de</button>
-              <div id="proximity" class="dropdown-content">
-                <div class="stack gap-h3">
-                  <div class="stack horizontal">
-                    <Icon
-                      name="gridicons:location"
-                      title="location"
-                      role="img"
-                    />
-                    <select name="position">
-                      <option value="">Emplacement</option>
-                      <option value="Ma position">
-                        Ma position
-                      </option>
-                      {
-                        cities?.map(city => (
-                          <option
-                            id={"city" + city.city}
-                            value={city.city}
-                            data-latitude={city.lat}
-                            data-longitude={city.lng}
-                          >
-                            {city.city}
-                          </option>
-                        ))
-                      }
-                    </select>
-                  </div>
-                  <div class="stack justify-space-between">
-                    <label for="distance">Distance (km)</label>
-                    <div class="stack gap-0">
-                      <input type="range" id="distance" name="distance" min="1" max="99" value="10" list="distances" />
-                      <datalist id="distances" class="stack horizontal justify-space-between align-items-center h7 padding-x-h9">
-                        <option value="1" label="01"></option>
-                        <option value="25" label="25"></option>
-                        <option value="50" label="50"></option>
-                        <option value="75" label="75"></option>
-                        <option value="99" label="99"></option>
-                      </datalist>
-                    </div>
+            <button
+              popovertarget="proximity"
+              id="proximityBtn"
+              type="button"
+              class="stack horizontal align-items-center gap-h8"
+            >
+              <span>A proximité de</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open ressources menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div
+              popover
+              id="proximity"
+              class="padding-h3 border-radius-m breakout-clickable"
+            >
+              <div class="stack gap-h3">
+                <div class="stack horizontal">
+                  <Icon
+                    name="gridicons:location"
+                    title="location"
+                    role="img"
+                  />
+                  <select name="position">
+                    <option value="">Emplacement</option>
+                    <option value="Ma position">
+                      Ma position
+                    </option>
+                    {
+                      cities?.map(city => (
+                        <option
+                          id={"city" + city.city}
+                          value={city.city}
+                          data-latitude={city.lat}
+                          data-longitude={city.lng}
+                        >
+                          {city.city}
+                        </option>
+                      ))
+                    }
+                  </select>
+                </div>
+                <div class="stack justify-space-between">
+                  <label for="distance">Distance (km)</label>
+                  <div class="stack gap-0">
+                    <input type="range" id="distance" name="distance" min="1" max="99" value="10" list="distances" />
+                    <datalist id="distances" class="stack horizontal justify-space-between align-items-center h7 padding-x-h9">
+                      <option value="1" label="01"></option>
+                      <option value="25" label="25"></option>
+                      <option value="50" label="50"></option>
+                      <option value="75" label="75"></option>
+                      <option value="99" label="99"></option>
+                    </datalist>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="dropdown center">
-              <button id="eventTypeBtn" onclick="eventType.classList.toggle('show')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Types</button>
-              <div id="eventType" class="dropdown-content align-items-start">
-                <div class="stack gap-h3" style="white-space: nowrap">
-                  {
-                    dictionary?.map(d => {
-                      return (
-                        <div class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={d.code_name}
-                            value={d.code_name}
-                            name="types"
-                            data-code={d.code_name}
-                            data-label={d.translations.find(t => t.language_code === lang.code).default_label}
-                          >
-                          <label for={d.code_name}>{d.translations.find(t => t.language_code === lang.code).default_label}</label>
-                        </div>
-                      );
-                    })
-                  }
-                </div>
+            <button
+              popovertarget="eventType"
+              id="eventTypeBtn"
+              class="max-width-col-5 stack horizontal align-items-center gap-h8"
+              type="button"
+            >
+              <span class="text-overflow-ellipsis">Types</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open ressources menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div
+              popover
+              id="eventType"
+              class="padding-h3 border-radius-m breakout-clickable align-items-start"
+            >
+              <div class="stack gap-h3" style="white-space: nowrap">
+                {
+                  dictionary?.map(d => {
+                    return (
+                      <div class="stack horizontal align-items-center">
+                        <input
+                          type="checkbox"
+                          id={d.code_name}
+                          value={d.code_name}
+                          name="types"
+                          data-code={d.code_name}
+                          data-label={d.translations.find(t => t.language_code === lang.code).default_label}
+                        >
+                        <label for={d.code_name}>{d.translations.find(t => t.language_code === lang.code).default_label}</label>
+                      </div>
+                    );
+                  })
+                }
               </div>
             </div>
             <!-- <p>Trier par...</p>

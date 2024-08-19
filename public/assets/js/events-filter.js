@@ -68,7 +68,7 @@ function filterEvents(eventsForm) {
   let coords;
   if (!!positionFilter) {
     proximityBtn.classList.add('color-palette-teal');
-    proximityBtn.innerText = positionFilter;
+    proximityBtn.children[0].innerText = positionFilter;
 
     // Get the coordinates to check the distance
     if (positionFilter === 'Ma position') {
@@ -81,16 +81,16 @@ function filterEvents(eventsForm) {
     }
   } else {
     proximityBtn.classList.remove('color-palette-teal');
-    proximityBtn.innerText = 'A proximité de';
+    proximityBtn.children[0].innerText = 'A proximité de';
   }
 
   // Update the event type button
   if (!!typesFilter && typesFilter.length) {
     eventTypeBtn.classList.add('color-palette-teal');
-    eventTypeBtn.innerText = typesFilter.map(typeFilter => eventTypes[typeFilter]).join(', ');
+    eventTypeBtn.children[0].innerText = typesFilter.map(typeFilter => eventTypes[typeFilter]).join(', ');
   } else {
     eventTypeBtn.classList.remove('color-palette-teal');
-    eventTypeBtn.innerText = 'Types';
+    eventTypeBtn.children[0].innerText = 'Types';
   }
 
   // Filter the events
@@ -146,22 +146,6 @@ function distance(coords1, coords2) {
   return R * c; // in metres
 };
 
-/**
- * Close the dropdown menu if the user clicks outside of it
- * @param {*} event 
- */
-function closeDropdowns(event) {
-  if (!event.target.closest('.dropdown')) {
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('block')) {
-        openDropdown.classList.remove('block');
-      }
-    }
-  }
-};
-
 eventsForm.onsubmit = (e) => e.preventDefault();
 eventsForm.onchange = () => filterEvents(eventsForm);
 resetBtn.onclick = (e) => {
@@ -169,5 +153,3 @@ resetBtn.onclick = (e) => {
   eventsForm.reset();
   filterEvents(eventsForm);
 };
-
-window.onclick = closeDropdowns;

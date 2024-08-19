@@ -90,3 +90,7 @@ blockquote {
 .card-article .author-name {
   line-height: 32px;
 }
+
+div[popover] {
+  margin: 0;
+}

@@ -37,9 +37,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           <li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
           <li><a href={`/${lang.code}/e`}>Agenda</a></li>
           <li><a href={`/${lang.code}/o`}>Annuaire</a></li>
-          <li class="dropdown">
-            <a onclick="ressources.classList.toggle('block')" class="dropbtn">Ressources</a>
-            <div id="ressources" class="dropdown-content">
+          <li>
+            <input
+              type="button"
+              popovertarget="ressources"
+              value="Ressources"
+              id="ressourcesBtn"
+            >
+            <div
+              popover
+              id="ressources"
+              class="padding-h3 border-radius-m breakout-clickable"
+            >
               <div class="stack">
                 <a href={`/${lang.code}/a`}>Articles</a>
                 <a class="color-palette-teal" href="https://talk.wanna-play.be/" target="_blank">
@@ -49,8 +58,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             </div>
           </li>
           <li class="dropdown">
-            <a onclick="about.classList.toggle('block')" class="dropbtn">A Propos</a>
-            <div id="about" class="dropdown-content">
+            <input
+              type="button"
+              popovertarget="about"
+              value="A Propos"
+              id="aboutBtn"
+            >
+            <div
+              popover
+              id="about"
+              class="padding-h3 border-radius-m breakout-clickable"
+            >
               <div class="stack">
                 <a href={`/${lang.code}/projet`}>Projet</a>
                 <a href={`/${lang.code}/equipe`}>Équipe</a>
@@ -203,6 +221,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   }
   nav > ul > li:first-child > a {
     max-width: max-content;
+  }
+  nav > ul > li > input {
+    padding: 0;
+  }
+  nav > ul > li > input:hover {
+    background-color: initial;
+    color: var(--color-text__a--hover);
   }
   #footer-main {
     margin-top: 4vw;

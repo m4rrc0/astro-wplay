@@ -2,6 +2,7 @@
 import { IO, Img, ImgDirectus, SEO } from "@components";
 import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png";
 import { BasicPage, SkeletonPage } from "@layouts";
+import { Icon } from "astro-icon/components"
 
 const { lang, organizations, areas, dictionary } = Astro.props
 
@@ -30,78 +31,111 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <script src="/assets/js/organizations-filter.js" defer type="module"></script>
         <div class="center">
           <form id="organizationsForm" class="stack horizontal justify-content-center gap-0" style="flex-wrap: wrap; gap: var(--size-h1)">
-            <div class="dropdown center">
-              <button id="areaBtn" onclick="area.classList.toggle('block')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Provinces</button>
-              <div id="area" class="dropdown-content align-items-start">
-                <div class="stack gap-h3" style="white-space: nowrap">
-                  {
-                    areas.map(area => {
-                      return (
-                        <div class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={area.code_name}
-                            value={area.code_name}
-                            name="areas"
-                            data-code={area.code_name}
-                            data-label={area.name[lang.code]}
-                          >
-                          <label for={area.code_name}>{area.name[lang.code]}</label>
-                        </div>
-                      );
-                    })
-                  }
-                </div>
+            <button
+              popovertarget="area"
+              id="areaBtn"
+              class="max-width-col-5 stack horizontal align-items-center gap-h8"
+              type="button"
+            >
+              <span class="text-overflow-ellipsis">Provinces</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open provinces menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div popover id="area" class="padding-h3 border-radius-m breakout-clickable align-items-start">
+              <div class="stack gap-h3" style="white-space: nowrap">
+                {
+                  areas.map(area => {
+                    return (
+                      <div class="stack horizontal align-items-center">
+                        <input
+                          type="checkbox"
+                          id={area.code_name}
+                          value={area.code_name}
+                          name="areas"
+                          data-code={area.code_name}
+                          data-label={area.name[lang.code]}
+                        >
+                        <label for={area.code_name}>{area.name[lang.code]}</label>
+                      </div>
+                    );
+                  })
+                }
               </div>
             </div>
-            <div class="dropdown center">
-              <button id="typeBtn" onclick="organizationType.classList.toggle('block')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Types</button>
-              <div id="organizationType" class="dropdown-content align-items-start">
-                <div class="stack gap-h3" style="white-space: nowrap">
-                  {
-                    dictionary.filter(
-                      (d) => d.tag_categories.includes("organization_type")
-                    ).map(d => {
-                      return (
-                        <div class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={d.code_name} value={d.code_name}
-                            name="types"
-                            data-code={d.code_name}
-                            data-label={d.translations.find(t => t.language_code === lang.code).default_label}
-                          >
-                          <label for={d.code_name}>{d.translations.find(t => t.language_code === lang.code).default_label}</label>
-                        </div>
-                      );
-                    })
-                  }
-                </div>
+            <button
+              popovertarget="organizationType"
+              id="organizationTypeBtn"
+              class="max-width-col-5 stack horizontal align-items-center gap-h8"
+              type="button"
+            >
+              <span class="text-overflow-ellipsis">Types</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open types menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div popover id="organizationType" class="padding-h3 border-radius-m breakout-clickable align-items-start">
+              <div class="stack gap-h3" style="white-space: nowrap">
+                {
+                  dictionary.filter(
+                    (d) => d.tag_categories.includes("organization_type")
+                  ).map(d => {
+                    return (
+                      <div class="stack horizontal align-items-center">
+                        <input
+                          type="checkbox"
+                          id={d.code_name} value={d.code_name}
+                          name="types"
+                          data-code={d.code_name}
+                          data-label={d.translations.find(t => t.language_code === lang.code).default_label}
+                        >
+                        <label for={d.code_name}>{d.translations.find(t => t.language_code === lang.code).default_label}</label>
+                      </div>
+                    );
+                  })
+                }
               </div>
             </div>
-            <div class="dropdown center">
-              <button id="serviceBtn" onclick="service.classList.toggle('block')" class="dropbtn max-width-col-5 text-overflow-ellipsis">Services</button>
-              <div id="service" class="dropdown-content align-items-start">
-                <div class="stack gap-h3" style="white-space: nowrap">
-                  {
-                    dictionary.filter(
-                      (d) => d.tag_categories.includes("games_related_service")
-                    ).map(d => {
-                      return (
-                        <div class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={d.code_name} value={d.code_name}
-                            name="services"
-                            data-code={d.code_name}
-                            data-label={d.translations.find(t => t.language_code === lang.code).default_label}
-                          >
-                          <label for={d.code_name}>{d.translations.find(t => t.language_code === lang.code).default_label}</label>
-                        </div>
-                      );
-                    })
-                  }
-                </div>
+            <button
+              popovertarget="service"
+              id="serviceBtn"
+              class="max-width-col-5 stack horizontal align-items-center gap-h8"
+              type="button"
+            >
+              <span class="text-overflow-ellipsis">Services</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open services menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div popover id="service" class="padding-h3 border-radius-m breakout-clickable align-items-start">
+              <div class="stack gap-h3" style="white-space: nowrap">
+                {
+                  dictionary.filter(
+                    (d) => d.tag_categories.includes("games_related_service")
+                  ).map(d => {
+                    return (
+                      <div class="stack horizontal align-items-center">
+                        <input
+                          type="checkbox"
+                          id={d.code_name} value={d.code_name}
+                          name="services"
+                          data-code={d.code_name}
+                          data-label={d.translations.find(t => t.language_code === lang.code).default_label}
+                        >
+                        <label for={d.code_name}>{d.translations.find(t => t.language_code === lang.code).default_label}</label>
+                      </div>
+                    );
+                  })
+                }
               </div>
             </div>
             <input type="reset" id="resetBtn" class="color-palette-teal" style="display: none;">

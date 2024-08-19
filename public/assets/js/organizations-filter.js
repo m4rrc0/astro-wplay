@@ -10,7 +10,7 @@ const services = Array.from(document.forms['organizationsForm'].elements.service
 const organizationsForm = document.getElementById('organizationsForm');
 const resetBtn = document.getElementById('resetBtn');
 const areaBtn = document.getElementById('areaBtn');
-const typeBtn = document.getElementById('typeBtn');
+const typeBtn = document.getElementById('organizationTypeBtn');
 const serviceBtn = document.getElementById('serviceBtn');
 const organizations = document.getElementsByClassName('card-organization');
 const dropdowns = document.getElementsByClassName('dropdown-content');
@@ -77,28 +77,28 @@ function filterOrganizations(organizationsForm) {
   // Update the areas button
   if (!!areasFilter && areasFilter.length) {
     areaBtn.classList.add('color-palette-teal');
-    areaBtn.innerText = areasFilter.map(areaFilter => areas[areaFilter]).join(', ');
+    areaBtn.children[0].innerText = areasFilter.map(areaFilter => areas[areaFilter]).join(', ');
   } else {
     areaBtn.classList.remove('color-palette-teal');
-    areaBtn.innerText = 'Provinces';
+    areaBtn.children[0].innerText = 'Provinces';
   }
 
   // Update the types button
   if (!!typesFilter && typesFilter.length) {
     typeBtn.classList.add('color-palette-teal');
-    typeBtn.innerText = typesFilter.map(typeFilter => organizationTypes[typeFilter]).join(', ');
+    typeBtn.children[0].innerText = typesFilter.map(typeFilter => organizationTypes[typeFilter]).join(', ');
   } else {
     typeBtn.classList.remove('color-palette-teal');
-    typeBtn.innerText = 'Types';
+    typeBtn.children[0].innerText = 'Types';
   }
 
   // Update the services button
   if (!!servicesFilter && servicesFilter.length) {
     serviceBtn.classList.add('color-palette-teal');
-    serviceBtn.innerText = servicesFilter.map(serviceFilter => services[serviceFilter]).join(', ');
+    serviceBtn.children[0].innerText = servicesFilter.map(serviceFilter => services[serviceFilter]).join(', ');
   } else {
     serviceBtn.classList.remove('color-palette-teal');
-    serviceBtn.innerText = 'Services';
+    serviceBtn.children[0].innerText = 'Services';
   }
 
   // Filter the organizations
@@ -130,22 +130,6 @@ function filterOrganizations(organizationsForm) {
   }
 };
 
-/**
- * Close the dropdown menu if the user clicks outside of it
- * @param {*} e 
- */
-function closeDropdowns(e) {
-  if (!e.target.closest('.dropdown')) {
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('block')) {
-        openDropdown.classList.remove('block');
-      }
-    }
-  }
-};
-
 organizationsForm.onsubmit = (e) => e.preventDefault();
 organizationsForm.onchange = () => filterOrganizations(organizationsForm);
 resetBtn.onclick = (e) => {
@@ -153,5 +137,3 @@ resetBtn.onclick = (e) => {
   organizationsForm.reset();
   filterOrganizations(organizationsForm);
 };
-
-window.onclick = closeDropdowns;

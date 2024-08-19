@@ -249,9 +249,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 return (
                   <li
                     class="card-organization
-                                        box no-border stack gap-down-h7 split-after-1
-                                        border-radius-s
-                                        breakout-clickable"
+                      box no-border stack gap-down-h7 split-after-1
+                      border-radius-s
+                      breakout-clickable"
                     style=""
                   >
                     <div
@@ -298,7 +298,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     >
                       <ul class="reset">
                         {typesTranslated?.map((type) => {
-                          const currentPalette = `color-palette-${type.code_name}`
+                          const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
                           return (
                             <li
                               class={`box no-border padding-x-h8 padding-y-h9

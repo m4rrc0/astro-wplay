@@ -22,8 +22,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   />
   <BasicPage {lang}>
     <main class="center width-max">
-      <div id="events-list-container" class="box no-border stack gap-down-h1">
-        <IO h2 $skip={!organizations?.[0]} class="center text">
+      <div id="organizations-list-container" class="box no-border stack gap-down-h1">
+        <IO h1 $skip={!organizations?.[0]} class="center text">
           Organisations
         </IO>
 
@@ -124,9 +124,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 return (
                   <li
                     class="card-organization
-                                        box no-border stack gap-down-h7 split-after-1
-                                        border-radius-s
-                                        breakout-clickable"
+                      box no-border stack gap-down-h7 split-after-1
+                      border-radius-s
+                      breakout-clickable"
                     style=""
                     data-area={location?.area.code_name}
                     data-types={typesTranslated?.map(t => t.code_name)}
@@ -176,7 +176,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     >
                       <ul class="reset">
                         {typesTranslated?.map((type) => {
-                          const currentPalette = `color-palette-${type.code_name}`
+                          const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
                           return (
                             <li
                               class={`box no-border padding-x-h8 padding-y-h9

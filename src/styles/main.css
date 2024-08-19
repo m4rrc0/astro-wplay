@@ -91,6 +91,9 @@ blockquote {
   line-height: 32px;
 }
 
-div[popover] {
-  margin: 0;
+div[popover],
+.stack.horizontal > * + div[popover] {
+  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }

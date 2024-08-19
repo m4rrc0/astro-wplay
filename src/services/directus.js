@@ -305,7 +305,8 @@ const transformDateTime = (dateRaw) => {
 	const hasTime = dateStr?.length > 10
 
 	return {
-		dateTimeRaw: dateRaw,
+		// dateTimeRaw: dateRaw,
+		dateTimeRaw: dateStr,
 		dateStr,
 		hasTime,
 		fr: {
@@ -1412,18 +1413,17 @@ export async function fetchEvents() {
 		.toISOString()
 		.substring(0, 10)
 
-	const events = eventsUnfiltered.filter((event) => {
+	let events = eventsUnfiltered.filter((event) => {
 		return (
-			event?.time_end?.dateTimeRaw > today &&
-			event?.time_end?.dateTimeRaw < inSixMonths
+			event?.time_end?.dateStr > today && event?.time_end?.dateStr < inSixMonths
 		)
 		// TODO: add this when UI is ready to display canonical event pages
 		// || event.isCanonical
 	})
 
 	events.sort((prev, next) => {
-		const a = prev?.time_start?.dateTimeRaw
-		const b = next?.time_start?.dateTimeRaw
+		const a = prev?.time_start?.dateStr
+		const b = next?.time_start?.dateStr
 		if (a > b) return 1
 		if (a < b) return -1
 		return 0

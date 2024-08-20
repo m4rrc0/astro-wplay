@@ -34,7 +34,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 							<span>Wanna Play</span>
 						</a>
 					</li>
-					<li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
+					<!-- <li><a href={`/${lang.code}/be`}>Où jouer?</a></li> -->
 					<li><a href={`/${lang.code}/e`}>Agenda</a></li>
 					<li><a href={`/${lang.code}/o`}>Annuaire</a></li>
 					<li>
@@ -81,12 +81,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 					</li>
 					<li><a href={`/${lang.code}/contact`}>Contact</a></li>
 					<!-- <li><a href="/styleguide">Styleguide</a></li> -->
+					<!-- TODO: Improve accessibility -->
 					<Icon
+						aria-disabled
+						data-remove-disabled
 						id="searchBtn"
 						name="gridicons:search"
 						title="search"
-						role="img"
 						onclick="searchContainer.showModal()"
+						onkeydown="if (event.key === ' ' || event.key === 'Enter') { searchContainer.showModal(); }"
+						onload="this.setAttribute('tabindex', '0')"
+						role="button"
 					/>
 				</ul>
 			</nav>
@@ -248,6 +253,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 	nav > ul > li > input:hover {
 		background-color: initial;
 		color: var(--color-text__a--hover);
+	}
+	:where(#searchBtn) {
+		cursor: pointer;
 	}
 	#footer-main {
 		margin-top: 4vw;

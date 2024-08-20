@@ -39,6 +39,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 						style="flex-wrap: wrap; gap: var(--size-h1)"
 					>
 						<button
+							disabled
+							data-remove-disabled
 							popovertarget="area"
 							id="areaBtn"
 							class="max-width-col-5 stack horizontal align-items-center gap-h8"
@@ -80,6 +82,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 							</div>
 						</div>
 						<button
+							disabled
+							data-remove-disabled
 							popovertarget="organizationType"
 							id="organizationTypeBtn"
 							class="max-width-col-5 stack horizontal align-items-center gap-h8"
@@ -133,6 +137,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 							</div>
 						</div>
 						<button
+							disabled
+							data-remove-disabled
 							popovertarget="service"
 							id="serviceBtn"
 							class="max-width-col-5 stack horizontal align-items-center gap-h8"

@@ -8,7 +8,7 @@ const { lang = "fr" } = Astro.props
 const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
 ---
 
-<html {lang}>
+<html {lang} class="no-js">
 	<head>
 		<!-- Explicitely specify where ressources can come from -->
 		<!-- See: https://web.dev/csp/ OR https://web.dev/csp-xss/ -->
@@ -102,6 +102,19 @@ const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
 			href="/assets/images/favicons/mask-icon.svg"
 			color="rgb(47,82,160)"
 		/>
+
+		<script>
+			;(function (H) {
+				H.className = H.className.replace(/\bno-js\b/, "js")
+			})(document.documentElement)
+		</script>
+		<script>
+			const elems = document.querySelectorAll("[data-remove-disabled]")
+			for (const el of elems) {
+				el.removeAttribute("disabled")
+				el.removeAttribute("aria-disabled")
+			}
+		</script>
 
 		<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
 		<script is:inline src="/pagefind/pagefind-ui.js"></script>

@@ -50,6 +50,14 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]),
 textarea {
 	border-width: 1px; /* TODO: remove this when sizing lib is ok */
 }
+:--button {
+	border-radius: var(--border-radius-s);
+}
+:--button:disabled,
+[role="button"][aria-disabled] {
+	opacity: 0.4;
+	cursor: auto;
+}
 
 /* #app {
   margin: auto;

@@ -7,33 +7,33 @@ s... = unitless scale values determined by size-scale-ratio
 size-lock... = used for computing css locks for every size we need
 */
 :root {
-  --s-14: calc(var(--s-13) / var(--size-scale-ratio));
-  --s-13: calc(var(--s-12) / var(--size-scale-ratio));
-  --s-12: calc(var(--s-11) / var(--size-scale-ratio));
-  --s-11: calc(var(--s-10) / var(--size-scale-ratio));
-  --s-10: calc(var(--s-9) / var(--size-scale-ratio));
-  --s-9: calc(var(--s-8) / var(--size-scale-ratio));
-  --s-8: calc(var(--s-7) / var(--size-scale-ratio));
-  --s-7: calc(var(--s-6) / var(--size-scale-ratio));
-  --s-6: calc(var(--s-5) / var(--size-scale-ratio));
-  --s-5: calc(var(--s-4) / var(--size-scale-ratio));
-  --s-4: calc(var(--s-3) / var(--size-scale-ratio));
-  --s-3: calc(var(--s-2) / var(--size-scale-ratio));
-  --s-2: calc(var(--s-1) / var(--size-scale-ratio));
-  --s-1: var(--s0);
-  --s0: var(--size-base);
-  --s1: var(--s0);
-  --s2: calc(var(--s1) * var(--size-scale-ratio));
-  --s3: calc(var(--s2) * var(--size-scale-ratio));
-  --s4: calc(var(--s3) * var(--size-scale-ratio));
-  --s5: calc(var(--s4) * var(--size-scale-ratio));
-  --s6: calc(var(--s5) * var(--size-scale-ratio));
-  --s7: calc(var(--s6) * var(--size-scale-ratio));
-  --s8: calc(var(--s7) * var(--size-scale-ratio));
-  --s9: calc(var(--s8) * var(--size-scale-ratio));
-  --s10: calc(var(--s9) * var(--size-scale-ratio));
-  --s11: calc(var(--s10) * var(--size-scale-ratio));
-  --s12: calc(var(--s11) * var(--size-scale-ratio));
+	--s-14: calc(var(--s-13) / var(--size-scale-ratio));
+	--s-13: calc(var(--s-12) / var(--size-scale-ratio));
+	--s-12: calc(var(--s-11) / var(--size-scale-ratio));
+	--s-11: calc(var(--s-10) / var(--size-scale-ratio));
+	--s-10: calc(var(--s-9) / var(--size-scale-ratio));
+	--s-9: calc(var(--s-8) / var(--size-scale-ratio));
+	--s-8: calc(var(--s-7) / var(--size-scale-ratio));
+	--s-7: calc(var(--s-6) / var(--size-scale-ratio));
+	--s-6: calc(var(--s-5) / var(--size-scale-ratio));
+	--s-5: calc(var(--s-4) / var(--size-scale-ratio));
+	--s-4: calc(var(--s-3) / var(--size-scale-ratio));
+	--s-3: calc(var(--s-2) / var(--size-scale-ratio));
+	--s-2: calc(var(--s-1) / var(--size-scale-ratio));
+	--s-1: var(--s0);
+	--s0: var(--size-base);
+	--s1: var(--s0);
+	--s2: calc(var(--s1) * var(--size-scale-ratio));
+	--s3: calc(var(--s2) * var(--size-scale-ratio));
+	--s4: calc(var(--s3) * var(--size-scale-ratio));
+	--s5: calc(var(--s4) * var(--size-scale-ratio));
+	--s6: calc(var(--s5) * var(--size-scale-ratio));
+	--s7: calc(var(--s6) * var(--size-scale-ratio));
+	--s8: calc(var(--s7) * var(--size-scale-ratio));
+	--s9: calc(var(--s8) * var(--size-scale-ratio));
+	--s10: calc(var(--s9) * var(--size-scale-ratio));
+	--s11: calc(var(--s10) * var(--size-scale-ratio));
+	--s12: calc(var(--s11) * var(--size-scale-ratio));
 }
 
 /* 2. ------------------------------------
@@ -45,8 +45,8 @@ the size-... is the fluid value bound within a min and max IF the browser suppor
 
 body,
 *[class*="size-context-"] {
-  /* ARCHIVE: Lock formula */
-  /* --lock-h0: calc(
+	/* ARCHIVE: Lock formula */
+	/* --lock-h0: calc(
     (var(--size-h0-min) * 1rem) +
     (var(--size-h0-max) - var(--size-h0-min)) *
     (100vw - (var(--size-lock-screen-min) * 1rem)) /
@@ -54,82 +54,82 @@ body,
   );
   --lock-h1: ...
   --lock-h2: ... */
-  @mixin locks h-1, h0, h1, h2, h3, h4, p, h5, h6, h7, h8, h9;
-  /* Can also use function */
-  /* --lock-h1: lock(var(--size-h1-min),var(--size-h1-max),var(--size-lock-screen-min),var(--size-lock-screen-max)); */
+	@mixin locks h-1, h0, h1, h2, h3, h4, p, h5, h6, h7, h8, h9;
+	/* Can also use function */
+	/* --lock-h1: lock(var(--size-h1-min),var(--size-h1-max),var(--size-lock-screen-min),var(--size-lock-screen-max)); */
 
-  /* --size-font: var(--lock); */
-  --size-h-1: var(--lock-h-1);
-  --size-h0: var(--lock-h0);
-  --size-h1: var(--lock-h1);
-  --size-h2: var(--lock-h2);
-  --size-h3: var(--lock-h3);
-  --size-h4: var(--lock-h4);
-  --size-p: var(--lock-p);
-  --size-h5: var(--lock-h5);
-  --size-h6: var(--lock-h6);
-  --size-h7: var(--lock-h7);
-  --size-h8: var(--lock-h8);
-  --size-h9: var(--lock-h9);
+	/* --size-font: var(--lock); */
+	--size-h-1: var(--lock-h-1);
+	--size-h0: var(--lock-h0);
+	--size-h1: var(--lock-h1);
+	--size-h2: var(--lock-h2);
+	--size-h3: var(--lock-h3);
+	--size-h4: var(--lock-h4);
+	--size-p: var(--lock-p);
+	--size-h5: var(--lock-h5);
+	--size-h6: var(--lock-h6);
+	--size-h7: var(--lock-h7);
+	--size-h8: var(--lock-h8);
+	--size-h9: var(--lock-h9);
 
-  /* NOTE: Have to use @support because for some reason firefox is not skipping the rule even though it does not know min(max()) */
-  @supports (font-size: min(max(16px, 2.2vw), 22px)) {
-    /* ARCHIVE: Clamp lacks browser support */
-    /* --size-h0: clamp((var(--size-h0-min) * 1rem), var(--lock-h0), (var(--size-h0-max) * 1rem)); */
-    /* https://caniuse.com/#feat=css-math-functions */
-    /* See https://css-tricks.com/simplified-fluid-typography/ */
+	/* NOTE: Have to use @support because for some reason firefox is not skipping the rule even though it does not know min(max()) */
+	@supports (font-size: min(max(16px, 2.2vw), 22px)) {
+		/* ARCHIVE: Clamp lacks browser support */
+		/* --size-h0: clamp((var(--size-h0-min) * 1rem), var(--lock-h0), (var(--size-h0-max) * 1rem)); */
+		/* https://caniuse.com/#feat=css-math-functions */
+		/* See https://css-tricks.com/simplified-fluid-typography/ */
 
-    /* Combination with the formula to avoid media queries */
-    /* prettier-ignore */
-    --size-h-1: min(max((var(--size-h-1-min) * 1rem), var(--lock-h-1)), (var(--size-h-1-max) * 1rem)); /* prettier-ignore */
-    --size-h0: min(max((var(--size-h0-min) * 1rem), var(--lock-h0)), (var(--size-h0-max) * 1rem)); /* prettier-ignore */
-    --size-h1: min(max((var(--size-h1-min) * 1rem), var(--lock-h1)), (var(--size-h1-max) * 1rem)); /* prettier-ignore */
-    --size-h2: min(max((var(--size-h2-min) * 1rem), var(--lock-h2)), (var(--size-h2-max) * 1rem)); /* prettier-ignore */
-    --size-h3: min(max((var(--size-h3-min) * 1rem), var(--lock-h3)), (var(--size-h3-max) * 1rem)); /* prettier-ignore */
-    --size-h4: min(max((var(--size-h4-min) * 1rem), var(--lock-h4)), (var(--size-h4-max) * 1rem)); /* prettier-ignore */
-    --size-p: min(max((var(--size-p-min) * 1rem), var(--lock-p)), (var(--size-p-max) * 1rem)); /* prettier-ignore */
-    --size-h5: min(max((var(--size-h5-min) * 1rem), var(--lock-h5)), (var(--size-h5-max) * 1rem)); /* prettier-ignore */
-    --size-h6: min(max((var(--size-h6-min) * 1rem), var(--lock-h6)), (var(--size-h6-max) * 1rem)); /* prettier-ignore */
-    --size-h7: min(max((var(--size-h7-min) * 1rem), var(--lock-h7)), (var(--size-h7-max) * 1rem)); /* prettier-ignore */
-    --size-h8: min(max((var(--size-h8-min) * 1rem), var(--lock-h8)), (var(--size-h8-max) * 1rem));
-    --size-h9: min(
-      max((var(--size-h9-min) * 1rem), var(--lock-h9)),
-      (var(--size-h9-max) * 1rem)
-    );
-  }
-  /* If no support for min(max()) we use media queries for more predictability */
-  @supports not (font-size: min(max(16px, 2.2vw), 22px)) {
-    @media (width > calc(env(--size-lock-screen-max) * 1rem)) {
-      --size-h-1: calc(var(--size-h-1-max) * 1rem);
-      --size-h0: calc(var(--size-h0-max) * 1rem);
-      --size-h1: calc(var(--size-h1-max) * 1rem);
-      --size-h2: calc(var(--size-h2-max) * 1rem);
-      --size-h3: calc(var(--size-h3-max) * 1rem);
-      --size-h4: calc(var(--size-h4-max) * 1rem);
-      --size-p: calc(var(--size-p-max) * 1rem);
-      --size-h5: calc(var(--size-h5-max) * 1rem);
-      --size-h6: calc(var(--size-h6-max) * 1rem);
-      --size-h7: calc(var(--size-h7-max) * 1rem);
-      --size-h8: calc(var(--size-h8-max) * 1rem);
-      --size-h9: calc(var(--size-h9-max) * 1rem);
-    }
-    @media (width < calc(env(--size-lock-screen-min) * 1rem)) {
-      --size-h-1: calc(var(--size-h-1-min) * 1rem);
-      --size-h0: calc(var(--size-h0-min) * 1rem);
-      --size-h1: calc(var(--size-h1-min) * 1rem);
-      --size-h2: calc(var(--size-h2-min) * 1rem);
-      --size-h3: calc(var(--size-h3-min) * 1rem);
-      --size-h4: calc(var(--size-h4-min) * 1rem);
-      --size-p: calc(var(--size-p-min) * 1rem);
-      --size-h5: calc(var(--size-h5-min) * 1rem);
-      --size-h6: calc(var(--size-h6-min) * 1rem);
-      --size-h7: calc(var(--size-h7-min) * 1rem);
-      --size-h8: calc(var(--size-h8-min) * 1rem);
-      --size-h9: calc(var(--size-h9-min) * 1rem);
-    }
-  }
+		/* Combination with the formula to avoid media queries */
+		/* prettier-ignore */
+		--size-h-1: min(max((var(--size-h-1-min) * 1rem), var(--lock-h-1)), (var(--size-h-1-max) * 1rem)); /* prettier-ignore */
+		--size-h0: min(max((var(--size-h0-min) * 1rem), var(--lock-h0)), (var(--size-h0-max) * 1rem)); /* prettier-ignore */
+		--size-h1: min(max((var(--size-h1-min) * 1rem), var(--lock-h1)), (var(--size-h1-max) * 1rem)); /* prettier-ignore */
+		--size-h2: min(max((var(--size-h2-min) * 1rem), var(--lock-h2)), (var(--size-h2-max) * 1rem)); /* prettier-ignore */
+		--size-h3: min(max((var(--size-h3-min) * 1rem), var(--lock-h3)), (var(--size-h3-max) * 1rem)); /* prettier-ignore */
+		--size-h4: min(max((var(--size-h4-min) * 1rem), var(--lock-h4)), (var(--size-h4-max) * 1rem)); /* prettier-ignore */
+		--size-p: min(max((var(--size-p-min) * 1rem), var(--lock-p)), (var(--size-p-max) * 1rem)); /* prettier-ignore */
+		--size-h5: min(max((var(--size-h5-min) * 1rem), var(--lock-h5)), (var(--size-h5-max) * 1rem)); /* prettier-ignore */
+		--size-h6: min(max((var(--size-h6-min) * 1rem), var(--lock-h6)), (var(--size-h6-max) * 1rem)); /* prettier-ignore */
+		--size-h7: min(max((var(--size-h7-min) * 1rem), var(--lock-h7)), (var(--size-h7-max) * 1rem)); /* prettier-ignore */
+		--size-h8: min(max((var(--size-h8-min) * 1rem), var(--lock-h8)), (var(--size-h8-max) * 1rem));
+		--size-h9: min(
+			max((var(--size-h9-min) * 1rem), var(--lock-h9)),
+			(var(--size-h9-max) * 1rem)
+		);
+	}
+	/* If no support for min(max()) we use media queries for more predictability */
+	@supports not (font-size: min(max(16px, 2.2vw), 22px)) {
+		@media (width > calc(env(--size-lock-screen-max) * 1rem)) {
+			--size-h-1: calc(var(--size-h-1-max) * 1rem);
+			--size-h0: calc(var(--size-h0-max) * 1rem);
+			--size-h1: calc(var(--size-h1-max) * 1rem);
+			--size-h2: calc(var(--size-h2-max) * 1rem);
+			--size-h3: calc(var(--size-h3-max) * 1rem);
+			--size-h4: calc(var(--size-h4-max) * 1rem);
+			--size-p: calc(var(--size-p-max) * 1rem);
+			--size-h5: calc(var(--size-h5-max) * 1rem);
+			--size-h6: calc(var(--size-h6-max) * 1rem);
+			--size-h7: calc(var(--size-h7-max) * 1rem);
+			--size-h8: calc(var(--size-h8-max) * 1rem);
+			--size-h9: calc(var(--size-h9-max) * 1rem);
+		}
+		@media (width < calc(env(--size-lock-screen-min) * 1rem)) {
+			--size-h-1: calc(var(--size-h-1-min) * 1rem);
+			--size-h0: calc(var(--size-h0-min) * 1rem);
+			--size-h1: calc(var(--size-h1-min) * 1rem);
+			--size-h2: calc(var(--size-h2-min) * 1rem);
+			--size-h3: calc(var(--size-h3-min) * 1rem);
+			--size-h4: calc(var(--size-h4-min) * 1rem);
+			--size-p: calc(var(--size-p-min) * 1rem);
+			--size-h5: calc(var(--size-h5-min) * 1rem);
+			--size-h6: calc(var(--size-h6-min) * 1rem);
+			--size-h7: calc(var(--size-h7-min) * 1rem);
+			--size-h8: calc(var(--size-h8-min) * 1rem);
+			--size-h9: calc(var(--size-h9-min) * 1rem);
+		}
+	}
 
-  /* --lh-h0: calc(var(--size-h0) * 1.45);
+	/* --lh-h0: calc(var(--size-h0) * 1.45);
   --lh-h1: calc(var(--size-h1) * 1.45);
   --lh-h2: calc(var(--size-h2) * 1.45);
   --lh-h3: calc(var(--size-h3) * 1.45);
@@ -148,96 +148,103 @@ body,
 /* TODO: what vars do we need throughout the app? Isn't --size-h1 -> --size-h8 enough and more declarative? */
 body,
 *[class*="size-context-"] {
-  /* should have multiple widths (max, measure, aside, min, 0, ?) */
-  /* --size-relative-ratio is defined in tokens = 1.618 by default */
-  --size-relative-xs: calc(var(--size-relative-s) / var(--size-relative-ratio)); /* 0.382 */
-  --size-relative-s: calc(var(--size-relative-m) / var(--size-relative-ratio)); /* 0.618 */
-  --size-relative-m: 1em;
-  --size-relative-l: calc(var(--size-relative-m) * var(--size-relative-ratio)); /* 1.618 */
-  --size-relative-xl: calc(var(--size-relative-l) * var(--size-relative-ratio)); /* 2.618 */
-  --size-relative: var(--size-relative-m);
+	/* should have multiple widths (max, measure, aside, min, 0, ?) */
+	/* --size-relative-ratio is defined in tokens = 1.618 by default */
+	--size-relative-xs: calc(
+		var(--size-relative-s) / var(--size-relative-ratio)
+	); /* 0.382 */
+	--size-relative-s: calc(
+		var(--size-relative-m) / var(--size-relative-ratio)
+	); /* 0.618 */
+	--size-relative-m: 1em;
+	--size-relative-l: calc(
+		var(--size-relative-m) * var(--size-relative-ratio)
+	); /* 1.618 */
+	--size-relative-xl: calc(
+		var(--size-relative-l) * var(--size-relative-ratio)
+	); /* 2.618 */
+	--size-relative: var(--size-relative-m);
 
-  /* --- main site's sections widths --- */
-  --measure: var(--width-measure);
-  --measure-relative: var(--width-measure-relative);
-  --width-measure-h1: calc(var(--size-h1) * var(--width-measure-ratio));
-  --width-measure-h2: calc(var(--size-h2) * var(--width-measure-ratio));
-  --width-measure-h3: calc(var(--size-h3) * var(--width-measure-ratio));
-  --width-measure-h4: calc(var(--size-h4) * var(--width-measure-ratio));
-  --width-measure-h5: calc(var(--size-h5) * var(--width-measure-ratio));
-  --width-measure-h6: calc(var(--size-h6) * var(--width-measure-ratio));
-  /* --width-max: ; */ /* already defined in tokens and vars */
+	/* --- main site's sections widths --- */
+	--measure: var(--width-measure);
+	--measure-relative: var(--width-measure-relative);
+	--width-measure-h1: calc(var(--size-h1) * var(--width-measure-ratio));
+	--width-measure-h2: calc(var(--size-h2) * var(--width-measure-ratio));
+	--width-measure-h3: calc(var(--size-h3) * var(--width-measure-ratio));
+	--width-measure-h4: calc(var(--size-h4) * var(--width-measure-ratio));
+	--width-measure-h5: calc(var(--size-h5) * var(--width-measure-ratio));
+	--width-measure-h6: calc(var(--size-h6) * var(--width-measure-ratio));
+	/* --width-max: ; */ /* already defined in tokens and vars */
 
-  /* ----------------------------------------------- */
-  /* TODO: better way to handle widths. does not scale nice. see logo on org page */
-  /* ----------------------------------------------- */
+	/* ----------------------------------------------- */
+	/* TODO: better way to handle widths. does not scale nice. see logo on org page */
+	/* ----------------------------------------------- */
 
-  --width-main: calc(var(--width-max) * var(--width-relative-ratio));
-  --width-aside: calc(var(--width-max) - var(--width-main));
-  --width-col-2: calc(var(--width-max) / 2);
-  --width-col-3: calc(var(--width-max) / 3);
-  --width-col-4: calc(var(--width-max) / 4);
-  --width-col-5: calc(var(--width-max) / 5);
-  --width-col-6: calc(var(--width-max) / 6);
-  --width-col-7: calc(var(--width-max) / 7);
-  --width-col-8: calc(var(--width-max) / 8);
-  --width-col-9: calc(var(--width-max) / 9);
-  --width-col-10: calc(var(--width-max) / 10);
-  --width-col-11: calc(var(--width-max) / 11);
-  --width-col-12: calc(var(--width-max) / 12);
-  --width-col-13: calc(var(--width-max) / 13);
-  --width-col-14: calc(var(--width-max) / 14);
-  --width-col-15: calc(var(--width-max) / 15);
-  --width-col-16: calc(var(--width-max) / 16);
-  /* --width-min: ; */ /* min block width */
+	--width-main: calc(var(--width-max) * var(--width-relative-ratio));
+	--width-aside: calc(var(--width-max) - var(--width-main));
+	--width-col-2: calc(var(--width-max) / 2);
+	--width-col-3: calc(var(--width-max) / 3);
+	--width-col-4: calc(var(--width-max) / 4);
+	--width-col-5: calc(var(--width-max) / 5);
+	--width-col-6: calc(var(--width-max) / 6);
+	--width-col-7: calc(var(--width-max) / 7);
+	--width-col-8: calc(var(--width-max) / 8);
+	--width-col-9: calc(var(--width-max) / 9);
+	--width-col-10: calc(var(--width-max) / 10);
+	--width-col-11: calc(var(--width-max) / 11);
+	--width-col-12: calc(var(--width-max) / 12);
+	--width-col-13: calc(var(--width-max) / 13);
+	--width-col-14: calc(var(--width-max) / 14);
+	--width-col-15: calc(var(--width-max) / 15);
+	--width-col-16: calc(var(--width-max) / 16);
+	/* --width-min: ; */ /* min block width */
 
-  /* gap is for margins, paddings, grid-gap, ... */
-  /* --gap-xxs: var(--size-h7);
+	/* gap is for margins, paddings, grid-gap, ... */
+	/* --gap-xxs: var(--size-h7);
   --gap-xs: var(--size-h6);
   --gap-s: var(--size-h5);
   --gap-l: var(--size-h3);
   --gap-xl: var(--size-h2);
   --gap-xxl: var(--size-h1); */
-  --gap-m: var(--size-h4);
-  /* --gap: var(--gap-m); */
+	--gap-m: var(--size-h4);
+	/* --gap: var(--gap-m); */
 
-  /* useful vars for layout primitives */
-  /* --gutters: var(--gap-m); */
-  /* --space: var(--gap-m); */
-  --padding: var(--size-relative);
-  /* --width-border: var(--gap-xxs); */
-  /* --width-max: var(--gap-xxs); */
-  /* --width-min: var(--gap-xxs); */
-  /* --width-item: var(--gap-xxs); */
-  /* --width-side: var(--gap-xxs); */
-  /* --width-main-min: var(--gap-xxs); */
-  /* --height: var(--gap-xxs); */
-  /* --threshold: var(--gap-xxs); */
+	/* useful vars for layout primitives */
+	/* --gutters: var(--gap-m); */
+	/* --space: var(--gap-m); */
+	--padding: var(--size-relative);
+	/* --width-border: var(--gap-xxs); */
+	/* --width-max: var(--gap-xxs); */
+	/* --width-min: var(--gap-xxs); */
+	/* --width-item: var(--gap-xxs); */
+	/* --width-side: var(--gap-xxs); */
+	/* --width-main-min: var(--gap-xxs); */
+	/* --height: var(--gap-xxs); */
+	/* --threshold: var(--gap-xxs); */
 
-  --size-border-button: var(--size-h8);
-  /* --- Border widths --- */
-  --size-border-0: 0;
-  --size-border-s: 1px;
-  --size-border-m: var(--size-h8);
-  --size-border-l: var(--size-h6);
-  /* default */
-  --size-border: var(--size-border-m);
+	/* --size-border-button: var(--size-h8); */
+	--size-border-button: 3px;
+	/* --- Border widths --- */
+	--size-border-0: 0;
+	--size-border-s: 1px;
+	--size-border-m: var(--size-h8);
+	--size-border-l: var(--size-h6);
+	/* default */
+	--size-border: var(--size-border-m);
 
-  /* --- outline ---
+	/* --- outline ---
   (Used for :focus. Should probably be fixed for the whole site, whatever the context) */
-  /* --size-outline: var(--size-h9); */
-  --size-outline: calc(var(--s-14) * 1rem);
+	/* --size-outline: var(--size-h9); */
+	--size-outline: calc(var(--s-14) * 1rem);
 
-  /* --- Gutters ---
+	/* --- Gutters ---
   = lateral paddings */
-  --size-gutters-0: 0;
-  --size-gutters-s: var(--size-h8);
-  --size-gutters-m: var(--size-p);
-  --size-gutters-l: var(--size-h3);
-  /* default */
-  --size-gutters: var(--size-gutters-m);
-
-
+	--size-gutters-0: 0;
+	--size-gutters-s: var(--size-h8);
+	--size-gutters-m: var(--size-p);
+	--size-gutters-l: var(--size-h3);
+	/* default */
+	--size-gutters: var(--size-gutters-m);
 }
 
 /* 4. ------------------------------------
@@ -246,98 +253,98 @@ We will use "size contexts" to determine the mins and max to use for the compute
 
 .size-context-main,
 body {
-  /* Default sizing for title */
-  --size-h-1-max: var(--s12);
-  --size-h-1-min: var(--s9);
-  --size-h0-max: var(--s9);
-  --size-h0-min: var(--s6);
-  --size-h1-max: var(--s6);
-  --size-h1-min: var(--s4);
-  --size-h2-max: var(--s4);
-  --size-h2-min: var(--s2);
-  --size-h3-max: var(--s2);
-  --size-h3-min: var(--s1);
-  --size-h4-max: var(--s1);
-  --size-h4-min: var(--s0);
-  --size-p-max: var(--s1);
-  --size-p-min: var(--s0);
-  --size-h5-max: var(--s0);
-  --size-h5-min: var(--s-1);
-  --size-h6-max: var(--s-1);
-  --size-h6-min: var(--s-4);
-  --size-h7-max: var(--s-4);
-  --size-h7-min: var(--s-8);
-  --size-h8-max: var(--s-8);
-  --size-h8-min: var(--s-12);
-  --size-h9-max: var(--s-12);
-  --size-h9-min: var(--s-14);
+	/* Default sizing for title */
+	--size-h-1-max: var(--s12);
+	--size-h-1-min: var(--s9);
+	--size-h0-max: var(--s9);
+	--size-h0-min: var(--s6);
+	--size-h1-max: var(--s6);
+	--size-h1-min: var(--s4);
+	--size-h2-max: var(--s4);
+	--size-h2-min: var(--s2);
+	--size-h3-max: var(--s2);
+	--size-h3-min: var(--s1);
+	--size-h4-max: var(--s1);
+	--size-h4-min: var(--s0);
+	--size-p-max: var(--s1);
+	--size-p-min: var(--s0);
+	--size-h5-max: var(--s0);
+	--size-h5-min: var(--s-1);
+	--size-h6-max: var(--s-1);
+	--size-h6-min: var(--s-4);
+	--size-h7-max: var(--s-4);
+	--size-h7-min: var(--s-8);
+	--size-h8-max: var(--s-8);
+	--size-h8-min: var(--s-12);
+	--size-h9-max: var(--s-12);
+	--size-h9-min: var(--s-14);
 }
 
 .size-context-massive {
-  /* Sizing for massive titles in sections */
-  --size-h-1-max: var(--s12);
-  --size-h-1-min: var(--s12);
-  --size-h0-max: var(--s12);
-  --size-h0-min: var(--s5);
-  --size-h1-max: var(--s10);
-  --size-h1-min: var(--s4);
-  --size-h2-max: var(--s8);
-  --size-h2-min: var(--s3);
-  --size-h3-max: var(--s4);
-  --size-h3-min: var(--s2);
-  --size-h4-max: var(--s2);
-  --size-h4-min: var(--s1);
-  --size-p-max: var(--s2);
-  --size-p-min: var(--s1);
-  --size-h5-max: var(--s1);
-  --size-h5-min: var(--s-2);
-  --size-h6-max: var(--s-2);
-  --size-h6-min: var(--s-3);
-  --size-h7-max: var(--s-3);
-  --size-h7-min: var(--s-4);
-  --size-h8-max: var(--s-4);
-  --size-h8-min: var(--s-5);
-  --size-h9-max: var(--s-5);
-  --size-h9-min: var(--s-6);
+	/* Sizing for massive titles in sections */
+	--size-h-1-max: var(--s12);
+	--size-h-1-min: var(--s12);
+	--size-h0-max: var(--s12);
+	--size-h0-min: var(--s5);
+	--size-h1-max: var(--s10);
+	--size-h1-min: var(--s4);
+	--size-h2-max: var(--s8);
+	--size-h2-min: var(--s3);
+	--size-h3-max: var(--s4);
+	--size-h3-min: var(--s2);
+	--size-h4-max: var(--s2);
+	--size-h4-min: var(--s1);
+	--size-p-max: var(--s2);
+	--size-p-min: var(--s1);
+	--size-h5-max: var(--s1);
+	--size-h5-min: var(--s-2);
+	--size-h6-max: var(--s-2);
+	--size-h6-min: var(--s-3);
+	--size-h7-max: var(--s-3);
+	--size-h7-min: var(--s-4);
+	--size-h8-max: var(--s-4);
+	--size-h8-min: var(--s-5);
+	--size-h9-max: var(--s-5);
+	--size-h9-min: var(--s-6);
 
-  /* We can also override the default use of certain variables */
-  --size-outline: calc(var(--s-14) * 1rem); /* Used for :focus */
+	/* We can also override the default use of certain variables */
+	--size-outline: calc(var(--s-14) * 1rem); /* Used for :focus */
 }
 
 .size-context-aside {
-  --gap-xl: var(--size-h5);
-  --gap-s: var(--size-s2);
+	--gap-xl: var(--size-h5);
+	--gap-s: var(--size-s2);
 }
 
 .size-context-miniature {
-  --size-h-1-max: var(--s2);
-  --size-h-1-min: var(--s-1);
-  --size-h0-max: var(--s-1);
-  --size-h0-min: var(--s-2);
-  --size-h1-max: var(--s-2);
-  --size-h1-min: var(--s-3);
-  --size-h2-max: var(--s-3);
-  --size-h2-min: var(--s-4);
-  --size-h3-max: var(--s-4);
-  --size-h3-min: var(--s-5);
-  --size-h4-max: var(--s-5);
-  --size-h4-min: var(--s-6);
-  --size-p-max: var(--s-5);
-  --size-p-min: var(--s-6);
-  --size-h5-max: var(--s-6);
-  --size-h5-min: var(--s-7);
-  --size-h6-max: var(--s-7);
-  --size-h6-min: var(--s-8);
-  --size-h7-max: var(--s-8);
-  --size-h7-min: var(--s-8);
-  --size-h8-max: var(--s-8);
-  --size-h8-min: var(--s-8);
-  --size-h9-max: var(--s-8);
-  --size-h9-min: var(--s-8);
+	--size-h-1-max: var(--s2);
+	--size-h-1-min: var(--s-1);
+	--size-h0-max: var(--s-1);
+	--size-h0-min: var(--s-2);
+	--size-h1-max: var(--s-2);
+	--size-h1-min: var(--s-3);
+	--size-h2-max: var(--s-3);
+	--size-h2-min: var(--s-4);
+	--size-h3-max: var(--s-4);
+	--size-h3-min: var(--s-5);
+	--size-h4-max: var(--s-5);
+	--size-h4-min: var(--s-6);
+	--size-p-max: var(--s-5);
+	--size-p-min: var(--s-6);
+	--size-h5-max: var(--s-6);
+	--size-h5-min: var(--s-7);
+	--size-h6-max: var(--s-7);
+	--size-h6-min: var(--s-8);
+	--size-h7-max: var(--s-8);
+	--size-h7-min: var(--s-8);
+	--size-h8-max: var(--s-8);
+	--size-h8-min: var(--s-8);
+	--size-h9-max: var(--s-8);
+	--size-h9-min: var(--s-8);
 }
 
 .size-context-narrow {
-  --width-max: var(--width-narrow);
+	--width-max: var(--width-narrow);
 }
 
 /* 5. ------------------------------------

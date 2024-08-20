@@ -321,7 +321,7 @@ const transformDateTime = (dateRaw) => {
 							timeZone: "UTC",
 							minute: "2-digit",
 						}),
-				  }
+					}
 				: {}),
 			weekday: date.toLocaleString("fr", { timeZone: "UTC", weekday: "short" }),
 			day: date.toLocaleString("fr", { timeZone: "UTC", day: "numeric" }),
@@ -357,7 +357,7 @@ function transformImage(i) {
 		? {
 				...i,
 				src: `${cmsAssetsUrl}/${i?.id}`,
-		  }
+			}
 		: i
 }
 
@@ -379,8 +379,7 @@ function transformAddress(location) {
 	let area = areasBe.find(
 		(area) => l.postalCode >= area.zipMin && l.postalCode <= area.zipMax,
 	)
-	if (!area)
-		console.warn(`--SELF WARNING-- ZIP missing for place: '${string}'`)
+	if (!area) console.warn(`--SELF WARNING-- ZIP missing for place: '${string}'`)
 
 	area = area && {
 		...area,
@@ -766,7 +765,7 @@ function fallbackOnParentsOfEvent({
 					games_related_services: mainOrganizer.games_related_services,
 					amenities_translated: mainOrganizer.amenities_translated,
 					gallery: mainOrganizer.gallery,
-			  })
+				})
 			: {}),
 		// ...(hasParent
 		//   ? removeEmptyPropOnObject({
@@ -1016,7 +1015,7 @@ export function transformEvent(eventRaw, languages) {
 				mainOrganizer,
 				languages,
 				// hasParent,
-		  })
+			})
 		: eventRaw
 
 	// TODO: old implementation, will be removed
@@ -1035,7 +1034,7 @@ export function transformEvent(eventRaw, languages) {
 					time_end,
 					isSameDay,
 				}
-		  })
+			})
 		: null
 
 	// 	{
@@ -1127,7 +1126,7 @@ export function transformEvent(eventRaw, languages) {
 		? {
 				slug: slugCanonical,
 				path: createPath({ type: "event", slug: slugCanonical }),
-		  }
+			}
 		: null
 
 	const canonical =
@@ -1135,7 +1134,7 @@ export function transformEvent(eventRaw, languages) {
 			? {
 					slug: slugCanonical,
 					path: createPath({ type: "event", slug: slugCanonical }),
-			  }
+				}
 			: null
 
 	const allSchedulesArray = [
@@ -1191,7 +1190,8 @@ export function transformEvent(eventRaw, languages) {
 							occEndDate = dateStr.split("T")[0]
 						}
 
-						const occEndDateTime = occEndDate + `T${occEndTime}`
+						const occEndDateTime =
+							occEndDate + (occEndTime ? `T${occEndTime}` : "")
 						time_end = transformDateTime(occEndDateTime)
 					} else if (matchingSchedule?.type === "unique") {
 						time_end = transformDateTime(matchingSchedule.endDateStr)
@@ -1206,7 +1206,7 @@ export function transformEvent(eventRaw, languages) {
 						time_start,
 						time_end,
 					}
-			  })
+				})
 			: null
 
 	// Transform images

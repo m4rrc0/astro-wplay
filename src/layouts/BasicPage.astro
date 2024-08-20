@@ -10,228 +10,248 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <div
-  id="layout-page-base"
-  class="stack split-after-2 gap-down-h1 justify-start"
-  style="min-height: 100vh;"
+	id="layout-page-base"
+	class="layout-page stack split-after-2 gap-down-h1 justify-start"
+	style="min-height: 100vh;"
 >
-  <div id="menu-main" class="color-palette-">
-    <div class="center width-max">
-      <nav class="box no-border cluster overflow gap-h6-down">
-        <ul class="reset reset-down-a size-h3">
-          <li>
-            <a
-              href={`/${lang.code}`}
-              class="stack horizontal align-items-center"
-              aria-label="Page d'accueil"
-            >
-              <img
-                src="/assets/images/favicons/favicon-32x32.png"
-                alt="logo"
-                width="32"
-                height="32"
-                style="display: inline;"
-              />
-              <span>Wanna Play</span>
-            </a>
-          </li>
-          <li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
-          <li><a href={`/${lang.code}/e`}>Agenda</a></li>
-          <li><a href={`/${lang.code}/o`}>Annuaire</a></li>
-          <li>
-            <input
-              type="button"
-              popovertarget="ressources"
-              value="Ressources"
-              id="ressourcesBtn"
-            >
-            <div
-              popover
-              id="ressources"
-              class="padding-h3 border-radius-m breakout-clickable"
-            >
-              <div class="stack">
-                <a href={`/${lang.code}/a`}>Articles</a>
-                <a class="color-palette-teal" href="https://talk.wanna-play.be/" target="_blank">
-                  Wanna Talk?
-                </a>
-              </div>
-            </div>
-          </li>
-          <li class="dropdown">
-            <input
-              type="button"
-              popovertarget="about"
-              value="A Propos"
-              id="aboutBtn"
-            >
-            <div
-              popover
-              id="about"
-              class="padding-h3 border-radius-m breakout-clickable"
-            >
-              <div class="stack">
-                <a href={`/${lang.code}/projet`}>Projet</a>
-                <a href={`/${lang.code}/equipe`}>Équipe</a>
-              </div>
-            </div>
-          </li>
-          <li><a href={`/${lang.code}/contact`}>Contact</a></li>
-          <!-- <li><a href="/styleguide">Styleguide</a></li> -->
-          <Icon
-            id="searchBtn"
-            name="gridicons:search"
-            title="search"
-            role="img"
-            onclick="searchContainer.showModal()"
-          />
-        </ul>
-      </nav>
-    </div>
-  </div>
+	<div id="menu-main" class="color-palette-">
+		<div class="center width-max">
+			<nav class="box no-border cluster overflow gap-h6-down">
+				<ul class="reset reset-down-a size-h3">
+					<li>
+						<a
+							href={`/${lang.code}`}
+							class="stack horizontal align-items-center"
+							aria-label="Page d'accueil"
+						>
+							<img
+								src="/assets/images/favicons/favicon-32x32.png"
+								alt="logo"
+								width="32"
+								height="32"
+								style="display: inline;"
+							/>
+							<span>Wanna Play</span>
+						</a>
+					</li>
+					<li><a href={`/${lang.code}/be`}>Où jouer?</a></li>
+					<li><a href={`/${lang.code}/e`}>Agenda</a></li>
+					<li><a href={`/${lang.code}/o`}>Annuaire</a></li>
+					<li>
+						<input
+							type="button"
+							popovertarget="ressources"
+							value="Ressources"
+							id="ressourcesBtn"
+						/>
+						<div
+							popover
+							id="ressources"
+							class="padding-h3 border-radius-m breakout-clickable"
+						>
+							<div class="stack">
+								<a href={`/${lang.code}/a`}>Articles</a>
+								<a
+									class="color-palette-teal"
+									href="https://talk.wanna-play.be/"
+									target="_blank"
+								>
+									Wanna Talk?
+								</a>
+							</div>
+						</div>
+					</li>
+					<li class="dropdown">
+						<input
+							type="button"
+							popovertarget="about"
+							value="A Propos"
+							id="aboutBtn"
+						/>
+						<div
+							popover
+							id="about"
+							class="padding-h3 border-radius-m breakout-clickable"
+						>
+							<div class="stack">
+								<a href={`/${lang.code}/projet`}>Projet</a>
+								<a href={`/${lang.code}/equipe`}>Équipe</a>
+							</div>
+						</div>
+					</li>
+					<li><a href={`/${lang.code}/contact`}>Contact</a></li>
+					<!-- <li><a href="/styleguide">Styleguide</a></li> -->
+					<Icon
+						id="searchBtn"
+						name="gridicons:search"
+						title="search"
+						role="img"
+						onclick="searchContainer.showModal()"
+					/>
+				</ul>
+			</nav>
+		</div>
+	</div>
 
-  <dialog id="searchContainer" class="width-max" style="height: 100%; background-color: transparent;">
-    <div id="search"></div>
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        let search = new PagefindUI({ element: '#search', showSubResults: true, resetStyles: false });
-        window.addEventListener('click', (e) => {
-          if (!e.target.closest('.pagefind-ui') && !e.target.closest('.pagefind-ui__button') && !e.target.closest('#searchBtn')) {
-            search.destroy();
-            search = new PagefindUI({ element: "#search", showSubResults: true, resetStyles: false });
-            document.getElementById('searchContainer').close();
-          }
-        })
-      });
-    </script>
-  </dialog>
+	<dialog
+		id="searchContainer"
+		class="width-max"
+		style="height: 100%; background-color: transparent;"
+	>
+		<div id="search"></div>
+		<script>
+			window.addEventListener("DOMContentLoaded", () => {
+				let search = new PagefindUI({
+					element: "#search",
+					showSubResults: true,
+					resetStyles: false,
+				})
+				window.addEventListener("click", (e) => {
+					if (
+						!e.target.closest(".pagefind-ui") &&
+						!e.target.closest(".pagefind-ui__button") &&
+						!e.target.closest("#searchBtn")
+					) {
+						search.destroy()
+						search = new PagefindUI({
+							element: "#search",
+							showSubResults: true,
+							resetStyles: false,
+						})
+						document.getElementById("searchContainer").close()
+					}
+				})
+			})
+		</script>
+	</dialog>
 
-  <slot />
+	<slot />
 
-  <footer
-    id="footer-main"
-    class="skew-border-before
+	<footer
+		id="footer-main"
+		class="skew-border-before
     color-palette-variation-contrast"
-  >
-    <div class="box no-border center intrinsic text stack gap-down-h7">
-      <div class="cluster justify-center size-h3">
-        <div>
-          <a
-            href="https://www.facebook.com/WannaPlayBE/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Facebook
-          </a><a
-            href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Youtube
-          </a><a
-            href="https://www.instagram.com/wannaplay_be/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Instagram
-          </a><a
-            href="http://eepurl.com/cM3shf"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Newsletter
-          </a><a
-            href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Spotify
-          </a><a
-            href="https://www.redbubble.com/fr/people/Wanna-Play-asbl/explore"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Shop
-          </a>
-        </div>
-      </div>
-      <div>
-        <p>
-          Site web créé avec <Icon
-            name="carbon:fire"
-            title="enthousiasme"
-            role="img"
-          /> et <Icon name="ph:coffee" title="caféine" role="img" /> par <a
-            href="http://www.m4rr.co/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >m4rrc0
-          </a>
-        </p>
-        <p>
-          Identité graphique créée avec <Icon
-            name="gridicons:heart-outline"
-            title="passion"
-            role="img"
-          /> et <Icon
-            name="simple-line-icons:magic-wand"
-            title="magie"
-            role="img"
-          /> par <a
-            href="http://www.tess-h.be/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Tess h.
-          </a>
-        </p>
-      </div>
-      <p class="size-h6">
-        <span>© Wanna Play ASBL -</span>
-        <span>0695.574.033 -</span>
-        <span>IBAN BE54 5230 8139 4997</span>
-        <br />
-        <span
-          >Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - <MtObf
-            {email}
-          />
-        </span>
-      </p>
-      <!-- <div class="cluster justify-center size-h6">
+	>
+		<div class="box no-border center intrinsic text stack gap-down-h7">
+			<div class="cluster justify-center size-h3">
+				<div>
+					<a
+						href="https://www.facebook.com/WannaPlayBE/"
+						target="_blank"
+						rel="noopener noreferrer"
+						>Facebook
+					</a><a
+						href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
+						target="_blank"
+						rel="noopener noreferrer"
+						>Youtube
+					</a><a
+						href="https://www.instagram.com/wannaplay_be/"
+						target="_blank"
+						rel="noopener noreferrer"
+						>Instagram
+					</a><a
+						href="http://eepurl.com/cM3shf"
+						target="_blank"
+						rel="noopener noreferrer"
+						>Newsletter
+					</a><a
+						href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
+						target="_blank"
+						rel="noopener noreferrer"
+						>Spotify
+					</a><a
+						href="https://www.redbubble.com/fr/people/Wanna-Play-asbl/explore"
+						target="_blank"
+						rel="noopener noreferrer"
+						>Shop
+					</a>
+				</div>
+			</div>
+			<div>
+				<p>
+					Site web créé avec <Icon
+						name="carbon:fire"
+						title="enthousiasme"
+						role="img"
+					/> et <Icon name="ph:coffee" title="caféine" role="img" /> par <a
+						href="http://www.m4rr.co/"
+						target="_blank"
+						rel="noopener noreferrer"
+						>m4rrc0
+					</a>
+				</p>
+				<p>
+					Identité graphique créée avec <Icon
+						name="gridicons:heart-outline"
+						title="passion"
+						role="img"
+					/> et <Icon
+						name="simple-line-icons:magic-wand"
+						title="magie"
+						role="img"
+					/> par <a
+						href="http://www.tess-h.be/"
+						target="_blank"
+						rel="noopener noreferrer"
+						>Tess h.
+					</a>
+				</p>
+			</div>
+			<p class="size-h6">
+				<span>© Wanna Play ASBL -</span>
+				<span>0695.574.033 -</span>
+				<span>IBAN BE54 5230 8139 4997</span>
+				<br />
+				<span
+					>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique - <MtObf
+						{email}
+					/>
+				</span>
+			</p>
+			<!-- <div class="cluster justify-center size-h6">
         <div>
           <span>Tester cette page: </span>
           <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Performance</a>
           <a href={`https://ecograder.com/report?site_submitted=${canonicalURL.href.replaceAll(/\//g, '%2F').replaceAll(':', '%3A')}`} target="_blank" rel="noopener noreferrer">Indice écologique</a>
         </div>
       </div> -->
-    </div>
-  </footer>
+		</div>
+	</footer>
 </div>
 
 <style>
-  /* #template-global {
+	/* #template-global {
     margin-bottom: var(--gap-xxl);
   } */
-  #menu-main {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
-  }
-  nav {
-    /* --gap: var(--size-h6); */
-    /* margin: var(--gap) 0; */
-    --justify-content: flex-end;
-  }
-  nav > ul > li:first-child {
-    --justify-content: flex-start;
-    flex-grow: 1;
-  }
-  nav > ul > li:first-child > a {
-    max-width: max-content;
-  }
-  nav > ul > li > input {
-    padding: 0;
-  }
-  nav > ul > li > input:hover {
-    background-color: initial;
-    color: var(--color-text__a--hover);
-  }
-  #footer-main {
-    margin-top: 4vw;
-    --skew-before: -1.5deg;
-    --skew-before-origin: top left;
-  }
+	#menu-main {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+	}
+	nav {
+		/* --gap: var(--size-h6); */
+		/* margin: var(--gap) 0; */
+		--justify-content: flex-end;
+	}
+	nav > ul > li:first-child {
+		--justify-content: flex-start;
+		flex-grow: 1;
+	}
+	nav > ul > li:first-child > a {
+		max-width: max-content;
+	}
+	nav > ul > li > input {
+		padding: 0;
+	}
+	nav > ul > li > input:hover {
+		background-color: initial;
+		color: var(--color-text__a--hover);
+	}
+	#footer-main {
+		margin-top: 4vw;
+		--skew-before: -1.5deg;
+		--skew-before-origin: top left;
+	}
 </style>

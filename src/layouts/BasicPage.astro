@@ -7,6 +7,12 @@ const { lang } = Astro.props
 const email = import.meta.env.CONTACT_EMAIL
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const ariaCurrentAttr = (currentHref) => {
+	if (currentHref === canonicalURL.pathname) {
+		return "page"
+	}
+	return false
+}
 ---
 
 <div
@@ -35,8 +41,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 						</a>
 					</li>
 					<!-- <li><a href={`/${lang.code}/be`}>Où jouer?</a></li> -->
-					<li><a href={`/${lang.code}/e`}>Agenda</a></li>
-					<li><a href={`/${lang.code}/o`}>Annuaire</a></li>
+					<li>
+						<a
+							href={`/${lang.code}/e`}
+							aria-current={ariaCurrentAttr(`/${lang.code}/e`)}>Agenda</a
+						>
+					</li>
+					<li>
+						<a
+							href={`/${lang.code}/o`}
+							aria-current={ariaCurrentAttr(`/${lang.code}/o`)}>Annuaire</a
+						>
+					</li>
 					<li>
 						<input
 							type="button"
@@ -50,7 +66,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 							class="padding-h3 border-radius-m breakout-clickable"
 						>
 							<div class="stack">
-								<a href={`/${lang.code}/a`}>Articles</a>
+								<a
+									href={`/${lang.code}/a`}
+									aria-current={ariaCurrentAttr(`/${lang.code}/a`)}>Articles</a
+								>
 								<a
 									class="color-palette-teal"
 									href="https://talk.wanna-play.be/"
@@ -74,12 +93,25 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 							class="padding-h3 border-radius-m breakout-clickable"
 						>
 							<div class="stack">
-								<a href={`/${lang.code}/projet`}>Projet</a>
-								<a href={`/${lang.code}/equipe`}>Équipe</a>
+								<a
+									href={`/${lang.code}/projet`}
+									aria-current={ariaCurrentAttr(`/${lang.code}/projet`)}
+									>Projet</a
+								>
+								<a
+									href={`/${lang.code}/equipe`}
+									aria-current={ariaCurrentAttr(`/${lang.code}/equipe`)}
+									>Équipe</a
+								>
 							</div>
 						</div>
 					</li>
-					<li><a href={`/${lang.code}/contact`}>Contact</a></li>
+					<li>
+						<a
+							href={`/${lang.code}/contact`}
+							aria-current={ariaCurrentAttr(`/${lang.code}/contact`)}>Contact</a
+						>
+					</li>
 					<!-- <li><a href="/styleguide">Styleguide</a></li> -->
 					<!-- TODO: Improve accessibility -->
 					<Icon
@@ -256,6 +288,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 	}
 	:where(#searchBtn) {
 		cursor: pointer;
+	}
+	nav [aria-current="page"] {
+		color: var(--color-text__a--hover);
+		background-color: var(--color-bg__a--hover);
 	}
 	#footer-main {
 		margin-top: 4vw;

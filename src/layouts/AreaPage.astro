@@ -38,6 +38,7 @@ const eventsPhrase =
     : `${eventsCountPhrase} à ${areaName} entre le ${eventsTimeArr.join(
         " et le ",
       )}`
+
 // const restosBarsCount = organizations
 //     .filter((o) => o.types.find('bar') || o.types.find('restaurant'))
 
@@ -125,7 +126,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               events?.map((event) => {
                 const {
                   name,
-                  address,
+                  location,
                   cover_image,
                   organizers,
                   time_start,
@@ -187,10 +188,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                         p
                         $skipNoInner
                         class="zip city h5"
-                        data-zip={address.zip}
-                        data-city={address.city}
+                        data-zip={location.postalCode}
+                        data-city={location.addressLocality}
                       >
-                        {address?.string}
+                        {location.addressLocality}
                       </IO>
                       <ul class="reset stack horizontal">
                         {organizers?.map(({ name, logo }) => (
@@ -248,9 +249,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 return (
                   <li
                     class="card-organization
-                                        box no-border stack gap-down-h7 split-after-1
-                                        border-radius-s
-                                        breakout-clickable"
+                      box no-border stack gap-down-h7 split-after-1
+                      border-radius-s
+                      breakout-clickable"
                     style=""
                   >
                     <div
@@ -297,14 +298,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     >
                       <ul class="reset">
                         {typesTranslated?.map((type) => {
-                          const currentPalette = `color-palette-${type.code_name}`
+                          const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
                           return (
                             <li
                               class={`box no-border padding-x-h8 padding-y-h9
                                                             ${currentPalette} color-palette-variation-contrast
                                                             border-radius-s`}
                             >
-                              {type.fr}
+                              {type.translations.find(t => t.language_code === lang.code).default_label}
                             </li>
                           )
                         })}

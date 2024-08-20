@@ -8,113 +8,131 @@ const { lang = "fr" } = Astro.props
 const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
 ---
 
-<html {lang}>
-  <head>
-    <!-- Explicitely specify where ressources can come from -->
-    <!-- See: https://web.dev/csp/ OR https://web.dev/csp-xss/ -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="
+<html {lang} class="no-js">
+	<head>
+		<!-- Explicitely specify where ressources can come from -->
+		<!-- See: https://web.dev/csp/ OR https://web.dev/csp-xss/ -->
+		<!-- <meta http-equiv="Content-Security-Policy" content="
       default-src 'self'; object-src 'none'; img-src 'self' data: https://cms.wanna-play.be; style-src 'self' 'unsafe-inline'; child-src https://youtube.com;
       script-src 'self' 'unsafe-inline' data:;"> -->
-    <!-- Default referrer policy for requests: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy -->
-    <!-- Send a full URL when performing a same-origin request, only send the origin when the protocol security level stays the same (e.g. HTTPS→HTTPS), and send no header to a less secure destination (e.g. HTTPS→HTTP). -->
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta charset="utf-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
+		<!-- Default referrer policy for requests: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy -->
+		<!-- Send a full URL when performing a same-origin request, only send the origin when the protocol security level stays the same (e.g. HTTPS→HTTPS), and send no header to a less secure destination (e.g. HTTPS→HTTP). -->
+		<meta name="referrer" content="strict-origin-when-cross-origin" />
+		<meta charset="utf-8" />
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
 
-    <!-- Sitemap -->
-    <link rel="sitemap" href="/sitemap-index.xml" />
+		<!-- Sitemap -->
+		<link rel="sitemap" href="/sitemap-index.xml" />
 
-    <!-- Minimal favicon -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="/assets/images/favicons/favicon-32x32.png"
-    />
+		<!-- Minimal favicon -->
+		<link
+			rel="icon"
+			type="image/png"
+			href="/assets/images/favicons/favicon-32x32.png"
+		/>
 
-    <!-- ### CRITICAL FONTS PRELOAD ### -->
-    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" /> -->
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com/" /> -->
-    <link
-      rel="preload"
-      href="/assets/fonts/QuicksandCritical.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+		<!-- ### CRITICAL FONTS PRELOAD ### -->
+		<!-- <link rel="preconnect" href="https://fonts.gstatic.com" /> -->
+		<!-- <link rel="preconnect" href="https://fonts.googleapis.com/" /> -->
+		<link
+			rel="preload"
+			href="/assets/fonts/QuicksandCritical.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
 
-    <!-- ### MANIFEST & ICONS ### -->
-    <!-- General -->
-    <!-- <link rel="manifest" href="/manifest.webmanifest"> -->
-    <meta name="theme-color" content="rgb(47,82,160)" />
-    <meta name="application-name" content="Wanna Play" />
+		<!-- ### MANIFEST & ICONS ### -->
+		<!-- General -->
+		<!-- <link rel="manifest" href="/manifest.webmanifest"> -->
+		<meta name="theme-color" content="rgb(47,82,160)" />
+		<meta name="application-name" content="Wanna Play" />
 
-    <link rel="shortcut icon" href="/assets/images/favicons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/assets/images/favicons/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/assets/images/favicons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="96x96"
-      href="/assets/images/favicons/favicon-96x96.png"
-    />
+		<link
+			rel="shortcut icon"
+			href="/assets/images/favicons/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/assets/images/favicons/favicon-16x16.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/assets/images/favicons/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="96x96"
+			href="/assets/images/favicons/favicon-96x96.png"
+		/>
 
-    <!-- Apple -->
-    <meta name="apple-mobile-web-app-title" content="Wanna Play" />
-    <link
-      rel="apple-touch-icon"
-      sizes="96x96"
-      href="/assets/images/favicons/favicon-96x96.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="256x256"
-      href="/assets/images/favicons/splash-256x256.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="384x384"
-      href="/assets/images/favicons/splash-384x384.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="512x512"
-      href="/assets/images/favicons/splash-512x512.png"
-    />
-    <!-- When a tab is pinned in Safari, it uses this icon -->
-    <!-- The image needs to be a square SVG image, with a transparent (or simply: no) background, and all vectors 100% black. -->
-    <link
-      rel="mask-icon"
-      href="/assets/images/favicons/mask-icon.svg"
-      color="rgb(47,82,160)"
-    />
+		<!-- Apple -->
+		<meta name="apple-mobile-web-app-title" content="Wanna Play" />
+		<link
+			rel="apple-touch-icon"
+			sizes="96x96"
+			href="/assets/images/favicons/favicon-96x96.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="256x256"
+			href="/assets/images/favicons/splash-256x256.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="384x384"
+			href="/assets/images/favicons/splash-384x384.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="512x512"
+			href="/assets/images/favicons/splash-512x512.png"
+		/>
+		<!-- When a tab is pinned in Safari, it uses this icon -->
+		<!-- The image needs to be a square SVG image, with a transparent (or simply: no) background, and all vectors 100% black. -->
+		<link
+			rel="mask-icon"
+			href="/assets/images/favicons/mask-icon.svg"
+			color="rgb(47,82,160)"
+		/>
 
-    <!-- Microsoft -->
-    <!-- <meta name="msapplication-TileColor" content="grey" /> -->
-    <!-- <meta name="msapplication-config" content="/favicons/browserconfig.xml" /> -->
+		<script>
+			;(function (H) {
+				H.className = H.className.replace(/\bno-js\b/, "js")
+			})(document.documentElement)
+		</script>
+		<script>
+			const elems = document.querySelectorAll("[data-remove-disabled]")
+			for (const el of elems) {
+				el.removeAttribute("disabled")
+				el.removeAttribute("aria-disabled")
+			}
+		</script>
 
-    <!-- ### /MANIFEST & ICONS ### -->
+		<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+		<script is:inline src="/pagefind/pagefind-ui.js"></script>
 
-    <SEO locale="fr_BE" siteName="Wanna Play" />
+		<!-- Microsoft -->
+		<!-- <meta name="msapplication-TileColor" content="grey" /> -->
+		<!-- <meta name="msapplication-config" content="/favicons/browserconfig.xml" /> -->
 
-    <slot name="head"></slot>
-  </head>
-  <body>
-    <slot name="body"></slot>
-    <slot></slot>
-    <!-- <script type="module" data-swup-ignore-script>
+		<!-- ### /MANIFEST & ICONS ### -->
+
+		<SEO locale="fr_BE" siteName="Wanna Play" />
+
+		<slot name="head" />
+	</head>
+	<body>
+		<slot name="body" />
+		<slot />
+		<!-- <script type="module" data-swup-ignore-script>
       import "/assets/js/swup.min.js"
       import "/assets/js/SwupScriptsPlugin.min.js"
       const swup = new Swup({
@@ -122,24 +140,27 @@ const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
         containers: ["#layout-page-base > main"]
       });
     </script> -->
-    <script src="/assets/js/instant.page.js" defer type="module">
-
-    </script>
-    <!-- <script hoist>import '../assets/js/instant.page.js';</script> -->
-    <!-- <script hoist src="https://instant.page/5.1.0" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script> -->
-    <noscript
-      ><style is:inline>
-        .astro-imagetools-img {
-          background: none;
-        }
-      </style>
-    </noscript>
-    <!-- Cloudflare Web Analytics -->{PUBLIC_ANALYTICS_CLOUDFLARE && (
-      <script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon={`{"token": "${PUBLIC_ANALYTICS_CLOUDFLARE}"}`}
-      />
-    )}<!-- End Cloudflare Web Analytics -->
-  </body>
+		<script src="/assets/js/instant.page.js" defer type="module"></script>
+		<script src="/assets/js/popover.js" defer></script>
+		<script src="/assets/js/popover-polyfill.min.js" defer type="module"
+		></script>
+		<!-- <script hoist>import '../assets/js/instant.page.js';</script> -->
+		<!-- <script hoist src="https://instant.page/5.1.0" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script> -->
+		<noscript
+			><style is:inline>
+				.astro-imagetools-img {
+					background: none;
+				}
+			</style>
+		</noscript>
+		<!-- Cloudflare Web Analytics -->{
+			PUBLIC_ANALYTICS_CLOUDFLARE && (
+				<script
+					defer
+					src="https://static.cloudflareinsights.com/beacon.min.js"
+					data-cf-beacon={`{"token": "${PUBLIC_ANALYTICS_CLOUDFLARE}"}`}
+				/>
+			)
+		}<!-- End Cloudflare Web Analytics -->
+	</body>
 </html>

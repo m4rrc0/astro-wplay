@@ -1,5 +1,15 @@
 import { createDirectus, rest, authentication, readItems } from "@directus/sdk"
-import { slugify, createPath, areasBe } from "@utils"
+import rrule from "rrule"
+import {
+	slugify,
+	createPath,
+	areasBe,
+	toTzDate,
+	stripDate,
+	datePlus1Day,
+} from "@utils"
+
+const { datetime, RRule, RRuleSet, rrulestr } = rrule
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL || process.env.DIRECTUS_URL
 const DIRECTUS_EMAIL =
@@ -26,8 +36,8 @@ const imageFields = (preString) => [
 	preString + "width",
 	preString + "height",
 	preString + "description",
-	//   preString + "image_alt",
-	//   preString + "image_title",
+	// preString + "image_alt",
+	// preString + "image_title",
 ]
 const blockFields = (preString) => [
 	preString + `id`,
@@ -78,61 +88,130 @@ export const areas = [
 })
 /* prettier-ignore */
 const dico = [
-  // links names
-  { code_name: 'website', fr: 'Site web', iconName: 'ph:link' },
-  { code_name: 'web_page', fr: 'Page web', iconName: 'ph:link' },
-  { code_name: 'facebook_page', fr: 'Page Facebook', iconName: 'ph:facebook-logo' },
-  { code_name: 'facebook_event', fr: 'Événement Facebook', iconName: 'ph:facebook-logo' },
-  { code_name: 'twitter', fr: 'Twitter', iconName: 'ph:twitter-logo' },
-  { code_name: 'instagram', fr: 'Instagram', iconName: 'ph:instagram-logo' },
-  { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'ph:youtube-logo' },
+	// links names
+	{ code_name: "website", fr: "Site web", iconName: "ph:link" },
+	{ code_name: "web_page", fr: "Page web", iconName: "ph:link" },
+	{
+		code_name: "facebook_page",
+		fr: "Page Facebook",
+		iconName: "ph:facebook-logo",
+	},
+	{
+		code_name: "facebook_event",
+		fr: "Événement Facebook",
+		iconName: "ph:facebook-logo",
+	},
+	{ code_name: "twitter", fr: "Twitter", iconName: "ph:twitter-logo" },
+	{ code_name: "instagram", fr: "Instagram", iconName: "ph:instagram-logo" },
+	{ code_name: "youtube_channel", fr: "Youtube", iconName: "ph:youtube-logo" },
 
-  { code_name: 'spotify', fr: 'Spotify', iconName: 'ph:spotify-logo' },
-  { code_name: 'shop', fr: 'Boutique', iconName: 'ph:shopping-cart-simple' },
-  { code_name: 'tripadvisor', fr: 'Tripadvisor', iconName: 'cib:tripadvisor' },
-  { code_name: 'facebook_group', fr: 'Groupe Facebook', iconName: 'ph:facebook-logo' },
-  { code_name: 'forum', fr: 'Forum', iconName: 'ph:chats' },
-  { code_name: 'talk', fr: 'Le Talk', iconName: 'ri:kakao-talk-line' },
-  // Areas
-  ...areas,
-  // Organization types
-  { code_name: 'association', fr: 'Association' },
-  { code_name: 'club', fr: 'Club' },
-  { code_name: 'bar', fr: 'Bar' },
-  { code_name: 'restaurant', fr: 'Restaurant' },
-  { code_name: 'toy_library', fr: 'Ludothèque' },
-  { code_name: 'shop', fr: 'Boutique' },
-  { code_name: 'festival', fr: 'Festival' },
-  { code_name: 'escape_room', fr: 'Escape Room' },
-  // Days of week
-  { code_name: 'monday', fr: 'Lundi' },
-  { code_name: 'tuesday', fr: 'Mardi' },
-  { code_name: 'wednesday', fr: 'Mercredi' },
-  { code_name: 'thursday', fr: 'Jeudi' },
-  { code_name: 'friday', fr: 'Vendredi' },
-  { code_name: 'saturday', fr: 'Samedi' },
-  { code_name: 'sunday', fr: 'Dimanche' },
-  // Games services
-  { code_name: 'yes_games', fr: 'Jeux sur place' },
-  { code_name: 'animators', fr: 'Animateurs' },
-  { code_name: 'buy_new', fr: 'Achat neuf' },
-  { code_name: 'buy_used', fr: "Achat d'occasion" },
-  { code_name: 'video_games', fr: 'Jeux vidéos' },
-  // Amenities
-  { code_name: 'snacks', fr: 'Snacks' },
-  { code_name: 'drinks', fr: 'Boissons' },
-  { code_name: 'food', fr: 'Nourriture' },
-  { code_name: 'vegetarian', fr: 'Végétarien' },
-  { code_name: 'vegan', fr: 'Végan' },
-  { code_name: 'handicapped', fr: 'Accessible' },
-  { code_name: 'children', fr: 'Enfants bienvenus' },
+	{ code_name: "spotify", fr: "Spotify", iconName: "ph:spotify-logo" },
+	{ code_name: "shop", fr: "Boutique", iconName: "ph:shopping-cart-simple" },
+	{ code_name: "tripadvisor", fr: "Tripadvisor", iconName: "cib:tripadvisor" },
+	{
+		code_name: "facebook_group",
+		fr: "Groupe Facebook",
+		iconName: "ph:facebook-logo",
+	},
+	{ code_name: "forum", fr: "Forum", iconName: "ph:chats" },
+	{ code_name: "talk", fr: "Le Talk", iconName: "ri:kakao-talk-line" },
+	// Areas
+	...areas,
+	// Days of week
+	{ code_name: "monday", fr: "Lundi" },
+	{ code_name: "tuesday", fr: "Mardi" },
+	{ code_name: "wednesday", fr: "Mercredi" },
+	{ code_name: "thursday", fr: "Jeudi" },
+	{ code_name: "friday", fr: "Vendredi" },
+	{ code_name: "saturday", fr: "Samedi" },
+	{ code_name: "sunday", fr: "Dimanche" },
+	// Amenities
+	{ code_name: "snacks", fr: "Snacks" },
+	{ code_name: "drinks", fr: "Boissons" },
+	{ code_name: "food", fr: "Nourriture" },
+	{ code_name: "vegetarian", fr: "Végétarien" },
+	{ code_name: "vegan", fr: "Végan" },
+	{ code_name: "handicapped", fr: "Accessible" },
+	{ code_name: "children", fr: "Enfants bienvenus" },
+
+	// More generic matches last just to be sure to match the rest first
+	{
+		code_name: "facebook",
+		fr: "Page Facebook",
+		iconName: "ph:facebook-logo",
+	},
+	{ code_name: "youtube", fr: "Youtube", iconName: "ph:youtube-logo" },
+	{
+		code_name: "linkedin",
+		fr: "LinkedIn",
+		iconName: "ph:linkedin-logo",
+	},
+	{
+		code_name: "linktr.ee|linktree",
+		fr: "Linktree",
+		iconName: "ph:linktree-logo",
+	},
+	{
+		code_name: "pinterest",
+		fr: "Pinterest",
+		iconName: "ph:pinterest-logo",
+	},
+	{
+		code_name: "discord",
+		fr: "Discord",
+		iconName: "ph:discord-logo",
+	},
+	{
+		code_name: "tiktok",
+		fr: "TikTok",
+		iconName: "ph:tiktok-logo",
+	},
+	{
+		code_name: "twitch",
+		fr: "Twitch",
+		iconName: "ph:twitch-logo",
+	},
+	{
+		code_name:
+			"ticket|tickets|inscription|réservation|billets|billet|billeterie",
+		// fr: "LinkedIn",
+		iconName: "ph:ticket-light",
+	},
+	{
+		code_name:
+			"date|dates|agenda|calendrier|calendrier|agenda|planning|plannings|event",
+		iconName: "ph:calendar-dots-light",
+	},
+	{
+		code_name:
+			"my ludo|myludo|Board game geek|boardgamegeek|jeux",
+		fr: "My Ludo",
+		iconName: "ph:checkerboard-thin",
+	},
+	{
+		code_name: "catalogue",
+		iconName: "ph:book-open-text-thin",
+	},
+	{ code_name: "web", fr: "Web", iconName: "ph:link" },
 ]
 
 // --- UTILITY FUNCTIONS --- //
 
 const translateFromCodeName = (code_name) => {
-	const match = dico.find((el) => el.code_name === code_name)
+	const codeNameLow = code_name?.toLowerCase()
 
+	let match = dico.find((el) => el.code_name === code_name)
+
+	if (!match) {
+		// Wider matching logic to match more generic strings
+		match = dico.find((el) => {
+			const dicoRex = new RegExp(el.code_name, "i")
+			return dicoRex.test(codeNameLow)
+		})
+		if (match) {
+			match.fr = code_name
+		}
+	}
 	if (!match) {
 		console.warn(
 			`--SELF WARNING-- No match in dico for code_name '${code_name}'`,
@@ -207,38 +286,52 @@ export async function start() {
 
 // --- TRANSFORM FIELDS --- //
 
-const transformDateTime = (str) => {
-	if (!str) return str
+const transformDateTime = (dateRaw) => {
+	if (!dateRaw) return dateRaw
 
-	const hasTime = str?.length > 10
+	const date = toTzDate(dateRaw)
 
 	const dateOptions = {
+		timeZone: "UTC",
 		weekday: "short",
 		year: "numeric",
 		month: "short",
 		day: "numeric",
 	}
-	const timeOptions = { hour: "2-digit", minute: "2-digit" }
+	const timeOptions = { timeZone: "UTC", hour: "2-digit", minute: "2-digit" }
 
-	const date = new Date(str)
+	// date = new Date(dateRaw)
+	const dateStr = stripDate(date).slice(0, -3)
+	const hasTime = dateStr?.length > 10
+
 	return {
-		dateTimeRaw: str,
+		dateTimeRaw: dateRaw,
+		dateStr,
 		hasTime,
 		fr: {
-			date: date.toLocaleDateString("fr", dateOptions),
+			date: date.toLocaleString("fr", dateOptions),
 			...(hasTime
 				? {
-						time: date.toLocaleTimeString("fr", timeOptions),
-						hours: date.toLocaleTimeString("fr", { hour: "2-digit" }),
-						minutes: date.toLocaleTimeString("fr", { minute: "2-digit" }),
-				  }
+						time: date.toLocaleString("fr", timeOptions),
+						hours: date.toLocaleString("fr", {
+							timeZone: "UTC",
+							hour: "2-digit",
+						}),
+						minutes: date.toLocaleString("fr", {
+							timeZone: "UTC",
+							minute: "2-digit",
+						}),
+					}
 				: {}),
-			weekday: date.toLocaleDateString("fr", { weekday: "short" }),
-			day: date.toLocaleDateString("fr", { day: "numeric" }),
-			month: date.toLocaleDateString("fr", { month: "short" }),
-			monthShort: date.toLocaleDateString("fr", { month: "short" }),
-			monthLong: date.toLocaleDateString("fr", { month: "long" }),
-			year: date.toLocaleDateString("fr", { year: "numeric" }),
+			weekday: date.toLocaleString("fr", { timeZone: "UTC", weekday: "short" }),
+			day: date.toLocaleString("fr", { timeZone: "UTC", day: "numeric" }),
+			month: date.toLocaleString("fr", { timeZone: "UTC", month: "short" }),
+			monthShort: date.toLocaleString("fr", {
+				timeZone: "UTC",
+				month: "short",
+			}),
+			monthLong: date.toLocaleString("fr", { timeZone: "UTC", month: "long" }),
+			year: date.toLocaleString("fr", { timeZone: "UTC", year: "numeric" }),
 		},
 	}
 }
@@ -264,17 +357,17 @@ function transformImage(i) {
 		? {
 				...i,
 				src: `${cmsAssetsUrl}/${i?.id}`,
-		  }
+			}
 		: i
 }
 
-function transformAddress(address) {
-	const a = (address?.[0]?.zip && address?.[0]) || (address?.zip && address)
-	if (!a) return null
+function transformAddress(location) {
+	const l = location?.postalCode && location
+	if (!l) return null
 
 	const string = [
-		[a.street, a.number].filter((z) => z).join(" "),
-		[a.zip, a.city].filter((z) => z).join(" "),
+		[l.streetAddress, l.streetNumber].filter((z) => z).join(" "),
+		[l.postalCode, l.addressLocality].filter((z) => z).join(" "),
 	]
 		.filter((z) => z)
 		.join(", ")
@@ -284,17 +377,16 @@ function transformAddress(address) {
 	)}+belgium`
 
 	let area = areasBe.find(
-		(area) => a.zip >= area.zipMin && a.zip <= area.zipMax,
+		(area) => l.postalCode >= area.zipMin && l.postalCode <= area.zipMax,
 	)
-	if (!area)
-		console.warn(`--SELF WARNING-- ZIP missing for address: '${string}'`)
+	if (!area) console.warn(`--SELF WARNING-- ZIP missing for place: '${string}'`)
 
 	area = area && {
 		...area,
 		...translateFromCodeName(area.code_name),
 	}
 
-	return { ...a, string, gMapLink, area }
+	return { ...l, string, gMapLink, area }
 }
 
 function transformPageData(page_data) {
@@ -325,7 +417,7 @@ function transformBlock(blockRaw, languages) {
 
 // --- FETCH LANGUAGES --- //
 export const fetchLanguages = async () => {
-	await client.refresh()
+	// await client.refresh()
 	const result = await client.request(readItems("languages"))
 
 	return result
@@ -340,7 +432,7 @@ export const fetchLanguages = async () => {
 // --- F&T PAGES --- //
 
 export async function fetchPages() {
-	await client.refresh()
+	// await client.refresh()
 	// const result = await client.request(readItems("languages"))
 	return await client.request(
 		readItems("Pages", {
@@ -369,12 +461,37 @@ export async function fetchPages() {
 	// })
 }
 
+// --- F&T DICTIONARY --- //
+
+export async function fetchDictionary() {
+	await client.refresh()
+	return await client.request(
+		readItems("dictionary", {
+			limit: -1,
+			fields: [
+				"tag_categories",
+				"code_name",
+				"colorPalette",
+				"translations.language_code",
+				"translations.default_label",
+			],
+		}),
+	)
+}
+
 // --- F&T ORGANIZATIONS --- //
 
 export function transformOrganization(o, languages) {
 	if (!o) return o
 
-	const { status, slug, types, opening_hours, games_services, amenities } = o
+	const {
+		status,
+		slug,
+		opening_hours,
+		amenities,
+		organization_types,
+		games_related_services,
+	} = o
 	// Create Path
 	const path = createPath({ type: "organization", slug })
 	// Distort Name if not published
@@ -382,10 +499,12 @@ export function transformOrganization(o, languages) {
 		status !== "published" && ENV !== "production"
 			? `_${status?.toUpperCase()}_${o.name}`
 			: o.name
-	// Transform Address
-	const address = transformAddress(o.address)
+	// Transform Location
+	const location = transformAddress(o.location)
 	// Transform types
-	const typesTranslated = types?.map(translateFromCodeName)
+	const typesTranslated = organization_types?.map((t) => t.type)
+	// Transform services
+	const servicesTranslated = games_related_services?.map((t) => t.service)
 	// Transform opening_hours
 	const opening_hours_strings = opening_hours?.map(({ days, time_slots }) => {
 		const daysTranslated = days?.map(translateFromCodeName)
@@ -406,8 +525,6 @@ export function transformOrganization(o, languages) {
 		)
 	})
 
-	// Transform games_services
-	const games_services_translated = games_services?.map(translateFromCodeName)
 	// Transform amenities
 	const amenities_translated = amenities?.map(translateFromCodeName)
 	// Transform images
@@ -448,10 +565,10 @@ export function transformOrganization(o, languages) {
 		...o,
 		path,
 		name,
-		address,
+		location,
 		typesTranslated,
+		servicesTranslated,
 		opening_hours_strings,
-		games_services_translated,
 		amenities_translated,
 		logo,
 		gallery,
@@ -462,7 +579,7 @@ export function transformOrganization(o, languages) {
 }
 
 export async function fetchOrganizations() {
-	await client.refresh()
+	// await client.refresh()
 	const organizationsRaw = await client.request(
 		readItems("organizations", {
 			limit: -1,
@@ -473,34 +590,81 @@ export async function fetchOrganizations() {
 				"date_updated",
 				"name",
 				"slug",
-				"types",
+				"organization_types.type.code_name",
+				"organization_types.type.colorPalette",
+				"organization_types.type.translations.language_code",
+				"organization_types.type.translations.default_label",
+				"boardgame_related",
 				...imageFields("logo."),
 				...imageFields("cover_image."),
 				"opening_hours",
-				"games_services",
-				"address",
+				"games_related_services.service.code_name",
+				"games_related_services.service.colorPalette",
+				"games_related_services.service.translations.language_code",
+				"games_related_services.service.translations.default_label",
+				"location.*",
 				"amenities",
 				"links",
 				"translations.*",
 				// ...imageFields("gallery.*."),
 				// Related Events
+				"events.events_id.id",
 				"events.events_id.status",
 				"events.events_id.date_updated",
 				"events.events_id.name",
-				"events.events_id.address",
+				{
+					"events.events_id.location": [
+						// "*",
+						"name",
+						"streetAddress",
+						"streetNumber",
+						"postalCode",
+						"addressLocality",
+						"addressRegion",
+						"geo",
+					],
+				},
 				...imageFields("events.events_id.cover_image."),
-				"events.events_id.recurring",
+				"events.events_id.recurrence",
+				"events.events_id.startDate",
+				"events.events_id.endDate",
+				"events.events_id.startTime",
+				"events.events_id.endTime",
+				{
+					"events.events_id.eventSchedule": [
+						// "*",
+						"status",
+						"description",
+						"startDate",
+						"endDate",
+						"startTime",
+						"endTime",
+						"repeatCount",
+						"frequency",
+						"interval",
+						"byDay",
+						"byMonth",
+						"byMonthWeek",
+						"byMonthDay",
+						"bySetPos",
+						"exceptDate",
+						"addDate",
+					],
+				},
 				"events.events_id.schedule",
 				"events.events_id.links",
 				"events.events_id.organizers.organizations_id.status",
 				"events.events_id.organizers.organizations_id.name",
 				"events.events_id.organizers.organizations_id.slug",
-				"events.events_id.organizers.organizations_id.address",
+				"events.events_id.organizers.organizations_id.location.*",
 				...imageFields("events.events_id.organizers.organizations_id.logo."),
 				...imageFields(
 					"events.events_id.organizers.organizations_id.cover_image.",
 				),
-				"events.events_id.organizers.organizations_id.games_services",
+				"events.events_id.organizers.organizations_id.games_related_services.service.code_name",
+				"events.events_id.organizers.organizations_id.games_related_services.service.colorPalette",
+				"events.events_id.organizers.organizations_id.games_related_services.service.translations.language_code",
+				"events.events_id.organizers.organizations_id.games_related_services.service.translations.default_label",
 				"events.events_id.organizers.organizations_id.amenities",
 				// ...imageFields(
 				// 	"events.events_id.organizers.organizations_id.gallery.*.",
@@ -510,35 +674,33 @@ export async function fetchOrganizations() {
 				"events.events_id.translations.languages_code",
 				"events.events_id.translations.highlighted_details",
 				"events.events_id.translations.description",
-				"events.events_id.parent_event",
-				"events.events_id.parent_event.status",
-				"events.events_id.parent_event.name",
-				"events.events_id.parent_event.address",
-				"events.events_id.parent_event.recurring",
-				"events.events_id.parent_event.schedule",
-				"events.events_id.parent_event.links",
-				...imageFields("events.events_id.parent_event.cover_image."),
-				"events.events_id.parent_event.translations.languages_code",
-				"events.events_id.parent_event.translations.highlighted_details",
-				"events.events_id.parent_event.translations.description",
-				"events.events_id.parent_event.organizers.organizations_id.status",
-				"events.events_id.parent_event.organizers.organizations_id.name",
-				"events.events_id.parent_event.organizers.organizations_id.slug",
-				"events.events_id.parent_event.organizers.organizations_id.address",
-				...imageFields(
-					"events.events_id.parent_event.organizers.organizations_id.logo.",
-				),
-				...imageFields(
-					"events.events_id.parent_event.organizers.organizations_id.cover_image.",
-				),
-				"events.events_id.parent_event.organizers.organizations_id.games_services",
-				"events.events_id.parent_event.organizers.organizations_id.amenities",
+				// "events.events_id.parent_event",
+				// "events.events_id.parent_event.status",
+				// "events.events_id.parent_event.name",
+				// "events.events_id.parent_event.recurring",
+				// "events.events_id.parent_event.schedule",
+				// "events.events_id.parent_event.links",
+				// ...imageFields("events.events_id.parent_event.cover_image."),
+				// "events.events_id.parent_event.translations.languages_code",
+				// "events.events_id.parent_event.translations.highlighted_details",
+				// "events.events_id.parent_event.translations.description",
+				// "events.events_id.parent_event.organizers.organizations_id.status",
+				// "events.events_id.parent_event.organizers.organizations_id.name",
+				// "events.events_id.parent_event.organizers.organizations_id.slug",
+				// ...imageFields(
+				// 	"events.events_id.parent_event.organizers.organizations_id.logo.",
+				// ),
+				// ...imageFields(
+				// 	"events.events_id.parent_event.organizers.organizations_id.cover_image.",
+				// ),
+				// "events.events_id.parent_event.organizers.organizations_id.games_services",
+				// "events.events_id.parent_event.organizers.organizations_id.amenities",
 				// ...imageFields(
 				// 	"events.events_id.parent_event.organizers.organizations_id.gallery.*.",
 				// ),
-				"events.events_id.parent_event.organizers.organizations_id.translations.languages_code",
-				"events.events_id.parent_event.organizers.organizations_id.translations.description",
-				"events.events_id.event_instances",
+				// "events.events_id.parent_event.organizers.organizations_id.translations.languages_code",
+				// "events.events_id.parent_event.organizers.organizations_id.translations.description",
+				// "events.events_id.event_instances",
 			],
 		}),
 	)
@@ -555,11 +717,11 @@ export async function fetchOrganizations() {
 
 function fallbackOnParentsOfEvent({
 	eventRaw,
-	parent,
+	// parent,
 	organizers,
 	mainOrganizer,
 	languages,
-	hasParent,
+	// hasParent,
 }) {
 	// process translations fields first
 	const translations = languages
@@ -567,9 +729,9 @@ function fallbackOnParentsOfEvent({
 			const eventFields = removeEmptyPropOnObject(
 				translationFromCode(eventRaw?.translations, code),
 			)
-			const parentFields = removeEmptyPropOnObject(
-				translationFromCode(parent?.translations, code),
-			)
+			// const parentFields = removeEmptyPropOnObject(
+			// 	translationFromCode(parent?.translations, code),
+			// )
 			const organizerFields = translationFromCode(
 				mainOrganizer?.translations,
 				code,
@@ -578,11 +740,16 @@ function fallbackOnParentsOfEvent({
 			// TODO: account for fallback language on a node level (only)
 
 			// don't create a translation if no one has it
-			if (!eventFields && !parentFields && !organizerFields) return null
+			if (
+				!eventFields &&
+				// !parentFields &&
+				!organizerFields
+			)
+				return null
 
 			return {
 				...(organizerFields || {}),
-				...(parentFields || {}),
+				// ...(parentFields || {}),
 				...(eventFields || {}),
 				fallback_language: undefined,
 			}
@@ -593,20 +760,20 @@ function fallbackOnParentsOfEvent({
 		...(mainOrganizer
 			? removeEmptyPropOnObject({
 					name: mainOrganizer.name,
-					address: mainOrganizer.address,
+					location: mainOrganizer.location,
 					cover_image: mainOrganizer.cover_image,
-					games_services_translated: mainOrganizer.games_services_translated,
+					games_related_services: mainOrganizer.games_related_services,
 					amenities_translated: mainOrganizer.amenities_translated,
 					gallery: mainOrganizer.gallery,
-			  })
+				})
 			: {}),
-		...(hasParent
-			? removeEmptyPropOnObject({
-					name: parent.name,
-					address: parent.address,
-					cover_image: parent.cover_image,
-			  })
-			: {}),
+		// ...(hasParent
+		//   ? removeEmptyPropOnObject({
+		//       name: parent.name,
+		//       location: parent.location,
+		//       cover_image: parent.cover_image,
+		//     })
+		//   : {}),
 		...removeEmptyPropOnObject(eventRaw),
 		organizers,
 		translations,
@@ -615,40 +782,246 @@ function fallbackOnParentsOfEvent({
 	return e
 }
 
+export function transformSchedule(scheduleRaw) {
+	const {
+		status,
+		description,
+		startDate,
+		endDate: endDateRaw,
+		startTime,
+		endTime,
+		repeatCount,
+		frequency, // yearly, monthly, weekly
+		interval,
+		byDay,
+		bySetPos,
+		exceptDate,
+		addDate,
+		// Are the following useful?
+		byMonthDay,
+		byMonth, // [int]
+		// byMonthWeek,
+	} = scheduleRaw
+
+	// const startDateAsDate = new Date(startDate)
+	// const startDateAsDatePlus1 = new Date(startDate)
+	// startDateAsDatePlus1.setDate(startDateAsDatePlus1.getDate() + 1)
+	// const startDatePlus1 = startDateAsDatePlus1.toISOString().split("T")[0]
+	let { string: startDatePlus1 } = datePlus1Day(startDate)
+	startDatePlus1 = startDatePlus1.split("T")[0]
+
+	let endDate = endDateRaw
+	let moreThan24h = false
+
+	if (!endDate) {
+		// Define endDate
+		if (!endTime) endDate = endDateRaw
+		else if (endTime <= startTime) endDate = startDatePlus1
+		else if (endTime > startTime) endDate = startDate
+	} else if (endDate == startDatePlus1 && endTime > startTime) {
+		moreThan24h = true
+	} else if (endDate > startDatePlus1) {
+		moreThan24h = true
+	}
+
+	let type = undefined // can be 'unique', 'recurring' or 'invalid'
+	let rrule = undefined
+	const [Y, M, D] = (startDate || "").split("-")
+	const [h, m] = (startTime || "").split(":")
+
+	// Define type
+	if (!startDate || !startTime) type = "invalid"
+	// This was wrong because we might define an endDate > startDate if this schedule spans multiple days
+	// else if ((repeatCount > 1 || endDate > startDate) && !frequency)
+	else if (repeatCount > 1 && !frequency) type = "invalid"
+	else if ((repeatCount > 1 || endDate > startDatePlus1) && !!frequency)
+		type = "recurring"
+	else type = "unique"
+
+	const startDateTime =
+		startDate && startDate + (startTime ? `T${startTime}` : "")
+	const endDateTime = endDate && endDate + (endTime ? `T${endTime}` : "")
+
+	const startDateStr = stripDate(startDateTime)?.slice(0, -3)
+	const endDateStr = stripDate(endDateTime)?.slice(0, -3)
+
+	// const time_start = transformDateTime(startDateTime)
+	// const time_end = transformDateTime(endDateTime)
+
+	if (type === "recurring") {
+		rrule = new RRule({
+			freq: RRule[frequency.toUpperCase()],
+			dtstart: datetime(Y, M, D, h, m),
+			// dtstart: new Date(startDate),
+			// TODO: what happens if both repeatCount and endDate are set ???
+			count: repeatCount,
+			...(endDate && { until: new Date(endDate) }),
+			interval,
+			bysetpos: bySetPos,
+			...(byDay && {
+				byweekday: RRule[byDay.map((day) => day.slice(0, 2).toUpperCase())],
+			}),
+			// Are the following useful?
+			bymonthday: byMonthDay,
+			bymonth: byMonth,
+		})
+	}
+
+	return {
+		...scheduleRaw,
+		type,
+		rrule,
+		endDate,
+		moreThan24h,
+		startDatePlus1,
+		startDateTime,
+		endDateTime,
+		startDateStr,
+		endDateStr,
+	}
+}
+
+export function transformSchedules(schedulePartsRaw, legacySchedule) {
+	// let type = undefined
+	const purgedScheduleParts = schedulePartsRaw?.filter(
+		({ status, type }) =>
+			type !== "invalid" && (status || "published") === "published",
+	)
+	// if (purgedScheduleParts?.length < 1) type = "invalid"
+	// else if (purgedScheduleParts?.length > 1) type = "recurring"
+	// else if (purgedScheduleParts[0]?.type === "recurring") type = "recurring"
+	// else if (purgedScheduleParts[0]?.type === "unique") type = "unique"
+	// else {
+	// 	console.error("Unexpected schedule type", purgedScheduleParts);
+	// }
+
+	const rRuleSet = new RRuleSet()
+
+	// Populate RuleSet with scheduleParts
+	purgedScheduleParts?.forEach(
+		({
+			status,
+			type,
+			rrule,
+			// description,
+			startDate,
+			endDate,
+			startTime,
+			endTime,
+			repeatCount,
+			frequency, // yearly, monthly, weekly
+			interval,
+			byDay,
+			bySetPos,
+			exceptDate,
+			addDate,
+			// Are the following useful?
+			byMonthDay,
+			byMonth, // [int]
+			// byMonthWeek,
+		}) => {
+			const [Y, M, D] = (startDate || "").split("-")
+			const [h, m] = (startTime || "").split(":")
+
+			// console.log({ startDate, startTime, exceptDate, byMonth })
+
+			// Recurring events
+			if (type === "recurring") {
+				// Main recurrance definition
+				rRuleSet.rrule(rrule)
+
+				// Exceptions: Exclude dates
+				for (const { date } of exceptDate || []) {
+					const [eY, eM, eD] = date.split("-")
+					rRuleSet.exdate(datetime(eY, eM, eD, h, m))
+				}
+				// Exceptions: Add dates manualy
+				for (const { date } of addDate || []) {
+					const [aY, aM, aD] = date.split("-")
+					rRuleSet.rdate(datetime(aY, aM, aD, h, m))
+				}
+				// Event spanning multiple days has no frequency but multiple schedules with unique dates+times
+			} else if (type === "unique") {
+				rRuleSet.rdate(datetime(Y, M, D, h, m))
+			}
+		},
+	)
+
+	// TODO:
+	// - Add legacy schedule if date is in the future
+	if (legacySchedule?.length) {
+		for (const { time_start, time_end, isSameDay } of legacySchedule) {
+			const startDateTime = time_start.dateTimeRaw
+			const endDateTime = time_end?.dateTimeRaw
+			// const nowDateTime = new Date().toISOString().split(".").shift()
+			const nowDateTime = stripDate(new Date())
+
+			// Compare time_end with now to skip old events
+			if (nowDateTime > (endDateTime || startDateTime)) {
+				continue
+			}
+
+			const [sY, sM, sD, sh, sm] = startDateTime
+				.split("T")
+				?.map((dateOrTime) => dateOrTime.split(/[:-]/))
+				.flat(Infinity)
+
+			// console.log(nowDateTime, startDateTime, endDateTime, [sY, sM, sD, sh, sm])
+
+			rRuleSet.rdate(datetime(sY, sM, sD, sh, sm))
+		}
+	}
+	// TODO:
+	// - prepare useful properties (list them here next)
+	// const instances = rRuleSet.all()
+
+	return {
+		rRuleSet,
+		schedule: purgedScheduleParts,
+	}
+}
+
 export function transformEvent(eventRaw, languages) {
-	const parent =
-		eventRaw?.parent_event && transformEvent(eventRaw?.parent_event)
+	// const parent =
+	// 	eventRaw?.parent_event && transformEvent(eventRaw?.parent_event)
 	const organizers =
-		(eventRaw?.organizers?.[0]?.organizations_id &&
-			eventRaw?.organizers?.map(({ organizations_id: o }) =>
-				transformOrganization(o),
-			)) ||
-		(parent?.organizers?.[0] &&
-			parent?.organizers?.map(({ organizations_id: o }) =>
-				transformOrganization(o),
-			))
+		eventRaw?.organizers?.[0]?.organizations_id &&
+		eventRaw?.organizers?.map(({ organizations_id: o }) =>
+			transformOrganization(o),
+		)
+	// 	||
+	// (parent?.organizers?.[0] &&
+	// 	parent?.organizers?.map(({ organizations_id: o }) =>
+	// 		transformOrganization(o),
+	// 	))
 
 	const mainOrganizer = organizers?.[0]
 	// Inject booleans
-	const isRecurring =
-		eventRaw.recurring ||
-		eventRaw.schedule?.length + eventRaw.event_instances?.length > 1
-	const parentIsRecurring = parent?.recurring || parent?.schedule?.length > 0
-	const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
-	const hasParent = !!parent
+	// TODO: old implementation, will be removed
+	// const isRecurring =
+	// 	eventRaw.recurring ||
+	// 	eventRaw.schedule?.length + eventRaw.event_instances?.length > 1
+
+	// TODO: old implementation, will be removed
+	// const parentIsRecurring = parent?.recurring || parent?.schedule?.length > 0
+	// const hasParent = !!parent
 
 	// Fallback values from parent_event or first Organizer
 	const e = languages
 		? fallbackOnParentsOfEvent({
 				eventRaw,
-				parent,
+				// parent,
 				organizers,
 				mainOrganizer,
 				languages,
-				hasParent,
-		  })
+				// hasParent,
+			})
 		: eventRaw
 
+	// TODO: old implementation, will be removed
+	const hasNoSchedule = !eventRaw?.schedule?.[0]?.time_start
+
+	// TODO: old implementation, will be removed
 	// Transform datetimes
 	const scheduleFormatted = !hasNoSchedule
 		? e.schedule.map(({ time_start: tsRaw, time_end: teRaw }) => {
@@ -661,22 +1034,187 @@ export function transformEvent(eventRaw, languages) {
 					time_end,
 					isSameDay,
 				}
-		  })
+			})
 		: null
+
+	// 	{
+	//     time_start: { dateTimeRaw: '2023-11-08T18:30:00', hasTime: true, fr: {
+	//   date: 'ven. 6 oct. 2023',
+	//   time: '17:30',
+	//   hours: '17 h',
+	//   minutes: '30',
+	//   weekday: 'ven.',
+	//   day: '6',
+	//   month: 'oct.',
+	//   monthShort: 'oct.',
+	//   monthLong: 'octobre',
+	//   year: '2023'
+	//  },
+	//     time_end: { dateTimeRaw: '2023-11-08T21:30:00', hasTime: true, fr: [Object] },
+	//     isSameDay: true
+	//   }
+
+	const scheduleParts = e?.eventSchedule?.map(transformSchedule)
+	const { schedule: eventSchedule, rRuleSet: scheduleRuleSet } =
+		transformSchedules(scheduleParts, scheduleFormatted)
+
+	for (const schedulePart of scheduleParts || []) {
+		if (schedulePart?.type === "invalid") {
+			console.error(`ERROR: schedule is invalid in event "${e.name}"`)
+			console.error(schedulePart)
+			return null
+		}
+	}
+
+	// Event can be "unique", "recurring" or "multidays" (or "unplanned")
+	let recurrenceInferredFromData = undefined
+	// here eventSchedule has already been purged of invalid parts
+	if (!!e?.startDate && eventSchedule?.length > 0)
+		recurrenceInferredFromData = "multidays"
+	else if (!!e?.startDate) recurrenceInferredFromData = "unique"
+	else if (eventSchedule?.length > 0) recurrenceInferredFromData = "recurring"
+	// TODO: Remove this check when schedule is fully replaced by eventSchedule
+	else if (e?.schedule?.length > 1) recurrenceInferredFromData = "recurring"
+	else if (!e?.schedule?.[0]?.time_start)
+		recurrenceInferredFromData = "unplanned"
+	else if (e?.schedule?.length === 1) recurrenceInferredFromData = "unique"
+	else recurrenceInferredFromData = undefined
+
+	const recurrence = e?.recurrence ?? recurrenceInferredFromData
+	const isRecurring = recurrence === "recurring"
+
+	if (
+		typeof recurrence === "undefined" ||
+		recurrence !== recurrenceInferredFromData
+	) {
+		console.warn(`Recurrence might be wrong for event '${e.name}'`)
+		console.warn({
+			recurrence,
+			"event.recurrence": e.recurrence,
+			recurrenceInferredFromData,
+			scheduleParts,
+			eventSchedule,
+		})
+	}
 
 	// Create Slug
 	const nameSlug = slugify(e.name)
-	const dateSlug = scheduleFormatted?.[0].time_start.dateTimeRaw.substring(
-		0,
-		10,
-	)
-	const slug = `${nameSlug}-${dateSlug}`
-	// TODO: should probably create "paths" for translated paths
-	const path = createPath({ type: "event", slug })
+	// const dateSlug = scheduleFormatted?.[0].time_start.dateTimeRaw.substring(
+	// 	0,
+	// 	10,
+	// )
+	// const slug = `${nameSlug}-${dateSlug}`
+
+	const shortId = e?.id?.substring(24) // only keep the last 12 characters
+	const slugCanonical = `${nameSlug}-${shortId}`
+
+	// TODO: general start and end dateTime
+	const startDateTime =
+		e.startDate && e.startDate + (e.startTime ? `T${e.startTime}` : "")
+	const endDateTime =
+		e.endDate && e.endDate + (e.endTime ? `T${e.endTime}` : "")
+
+	let time_start = transformDateTime(startDateTime)
+	let time_end = transformDateTime(endDateTime)
+
+	if (!time_start && recurrence === "unique" && scheduleFormatted?.[0]) {
+		time_start = scheduleFormatted[0].time_start
+		time_end = scheduleFormatted[0].time_end
+	}
+
+	const unique = /unique|multidays/.test(recurrence)
+		? {
+				slug: slugCanonical,
+				path: createPath({ type: "event", slug: slugCanonical }),
+			}
+		: null
+
+	const canonical =
+		recurrence === "recurring"
+			? {
+					slug: slugCanonical,
+					path: createPath({ type: "event", slug: slugCanonical }),
+				}
+			: null
+
+	const allSchedulesArray = [
+		...(scheduleFormatted || []),
+		...(eventSchedule || []),
+	]
+	allSchedulesArray.reverse()
+
+	const occurences =
+		recurrence === "recurring"
+			? scheduleRuleSet.all().map((date) => {
+					const dateStr = stripDate(date).slice(0, -3)
+					const dateSlug = dateStr.replace(":", "h")
+					const slug = `${nameSlug}-${dateSlug}`
+					const path = createPath({ type: "event", slug })
+
+					// Map an occurance to its corresponding eventSchedule.
+					// eventSchedule of type unique take precedence in this case because we might want to overwrite an occurance to add more data
+					let matchingSchedule = allSchedulesArray.find((schedule) => {
+						// First run looks for more precise eventSchedulePart
+						if (schedule.type === "recurring") return false
+
+						let currentDateStr =
+							schedule?.startDateStr || // in case of eventSchedule
+							schedule?.time_start?.dateStr // in case of formattedSchedule
+
+						return currentDateStr === dateStr
+					})
+
+					if (!matchingSchedule) {
+						// Second run looks for a match in recurring eventSchedulePart
+						matchingSchedule = allSchedulesArray.find((schedule) => {
+							// First run looks for more precise eventSchedulePart
+							if (schedule.type !== "recurring") return false
+
+							return schedule.rrule
+								.all()
+								.some((d) => d.getTime() === date.getTime())
+						})
+					}
+
+					const time_start = transformDateTime(date)
+					let time_end = undefined
+					if (matchingSchedule?.time_end) {
+						time_end = matchingSchedule.time_end
+					} else if (matchingSchedule?.type === "recurring") {
+						const occEndTime = matchingSchedule.endTime
+						let occEndDate = undefined
+						if (matchingSchedule.endTime < matchingSchedule.startTime) {
+							const { string } = datePlus1Day(date)
+							occEndDate = string.split("T")[0]
+						} else {
+							occEndDate = dateStr.split("T")[0]
+						}
+
+						const occEndDateTime =
+							occEndDate + (occEndTime ? `T${occEndTime}` : "")
+						time_end = transformDateTime(occEndDateTime)
+					} else if (matchingSchedule?.type === "unique") {
+						time_end = transformDateTime(matchingSchedule.endDateStr)
+					}
+
+					return {
+						date,
+						dateStr,
+						dateSlug,
+						slug,
+						path,
+						time_start,
+						time_end,
+					}
+				})
+			: null
+
 	// Transform images
 	const cover_image = transformImage(e?.cover_image)
-	// Transform Address
-	const address = transformAddress(e.address)
+	// Transform Location
+	const location = transformAddress(e.location)
+	// Transform types
+	const typesTranslated = e.event_types?.map((t) => t.type)
 	// Transform links
 	const links = e.links?.map(transformLink)
 	// date_updated can be undefined if never had modifications
@@ -684,49 +1222,77 @@ export function transformEvent(eventRaw, languages) {
 
 	return {
 		...e,
+		recurrence,
 		isRecurring,
-		parentIsRecurring,
+		startDateTime,
+		endDateTime,
+		time_start,
+		time_end,
+		// parentIsRecurring,
 		hasNoSchedule,
-		hasParent,
-		parent_event: parent,
+		// hasParent,
+		// parent_event: parent,
 		scheduleFormatted,
-		slug,
-		path,
+		eventSchedule,
+		scheduleRuleSet,
+		// slug,
+		// path,
+		typesTranslated,
 		cover_image,
-		address,
+		location,
 		links,
 		date_updated,
+		...unique,
+		canonical,
+		occurences,
 	}
 }
 
 const flattenEvents = (eventsUnflat) => {
-	// - can take info from parent event fields
-	// - can take info from first organizer fields
-	// - can take info from first orga from parent event
 	let eventsFlatten = []
 
 	eventsUnflat.forEach((event) => {
-		if (event.hasNoSchedule) {
-			// skip event entirely because it will be used by children if it is a recurring one
+		if (event.recurrence === "unplanned") {
 			return null
-		} else {
-			// TODO: need to verify that code
-			const instancesFromSchedule = event.scheduleFormatted?.map((sched) => ({
+		} else if (event.recurrence === "unique") {
+			eventsFlatten.push(event)
+		} else if (event.recurrence === "multidays") {
+			eventsFlatten.push(event)
+		} else if (event.recurrence === "recurring") {
+			const occurencesExpanded = event.occurences?.map((occ) => ({
 				...event,
-				...sched,
+				...occ,
 			}))
-			eventsFlatten.push(...instancesFromSchedule)
+			const canonicalExpanded = {
+				...event,
+				...event.canonical,
+				isCanonical: true,
+			}
+			eventsFlatten.push(canonicalExpanded, ...occurencesExpanded)
+		} else {
+			console.error(
+				`Unexpected recurrence type: ${event.recurrence} for event: ${event.name}`,
+			)
 		}
 
-		// TODO: think about data inconsistencies if recurring is true but only one date for example
-		// this is possible if only one date has been provided for now
+		// TODO: old implemetation to remove
+		// if (event?.hasNoSchedule) {
+		// 	// skip event entirely because it will be used by children if it is a recurring one
+		// 	return null
+		// } else {
+		// 	const instancesFromSchedule = event.scheduleFormatted?.map((sched) => ({
+		// 		...event,
+		// 		...sched,
+		// 	}))
+		// 	eventsFlatten.push(...instancesFromSchedule)
+		// }
 	})
 
 	return eventsFlatten
 }
 
 export async function fetchEvents() {
-	await client.refresh()
+	// await client.refresh()
 
 	const languages = await fetchLanguages()
 
@@ -740,22 +1306,68 @@ export async function fetchEvents() {
 				],
 			},
 			fields: [
-				"*",
+				// "*",
+				"id",
 				"status",
 				"date_updated",
 				"name",
-				"address",
+				"event_types.type.code_name",
+				"event_types.type.colorPalette",
+				"event_types.type.translations.language_code",
+				"event_types.type.translations.default_label",
+				{
+					location: [
+						// "*",
+						"name",
+						"streetAddress",
+						"streetNumber",
+						"postalCode",
+						"addressLocality",
+						"addressRegion",
+						"geo",
+					],
+				},
 				...imageFields("cover_image."),
-				"recurring",
+				"recurrence",
+				"startDate",
+				"endDate",
+				"startTime",
+				"endTime",
+				{
+					eventSchedule: [
+						// "*",
+						"status",
+						"description",
+						"startDate",
+						"endDate",
+						"startTime",
+						"endTime",
+						"repeatCount",
+						"frequency",
+						"interval",
+						"byDay",
+						"byMonth",
+						"byMonthWeek",
+						"byMonthDay",
+						"bySetPos",
+						"exceptDate",
+						"addDate",
+					],
+				},
 				"schedule",
 				"links",
 				"organizers.organizations_id.status",
 				"organizers.organizations_id.name",
+				"organizers.organizations_id.boardgame_related",
+				"organizers.organizations_id.links",
 				"organizers.organizations_id.slug",
-				"organizers.organizations_id.address",
+				"organizers.organizations_id.location.*",
 				...imageFields("organizers.organizations_id.logo."),
 				...imageFields("organizers.organizations_id.cover_image."),
-				"organizers.organizations_id.games_services",
+				"organizers.organizations_id.games_related_services.service.code_name",
+				"organizers.organizations_id.games_related_services.service.colorPalette",
+				"organizers.organizations_id.games_related_services.service.translations.language_code",
+				"organizers.organizations_id.games_related_services.service.translations.default_label",
 				"organizers.organizations_id.amenities",
 				// ...imageFields("organizers.organizations_id.gallery.*."),
 				"organizers.organizations_id.translations.languages_code",
@@ -763,34 +1375,35 @@ export async function fetchEvents() {
 				"translations.languages_code",
 				"translations.highlighted_details",
 				"translations.description",
-				"parent_event",
-				"parent_event.status",
-				"parent_event.name",
-				"parent_event.address",
-				"parent_event.recurring",
-				"parent_event.schedule",
-				"parent_event.links",
-				...imageFields("parent_event.cover_image."),
-				"parent_event.translations.languages_code",
-				"parent_event.translations.highlighted_details",
-				"parent_event.translations.description",
-				"parent_event.organizers.organizations_id.status",
-				"parent_event.organizers.organizations_id.name",
-				"parent_event.organizers.organizations_id.slug",
-				"parent_event.organizers.organizations_id.address",
-				...imageFields("parent_event.organizers.organizations_id.logo."),
-				...imageFields("parent_event.organizers.organizations_id.cover_image."),
-				"parent_event.organizers.organizations_id.games_services",
-				"parent_event.organizers.organizations_id.amenities",
-				// ...imageFields("parent_event.organizers.organizations_id.gallery.*."),
-				"parent_event.organizers.organizations_id.translations.languages_code",
-				"parent_event.organizers.organizations_id.translations.description",
-				"event_instances",
+				// "parent_event",
+				// "parent_event.status",
+				// "parent_event.name",
+				// "parent_event.recurring",
+				// "parent_event.schedule",
+				// "parent_event.links",
+				// ...imageFields("parent_event.cover_image."),
+				// "parent_event.translations.languages_code",
+				// "parent_event.translations.highlighted_details",
+				// "parent_event.translations.description",
+				// "parent_event.organizers.organizations_id.status",
+				// "parent_event.organizers.organizations_id.name",
+				// "parent_event.organizers.organizations_id.slug",
+				// ...imageFields("parent_event.organizers.organizations_id.logo."),
+				// ...imageFields("parent_event.organizers.organizations_id.cover_image."),
+				// "parent_event.organizers.organizations_id.games_services",
+				// "parent_event.organizers.organizations_id.amenities",
+				// // ...imageFields("parent_event.organizers.organizations_id.gallery.*."),
+				// "parent_event.organizers.organizations_id.translations.languages_code",
+				// "parent_event.organizers.organizations_id.translations.description",
+				// "event_instances",
 			],
 		}),
 	)
 
-	const eventsUnflat = eventsRaw?.map((e) => transformEvent(e, languages))
+	const eventsUnflat = eventsRaw
+		?.map((e) => transformEvent(e, languages))
+		.filter((z) => z)
+
 	const eventsUnfiltered = flattenEvents(eventsUnflat)
 
 	const d = new Date()
@@ -804,6 +1417,8 @@ export async function fetchEvents() {
 			event?.time_end?.dateTimeRaw > today &&
 			event?.time_end?.dateTimeRaw < inSixMonths
 		)
+		// TODO: add this when UI is ready to display canonical event pages
+		// || event.isCanonical
 	})
 
 	events.sort((prev, next) => {
@@ -862,7 +1477,7 @@ export function transformArticle(articleRaw, languages) {
 }
 
 export async function fetchArticles() {
-	await client.refresh()
+	// await client.refresh()
 
 	const languages = await fetchLanguages()
 

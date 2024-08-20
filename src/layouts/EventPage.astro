@@ -8,7 +8,7 @@ import { imageDirectusSrc } from '@utils'
 const {lang, event: {
   status,
   name,
-  address,
+  location,
   cover_image,
   recurring,
   schedule,
@@ -22,7 +22,7 @@ const {lang, event: {
   // translations.main_url,
   // translations.facebook_event_url,
   // translations.other_links,
-  games_services_translated,
+  servicesTranslated,
   amenities_translated,
   event_instances,
   isRecurring,
@@ -34,9 +34,9 @@ const {lang, event: {
 
 const {day, monthLong, year} = time_start?.[lang.code] || {}
 const { description, highlighted_details } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
-const presentation = address?.city && address?.area?.name?.fr
-  && `Événement jeux à ${address.city}`
-  + (address.city !== address?.area?.name?.fr ? ` dans la ${address?.area?.code_name === 'brussels' ? 'région' : 'province'} de ${address?.area?.name?.fr}` : '')
+const presentation = location?.addressLocality && location?.area?.name?.fr
+  && `Événement jeux à ${location.addressLocality}`
+  + (location.addressLocality !== location?.area?.name?.fr ? ` dans la ${location?.area?.code_name === 'brussels' ? 'région' : 'province'} de ${location?.area?.name?.fr}` : '')
 const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: 'cover', quality: '50' })
 const srcSocial = imageDirectusSrc({ src: cover_image?.src, width: '1200', height: '630', fit: 'cover', quality: '99' })
 const startLong = day && monthLong && year && `${day} ${monthLong} ${year}`
@@ -70,9 +70,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           <div>
             {presentation && <p class="h3">{presentation}</p>}
             {
-              address?.string && (
+              location?.string && (
                 <p class="h6">
-                  <a href={address.gMapLink} target="_blank" rel="noopener noreferrer">{address.string}</a>
+                  <a href={location.gMapLink} target="_blank" rel="noopener noreferrer">{location.string}</a>
                 </p>)
             }
           </div>
@@ -109,11 +109,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             <p class="size-h3">Organisé par</p>
             <div class="box no-border cluster center max-width-measure-h4">
               <ul class="reset justify-content-center">
-                {organizers.map(({name, path, logo}) => (
+                {organizers.map(({name, boardgame_related, links, path, logo}) => (
                   <li>
-                    <a href={`/${path}`} class="
-                      box no-border stack center intrinsic gap-down-h8
-                    ">
+                    <a
+                      href={boardgame_related ? `/${path}` : links?.[0]?.url}
+                      class="box no-border stack center intrinsic gap-down-h8"
+                    >
                       {logo?.src && (
                           <ImgDirectus
                               image={logo}
@@ -169,16 +170,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           }
         </div>
       </div>} -->
-      {(games_services_translated?.[0] || amenities_translated?.[0]) &&
+      {(servicesTranslated?.[0] || amenities_translated?.[0]) &&
         <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
           <ul class="reset">
             <>
-              {games_services_translated?.map(({ [lang.code]: code }) => (
+              {servicesTranslated?.map((service) => (
                 <li class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-contrast
                   border-radius-s
-                ">{code}</li>
+                ">
+                  {service.translations.find(t => t.language_code === lang.code).default_label}
+                </li>
               ))}
 
               {amenities_translated?.map(({ [lang.code]: code }) => (

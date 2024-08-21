@@ -197,7 +197,7 @@ const dico = [
 
 // --- UTILITY FUNCTIONS --- //
 
-const translateFromCodeName = (code_name) => {
+const translateFromCodeName = (code_name, warningCue) => {
 	const codeNameLow = code_name?.toLowerCase()
 
 	let match = dico.find((el) => el.code_name === code_name)
@@ -214,7 +214,7 @@ const translateFromCodeName = (code_name) => {
 	}
 	if (!match) {
 		console.warn(
-			`--SELF WARNING-- No match in dico for code_name '${code_name}'`,
+			`--SELF WARNING-- No match in dico for code_name '${code_name}'${warningCue ? " (in '" + warningCue + "')" : ""}`,
 		)
 		return {
 			code_name,
@@ -337,8 +337,8 @@ const transformDateTime = (dateRaw) => {
 	}
 }
 
-const transformLink = ({ name, url }) => {
-	const linkNameTranslated = translateFromCodeName(name)
+const transformLink = ({ name, url }, warningCue) => {
+	const linkNameTranslated = translateFromCodeName(name, warningCue)
 	let { iconName } = linkNameTranslated
 
 	if (!iconName) {
@@ -535,7 +535,7 @@ export function transformOrganization(o, languages) {
 	const gallery = o?.gallery?.map(transformImage)
 	const cover_image = transformImage(o?.cover_image)
 	// Transform links
-	const links = o.links?.map(transformLink)
+	const links = o.links?.map((link) => transformLink(link, o.name))
 
 	const eventsUnflat = o.events
 		?.filter(({ events_id: e } = {}) => !!e && e.status === "published")
@@ -1245,7 +1245,8 @@ export function transformEvent(eventRaw, languages) {
 	// Transform types
 	const typesTranslated = e.event_types?.map((t) => t.type)
 	// Transform links
-	const links = e.links?.map(transformLink)
+	const links = e.links?.map((link) => transformLink(link, e.name))
+
 	// date_updated can be undefined if never had modifications
 	const date_updated = e.date_updated ?? e.date_created
 
@@ -1451,9 +1452,11 @@ export async function fetchEvents() {
 		.toISOString()
 		.substring(0, 10)
 
+	// TODO: HERE - split events and canonical events in 2 separate arrays because we cannot sort if time_start is undefined
+	const canonicalEvents = eventsUnfiltered.filter((event) => event.isCanonical)
 	let events = eventsUnfiltered.filter((event) => {
 		// TODO: add this when UI is ready to display canonical event pages
-		if (event.isCanonical) return true
+		if (event.isCanonical) return false
 
 		if (!event.time_start) {
 			if (!event.isCanonical) {
@@ -1483,7 +1486,7 @@ export async function fetchEvents() {
 		return 0
 	})
 
-	return events
+	return { events, canonicalEvents }
 }
 
 // --- F&T ARTICLES --- //

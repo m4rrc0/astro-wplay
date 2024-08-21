@@ -1,0 +1,79 @@
+---
+import { Markdown } from "astro-remote"
+import { Icon } from "astro-icon/components"
+import { SkeletonPage, BasicPage } from "@layouts"
+import { SEO, IO, ImgDirectus } from "@components"
+import { imageDirectusSrc } from "@utils"
+import { Div } from "@src/elements"
+
+const {
+  lang,
+  // teamMember: {
+    
+  // },
+} = Astro.props
+
+// const name = 
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!-- <Debug {name} /> -->
+<SkeletonPage lang={lang.code}>
+  <SEO
+  slot="head"
+  ogType="website"
+  title="test"
+  description="Viens découvrir qui se cache derrière Wanna Play"
+  canonicalUrl={canonicalURL.href}
+  socialImage="/assets/images/LOGO-1024px.png"
+  ogVideo={false}
+  twitterCard="summary"
+  />
+
+  <BasicPage {lang}>
+    N'importe quoi :p
+    <!-- <div class="stack gap-down-h1">
+    <main class="center max" style="margin-top: 0;">
+      <header>
+        <h1 class="centered" set:html={name} />
+          
+        </div>
+        {
+          pic?.src && (
+            <div
+              class="center intrinsic box no-border
+              color-palette-main
+              width-col-6
+              border-radius-s
+              "
+              style="
+              margin-top: calc(var(--size-h2) * -1);
+              margin-bottom: var(--size-h2);
+              box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
+              max-height: var(--width-col-6);
+              overflow: hidden;
+              "
+            >
+              <ImgDirectus
+                image={pic}
+                src={pic?.src}
+                alt={name}
+                loading="lazy"
+                class=""
+                style={`width: ${pic.width}; max-width: 100%; height: auto; max-height: ${pic.height}; object-fit: contain;`}
+                width={pic.width}
+                height={pic.height}
+                fit="contain"
+                quality="99"
+              />
+            </div>
+          )
+        } -->
+      </header>
+
+    </main>
+
+    <!-- </div> -->
+  </BasicPage>
+</SkeletonPage>

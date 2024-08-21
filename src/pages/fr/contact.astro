@@ -4,6 +4,7 @@ import { SkeletonPage, BasicPage } from "@layouts"
 import { SEO, MtObf } from "@components"
 
 const email = import.meta.env.CONTACT_EMAIL
+const mailContent = import.meta.env.CONTENT_EMAIL
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
@@ -24,22 +25,27 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
       <h1 class="center text">Contacte-nous</h1>
 
-      <p class="h3">
-        <span>...par e-mail à</span>
-        <MtObf {email} />
-        <span>
-          ou par <a
-            href="https://www.facebook.com/WannaPlayBE/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Facebook
-          </a>
-        </span>
-      </p>
+      <div>
+       <p>Si tu as des questions <strong>sur nous, notre projet,...</strong> tu peux nous joindre par e-mail à 
+        <MtObf {email} /></p>
+        <br>
+        <p>Pour toute question ou remarque concernant <strong>la mise à jour du contenu</strong> d'une organisation ou d'un évènement sur le site (nouveaux events,fermeture, ouverture, changements d'horaires,...), tu peux nous joindre par e-mail à l'adresse
+        <MtObf email={mailContent}/>
+        </p>
+      <p>Pour rappel: nous ne faisons que répertorier les lieux, organisations et évènements ludiques. Si tu as donc des questions par rapport à un lieu ou un évènement précis, contactez directement les organisateurs/responsables qui seront à même de vous répondre. Leurs données de contact sont disponibles sur leur page d'organisation.</p>
+      </div>
 
       <div>
-        <p>Retrouve nous aussi sur:</p>
+        <p>Tu peux nous suivre sur:</p>
         <ul>
+          <li>
+            <a
+              href="https://www.facebook.com/WannaPlayBE/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Facebook
+            </a>
+          </li>
           <li>
             <a
               href="https://www.instagram.com/wannaplay_be/"
@@ -56,7 +62,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               >Youtube
             </a>
           </li>
-          <li>
+          <li>Retrouve ici notre playlist préférée pour jouer:
             <a
               href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
               target="_blank"
@@ -64,7 +70,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               >Spotify
             </a>
           </li>
-          <li>
+          <li> Fan des illus de Tess? Tu peux facilement les utiliser pour offrir des cadeaux sympas,  créer des t-shirts, des mugs,... ça se passe ici:
             <a
               href="https://www.redbubble.com/fr/people/Wanna-Play-asbl/explore"
               target="_blank"
@@ -72,7 +78,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               >Redbubble
             </a>
           </li>
-          <li>En live lors d'événements ludiques belges 😉</li>
+          <li>N'hésite pas à venir nous rencontrer lors de différents évènements ludiques belges😉 (le prochain sera le <a href ="/fr/e/bgf-2024-brussels-games-festival-2024-2024-08-23">BGF</a> à Anderlecht)</li>
         </ul>
       </div>
     </main>

@@ -29,6 +29,7 @@ const {lang, event: {
   time_start,
   time_end,
   isSameDay,
+  moreThan24h,
   links,
 }} = Astro.props;
 
@@ -44,6 +45,7 @@ const metaTitle = [startLong, name].filter(z => z).join(' - ')
 const metaDescription = [presentation, startLong].filter(z => z).join(' le ')
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
 ---
 <SkeletonPage lang={lang.code}>
   <SEO
@@ -72,16 +74,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             {
               location?.string && (
                 <p class="h6">
-                  <a href={location.gMapLink} target="_blank" rel="noopener noreferrer">{location.string}</a>
+                  <a href={location.gMapLink} target="_blank" rel="noopener noreferrer">{location.fullString}</a>
                 </p>)
             }
           </div>
           {
-            time_start?.fr?.time && time_end?.fr?.time && (
+            time_start?.fr?.time && (
               <p set:html={
-                  isSameDay ?
-                  `<strong>${time_start?.fr?.date} de ${time_start.fr?.time} à ${time_end.fr?.time}</strong>` :
-                  `De <strong>${time_start?.fr?.date} - ${time_start.fr?.time}</strong> à <strong>${time_end.fr?.date} - ${time_end.fr?.time}</strong>`
+                  !moreThan24h ?
+                  `<strong>${time_start?.fr?.date}${time_end?.fr?.time ? ` de ${time_start.fr?.time}` : ''} à ${time_end?.fr?.time || time_start?.fr?.time}</strong>` :
+                  `De <strong>${time_start?.fr?.date} - ${time_start.fr?.time}</strong> à <strong>${time_end?.fr?.date} - ${time_end.fr?.time}</strong>`
                 } class="
                 box no-border width-fit-content
                 color-palette-main color-palette-variation-funky-contrast

@@ -372,6 +372,8 @@ function transformAddress(location) {
 	]
 		.filter((z) => z)
 		.join(", ")
+
+	const fullString = `${l.name ? l.name + " - " : ""}${string}`
 	const gMapLink = `https://maps.google.com/maps?q=${string.replace(
 		/\s/g,
 		"+",
@@ -387,7 +389,7 @@ function transformAddress(location) {
 		...translateFromCodeName(area.code_name),
 	}
 
-	return { ...l, string, gMapLink, area }
+	return { ...l, string, fullString, gMapLink, area }
 }
 
 function transformPageData(page_data) {
@@ -1441,11 +1443,25 @@ export async function fetchEvents() {
 		.substring(0, 10)
 
 	let events = eventsUnfiltered.filter((event) => {
+		// TODO: add this when UI is ready to display canonical event pages
+		// if (event.isCanonical) return true
+
+		if (!event.time_start) {
+			if (!event.isCanonical) {
+				console.error(`Event instance of "${event.name}" has no Start Date`)
+			}
+			return false
+		}
+
+		if (!event?.time_end) {
+			return (
+				event?.time_start?.dateStr > today &&
+				event?.time_start?.dateStr < inSixMonths
+			)
+		}
 		return (
 			event?.time_end?.dateStr > today && event?.time_end?.dateStr < inSixMonths
 		)
-		// TODO: add this when UI is ready to display canonical event pages
-		// || event.isCanonical
 	})
 
 	events.sort((prev, next) => {

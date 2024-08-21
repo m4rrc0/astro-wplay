@@ -6,7 +6,8 @@ import { imageDirectusSrc } from "@utils"
 import citiesUnordered from "@utils/areas/cities.json"
 import { Icon } from "astro-icon/components"
 
-const { lang, events, dictionary } = Astro.props
+const { lang, events: eventsUnfiltered, dictionary } = Astro.props
+const events = eventsUnfiltered?.filter((e) => !e.isCanonical)
 
 const cities = [...citiesUnordered].sort((a, b) =>
 	a.city.localeCompare(b.city, lang.code),

@@ -1,154 +1,198 @@
 ---
-import { SkeletonPage, BasicPage } from '@layouts'
-import {Markdown} from 'astro-remote';
-import { Icon } from 'astro-icon/components'
-import { SEO, IO, ImgDirectus, Img } from '@components'
-import { imageDirectusSrc } from '@utils'
+import { SkeletonPage, BasicPage } from "@layouts"
+import { Markdown } from "astro-remote"
+import { Icon } from "astro-icon/components"
+import { SEO, IO, ImgDirectus, Img } from "@components"
+import { imageDirectusSrc } from "@utils"
 
-const {lang, event: {
-  status,
-  name,
-  location,
-  cover_image,
-  recurring,
-  schedule,
-  scheduleFormatted,
-  organizers,
-  translations,
-  // translations.languages_code,
-  // translations.fallback_language,
-  // translations.highlighted_details,
-  // translations.description,
-  // translations.main_url,
-  // translations.facebook_event_url,
-  // translations.other_links,
-  servicesTranslated,
-  amenities_translated,
-  event_instances,
-  isRecurring,
-  time_start,
-  time_end,
-  isSameDay,
-  moreThan24h,
-  links,
-}} = Astro.props;
+const {
+	lang,
+	event: {
+		status,
+		name,
+		location,
+		cover_image,
+		recurring,
+		schedule,
+		scheduleFormatted,
+		organizers,
+		translations,
+		// translations.languages_code,
+		// translations.fallback_language,
+		// translations.highlighted_details,
+		// translations.description,
+		// translations.main_url,
+		// translations.facebook_event_url,
+		// translations.other_links,
+		servicesTranslated,
+		amenities_translated,
+		event_instances,
+		isRecurring,
+		time_start,
+		time_end,
+		isSameDay,
+		moreThan24h,
+		links,
+		recurrence,
+		occurrences,
+		canonical,
+		isCanonical,
+	},
+} = Astro.props
 
-const {day, monthLong, year} = time_start?.[lang.code] || {}
-const { description, highlighted_details } = translations?.find(({ languages_code }) => languages_code === lang.code) || {}
-const presentation = location?.addressLocality && location?.area?.name?.fr
-  && `Événement jeux à ${location.addressLocality}`
-  + (location.addressLocality !== location?.area?.name?.fr ? ` dans la ${location?.area?.code_name === 'brussels' ? 'région' : 'province'} de ${location?.area?.name?.fr}` : '')
-const srcCover = imageDirectusSrc({ src: cover_image?.src, width: '1300', fit: 'cover', quality: '50' })
-const srcSocial = imageDirectusSrc({ src: cover_image?.src, width: '1200', height: '630', fit: 'cover', quality: '99' })
+const { day, monthLong, year } = time_start?.[lang.code] || {}
+const { description, highlighted_details } =
+	translations?.find(({ languages_code }) => languages_code === lang.code) || {}
+const presentation =
+	location?.addressLocality &&
+	location?.area?.name?.fr &&
+	`Événement jeux à ${location.addressLocality}` +
+		(location.addressLocality !== location?.area?.name?.fr
+			? ` dans la ${location?.area?.code_name === "brussels" ? "région" : "province"} de ${location?.area?.name?.fr}`
+			: "")
+const srcCover = imageDirectusSrc({
+	src: cover_image?.src,
+	width: "1300",
+	fit: "cover",
+	quality: "50",
+})
+const srcSocial = imageDirectusSrc({
+	src: cover_image?.src,
+	width: "1200",
+	height: "630",
+	fit: "cover",
+	quality: "99",
+})
 const startLong = day && monthLong && year && `${day} ${monthLong} ${year}`
-const metaTitle = [startLong, name].filter(z => z).join(' - ')
-const metaDescription = [presentation, startLong].filter(z => z).join(' le ')
+const metaTitle = [startLong, name].filter((z) => z).join(" - ")
+const metaDescription = [presentation, startLong].filter((z) => z).join(" le ")
+const today = new Date().toISOString().split("T")[0]
+const d = new Date()
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
+// const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
 ---
+
 <SkeletonPage lang={lang.code}>
-  <SEO
-    slot="head"
-    ogType="website"
-    title={metaTitle}
-    description={metaDescription || description}
-    canonicalUrl={canonicalURL.href}
-    socialImage={srcSocial}
-    ogVideo={false}
-    twitterCard="summary"
-  />
-  <BasicPage {lang}>
-    <main class="center max" style="margin-top: 0;">
-      <header>
-        <div
-          class="center intrinsic text box no-border stack gap-down-h4
+	<SEO
+		slot="head"
+		ogType="website"
+		title={metaTitle}
+		description={metaDescription || description}
+		canonicalUrl={canonicalURL.href}
+		socialImage={srcSocial}
+		ogVideo={false}
+		twitterCard="summary"
+	/>
+	<BasicPage {lang}>
+		<main class="center max" style="margin-top: 0;">
+			<header>
+				<div
+					class="center intrinsic text box no-border stack gap-down-h4
             color-palette-trans
             padding-y-h-1
-            background-overlay
-            "
-          style={srcCover ? `background-image: url("${srcCover}");` : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}>
-          <h1 class="" set:html={name} />
-          <div>
-            {presentation && <p class="h3">{presentation}</p>}
-            {
-              location?.string && (
-                <p class="h6">
-                  <a href={location.gMapLink} target="_blank" rel="noopener noreferrer">{location.fullString}</a>
-                </p>)
-            }
-          </div>
-          {
-            time_start?.fr?.time && (
-              <p set:html={
-                  !moreThan24h ?
-                  `<strong>${time_start?.fr?.date}${time_end?.fr?.time ? ` de ${time_start.fr?.time}` : ''} à ${time_end?.fr?.time || time_start?.fr?.time}</strong>` :
-                  `De <strong>${time_start?.fr?.date} - ${time_start.fr?.time}</strong> à <strong>${time_end?.fr?.date} - ${time_end.fr?.time}</strong>`
-                } class="
+            background-overlay"
+					style={srcCover
+						? `background-image: url("${srcCover}");`
+						: 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}
+				>
+					<h1 class="" set:html={name} />
+					<div>
+						{presentation && <p class="h3">{presentation}</p>}
+						{
+							location?.string && (
+								<p class="h6">
+									<a
+										href={location.gMapLink}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{location.fullString}
+									</a>
+								</p>
+							)
+						}
+					</div>
+					{
+						time_start?.fr?.time && (
+							<p
+								set:html={
+									!moreThan24h
+										? `<strong>${time_start?.fr?.date}${time_end?.fr?.time ? ` de ${time_start.fr?.time}` : ""} à ${time_end?.fr?.time || time_start?.fr?.time}</strong>`
+										: `De <strong>${time_start?.fr?.date} - ${time_start.fr?.time}</strong> à <strong>${time_end?.fr?.date} - ${time_end.fr?.time}</strong>`
+								}
+								class="
                 box no-border width-fit-content
                 color-palette-main color-palette-variation-funky-contrast
                 size-h4 padding-h7 padding-y-h8
                 border-radius-l
-              "></p>
-            )
-          }
-
-        </div>
-      </header>
-      {organizers?.[0] && (
-        <div
-          class="box no-border center intrinsic
+              "
+							/>
+						)
+					}
+				</div>
+			</header>
+			{
+				organizers?.[0] && (
+					<div
+						class="box no-border center intrinsic
             color-palette-main
             border-radius-s
             "
-          style="
+						style="
             max-width: 90%;
             width: fit-content; 
             margin-top: calc(var(--size-h2) * -1);
             margin-bottom: var(--size-h2);
             box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
-            ">
-            <p class="size-h3">Organisé par</p>
-            <div class="box no-border cluster center max-width-measure-h4">
-              <ul class="reset justify-content-center">
-                {organizers.map(({name, boardgame_related, links, path, logo}) => (
-                  <li>
-                    <a
-                      href={boardgame_related ? `/${path}` : links?.[0]?.url}
-                      class="box no-border stack center intrinsic gap-down-h8"
-                    >
-                      {logo?.src && (
-                          <ImgDirectus
-                              image={logo}
-                              src={logo?.src}
-                              alt={name}
-                              loading="lazy"
-                              class=""
-                              style="width: 100px; max-width: 100%; height: auto; max-height:100;"
-                              width="100"
-                              height="100"
-                              fit="inside"
-                              quality="99" />
-                          )}
-                          <!-- <Img
+            "
+					>
+						<p class="size-h3">Organisé par</p>
+						<div class="box no-border cluster center max-width-measure-h4">
+							<ul class="reset justify-content-center">
+								{organizers.map(
+									({ name, boardgame_related, links, path, logo }) => (
+										<li>
+											<a
+												href={boardgame_related ? `/${path}` : links?.[0]?.url}
+												target={boardgame_related ? "_self" : "_blank"}
+												rel={boardgame_related ? "self" : "noopener noreferrer"}
+												class="box no-border stack center intrinsic gap-down-h8"
+											>
+												{logo?.src && (
+													<ImgDirectus
+														image={logo}
+														src={logo?.src}
+														alt={name}
+														loading="lazy"
+														class=""
+														style="width: 100px; max-width: 100%; height: auto; max-height:100;"
+														width="100"
+														height="100"
+														fit="inside"
+														quality="99"
+													/>
+												)}
+												{/* <Img
                               src="/src/assets/images/WannaPlay-button-circle-blue.png"
                               alt="logo"
                               loading="lazy"
                               class=""
                               style="max-width: 100%; height: auto;"
                               width="100"
-                              height="100" /> -->
-                      <span class="size-h4">{name}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-        </div>
-      )}
+                              height="100" /> */}
+												<span class="size-h4">{name}</span>
+											</a>
+										</li>
+									),
+								)}
+							</ul>
+						</div>
+					</div>
+				)
+			}
 
-
-      <!-- {(opening_hours_strings?.[0] || opening_hours_remark) && <div class="
+			<!-- {(opening_hours_strings?.[0] || opening_hours_remark) && <div class="
         box no-border
         color-palette-variation-funky-contrast
       ">
@@ -172,32 +216,44 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           }
         </div>
       </div>} -->
-      {(servicesTranslated?.[0] || amenities_translated?.[0]) &&
-        <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
-          <ul class="reset">
-            <>
-              {servicesTranslated?.map((service) => (
-                <li class="
+			{
+				(servicesTranslated?.[0] || amenities_translated?.[0]) && (
+					<div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
+						<ul class="reset">
+							<>
+								{servicesTranslated?.map((service) => (
+									<li
+										class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-contrast
                   border-radius-s
-                ">
-                  {service.translations.find(t => t.language_code === lang.code).default_label}
-                </li>
-              ))}
+                "
+									>
+										{
+											service.translations.find(
+												(t) => t.language_code === lang.code,
+											).default_label
+										}
+									</li>
+								))}
 
-              {amenities_translated?.map(({ [lang.code]: code }) => (
-                <li class="
+								{amenities_translated?.map(({ [lang.code]: code }) => (
+									<li
+										class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-funky-contrast
                   border-radius-s
-                ">{code}</li>
-              ))}
-            </>
-          </ul>
-        </div>
-      }
-      <!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
+                "
+									>
+										{code}
+									</li>
+								))}
+							</>
+						</ul>
+					</div>
+				)
+			}
+			<!-- {amenities_translated?.[0] && <div class="box no-border cluster gap-h6">
         <ul class="reset">
             {amenities_translated?.map(({ [lang.code]: code }) => (
               <li>{code}</li>
@@ -205,38 +261,99 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         </ul>
       </div>} -->
 
-      {highlighted_details && <div class="
+			{
+				highlighted_details && (
+					<div
+						class="
         box no-border center
         max-width-measure-h4
-      ">
-          <h2>Infos importantes</h2>
-          <Markdown content={highlighted_details} />
-      </div>}
+      "
+					>
+						<h2>Infos importantes</h2>
+						<Markdown content={highlighted_details} />
+					</div>
+				)
+			}
 
-      {description && <div class="
+			{
+				description && (
+					<div
+						class="
         box no-border center
         max-width-measure-h4
-      ">
-          <h2>Description</h2>
-          <Markdown content={description} />
-      </div>}
+      "
+					>
+						<h2>Description</h2>
+						<Markdown content={description} />
+					</div>
+				)
+			}
 
-      {links?.[0] && (
-        <div class="box no-border cluster center max-width-measure-h4">
-          <ul class="reset justify-content-space-around">
-            {links.map(({name, url, iconName}) => (
-              <li>
-                <a href={url} target="_blank" rel="noopener noreferrer" class="
+			{
+				links?.[0] && (
+					<div class="box no-border cluster center max-width-measure-h4">
+						<ul class="reset justify-content-space-around">
+							{links.map(({ name, url, iconName }) => (
+								<li>
+									<a
+										href={url}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="
                   box no-border stack center intrinsic gap-down-h8
-                ">
-                  <Icon name={iconName} size="1em" class="size-h1" />
-                  <div class="size-h4">{name.fr}</div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </main>
-  </BasicPage>
+                "
+									>
+										<Icon name={iconName} size="1em" class="size-h1" />
+										<div class="size-h4">{name.fr}</div>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				)
+			}
+
+			{
+				occurrences && (
+					<div class="box no-border center max-width-measure-h4 stack gap-down-h4">
+						<h2 class="center text">Toutes les dates</h2>
+						<div
+							class="grid gap-down-h4"
+							style="--width-column: var(--width-col-9);"
+						>
+							<ul class="list reset">
+								{occurrences?.map((event) => {
+									const { time_start } = event
+
+									const isPast = time_start.dateStr < today
+									const href = isPast ? `/${canonical.path}` : `/${event.path}`
+
+									return (
+										<li
+											class="card-event breakout-clickable box no-border border-radius-s color-palette-variation-contrast"
+											style={isPast ? "opacity: 0.5;" : ""}
+										>
+											<a href={href} class="name reset block">
+												<time
+													datetime={time_start.dateTimeRaw}
+													class="timestart stack gap-down-h8 center intrinsic"
+													style="line-height: 1;"
+												>
+													<span class="size-h1">{time_start?.fr?.day}</span>
+													<span class="size-h2">
+														{time_start?.fr?.monthShort}
+													</span>
+													<span class="size-h2">{time_start?.fr?.year}</span>
+												</time>
+											</a>
+										</li>
+									)
+								})}
+							</ul>
+						</div>
+					</div>
+				)
+			}
+		</main>
+	</BasicPage>
 </SkeletonPage>

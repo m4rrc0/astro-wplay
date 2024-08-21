@@ -6,38 +6,39 @@ import { SEO, IO, ImgDirectus, Img } from "@components"
 import { imageDirectusSrc } from "@utils"
 import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png"
 
-const { lang, area, events, organizations } = Astro.props
+const { lang, area, events: eventsUnfiltered, organizations } = Astro.props
+const events = eventsUnfiltered?.filter((e) => !e.isCanonical)
 
 const areaName = area.name[lang.code]
 const eventsCountPhrase = `${
-  events.length === 1
-    ? `${events.length} événement`
-    : `${events.length} événements`
+	events.length === 1
+		? `${events.length} événement`
+		: `${events.length} événements`
 } jeu`
 const eventsTimeStart = events?.[0]?.time_start
 const eventsTimeEnd =
-  events.length < 2
-    ? null
-    : events?.[events.length - 1]?.time_end ||
-      events?.[events.length - 1]?.time_start
+	events.length < 2
+		? null
+		: events?.[events.length - 1]?.time_end ||
+			events?.[events.length - 1]?.time_start
 const eventsTimeArr = [
-  eventsTimeStart &&
-    `${eventsTimeStart?.[lang.code]?.day} ${
-      eventsTimeStart?.[lang.code]?.monthLong
-    } ${eventsTimeStart?.[lang.code]?.year}`,
-  eventsTimeEnd &&
-    `${eventsTimeEnd?.[lang.code]?.day} ${
-      eventsTimeEnd?.[lang.code]?.monthLong
-    } ${eventsTimeEnd?.[lang.code]?.year}`,
+	eventsTimeStart &&
+		`${eventsTimeStart?.[lang.code]?.day} ${
+			eventsTimeStart?.[lang.code]?.monthLong
+		} ${eventsTimeStart?.[lang.code]?.year}`,
+	eventsTimeEnd &&
+		`${eventsTimeEnd?.[lang.code]?.day} ${
+			eventsTimeEnd?.[lang.code]?.monthLong
+		} ${eventsTimeEnd?.[lang.code]?.year}`,
 ].filter((z) => z)
 const eventsPhrase =
-  eventsTimeArr.length === 0
-    ? `${eventsCountPhrase} à ${areaName}`
-    : eventsTimeArr.length === 1 || eventsTimeArr?.[0] == eventsTimeArr?.[1]
-    ? `${eventsCountPhrase} à ${areaName} le ${eventsTimeArr[0]}`
-    : `${eventsCountPhrase} à ${areaName} entre le ${eventsTimeArr.join(
-        " et le ",
-      )}`
+	eventsTimeArr.length === 0
+		? `${eventsCountPhrase} à ${areaName}`
+		: eventsTimeArr.length === 1 || eventsTimeArr?.[0] == eventsTimeArr?.[1]
+			? `${eventsCountPhrase} à ${areaName} le ${eventsTimeArr[0]}`
+			: `${eventsCountPhrase} à ${areaName} entre le ${eventsTimeArr.join(
+					" et le ",
+				)}`
 
 // const restosBarsCount = organizations
 //     .filter((o) => o.types.find('bar') || o.types.find('restaurant'))
@@ -65,41 +66,41 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <SkeletonPage lang={lang.code}>
-  <SEO
-    slot="head"
-    ogType="website"
-    title={`Soirées jeux, clubs, bar à jeux, ludothèques dans la province de ${areaName}`}
-    description={`Tu veux jouer dans la province de ${areaName}? Viens découvrir les lieux ludiques de la région.`}
-    canonicalUrl={canonicalURL.href}
-    socialImage="/assets/images/LOGO-1024px.png"
-    ogVideo={false}
-    twitterCard="summary"
-  />
-  <BasicPage {lang}>
-    <main class="center width-max">
-      <div id="events-list-container" class="box no-border stack gap-down-h1">
-        <h1 class="center text">{areaName}</h1>
-        <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
-        <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
-        <!-- TODO: HERE -->
-        <script>
-          import List from "list.js"
+	<SEO
+		slot="head"
+		ogType="website"
+		title={`Soirées jeux, clubs, bar à jeux, ludothèques dans la province de ${areaName}`}
+		description={`Tu veux jouer dans la province de ${areaName}? Viens découvrir les lieux ludiques de la région.`}
+		canonicalUrl={canonicalURL.href}
+		socialImage="/assets/images/LOGO-1024px.png"
+		ogVideo={false}
+		twitterCard="summary"
+	/>
+	<BasicPage {lang}>
+		<main class="center width-max">
+			<div id="events-list-container" class="box no-border stack gap-down-h1">
+				<h1 class="center text">{areaName}</h1>
+				<IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
+				<IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
+				<!-- TODO: HERE -->
+				<script>
+					import List from "list.js"
 
-          var options = {
-            valueNames: [
-              // "timestart",
-              { name: "timestart", attr: "datetime" },
-              "name",
-              { name: "zip", attr: "data-zip" },
-              { name: "city", attr: "data-city" },
-            ],
-          }
+					var options = {
+						valueNames: [
+							// "timestart",
+							{ name: "timestart", attr: "datetime" },
+							"name",
+							{ name: "zip", attr: "data-zip" },
+							{ name: "city", attr: "data-city" },
+						],
+					}
 
-          var eventsList = new List("events-list-container", options)
-        </script>
+					var eventsList = new List("events-list-container", options)
+				</script>
 
-        <!-- TODO: enable searchin and filtering -->
-        <!-- <div class="center intrinsic stack" style="--gap: var(--size-h5);">
+				<!-- TODO: enable searchin and filtering -->
+				<!-- <div class="center intrinsic stack" style="--gap: var(--size-h5);">
           <input type="search" class="fuzzy-search" placeholder="Recherche" />
           <p>Trier par...</p>
           <div class="cluster" style="--gap: var(--size-h7);">
@@ -115,237 +116,241 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           </div>
         </div> -->
 
-        <IO
-          div
-          $skipNoInner
-          class="grid gap-down-h4"
-          style="--width-column: var(--width-col-3);"
-        >
-          <IO ul $skip={!events?.[0]?.name} class="list reset">
-            {
-              events?.map((event) => {
-                const {
-                  name,
-                  location,
-                  cover_image,
-                  organizers,
-                  time_start,
-                  time_end,
-                  isSameDay,
-                } = event
+				<IO
+					div
+					$skipNoInner
+					class="grid gap-down-h4"
+					style="--width-column: var(--width-col-3);"
+				>
+					<IO ul $skip={!events?.[0]?.name} class="list reset">
+						{
+							events?.map((event) => {
+								const {
+									name,
+									location,
+									cover_image,
+									organizers,
+									time_start,
+									time_end,
+									isSameDay,
+								} = event
 
-                const srcCover = imageDirectusSrc({
-                  src: cover_image?.src,
-                  width: "1000",
-                  fit: "cover",
-                  quality: "50",
-                })
+								const srcCover = imageDirectusSrc({
+									src: cover_image?.src,
+									width: "1000",
+									fit: "cover",
+									quality: "50",
+								})
 
-                return (
-                  <li
-                    class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                    style=""
-                  >
-                    <div
-                      class="box no-border padding-h4 with-sidebar gap-h4
+								return (
+									<li
+										class="card-event breakout-clickable box no-border no-padding border-radius-s"
+										style=""
+									>
+										<div
+											class="box no-border padding-h4 with-sidebar gap-h4
                                         color-palette-trans
                                         background-overlay
                                         "
-                      style={
-                        (srcCover
-                          ? `background-image: url("${srcCover}"); `
-                          : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
-                        `--content-min: 80%;`
-                      }
-                    >
-                      <div>
-                        <time
-                          datetime={time_start.dateTimeRaw}
-                          class="timestart stack gap-down-h8 center intrinsic"
-                          style="line-height: 1;"
-                        >
-                          <span class="size-h1">{time_start?.fr?.day}</span>
-                          <span class="size-h2">
-                            {time_start?.fr?.monthShort}
-                          </span>
-                          <span class="size-h2">{time_start?.fr?.year}</span>
-                        </time>
-                        <div>
-                          <div class="cover no-gap" style="--min-height: 100%;">
-                            <h2 class="h3 centered">
-                              <a
-                                href={`/${event.path}`}
-                                class="name reset clickable"
-                                set:html={name}
-                              />
-                            </h2>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
-                      <IO
-                        p
-                        $skipNoInner
-                        class="zip city h5"
-                        data-zip={location.postalCode}
-                        data-city={location.addressLocality}
-                      >
-                        {location.addressLocality}
-                      </IO>
-                      <ul class="reset stack horizontal">
-                        {organizers?.map(({ name, logo }) => (
-                          <li>
-                            {logo?.src ? (
-                              <ImgDirectus
-                                image={logo}
-                                src={logo?.src}
-                                alt={name}
-                                loading="lazy"
-                                class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                width="32"
-                                height="32"
-                                fit="inside"
-                                quality="99"
-                              />
-                            ) : (
-                              <Img
-                                src={placeholderWPlayCircleBlue}
-                                alt="logo"
-                                loading="lazy"
-                                class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                width="32"
-                                height="32"
-                              />
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </li>
-                )
-              })
-            }
-          </IO>
-        </IO>
-        <IO h2 $skip={!organizations?.[0]} class="center text">
-          Organisations
-        </IO>
-        <IO
-          div
-          $skipNoInner
-          class="grid gap-down-h4"
-          style="--width-column: var(--width-col-6);"
-        >
-          <IO ul $skipNoInner class="reset">
-            {
-              organizations?.map((organization) => {
-                const { name, path, logo, typesTranslated } = organization
+											style={
+												(srcCover
+													? `background-image: url("${srcCover}"); `
+													: `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+												`--content-min: 80%;`
+											}
+										>
+											<div>
+												<time
+													datetime={time_start.dateTimeRaw}
+													class="timestart stack gap-down-h8 center intrinsic"
+													style="line-height: 1;"
+												>
+													<span class="size-h1">{time_start?.fr?.day}</span>
+													<span class="size-h2">
+														{time_start?.fr?.monthShort}
+													</span>
+													<span class="size-h2">{time_start?.fr?.year}</span>
+												</time>
+												<div>
+													<div class="cover no-gap" style="--min-height: 100%;">
+														<h2 class="h3 centered">
+															<a
+																href={`/${event.path}`}
+																class="name reset clickable"
+																set:html={name}
+															/>
+														</h2>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+											<IO
+												p
+												$skipNoInner
+												class="zip city h5"
+												data-zip={location.postalCode}
+												data-city={location.addressLocality}
+											>
+												{location.addressLocality}
+											</IO>
+											<ul class="reset stack horizontal">
+												{organizers?.map(({ name, logo }) => (
+													<li>
+														{logo?.src ? (
+															<ImgDirectus
+																image={logo}
+																src={logo?.src}
+																alt={name}
+																loading="lazy"
+																class=""
+																style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+																width="32"
+																height="32"
+																fit="inside"
+																quality="99"
+															/>
+														) : (
+															<Img
+																src={placeholderWPlayCircleBlue}
+																alt="logo"
+																loading="lazy"
+																class=""
+																style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+																width="32"
+																height="32"
+															/>
+														)}
+													</li>
+												))}
+											</ul>
+										</div>
+									</li>
+								)
+							})
+						}
+					</IO>
+				</IO>
+				<IO h2 $skip={!organizations?.[0]} class="center text">
+					Organisations
+				</IO>
+				<IO
+					div
+					$skipNoInner
+					class="grid gap-down-h4"
+					style="--width-column: var(--width-col-6);"
+				>
+					<IO ul $skipNoInner class="reset">
+						{
+							organizations?.map((organization) => {
+								const { name, path, logo, typesTranslated } = organization
 
-                const nameIsLong = name.length > 30
+								const nameIsLong = name.length > 30
 
-                return (
-                  <li
-                    class="card-organization
+								return (
+									<li
+										class="card-organization
                       box no-border stack gap-down-h7 split-after-1
                       border-radius-s
                       breakout-clickable"
-                    style=""
-                  >
-                    <div
-                      class="center intrinsic"
-                      style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
-                    >
-                      {logo?.src ? (
-                        <ImgDirectus
-                          image={logo}
-                          src={logo?.src}
-                          alt={name}
-                          loading="lazy"
-                          class=""
-                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px;"
-                          width="120"
-                          height="120"
-                          fit="inside"
-                          quality="99"
-                        />
-                      ) : (
-                        <Img
-                          src={placeholderWPlayCircleBlue}
-                          alt="logo"
-                          loading="lazy"
-                          class=""
-                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px;"
-                          width="120"
-                          height="120"
-                        />
-                      )}
-                    </div>
-                    <h3>
-                      <a
-                        href={`/${path}`}
-                        class={`reset clickable${nameIsLong ? " h4" : ""}`}
-                      >
-                        {name}
-                      </a>
-                    </h3>
-                    <IO
-                      div
-                      $skip={!typesTranslated?.[0]}
-                      class="cluster gap-down-h8"
-                    >
-                      <ul class="reset">
-                        {typesTranslated?.map((type) => {
-                          const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
-                          return (
-                            <li
-                              class={`box no-border padding-x-h8 padding-y-h9
+										style=""
+									>
+										<div
+											class="center intrinsic"
+											style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
+										>
+											{logo?.src ? (
+												<ImgDirectus
+													image={logo}
+													src={logo?.src}
+													alt={name}
+													loading="lazy"
+													class=""
+													style="width: 120px; max-width: 100%; height: auto; max-height: 120px;"
+													width="120"
+													height="120"
+													fit="inside"
+													quality="99"
+												/>
+											) : (
+												<Img
+													src={placeholderWPlayCircleBlue}
+													alt="logo"
+													loading="lazy"
+													class=""
+													style="width: 120px; max-width: 100%; height: auto; max-height: 120px;"
+													width="120"
+													height="120"
+												/>
+											)}
+										</div>
+										<h3>
+											<a
+												href={`/${path}`}
+												class={`reset clickable${nameIsLong ? " h4" : ""}`}
+											>
+												{name}
+											</a>
+										</h3>
+										<IO
+											div
+											$skip={!typesTranslated?.[0]}
+											class="cluster gap-down-h8"
+										>
+											<ul class="reset">
+												{typesTranslated?.map((type) => {
+													const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
+													return (
+														<li
+															class={`box no-border padding-x-h8 padding-y-h9
                                                             ${currentPalette} color-palette-variation-contrast
                                                             border-radius-s`}
-                            >
-                              {type.translations.find(t => t.language_code === lang.code).default_label}
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </IO>
-                  </li>
-                )
-              })
-            }
-          </IO>
-        </IO>
-      </div>
-    </main>
-  </BasicPage>
+														>
+															{
+																type.translations.find(
+																	(t) => t.language_code === lang.code,
+																).default_label
+															}
+														</li>
+													)
+												})}
+											</ul>
+										</IO>
+									</li>
+								)
+							})
+						}
+					</IO>
+				</IO>
+			</div>
+		</main>
+	</BasicPage>
 </SkeletonPage>
 
 <style>
-  .card-event {
-    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
-    /* box-shadow: 0 0.05rem 0.05rem var(--color-shadow); */
-    /* Shadow from Directus */
-    /* box-shadow: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
-  }
-  .card-event-footer {
-    line-height: 32px;
-  }
-  .card-organization {
-    /* box-shadow: 0 0px 6px rgb(0 0 0 / 30%); */
-  }
-  .breakout-clickable:hover,
-  .breakout-clickable:focus-within {
-    /* box-shadow: inherit; */
-  }
+	.card-event {
+		/* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
+		/* box-shadow: 0 0.05rem 0.05rem var(--color-shadow); */
+		/* Shadow from Directus */
+		/* box-shadow: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
+	}
+	.card-event-footer {
+		line-height: 32px;
+	}
+	.card-organization {
+		/* box-shadow: 0 0px 6px rgb(0 0 0 / 30%); */
+	}
+	.breakout-clickable:hover,
+	.breakout-clickable:focus-within {
+		/* box-shadow: inherit; */
+	}
 
-  .sort.asc::after {
-    content: "\002B06";
-    padding-left: 3px;
-  }
-  .sort.desc::after {
-    content: "\002B07";
-    padding-left: 3px;
-  }
+	.sort.asc::after {
+		content: "\002B06";
+		padding-left: 3px;
+	}
+	.sort.desc::after {
+		content: "\002B07";
+		padding-left: 3px;
+	}
 </style>

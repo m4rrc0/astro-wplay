@@ -538,8 +538,9 @@ export function transformOrganization(o, languages) {
 	const links = o.links?.map(transformLink)
 
 	const eventsUnflat = o.events
+		?.filter(({ events_id: e } = {}) => !!e && e.status === "published")
 		?.map(({ events_id: e } = {}) => transformEvent(e, languages))
-		?.filter(({ events_id: e } = {}) => !!e)
+
 	const eventsUnfiltered = flattenEvents(eventsUnflat)
 
 	const d = new Date()
@@ -548,6 +549,7 @@ export function transformOrganization(o, languages) {
 		.toISOString()
 		.substring(0, 10)
 
+	// TODO: Might want to filter the same way as we do for the global events list
 	const events = eventsUnfiltered.filter((event) => {
 		return (
 			event?.time_end?.dateTimeRaw > today &&
@@ -808,7 +810,10 @@ function setEndDate({ startDate, endDate: endDateRaw, startTime, endTime }) {
 		moreThan24h = true
 	}
 
-	return { startDatePlus1, endDate, moreThan24h }
+	const today = new Date().toISOString().split("T")[0]
+	const isPast = (endDate || startDate) < today
+
+	return { startDatePlus1, endDate, moreThan24h, isPast }
 }
 
 function setDateTimes({ startDate, startTime, endDate, endTime }) {
@@ -848,7 +853,7 @@ export function transformSchedule(scheduleRaw) {
 		// byMonthWeek,
 	} = scheduleRaw
 
-	const { startDatePlus1, endDate, moreThan24h } = setEndDate({
+	const { startDatePlus1, endDate, moreThan24h, isPast } = setEndDate({
 		startDate,
 		endDate: endDateRaw,
 		startTime,
@@ -902,6 +907,7 @@ export function transformSchedule(scheduleRaw) {
 		endDate,
 		moreThan24h,
 		startDatePlus1,
+		isPast,
 		startDateTime,
 		endDateTime,
 		startDateStr,
@@ -1079,7 +1085,7 @@ export function transformEvent(eventRaw, languages) {
 		}
 	}
 
-	const { startDatePlus1, endDate, moreThan24h } = setEndDate({
+	const { startDatePlus1, endDate, moreThan24h, isPast } = setEndDate({
 		startDate: e.startDate,
 		endDate: e.endDate,
 		startTime: e.startTime,
@@ -1165,7 +1171,7 @@ export function transformEvent(eventRaw, languages) {
 	]
 	allSchedulesArray.reverse()
 
-	const occurences =
+	const occurrences =
 		recurrence === "recurring"
 			? scheduleRuleSet.all().map((date) => {
 					const dateStr = stripDate(date).slice(0, -3)
@@ -1227,6 +1233,7 @@ export function transformEvent(eventRaw, languages) {
 						path,
 						time_start,
 						time_end,
+						isPast: matchingSchedule?.isPast,
 					}
 				})
 			: null
@@ -1268,14 +1275,15 @@ export function transformEvent(eventRaw, languages) {
 		startDatePlus1,
 		endDate,
 		moreThan24h,
+		isPast,
 		startDateTime,
 		endDateTime,
 		startDateStr,
 		endDateStr,
-		// Occurences for flattening
+		// occurrences for flattening
 		...unique,
 		canonical,
-		occurences,
+		occurrences,
 	}
 }
 
@@ -1290,7 +1298,7 @@ const flattenEvents = (eventsUnflat = []) => {
 		} else if (event.recurrence === "multidays") {
 			eventsFlatten.push(event)
 		} else if (event.recurrence === "recurring") {
-			const occurencesExpanded = event.occurences?.map((occ) => ({
+			const occurrencesExpanded = event.occurrences?.map((occ) => ({
 				...event,
 				...occ,
 			}))
@@ -1299,7 +1307,7 @@ const flattenEvents = (eventsUnflat = []) => {
 				...event.canonical,
 				isCanonical: true,
 			}
-			eventsFlatten.push(canonicalExpanded, ...occurencesExpanded)
+			eventsFlatten.push(canonicalExpanded, ...occurrencesExpanded)
 		} else {
 			console.error(
 				`Unexpected recurrence type: ${event.recurrence} for event: ${event.name}`,
@@ -1445,7 +1453,7 @@ export async function fetchEvents() {
 
 	let events = eventsUnfiltered.filter((event) => {
 		// TODO: add this when UI is ready to display canonical event pages
-		// if (event.isCanonical) return true
+		if (event.isCanonical) return true
 
 		if (!event.time_start) {
 			if (!event.isCanonical) {
@@ -1453,6 +1461,8 @@ export async function fetchEvents() {
 			}
 			return false
 		}
+
+		// console.log(event.time_start?.dateStr, " -> ", event.isPast)
 
 		if (!event?.time_end) {
 			return (

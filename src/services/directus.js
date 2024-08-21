@@ -537,10 +537,9 @@ export function transformOrganization(o, languages) {
 	// Transform links
 	const links = o.links?.map(transformLink)
 
-	const eventsUnflat =
-		o.events
-			?.filter(({ events_id: e }) => !!e)
-			.map(({ events_id: e }) => transformEvent(e, languages)) || []
+	const eventsUnflat = o.events
+		?.map(({ events_id: e } = {}) => transformEvent(e, languages))
+		?.filter(({ events_id: e } = {}) => !!e)
 	const eventsUnfiltered = flattenEvents(eventsUnflat)
 
 	const d = new Date()
@@ -1011,6 +1010,8 @@ export function transformSchedules(schedulePartsRaw, legacySchedule) {
 }
 
 export function transformEvent(eventRaw, languages) {
+	if (eventRaw?.status !== "published") return undefined
+
 	// const parent =
 	// 	eventRaw?.parent_event && transformEvent(eventRaw?.parent_event)
 	const organizers =
@@ -1078,10 +1079,25 @@ export function transformEvent(eventRaw, languages) {
 		}
 	}
 
+	const { startDatePlus1, endDate, moreThan24h } = setEndDate({
+		startDate: e.startDate,
+		endDate: e.endDate,
+		startTime: e.startTime,
+		endTime: e.endTime,
+	})
+	const { startDateTime, endDateTime, startDateStr, endDateStr } = setDateTimes(
+		{
+			startDate: e.startDate,
+			startTime: e.startTime,
+			endDate,
+			endTime: e.endTime,
+		},
+	)
+
 	// Event can be "unique", "recurring" or "multidays" (or "unplanned")
 	let recurrenceInferredFromData = undefined
 	// here eventSchedule has already been purged of invalid parts
-	if (!!e?.startDate && eventSchedule?.length > 0)
+	if ((!!e?.startDate && eventSchedule?.length > 0) || moreThan24h)
 		recurrenceInferredFromData = "multidays"
 	else if (!!e?.startDate) recurrenceInferredFromData = "unique"
 	else if (eventSchedule?.length > 0) recurrenceInferredFromData = "recurring"
@@ -1108,21 +1124,6 @@ export function transformEvent(eventRaw, languages) {
 			eventSchedule,
 		})
 	}
-
-	const { startDatePlus1, endDate, moreThan24h } = setEndDate({
-		startDate: e.startDate,
-		endDate: e.endDate,
-		startTime: e.startTime,
-		endTime: e.endTime,
-	})
-	const { startDateTime, endDateTime, startDateStr, endDateStr } = setDateTimes(
-		{
-			startDate: e.startDate,
-			startTime: e.startTime,
-			endDate,
-			endTime: e.endTime,
-		},
-	)
 
 	// Create Slug
 	const nameSlug = slugify(e.name)
@@ -1278,7 +1279,7 @@ export function transformEvent(eventRaw, languages) {
 	}
 }
 
-const flattenEvents = (eventsUnflat) => {
+const flattenEvents = (eventsUnflat = []) => {
 	let eventsFlatten = []
 
 	eventsUnflat.forEach((event) => {

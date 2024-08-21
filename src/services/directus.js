@@ -783,26 +783,8 @@ function fallbackOnParentsOfEvent({
 	return e
 }
 
-export function transformSchedule(scheduleRaw) {
-	const {
-		status,
-		description,
-		startDate,
-		endDate: endDateRaw,
-		startTime,
-		endTime,
-		repeatCount,
-		frequency, // yearly, monthly, weekly
-		interval,
-		byDay,
-		bySetPos,
-		exceptDate,
-		addDate,
-		// Are the following useful?
-		byMonthDay,
-		byMonth, // [int]
-		// byMonthWeek,
-	} = scheduleRaw
+function setEndDate({ startDate, endDate: endDateRaw, startTime, endTime }) {
+	if (!startDate || !startTime) return {}
 
 	// const startDateAsDate = new Date(startDate)
 	// const startDateAsDatePlus1 = new Date(startDate)
@@ -825,6 +807,53 @@ export function transformSchedule(scheduleRaw) {
 		moreThan24h = true
 	}
 
+	return { startDatePlus1, endDate, moreThan24h }
+}
+
+function setDateTimes({ startDate, startTime, endDate, endTime }) {
+	const startDateTime =
+		startDate && startDate + (startTime ? `T${startTime}` : "")
+	const endDateTime = endDate && endDate + (endTime ? `T${endTime}` : "")
+
+	const startDateStr = stripDate(startDateTime)?.slice(0, -3)
+	const endDateStr = stripDate(endDateTime)?.slice(0, -3)
+
+	return {
+		startDateTime,
+		endDateTime,
+		startDateStr,
+		endDateStr,
+	}
+}
+
+export function transformSchedule(scheduleRaw) {
+	const {
+		status,
+		description,
+		startDate,
+		endDate: endDateRaw,
+		startTime,
+		endTime,
+		repeatCount,
+		frequency, // yearly, monthly, weekly
+		interval,
+		byDay,
+		bySetPos,
+		exceptDate,
+		addDate,
+		// Are the following useful?
+		byMonthDay,
+		byMonth, // [int]
+		// byMonthWeek,
+	} = scheduleRaw
+
+	const { startDatePlus1, endDate, moreThan24h } = setEndDate({
+		startDate,
+		endDate: endDateRaw,
+		startTime,
+		endTime,
+	})
+
 	let type = undefined // can be 'unique', 'recurring' or 'invalid'
 	let rrule = undefined
 	const [Y, M, D] = (startDate || "").split("-")
@@ -839,12 +868,9 @@ export function transformSchedule(scheduleRaw) {
 		type = "recurring"
 	else type = "unique"
 
-	const startDateTime =
-		startDate && startDate + (startTime ? `T${startTime}` : "")
-	const endDateTime = endDate && endDate + (endTime ? `T${endTime}` : "")
-
-	const startDateStr = stripDate(startDateTime)?.slice(0, -3)
-	const endDateStr = stripDate(endDateTime)?.slice(0, -3)
+	const { startDateTime, endDateTime, startDateStr, endDateStr } = setDateTimes(
+		{ startDate, startTime, endDate, endTime },
+	)
 
 	// const time_start = transformDateTime(startDateTime)
 	// const time_end = transformDateTime(endDateTime)
@@ -1038,23 +1064,6 @@ export function transformEvent(eventRaw, languages) {
 			})
 		: null
 
-	// 	{
-	//     time_start: { dateTimeRaw: '2023-11-08T18:30:00', hasTime: true, fr: {
-	//   date: 'ven. 6 oct. 2023',
-	//   time: '17:30',
-	//   hours: '17 h',
-	//   minutes: '30',
-	//   weekday: 'ven.',
-	//   day: '6',
-	//   month: 'oct.',
-	//   monthShort: 'oct.',
-	//   monthLong: 'octobre',
-	//   year: '2023'
-	//  },
-	//     time_end: { dateTimeRaw: '2023-11-08T21:30:00', hasTime: true, fr: [Object] },
-	//     isSameDay: true
-	//   }
-
 	const scheduleParts = e?.eventSchedule?.map(transformSchedule)
 	const { schedule: eventSchedule, rRuleSet: scheduleRuleSet } =
 		transformSchedules(scheduleParts, scheduleFormatted)
@@ -1098,6 +1107,21 @@ export function transformEvent(eventRaw, languages) {
 		})
 	}
 
+	const { startDatePlus1, endDate, moreThan24h } = setEndDate({
+		startDate: e.startDate,
+		endDate: e.endDate,
+		startTime: e.startTime,
+		endTime: e.endTime,
+	})
+	const { startDateTime, endDateTime, startDateStr, endDateStr } = setDateTimes(
+		{
+			startDate: e.startDate,
+			startTime: e.startTime,
+			endDate,
+			endTime: e.endTime,
+		},
+	)
+
 	// Create Slug
 	const nameSlug = slugify(e.name)
 	// const dateSlug = scheduleFormatted?.[0].time_start.dateTimeRaw.substring(
@@ -1108,12 +1132,6 @@ export function transformEvent(eventRaw, languages) {
 
 	const shortId = e?.id?.substring(24) // only keep the last 12 characters
 	const slugCanonical = `${nameSlug}-${shortId}`
-
-	// TODO: general start and end dateTime
-	const startDateTime =
-		e.startDate && e.startDate + (e.startTime ? `T${e.startTime}` : "")
-	const endDateTime =
-		e.endDate && e.endDate + (e.endTime ? `T${e.endTime}` : "")
 
 	let time_start = transformDateTime(startDateTime)
 	let time_end = transformDateTime(endDateTime)
@@ -1243,6 +1261,15 @@ export function transformEvent(eventRaw, languages) {
 		location,
 		links,
 		date_updated,
+		// Dates computed fields
+		startDatePlus1,
+		endDate,
+		moreThan24h,
+		startDateTime,
+		endDateTime,
+		startDateStr,
+		endDateStr,
+		// Occurences for flattening
 		...unique,
 		canonical,
 		occurences,
@@ -1506,30 +1533,6 @@ export async function fetchArticles() {
 			],
 		}),
 	)
-	// TODO: Remove implementation from old sdk when ready
-	// const articlesRaw = await directus.items("articles").readByQuery({
-	//   limit: -1,
-	//   filter: { status: { _eq: "published" } },
-	//   sort: "-date_published",
-	//   fields: [
-	//     "status",
-	//     "code_name",
-	//     ...pageDataFields("page_data."),
-	//     "authors.user_profiles_id.id",
-	//     "authors.user_profiles_id.status",
-	//     "authors.user_profiles_id.display_name",
-	//     ...imageFields("authors.user_profiles_id.avatar."),
-	//     "authors.user_profiles_id.directus_user.id",
-	//     "authors.user_profiles_id.directus_user.first_name",
-	//     "authors.user_profiles_id.directus_user.last_name",
-	//     ...imageFields("authors.user_profiles_id.directus_user.avatar."),
-	//     "date_published",
-	//     "date_modified",
-	//     ...blockFields("header."),
-	//     ...blockFields("main."),
-	//     ...blockFields("footer."),
-	//   ],
-	// })
 
 	const articles = articlesRaw?.map((a) => transformArticle(a, languages))
 

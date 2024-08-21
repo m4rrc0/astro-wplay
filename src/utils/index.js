@@ -107,6 +107,8 @@ export const toDateArray = (dateStr) => {
 }
 
 export const toTzDate = (dateRaw) => {
+	if (!dateRaw) return dateRaw
+
 	let date = dateRaw
 
 	if (typeof dateRaw === "string") {

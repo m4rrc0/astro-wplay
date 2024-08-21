@@ -38,7 +38,6 @@ const {
 } = Astro.props
 
 const events = eventsUnfiltered?.filter((e) => !e.isCanonical)
-console.log({ eventsUnfiltered, events })
 
 const { description, opening_hours_remark } =
 	translations?.find(({ languages_code }) => languages_code === lang.code) || {}

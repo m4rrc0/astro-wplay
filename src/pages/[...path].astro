@@ -1,173 +1,191 @@
 ---
 // import Debug from 'astro/debug';
 import {
-AdminHidden,
-AreaPage,
-AreasPage,
-ArticlePage,
-ArticlesPage,
-EventPage,
-EventsPage,
-HomePage,
-OrganizationPage,
-OrganizationsPage,
+	AdminHidden,
+	AreaPage,
+	AreasPage,
+	ArticlePage,
+	ArticlesPage,
+	EventPage,
+	EventsPage,
+	HomePage,
+	OrganizationPage,
+	OrganizationsPage,
 } from "@layouts"
 import { createPath } from "@utils"
 import {
-areas,
-fetchArticles,
-fetchEvents,
-fetchLanguages,
-fetchDictionary,
-fetchOrganizations,
-start as startDirectus
+	areas,
+	fetchArticles,
+	fetchEvents,
+	fetchLanguages,
+	fetchDictionary,
+	fetchOrganizations,
+	start as startDirectus,
 } from "../services/directus.js"
 
 const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
 export async function getStaticPaths() {
-  await startDirectus()
+	await startDirectus()
 
-  const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
+	const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
-  const languages = await fetchLanguages()
-  const dictionary = await fetchDictionary()
-  const organizations = await fetchOrganizations()
-  const events = await fetchEvents()
-  const articles = await fetchArticles()
+	const languages = await fetchLanguages()
+	const dictionary = await fetchDictionary()
+	const organizations = await fetchOrganizations()
+	const { events, canonicalEvents } = await fetchEvents()
+	const articles = await fetchArticles()
 
-  let staticPaths = [
-    ...(PAGE_ADMIN
-      ? [
-          {
-            params: { path: PAGE_ADMIN },
-            props: { lang: { code: "fr" }, events },
-          },
-        ]
-      : []),
-  ]
+	let staticPaths = [
+		...(PAGE_ADMIN
+			? [
+					{
+						params: { path: PAGE_ADMIN },
+						props: { lang: { code: "fr" }, events },
+					},
+				]
+			: []),
+	]
 
-  // TODO: account for multiple languages! (lang is hardcoded to 'fr' for the moment)
-  languages.forEach((lang) => {
-    if (lang.code !== "fr") return null
+	// TODO: account for multiple languages! (lang is hardcoded to 'fr' for the moment)
+	languages.forEach((lang) => {
+		if (lang.code !== "fr") return null
 
-    const organizationsStaticPaths = organizations.map((organization) => {
-      return {
-        params: { path: organization.path },
-        props: { lang, organization },
-      }
-    })
-    const eventsStaticPaths = events.map((event) => {
-      return { params: { path: event.path }, props: { lang, event } }
-    })
-    const articlesStaticPaths = articles.map((article) => {
-      return { params: { path: article.path }, props: { lang, article } }
-    })
-    const areasStaticPaths = areas.map((area) => {
-      const currentOrgs = organizations.filter(
-        (i) => i?.location?.area.code_name === area.code_name && i?.boardgame_related,
-      )
-      const currentEvents = events.filter(
-        (i) => i?.location?.area.code_name === area.code_name,
-      )
-      return {
-        params: { path: area.path[lang.code] },
-        props: {
-          lang,
-          area,
-          organizations: currentOrgs,
-          events: currentEvents
-        },
-      }
-    })
-    const listsStaticPaths = [
-      {
-        params: { path: createPath({ type: "home" }) },
-        props: { lang, areas, articles },
-      },
-      {
-        params: { path: createPath({ type: "organizations" }) },
-        props: {
-          lang,
-          organizations: organizations?.filter(
-            (o) => o.boardgame_related
-          ),
-          areas,
-          dictionary: dictionary?.sort((d1, d2) => d1.translations.find(t => t.language_code === lang.code).default_label.localeCompare(
-            d2.translations.find(t => t.language_code === lang.code).default_label
-          )),
-        }
-      },
-      {
-        params: { path: createPath({ type: "events" }) },
-        props: {
-          lang,
-          events,
-          dictionary: dictionary?.filter(
-            (d) => d.tag_categories.includes("event_type")
-          ).sort((d1, d2) => d1.translations.find(t => t.language_code === lang.code).default_label.localeCompare(
-            d2.translations.find(t => t.language_code === lang.code).default_label
-          )),
-        }
-      },
-      {
-        params: { path: createPath({ type: "articles" }) },
-        props: { lang, articles },
-      },
-      {
-        params: { path: createPath({ type: "areas" }) },
-        props: { lang, areas },
-      },
-    ]
+		const organizationsStaticPaths = organizations.map((organization) => {
+			return {
+				params: { path: organization.path },
+				props: { lang, organization },
+			}
+		})
+		const eventsStaticPaths = [...events, ...canonicalEvents].map((event) => {
+			return { params: { path: event.path }, props: { lang, event } }
+		})
+		const articlesStaticPaths = articles.map((article) => {
+			return { params: { path: article.path }, props: { lang, article } }
+		})
+		const areasStaticPaths = areas.map((area) => {
+			const currentOrgs = organizations.filter(
+				(i) =>
+					i?.location?.area.code_name === area.code_name &&
+					i?.boardgame_related,
+			)
+			const currentEvents = events.filter(
+				(i) => i?.location?.area.code_name === area.code_name,
+			)
+			return {
+				params: { path: area.path[lang.code] },
+				props: {
+					lang,
+					area,
+					organizations: currentOrgs,
+					events: currentEvents,
+				},
+			}
+		})
+		const listsStaticPaths = [
+			{
+				params: { path: createPath({ type: "home" }) },
+				props: { lang, areas, articles },
+			},
+			{
+				params: { path: createPath({ type: "organizations" }) },
+				props: {
+					lang,
+					organizations: organizations?.filter((o) => o.boardgame_related),
+					areas,
+					dictionary: dictionary?.sort((d1, d2) =>
+						d1.translations
+							.find((t) => t.language_code === lang.code)
+							.default_label.localeCompare(
+								d2.translations.find((t) => t.language_code === lang.code)
+									.default_label,
+							),
+					),
+				},
+			},
+			{
+				params: { path: createPath({ type: "events" }) },
+				props: {
+					lang,
+					events,
+					dictionary: dictionary
+						?.filter((d) => d.tag_categories.includes("event_type"))
+						.sort((d1, d2) =>
+							d1.translations
+								.find((t) => t.language_code === lang.code)
+								.default_label.localeCompare(
+									d2.translations.find((t) => t.language_code === lang.code)
+										.default_label,
+								),
+						),
+				},
+			},
+			{
+				params: { path: createPath({ type: "articles" }) },
+				props: { lang, articles },
+			},
+			{
+				params: { path: createPath({ type: "areas" }) },
+				props: { lang, areas },
+			},
+		]
 
-    staticPaths = [
-      ...staticPaths,
-      ...organizationsStaticPaths,
-      ...eventsStaticPaths,
-      ...articlesStaticPaths,
-      ...areasStaticPaths,
-      ...listsStaticPaths,
-    ]
-  })
+		staticPaths = [
+			...staticPaths,
+			...organizationsStaticPaths,
+			...eventsStaticPaths,
+			...articlesStaticPaths,
+			...areasStaticPaths,
+			...listsStaticPaths,
+		]
+	})
 
-  return staticPaths
+	return staticPaths
 }
 
 const { path } = Astro.params
 const {
-  lang,
-  dictionary,
-  organization,
-  organizations,
-  event,
-  events,
-  article,
-  articles,
-  area,
-  areas,
+	lang,
+	dictionary,
+	organization,
+	organizations,
+	event,
+	events,
+	article,
+	articles,
+	area,
+	areas,
 } = Astro.props
 ---
 
 <Fragment>
-  <!-- LISTS PAGES -->
-  {PAGE_ADMIN && path === PAGE_ADMIN && <AdminHidden {lang} {events} />}
-  {
-    path === createPath({ type: "home" }) && (
-      <HomePage {areas} {articles} {lang} />
-    )
-  }
-  {
-    path === createPath({ type: "articles" }) && (
-      <ArticlesPage {articles} {lang} />
-    )
-  }
-  {path === createPath({ type: "areas" }) && <AreasPage {areas} {lang} />}
-  {path === createPath({ type: "events" }) && <EventsPage {events} {lang} {dictionary} />}
-  {path === createPath({ type: "organizations" }) && <OrganizationsPage {organizations} {lang} {areas} {dictionary} />}
-  <!-- ITEMS PAGES -->
-  {organization && <OrganizationPage {organization} {lang} />}
-  {event && <EventPage {event} {lang} />}
-  {article && <ArticlePage {article} {lang} />}
-  {area && <AreaPage {area} {lang} {events} {organizations} />}
-  <!-- <Debug {article} /> -->
+	<!-- LISTS PAGES -->
+	{PAGE_ADMIN && path === PAGE_ADMIN && <AdminHidden {lang} {events} />}
+	{
+		path === createPath({ type: "home" }) && (
+			<HomePage {areas} {articles} {lang} />
+		)
+	}
+	{
+		path === createPath({ type: "articles" }) && (
+			<ArticlesPage {articles} {lang} />
+		)
+	}
+	{path === createPath({ type: "areas" }) && <AreasPage {areas} {lang} />}
+	{
+		path === createPath({ type: "events" }) && (
+			<EventsPage {events} {lang} {dictionary} />
+		)
+	}
+	{
+		path === createPath({ type: "organizations" }) && (
+			<OrganizationsPage {organizations} {lang} {areas} {dictionary} />
+		)
+	}
+	<!-- ITEMS PAGES -->
+	{organization && <OrganizationPage {organization} {lang} />}
+	{event && <EventPage {event} {lang} />}
+	{article && <ArticlePage {article} {lang} />}
+	{area && <AreaPage {area} {lang} {events} {organizations} />}
+	<!-- <Debug {article} /> -->
 </Fragment>

@@ -10,6 +10,11 @@ import {
   fetchArticles,
   areas,
 } from "../services/directus.js"
+
+import {
+  test
+}from "../services/notion.mjss"
+
 import {
   SkeletonPage,
   BasicPage,
@@ -102,6 +107,7 @@ export async function getStaticPaths() {
       },
     ]
 
+    test()
     const teamMemberStaticPaths = [
       {
         params: { path:"fr/equipe/jenny" },

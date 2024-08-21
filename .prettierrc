@@ -1,8 +1,0 @@
-{
-  "printWidth": 80,
-  "trailingComma": "all",
-  "jsxBracketSameLine": false,
-  "semi": false,
-  "astroSortOrder": "markup | styles",
-  "astroAllowShorthand": false
-}

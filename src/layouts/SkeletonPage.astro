@@ -128,6 +128,16 @@ const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
 		<SEO locale="fr_BE" siteName="Wanna Play" />
 
 		<slot name="head" />
+
+		{
+			process.env.CONTEXT === "production" && (
+				<script
+					defer
+					src="https://cloud.umami.is/script.js"
+					data-website-id="6a93ffd6-63db-405e-a26f-e28978ce0088"
+				/>
+			)
+		}
 	</head>
 	<body>
 		<slot name="body" />

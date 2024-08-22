@@ -58,6 +58,9 @@ textarea {
 	opacity: 0.4;
 	cursor: auto;
 }
+[popover] {
+	box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
+}
 
 /* #app {
   margin: auto;

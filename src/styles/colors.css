@@ -70,6 +70,9 @@ body,
 	/* --color-text__code: var(--color-bg); */
 	/* --color-bg__code: var(--color-secondary); */
 	/* --color-border__code: var(--color-primary); */
+
+	/* --- FORM --- */
+	/* --color-accent: var(--color-secondary); */
 }
 
 /* color PALETTES */

@@ -85,16 +85,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 								style="flex-shrink: 0;"
 							/>
 						</button>
-						<div
-							popover
-							id="proximity"
-							class="padding-h3 border-radius-m breakout-clickable"
-						>
+						<div popover id="proximity" class="padding-h3 border-radius-m">
 							<div class="stack gap-h3">
 								<div class="stack horizontal">
 									<Icon name="gridicons:location" title="location" role="img" />
 									<select name="position">
-										<option value="">Emplacement</option>
+										<option value="">Choisir...</option>
 										<option value="Ma position"> Ma position </option>
 										{
 											cities?.map((city) => (
@@ -110,7 +106,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 										}
 									</select>
 								</div>
-								<div class="stack justify-space-between">
+								<div class="distance stack justify-space-between">
 									<label for="distance">Distance (km)</label>
 									<div class="stack gap-0">
 										<input
@@ -155,7 +151,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 						<div
 							popover
 							id="eventType"
-							class="padding-h3 border-radius-m breakout-clickable align-items-start"
+							class="padding-h3 border-radius-m align-items-start"
 						>
 							<div class="stack gap-h3" style="white-space: nowrap">
 								{
@@ -347,5 +343,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 	.sort.desc::after {
 		content: "\002B07";
 		padding-left: 3px;
+	}
+	[popover]#proximity:has(select > option[value=""]:checked)
+		> div
+		> div:has(input[type="range"]) {
+		/* opacity: 0.5; */
+		display: none;
 	}
 </style>

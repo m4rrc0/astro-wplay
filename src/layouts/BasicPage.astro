@@ -7,6 +7,7 @@ const { lang } = Astro.props
 const email = import.meta.env.CONTACT_EMAIL
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+
 const ariaCurrentAttr = (currentHref) => {
 	if (currentHref === canonicalURL.pathname) {
 		return "page"
@@ -43,14 +44,14 @@ const ariaCurrentAttr = (currentHref) => {
 					<!-- <li><a href={`/${lang.code}/be`}>Où jouer?</a></li> -->
 					<li>
 						<a
-							href={`/${lang.code}/e`}
-							aria-current={ariaCurrentAttr(`/${lang.code}/e`)}>Agenda</a
+							href={`/${lang.code}/e/`}
+							aria-current={ariaCurrentAttr(`/${lang.code}/e/`)}>Agenda</a
 						>
 					</li>
 					<li>
 						<a
-							href={`/${lang.code}/o`}
-							aria-current={ariaCurrentAttr(`/${lang.code}/o`)}>Annuaire</a
+							href={`/${lang.code}/o/`}
+							aria-current={ariaCurrentAttr(`/${lang.code}/o/`)}>Annuaire</a
 						>
 					</li>
 					<li>
@@ -67,8 +68,8 @@ const ariaCurrentAttr = (currentHref) => {
 						>
 							<div class="stack">
 								<a
-									href={`/${lang.code}/a`}
-									aria-current={ariaCurrentAttr(`/${lang.code}/a`)}>Articles</a
+									href={`/${lang.code}/a/`}
+									aria-current={ariaCurrentAttr(`/${lang.code}/a/`)}>Articles</a
 								>
 								<a
 									class="color-palette-teal"
@@ -94,13 +95,13 @@ const ariaCurrentAttr = (currentHref) => {
 						>
 							<div class="stack">
 								<a
-									href={`/${lang.code}/projet`}
-									aria-current={ariaCurrentAttr(`/${lang.code}/projet`)}
+									href={`/${lang.code}/projet/`}
+									aria-current={ariaCurrentAttr(`/${lang.code}/projet/`)}
 									>Projet</a
 								>
 								<a
-									href={`/${lang.code}/equipe`}
-									aria-current={ariaCurrentAttr(`/${lang.code}/equipe`)}
+									href={`/${lang.code}/equipe/`}
+									aria-current={ariaCurrentAttr(`/${lang.code}/equipe/`)}
 									>Équipe</a
 								>
 							</div>
@@ -108,8 +109,9 @@ const ariaCurrentAttr = (currentHref) => {
 					</li>
 					<li>
 						<a
-							href={`/${lang.code}/contact`}
-							aria-current={ariaCurrentAttr(`/${lang.code}/contact`)}>Contact</a
+							href={`/${lang.code}/contact/`}
+							aria-current={ariaCurrentAttr(`/${lang.code}/contact/`)}
+							>Contact</a
 						>
 					</li>
 					<!-- <li><a href="/styleguide">Styleguide</a></li> -->

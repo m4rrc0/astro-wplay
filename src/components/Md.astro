@@ -1,10 +1,10 @@
 ---
-import { Markdown } from "astro-remote"
+import { Markdown } from "@components"
 
 // import { io } from '@utils'
 // const { props: allProps, $render } = await io(Astro)
 const {
-  props: { $skip, $skipNoInner, ...allProps },
+	props: { $skip, $skipNoInner, ...allProps },
 } = Astro
 const $render = true
 

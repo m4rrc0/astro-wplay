@@ -46,7 +46,11 @@ const presentation =
 	location?.addressLocality &&
 	location?.area?.name?.fr &&
 	typesTranslated
-		?.map(({ [lang.code]: typeTranslated }) => typeTranslated)
+		?.map(
+			(type) =>
+				type.translations.find((t) => t.language_code === lang.code)
+					.default_label,
+		)
 		.join(", ") +
 		` à ${location.addressLocality}` +
 		(location.addressLocality !== location?.area?.name?.fr

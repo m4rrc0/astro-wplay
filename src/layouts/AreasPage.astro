@@ -9,42 +9,44 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <SkeletonPage lang={lang.code}>
-  <SEO
-    slot="head"
-    ogType="website"
-    title="Où veux-tu jouer en Belgique?"
-    description="Tu veux jouer? Tu es à la bonne adresse! Choisis ta province et explore le monde ludique près de chez toi."
-    canonicalUrl={canonicalURL.href}
-    socialImage="/assets/images/LOGO-1024px.png"
-    ogVideo={false}
-    twitterCard="summary"
-  />
-  <BasicPage {lang}>
-    <main class="box no-border padding-h4">
-      <div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
-        <h1 class="center text">Où jouer en Belgique</h1>
-        <div class="cluster gap-down-h6" style="--justify-content: center;">
-          <ul class="reset">
-            {areas.map((area) => {
-              return (
-                <li>
-                  <a
-                    href={"/" + area.path[lang.code]}
-                    class={`area-${area.code_name}`}
-                  >
-                    {area.name[lang.code]}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-        <div>
-          <BelgiumMap {lang} {areas} />
-        </div>
-      </div>
-    </main>
-  </BasicPage>
+	<SEO
+		slot="head"
+		ogType="website"
+		title="Où veux-tu jouer en Belgique?"
+		description="Tu veux jouer? Tu es à la bonne adresse! Choisis ta province et explore le monde ludique près de chez toi."
+		canonicalUrl={canonicalURL.href + "/"}
+		socialImage="/assets/images/LOGO-1024px.png"
+		ogVideo={false}
+		twitterCard="summary"
+	/>
+	<BasicPage {lang}>
+		<main class="box no-border padding-h4">
+			<div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
+				<h1 class="center text">Où jouer en Belgique</h1>
+				<div class="cluster gap-down-h6" style="--justify-content: center;">
+					<ul class="reset">
+						{
+							areas.map((area) => {
+								return (
+									<li>
+										<a
+											href={`/${area.path[lang.code]}/`}
+											class={`area-${area.code_name}`}
+										>
+											{area.name[lang.code]}
+										</a>
+									</li>
+								)
+							})
+						}
+					</ul>
+				</div>
+				<div>
+					<BelgiumMap {lang} {areas} />
+				</div>
+			</div>
+		</main>
+	</BasicPage>
 </SkeletonPage>
 
 <!-- Was just under h1 -->
@@ -53,7 +55,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <ul class="reset stack gap-down-h8 justify-center">
             {areas.map(area => {
                 return (
-                    <li><a href={'/' + area.path[lang.code]} class={`area-${area.code_name}`}>{area.name[lang.code]}</a></li>
+                    <li><a href={'/' + area.path[lang.code] + '/'} class={`area-${area.code_name}`}>{area.name[lang.code]}</a></li>
                 )
             })}
         </ul>

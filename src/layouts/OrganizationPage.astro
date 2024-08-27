@@ -75,7 +75,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 		ogType="website"
 		title={name}
 		description={presentation || description}
-		canonicalUrl={canonicalURL.href}
+		canonicalUrl={canonicalURL.href + "/"}
 		socialImage={logo}
 		ogVideo={false}
 		twitterCard="summary"
@@ -308,7 +308,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 														>
 															<h2 class="h3 centered">
 																<a
-																	href={`/${event.path}`}
+																	href={`/${event.path}/`}
 																	class="name reset clickable"
 																	set:html={name}
 																/>

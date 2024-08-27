@@ -71,7 +71,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 		ogType="website"
 		title={`Soirées jeux, clubs, bar à jeux, ludothèques dans la province de ${areaName}`}
 		description={`Tu veux jouer dans la province de ${areaName}? Viens découvrir les lieux ludiques de la région.`}
-		canonicalUrl={canonicalURL.href}
+		canonicalUrl={canonicalURL.href + "/"}
 		socialImage="/assets/images/LOGO-1024px.png"
 		ogVideo={false}
 		twitterCard="summary"
@@ -175,7 +175,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 													<div class="cover no-gap" style="--min-height: 100%;">
 														<h2 class="h3 centered">
 															<a
-																href={`/${event.path}`}
+																href={`/${event.path}/`}
 																class="name reset clickable"
 																set:html={name}
 															/>
@@ -286,7 +286,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 										</div>
 										<h3>
 											<a
-												href={`/${path}`}
+												href={`/${path}/`}
 												class={`reset clickable${nameIsLong ? " h4" : ""}`}
 											>
 												{name}

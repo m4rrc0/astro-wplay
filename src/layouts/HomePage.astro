@@ -63,7 +63,7 @@ const jsonLd = {
     ogType="website"
     title="Connecte les joueurs"
     description={description}
-    canonicalUrl={canonicalURL.href}
+    canonicalUrl={canonicalURL.href + "/"}
     socialImage={imagePath}
     ogVideo={false}
     twitterCard="summary"
@@ -145,7 +145,7 @@ const jsonLd = {
                 return (
                   <li>
                     <a
-                      href={"/" + area.path[lang.code]}
+                      href={`/${area.path[lang.code]}/`}
                       class={`area-${area.code_name}`}
                     >
                       {area.name[lang.code]}
@@ -198,7 +198,7 @@ const jsonLd = {
                       />
                     </IO>
                     <h3 class="h4">
-                      <a href={`/${a.path}`} class="reset clickable">
+                      <a href={`/${a.path}/`} class="reset clickable">
                         {headerT?.title}
                       </a>
                     </h3>

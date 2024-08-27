@@ -15,7 +15,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 		ogType="website"
 		title={`Les acteurs du jeu de société en Belgique`}
 		description={`Bars à jeux, clubs, ludothèques, Escape rooms, ... Viens découvrir les organisations ludiques actives en Belgique.`}
-		canonicalUrl={canonicalURL.href}
+		canonicalUrl={canonicalURL.href + "/"}
 		socialImage="/assets/images/LOGO-1024px.png"
 		ogVideo={false}
 		twitterCard="summary"
@@ -262,7 +262,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 										</div>
 										<h3>
 											<a
-												href={`/${path}`}
+												href={`/${path}/`}
 												class={`reset clickable${nameIsLong ? " h4" : ""}`}
 											>
 												{name}

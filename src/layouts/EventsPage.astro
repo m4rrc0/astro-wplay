@@ -50,7 +50,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 		ogType="website"
 		title={`Événements et soirées jeux de Belgique`}
 		description={`Tu cherche une soirée jeux près de chez toi? Viens découvrir la liste d'événements ludiques la plus complète de Belgique sur Wanna Play.`}
-		canonicalUrl={canonicalURL.href}
+		canonicalUrl={canonicalURL.href + "/"}
 		socialImage="/assets/images/LOGO-1024px.png"
 		ogVideo={false}
 		twitterCard="summary"
@@ -269,7 +269,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 													<div class="cover no-gap" style="--min-height: 100%;">
 														<h2 class="h3 centered">
 															<a
-																href={`/${event.path}`}
+																href={`/${event.path}/`}
 																class="name reset clickable"
 																set:html={name}
 															/>

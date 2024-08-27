@@ -79,7 +79,7 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
 		ogType="website"
 		title={metaTitle}
 		description={metaDescription || description}
-		canonicalUrl={canonicalURL.href}
+		canonicalUrl={canonicalURL.href + "/"}
 		socialImage={srcSocial}
 		ogVideo={false}
 		twitterCard="summary"
@@ -154,7 +154,7 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
 									({ name, boardgame_related, links, path, logo }) => (
 										<li>
 											<a
-												href={boardgame_related ? `/${path}` : links?.[0]?.url}
+												href={boardgame_related ? `/${path}/` : links?.[0]?.url}
 												target={boardgame_related ? "_self" : "_blank"}
 												rel={boardgame_related ? "self" : "noopener noreferrer"}
 												class="box no-border stack center intrinsic gap-down-h8"
@@ -326,7 +326,9 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
 									const { time_start } = event
 
 									const isPast = time_start.dateStr < today
-									const href = isPast ? `/${canonical.path}` : `/${event.path}`
+									const href = isPast
+										? `/${canonical.path}/`
+										: `/${event.path}/`
 
 									return (
 										<li

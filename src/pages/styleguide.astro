@@ -1,152 +1,163 @@
 ---
-import { SkeletonPage, BasicPage } from '@layouts'
+import { SkeletonPage, BasicPage } from "@layouts"
 
 // Component Imports
-import SEO from '@components/SEO.astro'
-import Paragraph from '@partials/styleguide/Paragraph.astro';
-import DemoBoxComplete from '@partials/styleguide/DemoBoxComplete.astro'
+import SEO from "@components/SEO.astro"
+import Paragraph from "@partials/styleguide/Paragraph.astro"
+import DemoBoxComplete from "@partials/styleguide/DemoBoxComplete.astro"
 
-let list6 = ['main', 'danger', 'trans'];
+let list6 = ["main", "danger", "trans"]
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <SkeletonPage lang="fr">
-  <Fragment slot="head">
-    <SEO
-      ogType="website"
-      title="Styleguide"
-      description="A (soon to be) extensive style guide using nuds libraries"
-      canonicalUrl={canonicalURL.href}
-      socialImage="/assets/images/LOGO-1024px.png"
-      ogVideo={false}
-      twitterCard="summary"
-     />
-    <meta name="robots" content="noindex">
-  </Fragment>
+	<Fragment slot="head">
+		<SEO
+			ogType="website"
+			title="Styleguide"
+			description="A (soon to be) extensive style guide using nuds libraries"
+			canonicalUrl={canonicalURL.href + "/"}
+			socialImage="/assets/images/LOGO-1024px.png"
+			ogVideo={false}
+			twitterCard="summary"
+		/>
+		<meta name="robots" content="noindex" />
+	</Fragment>
 
-  <BasicPage lang={{ code: 'fr' }}>
-    <!-- <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
-    <!-- <a href={`https://web.dev/measure/?url=https%3A%2F%2Fwww.wanna-play.be%2F`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
-    <!-- <iframe
+	<BasicPage lang={{ code: "fr" }}>
+		<!-- <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
+		<!-- <a href={`https://web.dev/measure/?url=https%3A%2F%2Fwww.wanna-play.be%2F`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
+		<!-- <iframe
       src={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`}
     ></iframe> -->
-    <div class="box no-border stack gap-down" style="--gap-down: 1em">
-      <h1>Styleguide</h1>
-      <p>
-        This is actually more of a
-        <strong>
-          <em>work in progress</em>
-        </strong>
-        design system.
-      </p>
-      <section class="stack gap-down" style="--gap-down: 1em;">
-        <h2>Typography</h2>
-        <h3>Headings</h3>
-        <p class="h1">An h1 fox jumps over the fence or whatever</p>
-        <p class="h2">An h2 fox jumps over the fence or whatever</p>
-        <p class="h3">An h3 fox jumps over the fence or whatever</p>
-        <p class="h4">An h4 fox jumps over the fence or whatever</p>
-        <p class="h5">An h5 fox jumps over the fence or whatever</p>
-        <p class="h6">An h6 fox jumps over the fence or whatever</p>
-        <h3>Mix</h3>
-        <p class="h1">An h1 fox jumps over the fence or whatever</p>
-        <Paragraph />
-        <p class="h2">An h2 fox jumps over the fence or whatever</p>
-        <Paragraph />
-        <p class="h3">An h3 fox jumps over the fence or whatever</p>
-        <Paragraph />
-        <p class="h4">An h4 fox jumps over the fence or whatever</p>
-        <Paragraph />
-        <p class="h5">An h5 fox jumps over the fence or whatever</p>
-        <Paragraph />
-        <p class="h6">An h6 fox jumps over the fence or whatever</p>
-        <Paragraph />
-      </section>
+		<div class="box no-border stack gap-down" style="--gap-down: 1em">
+			<h1>Styleguide</h1>
+			<p>
+				This is actually more of a
+				<strong>
+					<em>work in progress</em>
+				</strong>
+				design system.
+			</p>
+			<section class="stack gap-down" style="--gap-down: 1em;">
+				<h2>Typography</h2>
+				<h3>Headings</h3>
+				<p class="h1">An h1 fox jumps over the fence or whatever</p>
+				<p class="h2">An h2 fox jumps over the fence or whatever</p>
+				<p class="h3">An h3 fox jumps over the fence or whatever</p>
+				<p class="h4">An h4 fox jumps over the fence or whatever</p>
+				<p class="h5">An h5 fox jumps over the fence or whatever</p>
+				<p class="h6">An h6 fox jumps over the fence or whatever</p>
+				<h3>Mix</h3>
+				<p class="h1">An h1 fox jumps over the fence or whatever</p>
+				<Paragraph />
+				<p class="h2">An h2 fox jumps over the fence or whatever</p>
+				<Paragraph />
+				<p class="h3">An h3 fox jumps over the fence or whatever</p>
+				<Paragraph />
+				<p class="h4">An h4 fox jumps over the fence or whatever</p>
+				<Paragraph />
+				<p class="h5">An h5 fox jumps over the fence or whatever</p>
+				<Paragraph />
+				<p class="h6">An h6 fox jumps over the fence or whatever</p>
+				<Paragraph />
+			</section>
 
-      <section class="stack gap-down" style="--gap-down: 1em;">
-        <h2>Blocks and boxes</h2>
-        <h3>A code block</h3>
-        <code class="code-block">
-          <pre>
+			<section class="stack gap-down" style="--gap-down: 1em;">
+				<h2>Blocks and boxes</h2>
+				<h3>A code block</h3>
+				<code class="code-block">
+					<pre>
             <p class="h2">An h2 fox jumps over the fence or whatever</p>
             <p class="h3">An h3 fox jumps over the fence or whatever</p>
             <p class="h4">An h4 fox jumps over the fence or whatever</p>
           </pre>
-        </code>
-        <h3>A blockquote</h3>
-        <blockquote>
-          Alway pay attention to the coupling you are introducing in your code
-          base when using specific tools. Ask yourself: "if I want to change this
-          piece, how easy will it be?"
-        </blockquote>
-      </section>
+				</code>
+				<h3>A blockquote</h3>
+				<blockquote>
+					Alway pay attention to the coupling you are introducing in your code
+					base when using specific tools. Ask yourself: "if I want to change
+					this piece, how easy will it be?"
+				</blockquote>
+			</section>
 
-      <section class="stack gap-down" style="--gap-down: 1em;">
-        <h2>Spacing</h2>
-        <p class="size-h9">size-h9</p>
-        <div
-          data-c-p-var="contrast"
-          style="height: var(--size-h9); display: flex; align-items: center;"></div>
-        <p class="size-h8">size-h8</p>
-        <div
-          data-c-p-var="contrast"
-          style="height: var(--size-h8); display: flex; align-items: center;"></div>
-        <p class="size-h7">size-h7</p>
-        <div
-          data-c-p-var="contrast"
-          style="height: var(--size-h7); display: flex; align-items: center;"></div>
-        <p class="size-h6">size-h6</p>
-        <div
-          data-c-p-var="contrast"
-          style="height: var(--size-h6); display: flex; align-items: center;"></div>
-        <p class="size-h5">size-h5</p>
-        <div
-          data-c-p-var="contrast"
-          style="height: var(--size-h5); display: flex; align-items: center;"></div>
-        <p class="size-h4">size-h4</p>
-        <div
-          data-c-p-var="contrast"
-          style="height: var(--size-h4); display: flex; align-items: center;"></div>
-      </section>
+			<section class="stack gap-down" style="--gap-down: 1em;">
+				<h2>Spacing</h2>
+				<p class="size-h9">size-h9</p>
+				<div
+					data-c-p-var="contrast"
+					style="height: var(--size-h9); display: flex; align-items: center;"
+				>
+				</div>
+				<p class="size-h8">size-h8</p>
+				<div
+					data-c-p-var="contrast"
+					style="height: var(--size-h8); display: flex; align-items: center;"
+				>
+				</div>
+				<p class="size-h7">size-h7</p>
+				<div
+					data-c-p-var="contrast"
+					style="height: var(--size-h7); display: flex; align-items: center;"
+				>
+				</div>
+				<p class="size-h6">size-h6</p>
+				<div
+					data-c-p-var="contrast"
+					style="height: var(--size-h6); display: flex; align-items: center;"
+				>
+				</div>
+				<p class="size-h5">size-h5</p>
+				<div
+					data-c-p-var="contrast"
+					style="height: var(--size-h5); display: flex; align-items: center;"
+				>
+				</div>
+				<p class="size-h4">size-h4</p>
+				<div
+					data-c-p-var="contrast"
+					style="height: var(--size-h4); display: flex; align-items: center;"
+				>
+				</div>
+			</section>
 
-      <section class="stack gap-down" style="--gap-down: 1em;">
-        <h2>Grid</h2>
-        <div
-          class="grid gap-down-h8"
-          style="--width-column: calc(var(--measure) / 3);">
-          <div>
-            {list6.map(i => (
-              <article
-                data-c-p={i}
-                class={`box no-border stack gap-down`}
-                style="--padding: var(--size-h5); --gap-down: 1em;">
-                <p class="h3">An h3 fox jumps over the fence or whatever</p>
-                <Paragraph />
-              </article>
+			<section class="stack gap-down" style="--gap-down: 1em;">
+				<h2>Grid</h2>
+				<div
+					class="grid gap-down-h8"
+					style="--width-column: calc(var(--measure) / 3);"
+				>
+					<div>
+						{
+							list6.map((i) => (
+								<article
+									data-c-p={i}
+									class={`box no-border stack gap-down`}
+									style="--padding: var(--size-h5); --gap-down: 1em;"
+								>
+									<p class="h3">An h3 fox jumps over the fence or whatever</p>
+									<Paragraph />
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</section>
 
-            ))}
-          </div>
-        </div>
-      </section>
+			<section class="stack gap-down" style="--gap-down: 1em;">
+				<h2>Colors</h2>
 
-      <section class="stack gap-down" style="--gap-down: 1em;">
-        <h2>Colors</h2>
-
-        {list6.map(i => ( <DemoBoxComplete {i} /> ))}
-        
-      </section>
-    </div>
-  </BasicPage>
+				{list6.map((i) => <DemoBoxComplete {i} />)}
+			</section>
+		</div>
+	</BasicPage>
 </SkeletonPage>
 
-
-
-
 <style>
-  h1,
-  h2,
-  h3 {
-    border-bottom: solid 1px;
-  }
+	h1,
+	h2,
+	h3 {
+		border-bottom: solid 1px;
+	}
 </style>

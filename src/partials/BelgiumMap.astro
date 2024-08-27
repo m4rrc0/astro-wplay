@@ -15,119 +15,121 @@ const { lang, areas } = Astro.props
 
 // NOTE: cannot put this directly in areas/be unfortunately because of error 'unexpected token <'
 const areaElems = {
-  "west-flanders": {
-    shape: `<polygon points="185.52 41.6 1.12 140.55 82.08 286.71 142.79 259.73 181.02 277.72 223.75 243.99 185.52 41.6"></polygon>`,
-    textCoords: { x: "185.52", y: "41.6" },
-  },
-  "east-flanders": {
-    shape: `<polygon points="192.53 78.74 387.91 50.6 403.65 129.3 367.67 147.29 381.16 178.77 309.2 277.72 259.73 255.23 243.99 275.47 206.73 257.42 223.75 243.99 192.53 78.74"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  antwerp: {
-    shape: `<polygon points="387.91 50.6 453.12 1.12 565.56 1.12 612.78 75.33 612.78 129.3 552.06 160.78 381.16 178.77 367.67 147.29 403.65 129.3 387.91 50.6"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  limburg: {
-    shape: `<polygon points="612.78 75.33 671.25 66.34 752.2 122.56 709.48 241.74 657.75 277.72 583.55 282.22 603.78 208.01 552.06 160.78 612.78 129.3 612.78 75.33"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  "flemish-brabant": {
-    shape: `<polygon points="309.2 277.72 583.55 282.22 603.78 208.01 552.06 160.78 381.16 178.77 309.2 277.72"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  brussels: {
-    shape: `<path
+	"west-flanders": {
+		shape: `<polygon points="185.52 41.6 1.12 140.55 82.08 286.71 142.79 259.73 181.02 277.72 223.75 243.99 185.52 41.6"></polygon>`,
+		textCoords: { x: "185.52", y: "41.6" },
+	},
+	"east-flanders": {
+		shape: `<polygon points="192.53 78.74 387.91 50.6 403.65 129.3 367.67 147.29 381.16 178.77 309.2 277.72 259.73 255.23 243.99 275.47 206.73 257.42 223.75 243.99 192.53 78.74"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
+	antwerp: {
+		shape: `<polygon points="387.91 50.6 453.12 1.12 565.56 1.12 612.78 75.33 612.78 129.3 552.06 160.78 381.16 178.77 367.67 147.29 403.65 129.3 387.91 50.6"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
+	limburg: {
+		shape: `<polygon points="612.78 75.33 671.25 66.34 752.2 122.56 709.48 241.74 657.75 277.72 583.55 282.22 603.78 208.01 552.06 160.78 612.78 129.3 612.78 75.33"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
+	"flemish-brabant": {
+		shape: `<polygon points="309.2 277.72 583.55 282.22 603.78 208.01 552.06 160.78 381.16 178.77 309.2 277.72"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
+	brussels: {
+		shape: `<path
       d="M652.64,289.55c-2.25-2.25-24.73-20.24-24.73-20.24l29.23-38.22,27,29.23-6.74,22.49Z"
       transform="translate(-240 -27.58)"></path>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  hainaut: {
-    shape: `<polygon points="142.79 259.73 181.02 363.17 252.98 372.17 268.72 423.89 376.66 444.12 367.67 552.06 435.13 558.81 421.64 459.87 399.15 453.12 408.14 435.13 468.86 419.39 462.11 347.43 350 316.42 350.04 277.72 309.2 277.72 259.73 255.23 243.99 275.47 205.76 257.48 181.02 277.72 142.79 259.73"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  "walloon-brabant": {
-    shape: `<polygon points="462.11 347.43 556.56 309.2 565.42 281.92 349.68 277.72 349.68 315.95 462.11 347.43"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  liege: {
-    shape: `<polygon points="709.48 241.74 848.9 309.2 830.91 340.68 875.88 376.66 884.88 417.14 824.16 484.6 794.93 466.61 790.43 419.39 758.95 410.39 752.2 444.12 720.72 439.63 722.97 405.9 653.26 385.66 648.76 399.15 624.02 405.9 556.56 309.2 565.56 282.22 657.75 277.72 709.48 241.74"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  namur: {
-    shape: `<polygon points="491.35 538.57 435.13 558.81 421.64 459.87 399.15 453.12 408.14 435.13 468.86 419.39 462.11 347.43 556.56 309.2 624.02 405.9 648.76 399.15 648.76 432.88 612.78 459.87 626.27 491.35 581.3 504.84 565.56 545.32 588.04 565.56 556.56 610.53 527.33 617.28 531.83 563.31 516.08 543.07 531.83 484.6 513.84 484.6 491.35 511.59 491.35 538.57"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
-  luxembourg: {
-    shape: `<polygon points="556.56 610.53 677.99 711.72 772.44 669 731.96 579.05 794.93 466.61 790.43 419.39 758.95 410.39 752.2 444.12 720.72 439.63 722.97 405.9 653.26 385.66 648.76 399.15 648.76 432.88 612.78 459.87 626.27 491.35 581.3 504.84 565.56 545.32 588.04 565.56 556.56 610.53"></polygon>`,
-    textCoords: { x: "50", y: "700" },
-  },
+		textCoords: { x: "50", y: "700" },
+	},
+	hainaut: {
+		shape: `<polygon points="142.79 259.73 181.02 363.17 252.98 372.17 268.72 423.89 376.66 444.12 367.67 552.06 435.13 558.81 421.64 459.87 399.15 453.12 408.14 435.13 468.86 419.39 462.11 347.43 350 316.42 350.04 277.72 309.2 277.72 259.73 255.23 243.99 275.47 205.76 257.48 181.02 277.72 142.79 259.73"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
+	"walloon-brabant": {
+		shape: `<polygon points="462.11 347.43 556.56 309.2 565.42 281.92 349.68 277.72 349.68 315.95 462.11 347.43"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
+	liege: {
+		shape: `<polygon points="709.48 241.74 848.9 309.2 830.91 340.68 875.88 376.66 884.88 417.14 824.16 484.6 794.93 466.61 790.43 419.39 758.95 410.39 752.2 444.12 720.72 439.63 722.97 405.9 653.26 385.66 648.76 399.15 624.02 405.9 556.56 309.2 565.56 282.22 657.75 277.72 709.48 241.74"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
+	namur: {
+		shape: `<polygon points="491.35 538.57 435.13 558.81 421.64 459.87 399.15 453.12 408.14 435.13 468.86 419.39 462.11 347.43 556.56 309.2 624.02 405.9 648.76 399.15 648.76 432.88 612.78 459.87 626.27 491.35 581.3 504.84 565.56 545.32 588.04 565.56 556.56 610.53 527.33 617.28 531.83 563.31 516.08 543.07 531.83 484.6 513.84 484.6 491.35 511.59 491.35 538.57"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
+	luxembourg: {
+		shape: `<polygon points="556.56 610.53 677.99 711.72 772.44 669 731.96 579.05 794.93 466.61 790.43 419.39 758.95 410.39 752.2 444.12 720.72 439.63 722.97 405.9 653.26 385.66 648.76 399.15 648.76 432.88 612.78 459.87 626.27 491.35 581.3 504.84 565.56 545.32 588.04 565.56 556.56 610.53"></polygon>`,
+		textCoords: { x: "50", y: "700" },
+	},
 }
 ---
 
 <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 886 712.85"
-  class="map-svg"
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox="0 0 886 712.85"
+	class="map-svg"
 >
-  {areas.map(({ code_name, name, slug, path }) => {
-    const aElem = areaElems[code_name]
-    return (
-      <a href={`/${path[lang.code]}`} class={`area-${code_name} reset`}>
-        <Fragment set:html={aElem.shape} />
-        <switch>
-          <foreignObject x="50" y="550" width="250" height="200">
-            <p
-              xmlns="http://www.w3.org/1999/xhtml"
-              class="text size-h1 color-palette-main"
-            >
-              {name[lang.code]}
-            </p>
-          </foreignObject>
+	{
+		areas.map(({ code_name, name, slug, path }) => {
+			const aElem = areaElems[code_name]
+			return (
+				<a href={`/${path[lang.code]}/`} class={`area-${code_name} reset`}>
+					<Fragment set:html={aElem.shape} />
+					<switch>
+						<foreignObject x="50" y="550" width="250" height="200">
+							<p
+								xmlns="http://www.w3.org/1999/xhtml"
+								class="text size-h1 color-palette-main"
+							>
+								{name[lang.code]}
+							</p>
+						</foreignObject>
 
-          <text x="10" y="700" class="text size-h1 color-palette-main">
-            {name[lang.code]}
-          </text>
-        </switch>
-      </a>
-    )
-  })}
+						<text x="10" y="700" class="text size-h1 color-palette-main">
+							{name[lang.code]}
+						</text>
+					</switch>
+				</a>
+			)
+		})
+	}
 </svg>
 
 <style is:global>
-  .map-svg {
-    width: var(--width-measure-h4);
-    max-width: 100%;
-  }
-  .map-svg polygon,
-  .map-svg path {
-    fill: var(--color-white);
-    stroke: var(--color-blue);
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 2px;
-  }
-  .map-svg polygon:hover,
-  .map-svg path:hover,
-  .map-svg a:focus polygon,
-  .map-svg a:focus path {
-    fill: var(--color-blue);
-  }
-  .map-svg .text {
-    visibility: hidden;
-    transition: visibility 0s;
-  }
-  .map-svg polygon:hover + * .text,
-  .map-svg path:hover + * .text,
-  .map-svg a:focus .text {
-    visibility: visible;
-  }
-  .map-svg a:focus {
-    outline-style: none;
-    /* & path,
+	.map-svg {
+		width: var(--width-measure-h4);
+		max-width: 100%;
+	}
+	.map-svg polygon,
+	.map-svg path {
+		fill: var(--color-white);
+		stroke: var(--color-blue);
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 2px;
+	}
+	.map-svg polygon:hover,
+	.map-svg path:hover,
+	.map-svg a:focus polygon,
+	.map-svg a:focus path {
+		fill: var(--color-blue);
+	}
+	.map-svg .text {
+		visibility: hidden;
+		transition: visibility 0s;
+	}
+	.map-svg polygon:hover + * .text,
+	.map-svg path:hover + * .text,
+	.map-svg a:focus .text {
+		visibility: visible;
+	}
+	.map-svg a:focus {
+		outline-style: none;
+		/* & path,
     & polygon,
     & text,
     & p {
       outline-style: solid;
     } */
-  }
+	}
 </style>

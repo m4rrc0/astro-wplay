@@ -1175,7 +1175,7 @@ export function transformEvent(eventRaw, languages) {
 		recurrence === "recurring"
 			? scheduleRuleSet.all().map((date) => {
 					const dateStr = stripDate(date).slice(0, -3)
-					const dateSlug = dateStr.replace(":", "h")
+					const dateSlug = dateStr.replace(":", "h").toLowerCase()
 					const slug = `${nameSlug}-${dateSlug}`
 					const path = createPath({ type: "event", slug })
 

@@ -549,17 +549,30 @@ export function transformOrganization(o, languages) {
 		.toISOString()
 		.substring(0, 10)
 
-	// TODO: Might want to filter the same way as we do for the global events list
-	const events = eventsUnfiltered.filter((event) => {
+	let events = eventsUnfiltered.filter((event) => {
+		if (event.isCanonical) return false
+
+		if (!event.time_start) {
+			if (!event.isCanonical) {
+				console.error(`Event instance of "${event.name}" has no Start Date`)
+			}
+			return false
+		}
+
+		if (!event?.time_end) {
+			return (
+				event?.time_start?.dateStr > today &&
+				event?.time_start?.dateStr < inSixMonths
+			)
+		}
 		return (
-			event?.time_end?.dateTimeRaw > today &&
-			event?.time_end?.dateTimeRaw < inSixMonths
+			event?.time_end?.dateStr > today && event?.time_end?.dateStr < inSixMonths
 		)
 	})
 
 	events.sort((prev, next) => {
-		const a = prev?.time_start?.dateTimeRaw
-		const b = next?.time_start?.dateTimeRaw
+		const a = prev?.time_start?.dateStr
+		const b = next?.time_start?.dateStr
 		if (a > b) return 1
 		if (a < b) return -1
 		return 0
@@ -1452,10 +1465,9 @@ export async function fetchEvents() {
 		.toISOString()
 		.substring(0, 10)
 
-	// TODO: HERE - split events and canonical events in 2 separate arrays because we cannot sort if time_start is undefined
+	// We split events and canonical events in 2 separate arrays because we cannot sort if time_start is undefined
 	const canonicalEvents = eventsUnfiltered.filter((event) => event.isCanonical)
 	let events = eventsUnfiltered.filter((event) => {
-		// TODO: add this when UI is ready to display canonical event pages
 		if (event.isCanonical) return false
 
 		if (!event.time_start) {
@@ -1464,8 +1476,6 @@ export async function fetchEvents() {
 			}
 			return false
 		}
-
-		// console.log(event.time_start?.dateStr, " -> ", event.isPast)
 
 		if (!event?.time_end) {
 			return (

@@ -561,12 +561,13 @@ export function transformOrganization(o, languages) {
 
 		if (!event?.time_end) {
 			return (
-				event?.time_start?.dateStr > today &&
-				event?.time_start?.dateStr < inSixMonths
+				event?.time_start?.dateStr > today
+				// && event?.time_start?.dateStr < inSixMonths
 			)
 		}
 		return (
-			event?.time_end?.dateStr > today && event?.time_end?.dateStr < inSixMonths
+			event?.time_end?.dateStr > today
+			// && event?.time_end?.dateStr < inSixMonths
 		)
 	})
 
@@ -1479,12 +1480,13 @@ export async function fetchEvents() {
 
 		if (!event?.time_end) {
 			return (
-				event?.time_start?.dateStr > today &&
-				event?.time_start?.dateStr < inSixMonths
+				event?.time_start?.dateStr > today
+				// && event?.time_start?.dateStr < inSixMonths
 			)
 		}
 		return (
-			event?.time_end?.dateStr > today && event?.time_end?.dateStr < inSixMonths
+			event?.time_end?.dateStr > today
+			// && event?.time_end?.dateStr < inSixMonths
 		)
 	})
 

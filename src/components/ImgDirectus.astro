@@ -1,8 +1,8 @@
 ---
-import { Image, Picture } from "astro:assets"
+import { Image, Picture } from 'astro:assets'
 // import { Img } from "astro-imagetools/components";
-import { imageDirectusSrc } from "@utils"
-import { IO } from "@components"
+import { imageDirectusSrc } from '@utils'
+import { IO } from '@components'
 
 // TODO: Check props of the new astro:assets service: https://docs.astro.build/en/guides/images/#properties
 const {
@@ -33,11 +33,8 @@ const src = imageDirectusSrc({
   type: image?.type,
 })
 
-const [typePre, typePost] = image?.type?.split("/") || []
-const useImageTools = !(
-  image?.type &&
-  (typePre !== "image" || typePost?.match("svg"))
-)
+const [typePre, typePost] = image?.type?.split('/') || []
+const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('svg')))
 ---
 
 <!-- <IO img {...props} {src} {width} {height} {$skip} class={_class} {style} /> --><!-- <IO wrapper {$skip}>
@@ -80,7 +77,7 @@ const useImageTools = !(
         {...(id ? { id } : {})}
         {...(_class ? { class: _class } : {})}
         {...(style ? { style } : {})}
-        onload={`this.style.background = 'transparent';${onload || ""}`}
+        onload={`this.style.background = 'transparent';${onload || ''}`}
       />
     ) : (
       <img {...props} {src} {width} {height} {id} class={_class} {style} />

@@ -1,5 +1,5 @@
 ---
-import { Image, Picture } from "astro:assets"
+import { Image, Picture } from 'astro:assets'
 // import { Img } from "astro-imagetools/components"
 
 // import { IO } from '@components'
@@ -56,5 +56,5 @@ const {
   {...id ? { id } : {}}
   {..._class ? { class: _class } : {}}
   {...style ? { style } : {}}
-  onload={`this.style.background = 'transparent';${onload || ""}`}
+  onload={`this.style.background = 'transparent';${onload || ''}`}
 />

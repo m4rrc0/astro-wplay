@@ -4,29 +4,17 @@ import SkeletonLayout from './SkeletonLayout.astro'
 import BasicPageLayout from './BasicPageLayout.astro'
 import SEO from '../components/SEO.svelte'
 
-const { content: {
-  title,
-  slug,
-  lang,
-  ogType,
-  siteName,
-  description,
-  canonicalUrl,
-} = {} } = Astro.props;
-
+const { content: { title, slug, lang, ogType, siteName, description, canonicalUrl } = {} } =
+  Astro.props
 ---
 
 <SkeletonLayout>
-  <SEO
-    slot="head"
-    {...{ lang, ogType, siteName, title, description, canonicalUrl }} />
+  <SEO slot="head" {...{ lang, ogType, siteName, title, description, canonicalUrl }} />
 
   <BasicPageLayout lang={{ code: 'fr' }}>
-
     <div class="stack">
       <slot />
     </div>
-
   </BasicPageLayout>
 </SkeletonLayout>
 

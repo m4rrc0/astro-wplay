@@ -1,315 +1,290 @@
 ---
 // import Fragment from 'astro/components'
-import { SkeletonPage, BasicPage } from "@layouts"
-import { SEO } from "@components"
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <SkeletonPage lang="fr">
-	<SEO
-		slot="head"
-		ogType="website"
-		title="L'histoire du projet"
-		description="Au service de la communauté du jeu de société en Belgique depuis 2017"
-		canonicalUrl={canonicalURL.href + "/"}
-		socialImage="/assets/images/LOGO-1024px.png"
-		ogVideo={false}
-		twitterCard="summary"
-	/>
-	<BasicPage lang={{ code: "fr" }}>
-		<main class="max-width-measure-h3 center stack gap-down-h1 box no-border">
-			<header class="stack center text">
-				<h1>Le projet Wanna Play</h1>
-				<p class="h2 color-palette-variation-funky">
-					Au service de la communauté du jeu de société!
-				</p>
-			</header>
-			<section
-				id="project-intro"
-				class="stack gap-down-h4 center text
+  <SEO
+    slot="head"
+    ogType="website"
+    title="L'histoire du projet"
+    description="Au service de la communauté du jeu de société en Belgique depuis 2017"
+    canonicalUrl={canonicalURL.href + '/'}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage lang={{ code: 'fr' }}>
+    <main class="max-width-measure-h3 center stack gap-down-h1 box no-border">
+      <header class="stack center text">
+        <h1>Le projet Wanna Play</h1>
+        <p class="h2 color-palette-variation-funky">
+          Au service de la communauté du jeu de société!
+        </p>
+      </header>
+      <section
+        id="project-intro"
+        class="stack gap-down-h4 center text
                 full-bleed-before full-bleed-after skew-border-before skew-border-after
                 color-palette-variation-funky-contrast"
-			>
-				<h2>Notre mantra</h2>
-				<p>Connecter les joueurs</p>
-				<h2>Notre objectif</h2>
-				<p>
-					Centraliser l'info pour permettre aux joueurs avertis et occasionnels
-					de trouver le lieu de jeu qui leur correspond et de rencontrer
-					d'autres joueurs passionnés.
-				</p>
-				<p>
-					On a commencé ce projet avec l'idée de devenir "le Airbnb" des soirées
-					jeu de société.<br />Cette idée nous anime toujours. Certaines
-					fonctionnalités sont déjà prêtes et attendent juste que la communauté
-					le soit également. ;)
-				</p>
-			</section>
+      >
+        <h2>Notre mantra</h2>
+        <p>Connecter les joueurs</p>
+        <h2>Notre objectif</h2>
+        <p>
+          Centraliser l'info pour permettre aux joueurs avertis et occasionnels de trouver le lieu
+          de jeu qui leur correspond et de rencontrer d'autres joueurs passionnés.
+        </p>
+        <p>
+          On a commencé ce projet avec l'idée de devenir "le Airbnb" des soirées jeu de société.<br
+          />Cette idée nous anime toujours. Certaines fonctionnalités sont déjà prêtes et attendent
+          juste que la communauté le soit également. ;)
+        </p>
+      </section>
 
-			<div>
-				<div class="title-label color-palette-variation-contrast">
-					<h2>prequel</h2>
-				</div>
-				<p>
-					L'idée est dans la tête d'Éric. Il y pense. Il pleure parce que ça
-					n'existe pas. Il s'impatiente... Et il finit par en parler à Tess et
-					Marc. <a href="/archive/team-2019.html" target="_blank">À trois</a>,
-					avec des compétences qui se complètent, on est gonflés à bloc pour
-					démarrer cette grande aventure.
-				</p>
-			</div>
-			<div>
-				<div class="title-label color-palette-variation-contrast">
-					<h2>3 mai 2017</h2>
-				</div>
-				<p>
-					On met en ligne <a href="/archive/first-landing.html" target="_blank"
-						>la première landing page
-					</a> pour parler du projet. On veut permettre aux joueurs de jouer où et
-					quand ils veulent. On veut leur fournir un outil pour s'organiser. L'objectif
-					est que chacun puisse créer ou rejoindre une partie près de chez lui facilement.
-				</p>
-				<p>
-					On parle du projet et on fait plein de rencontres intéressantes et
-					encourageantes.
-				</p>
-			</div>
-			<div>
-				<div class="title-label color-palette-variation-contrast">
-					<h2>août 2017</h2>
-				</div>
-				<p>
-					On teste pour la première fois à grande échelle le concept des
-					réservations de parties durant <a
-						href="/archive/brussels-games-festival.html"
-						target="_blank"
-						>la nocturne du Brussels Games Festival
-					</a>. Le succès est mitigé mais les retours sont super encourageants.
-				</p>
-				<p>
-					Suite au BGF, on se rend compte que le monde du jeu de société à
-					Bruxelles est très morcelé. On se met en tête de référencer tous les
-					événements jeu de Bruxelles sur une page du site et de créer une liste
-					de diffusion pour que tu recoives la liste chaque semaine dans ta
-					boite mail. La page est restée en ligne et a été la plus visitée du
-					site jusqu'à fin 2018.
-				</p>
-				<p>
-					Petit à petit, on invite quelques <a
-						href="/archive/ambassadors.html"
-						target="_blank"
-						>ambassadeurs
-					</a> à tester le concept en organisant des parties chez eux ou dans un
-					lieu public. Le succès est mitigé. La plateforme manque de membres et nous
-					décidons de mettre en suspend les fonctionnalités de création de parties
-					pour les particuliers.
-				</p>
-				<p>
-					Dans le cadre de notre partenariat avec le BGF, on teste le concept
-					Wanna Play lors des <a
-						href="/archive/brussels-games-party.html"
-						target="_blank"
-						>Brussels Games Party
-					</a>. Ça nous permet de tester plusieurs approches pour voir ce qui
-					est le plus utile au public.
-				</p>
-				<p>
-					Création d'une <a
-						href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ"
-						target="_blank"
-						rel="nofollow noopener noreferrer"
-						>chaine Youtube
-					</a> et de notre <a
-						href={`https://www.youtube.com/watch?v=L5faEDSmklM&feature=youtu.be`}
-						target="_blank"
-						rel="nofollow noopener noreferrer"
-						>première video
-					</a> ("amateur", faut il le préciser ^^) pour expliquer le concept Wanna
-					Play.
-				</p>
-				<p>
-					Rencontre avec Asmodee Belgium et participation au <a
-						href="https://www.facebook.com/AsmodeeBNL/videos/2266493293375713/"
-						target="_blank"
-						rel="nofollow noopener noreferrer"
-						>Belgoludiconews 90
-					</a> du 30 mai, notamment pour annoncer...
-				</p>
-			</div>
-			<div>
-				<div class="title-label color-palette-variation-contrast">
-					<h2>10 juin 2018</h2>
-				</div>
-				<p>
-					<a href="/archive/inauguration.html" target="_blank"
-						>INAUGURATION & SOIRÉE JEUX
-					</a>
-				</p>
-				<p>
-					100 personnes qui viennent juste pour nous. 13 partenaires éditeurs,
-					distributeurs, ludothèques, ... Chacun s'occupe d'une ou deux tables
-					de jeu et organise ses parties grâce à Wanna Play.<br />On peut le
-					dire, cet événement a été un franc succès, une belle dose de stress et
-					une tonne de rencontres passionnantes!
-				</p>
-			</div>
-			<div>
-				<div class="title-label color-palette-variation-contrast">
-					<h2>été 2018</h2>
-				</div>
-				<p>
-					Préparation du BGF avec les après-midi jeu au Vaux-Hall. Pour la
-					première fois, tu peux voir à l'avance la liste des jeux qui seront
-					disponibles sur place et tu peux voter pour les jeux que tu as le plus
-					envie de tester.
-				</p>
-				<p>
-					On se lance aussi dans l'idée folle de réaliser une <a
-						href="https://bgf.wanna-play.be/"
-						target="_blank"
-						rel="nofollow noopener noreferrer"
-						>App Compagnon
-					</a> pour le BGF 2018. On a moins de 2 mois pour réaliser une <a
-						href="https://bgf.wanna-play.be/about-the-app/"
-						target="_blank"
-						rel="nofollow noopener noreferrer"
-						>Progressive Web App
-					</a> référencant tous les exposants, les animations, les jeux et les infos
-					pratiques du festival. Un beau challenge. L'application est mise en ligne
-					2 jours avant le début du festival. (Pfiiooou ! ^^)
-				</p>
-				<p>
-					En plus de l'App Compagnon, on a relevé nos manches pour l'édition
-					2018 du BGF et on s'est organisé avec un tas d'éditeurs pour faire
-					jouer leurs nouveautés durant <a
-						href="/archive/brussels-games-festival.html"
-						target="_blank"
-						>la nocturne
-					</a>. 20 tables en réservation toute la nuit et plus de 50 nouveautés
-					à te faire découvrir. 29 partenariats et 11 animateurs nous donnent un
-					coup de main de 20h à 8h du mat.
-				</p>
-				<p>Wouaw! Un truc de fou cette nocturne !</p>
-			</div>
-			<div>
-				<div class="title-label color-palette-variation-contrast">
-					<h2>septembre 2018</h2>
-				</div>
-				<p>
-					On les a rencontrés lors du BGF... l'équipe de <a
-						href="https://www.ulule.com/megalithe/"
-						target="_blank"
-						rel="nofollow noopener noreferrer"
-						>Megalithe.co
-					</a>.<br />Les projets se ressemblent et c'est tout naturellement
-					qu'on décide de se revoir pour discuter de l'avenir. En septembre,
-					petite virée à Lille pour un weekend. On y découvre des personnes
-					réellement investies qui ont décidé de vivre ce projet à 100%.<br
-					/>Les discussions sont longues, intenses et passionnées durant tout le
-					weekend. ^^ On repart emballés à l'idée de joindre nos forces pour
-					développer la communauté de jeu de société dont tout le monde rêve.
-				</p>
-				<p>
-					Dans les mois qui suivent, on prend des heures à réfléchir ensemble,
-					avec Natacha et Kévin de Mégalithe et chacun de son côté pour trouver
-					comment combiner les projets et comment répondre au mieux aux besoins
-					des joueurs.
-				</p>
-				<p>
-					Durant ces quelques mois, on s'emballe beaucoup dans les potentialités
-					d'agrandir l'équipe et le projet, de diversifier les compétences, ...
-					On s'emballe tellement qu'on en oublie un petit peu de faire grandir
-					notre bébé...
-				</p>
-				<p>
-					La fin d'année annonce l'heure du bilan et des remises en question
-					pour Wanna Play. Il faut tirer les enseignements de toutes ces
-					expériences et aller de l'avant.
-				</p>
-				<p>
-					Nous avons un peu trop idéalisé tout ça. Pas assez de temps à investir
-					car nos métiers nous passionnent aussi... On décide finalement de
-					laisser de bon coeur nos quelques idées à Megalithe et de repartir
-					chacun de son côté pour peut être mieux se retrouver plus tard si la
-					vie le décide…
-				</p>
-				<p>
-					Au-delà des fonctionnalités qu'on pourrait mettre en place pour
-					t'aider, on se rend compte qu'il y a un grand besoin d'information
-					pour les joueurs. L'info est super fragmentée. Si on veut vraiment
-					rendre service, il faudrait commencer par donner plus de visibilité
-					aux nombreuses initiatives qui existent à travers le pays et
-					au-delààààà...
-				</p>
-				<p>
-					C'est l'heure de se recentrer sur nos atouts et de montrer de quel
-					bois on se chauffe ! :)
-				</p>
-			</div>
-			<div>
-				<div class="title-label color-palette-variation-contrast">
-					<h2>to be continued...</h2>
-				</div>
-			</div>
-		</main>
-	</BasicPage>
+      <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2>prequel</h2>
+        </div>
+        <p>
+          L'idée est dans la tête d'Éric. Il y pense. Il pleure parce que ça n'existe pas. Il
+          s'impatiente... Et il finit par en parler à Tess et Marc. <a
+            href="/archive/team-2019.html"
+            target="_blank">À trois</a
+          >, avec des compétences qui se complètent, on est gonflés à bloc pour démarrer cette
+          grande aventure.
+        </p>
+      </div>
+      <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2>3 mai 2017</h2>
+        </div>
+        <p>
+          On met en ligne <a href="/archive/first-landing.html" target="_blank"
+            >la première landing page
+          </a> pour parler du projet. On veut permettre aux joueurs de jouer où et quand ils veulent.
+          On veut leur fournir un outil pour s'organiser. L'objectif est que chacun puisse créer ou rejoindre
+          une partie près de chez lui facilement.
+        </p>
+        <p>On parle du projet et on fait plein de rencontres intéressantes et encourageantes.</p>
+      </div>
+      <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2>août 2017</h2>
+        </div>
+        <p>
+          On teste pour la première fois à grande échelle le concept des réservations de parties
+          durant <a href="/archive/brussels-games-festival.html" target="_blank"
+            >la nocturne du Brussels Games Festival
+          </a>. Le succès est mitigé mais les retours sont super encourageants.
+        </p>
+        <p>
+          Suite au BGF, on se rend compte que le monde du jeu de société à Bruxelles est très
+          morcelé. On se met en tête de référencer tous les événements jeu de Bruxelles sur une page
+          du site et de créer une liste de diffusion pour que tu recoives la liste chaque semaine
+          dans ta boite mail. La page est restée en ligne et a été la plus visitée du site jusqu'à
+          fin 2018.
+        </p>
+        <p>
+          Petit à petit, on invite quelques <a href="/archive/ambassadors.html" target="_blank"
+            >ambassadeurs
+          </a> à tester le concept en organisant des parties chez eux ou dans un lieu public. Le succès
+          est mitigé. La plateforme manque de membres et nous décidons de mettre en suspend les fonctionnalités
+          de création de parties pour les particuliers.
+        </p>
+        <p>
+          Dans le cadre de notre partenariat avec le BGF, on teste le concept Wanna Play lors des <a
+            href="/archive/brussels-games-party.html"
+            target="_blank"
+            >Brussels Games Party
+          </a>. Ça nous permet de tester plusieurs approches pour voir ce qui est le plus utile au
+          public.
+        </p>
+        <p>
+          Création d'une <a
+            href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ"
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            >chaine Youtube
+          </a> et de notre <a
+            href={`https://www.youtube.com/watch?v=L5faEDSmklM&feature=youtu.be`}
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            >première video
+          </a> ("amateur", faut il le préciser ^^) pour expliquer le concept Wanna Play.
+        </p>
+        <p>
+          Rencontre avec Asmodee Belgium et participation au <a
+            href="https://www.facebook.com/AsmodeeBNL/videos/2266493293375713/"
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            >Belgoludiconews 90
+          </a> du 30 mai, notamment pour annoncer...
+        </p>
+      </div>
+      <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2>10 juin 2018</h2>
+        </div>
+        <p>
+          <a href="/archive/inauguration.html" target="_blank">INAUGURATION & SOIRÉE JEUX </a>
+        </p>
+        <p>
+          100 personnes qui viennent juste pour nous. 13 partenaires éditeurs, distributeurs,
+          ludothèques, ... Chacun s'occupe d'une ou deux tables de jeu et organise ses parties grâce
+          à Wanna Play.<br />On peut le dire, cet événement a été un franc succès, une belle dose de
+          stress et une tonne de rencontres passionnantes!
+        </p>
+      </div>
+      <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2>été 2018</h2>
+        </div>
+        <p>
+          Préparation du BGF avec les après-midi jeu au Vaux-Hall. Pour la première fois, tu peux
+          voir à l'avance la liste des jeux qui seront disponibles sur place et tu peux voter pour
+          les jeux que tu as le plus envie de tester.
+        </p>
+        <p>
+          On se lance aussi dans l'idée folle de réaliser une <a
+            href="https://bgf.wanna-play.be/"
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            >App Compagnon
+          </a> pour le BGF 2018. On a moins de 2 mois pour réaliser une <a
+            href="https://bgf.wanna-play.be/about-the-app/"
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            >Progressive Web App
+          </a> référencant tous les exposants, les animations, les jeux et les infos pratiques du festival.
+          Un beau challenge. L'application est mise en ligne 2 jours avant le début du festival. (Pfiiooou
+          ! ^^)
+        </p>
+        <p>
+          En plus de l'App Compagnon, on a relevé nos manches pour l'édition 2018 du BGF et on s'est
+          organisé avec un tas d'éditeurs pour faire jouer leurs nouveautés durant <a
+            href="/archive/brussels-games-festival.html"
+            target="_blank"
+            >la nocturne
+          </a>. 20 tables en réservation toute la nuit et plus de 50 nouveautés à te faire
+          découvrir. 29 partenariats et 11 animateurs nous donnent un coup de main de 20h à 8h du
+          mat.
+        </p>
+        <p>Wouaw! Un truc de fou cette nocturne !</p>
+      </div>
+      <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2>septembre 2018</h2>
+        </div>
+        <p>
+          On les a rencontrés lors du BGF... l'équipe de <a
+            href="https://www.ulule.com/megalithe/"
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            >Megalithe.co
+          </a>.<br />Les projets se ressemblent et c'est tout naturellement qu'on décide de se
+          revoir pour discuter de l'avenir. En septembre, petite virée à Lille pour un weekend. On y
+          découvre des personnes réellement investies qui ont décidé de vivre ce projet à 100%.<br
+          />Les discussions sont longues, intenses et passionnées durant tout le weekend. ^^ On
+          repart emballés à l'idée de joindre nos forces pour développer la communauté de jeu de
+          société dont tout le monde rêve.
+        </p>
+        <p>
+          Dans les mois qui suivent, on prend des heures à réfléchir ensemble, avec Natacha et Kévin
+          de Mégalithe et chacun de son côté pour trouver comment combiner les projets et comment
+          répondre au mieux aux besoins des joueurs.
+        </p>
+        <p>
+          Durant ces quelques mois, on s'emballe beaucoup dans les potentialités d'agrandir l'équipe
+          et le projet, de diversifier les compétences, ... On s'emballe tellement qu'on en oublie
+          un petit peu de faire grandir notre bébé...
+        </p>
+        <p>
+          La fin d'année annonce l'heure du bilan et des remises en question pour Wanna Play. Il
+          faut tirer les enseignements de toutes ces expériences et aller de l'avant.
+        </p>
+        <p>
+          Nous avons un peu trop idéalisé tout ça. Pas assez de temps à investir car nos métiers
+          nous passionnent aussi... On décide finalement de laisser de bon coeur nos quelques idées
+          à Megalithe et de repartir chacun de son côté pour peut être mieux se retrouver plus tard
+          si la vie le décide…
+        </p>
+        <p>
+          Au-delà des fonctionnalités qu'on pourrait mettre en place pour t'aider, on se rend compte
+          qu'il y a un grand besoin d'information pour les joueurs. L'info est super fragmentée. Si
+          on veut vraiment rendre service, il faudrait commencer par donner plus de visibilité aux
+          nombreuses initiatives qui existent à travers le pays et au-delààààà...
+        </p>
+        <p>
+          C'est l'heure de se recentrer sur nos atouts et de montrer de quel bois on se chauffe ! :)
+        </p>
+      </div>
+      <div>
+        <div class="title-label color-palette-variation-contrast">
+          <h2>to be continued...</h2>
+        </div>
+      </div>
+    </main>
+  </BasicPage>
 </SkeletonPage>
 
 <style>
-	#project-intro {
-		margin-top: 4vw;
-		margin-bottom: 4vw;
-		padding-top: 4vw;
-		padding-bottom: 4vw;
+  #project-intro {
+    margin-top: 4vw;
+    margin-bottom: 4vw;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
 
-		--skew-before: -1.2deg;
-		--skew-before-origin: top left;
-		--skew-after: 1deg;
-		--skew-after-origin: bottom left;
-	}
-	.title-label {
-		display: inline-block;
-		position: relative;
-		margin-bottom: 1.382rem;
-		/* text-decoration: underline;
+    --skew-before: -1.2deg;
+    --skew-before-origin: top left;
+    --skew-after: 1deg;
+    --skew-after-origin: bottom left;
+  }
+  .title-label {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 1.382rem;
+    /* text-decoration: underline;
     text-decoration-color: var(--color-neutral); */
-	}
-	.title-label::after {
-		background-color: inherit;
-		content: "";
-		position: absolute;
-		z-index: -1;
-		border-radius: var(--border-radius-l);
-		top: -0.691rem;
-		bottom: -0.691rem;
-		right: -1.382rem;
-		left: -9999rem;
+  }
+  .title-label::after {
+    background-color: inherit;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    border-radius: var(--border-radius-l);
+    top: -0.691rem;
+    bottom: -0.691rem;
+    right: -1.382rem;
+    left: -9999rem;
 
-		/* Trial with box shadow not conclusive: https://css-tricks.com/full-browser-width-bars/ */
-		/* top: 0; */
-		/* bottom: 0; */
-		/* left: -9999px; */
-		/* right: 0; */
-		/* border-left: 9999px solid var(--color-neutral); */
-		/* box-shadow: 9999px 0 0 var(--color-neutral); */
-	}
-	main > div:nth-of-type(even) {
-		text-align: right;
-	}
-	main > div:nth-of-type(2n) .title-label {
-		--color-neutral: var(--color-teal);
-	}
-	main > div:nth-of-type(3n) .title-label {
-		--color-neutral: var(--color-red);
-	}
-	main > div:nth-of-type(even) .title-label::after {
-		/* border-left: 9999px solid var(--color-neutral); */
-		/* box-shadow: 99px 0 0 var(--color-neutral); */
-		right: -9999rem;
-		left: -1.382rem;
-	}
-	main > div:nth-of-type(even) p {
-		text-align: left;
-	}
+    /* Trial with box shadow not conclusive: https://css-tricks.com/full-browser-width-bars/ */
+    /* top: 0; */
+    /* bottom: 0; */
+    /* left: -9999px; */
+    /* right: 0; */
+    /* border-left: 9999px solid var(--color-neutral); */
+    /* box-shadow: 9999px 0 0 var(--color-neutral); */
+  }
+  main > div:nth-of-type(even) {
+    text-align: right;
+  }
+  main > div:nth-of-type(2n) .title-label {
+    --color-neutral: var(--color-teal);
+  }
+  main > div:nth-of-type(3n) .title-label {
+    --color-neutral: var(--color-red);
+  }
+  main > div:nth-of-type(even) .title-label::after {
+    /* border-left: 9999px solid var(--color-neutral); */
+    /* box-shadow: 99px 0 0 var(--color-neutral); */
+    right: -9999rem;
+    left: -1.382rem;
+  }
+  main > div:nth-of-type(even) p {
+    text-align: left;
+  }
 </style>

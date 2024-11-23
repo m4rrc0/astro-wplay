@@ -28,7 +28,7 @@
   --size-scale-ratio: design-token('size-scale-ratio');
   /* 1.618 */
   --size-relative-ratio: design-token('size-relative-ratio');
-  
+
   --size-lock-screen-min: design-token('size-lock-screen-min');
   --size-lock-screen-max: design-token('size-lock-screen-max');
   /* TODO: does not work */
@@ -36,7 +36,6 @@
   --fluid-min-screen: calc(var(--fluid-min-screen-px) / var(--size-base-px));
   --fluid-max-screen-px: 600;
   --fluid-max-screen: calc(var(--fluid-max-screen-px) / (var(--size-base-max) * var(--size-base-px))); */
-  
 
   --width-measure: design-token('width-measure' to rem);
   --width-measure-relative: design-token('width-measure-relative' to em);
@@ -54,8 +53,8 @@
 
   /* --shadow-raised-s: 0 0px 6px rgb(0 0 0 / 30%);
   --shadow-raised-m: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
-  --shadow-raised-s: 0px 5px 10px 0px rgba(0,0,0,0.3);
-  --shadow-raised-m: 0px 5px 10px 5px rgba(0,0,0,0.3);
+  --shadow-raised-s: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+  --shadow-raised-m: 0px 5px 10px 5px rgba(0, 0, 0, 0.3);
 }
 
 body {
@@ -87,7 +86,12 @@ body {
 @custom-selector :--strong_ :--strong, :--strong *;
 @custom-selector :--em em, .em, .italic;
 @custom-selector :--em_ :--em, :--em *;
-@custom-selector :--button button, .button, input[type='submit'], input[type='button'], input[type='reset'];
+@custom-selector :--button
+  button,
+  .button,
+  input[type='submit'],
+  input[type='button'],
+  input[type='reset'];
 
 /* :--headings {
   color: design-token(--main-color) !important;

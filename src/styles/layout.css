@@ -1,4 +1,4 @@
-@custom-selector :--stack .stack, [data-l-stack], [data-layout~="stack"];
+@custom-selector :--stack .stack, [data-l-stack], [data-layout~='stack'];
 
 /* -------- STACK ------------ */
 /*
@@ -173,7 +173,6 @@ NEW: overflow: class
 /* Does not work */
 /* .cluster.split-after-1 > * > :nth-child(1) { margin-right: auto; } /* prettier-ignore */
 
-
 /* -------- WITH SIDEBAR ------------ */
 /*
 gap: var dimension
@@ -308,8 +307,7 @@ Remarks:
 } */
 /* NOTE: ultimate fallback with divs and limited widths */ /* TODO */
 /* NOTE: grid with flexbox IF grid is not supported by the browser OR we chose it with the .flex class */
-@supports (not ((display: grid) and (width: min(20rem, 100%)))) and
-  (display: flex) {
+@supports (not ((display: grid) and (width: min(20rem, 100%)))) and (display: flex) {
   .grid:not(.no-flex):not(.force) {
     overflow: hidden;
   }
@@ -368,10 +366,7 @@ Remarks:
 
   /* NOTE: the min() function has limited support but allows this to work without JS */
   .grid:not(.flex) > * {
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(min(var(--width-column, 10rem), 100%), 1fr)
-    );
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--width-column, 10rem), 100%), 1fr));
   }
 }
 /* NOTE: we can decide to apply display:grid without the min() or observer fct if we know
@@ -384,10 +379,7 @@ we have very narrow columns smaller than any screen we want to support */
   grid-gap: var(--gap, 1rem);
   align-content: start; /* NEW */
   grid-template-columns: 100%;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(var(--width-column, 10rem), 1fr)
-  );
+  grid-template-columns: repeat(auto-fill, minmax(var(--width-column, 10rem), 1fr));
 }
 
 /* -------- FRAME ------------ */

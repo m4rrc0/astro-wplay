@@ -1,0 +1,33 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@components": ["src/components/index.js"],
+      "@elements/*": ["src/elements/*"],
+      "@elements": ["src/elements/index.js"],
+      "@layouts/*": ["src/layouts/*"],
+      "@layouts": ["src/layouts/index.js"],
+      "@pages/*": ["src/pages/*"],
+      "@partials/*": ["src/partials/*"],
+      "@partials": ["src/partials/index.js"],
+      "@services/*": ["src/services/*"],
+      "@styles/*": ["src/styles/*"],
+      "@utils/*": ["src/utils/*"],
+      "@utils": ["src/utils"],
+      "@images/*": ["src/assets/images/*"]
+    },
+    "jsx": "preserve",
+    "jsxImportSource": "astro",
+    "verbatimModuleSyntax": true,
+    "moduleResolution": "node",
+    "module": "ESNext",
+    "target": "ESNext",
+    "allowJs": true,
+    "strict": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,12 +1,12 @@
 // Full Astro Configuration API Documentation:
 // https://astro.build/config
-import "dotenv/config"
-import { defineConfig } from "astro/config"
-import svelte from "@astrojs/svelte"
-import sitemap from "@astrojs/sitemap"
-import robotsTxt from "astro-robots-txt"
-import critters from "astro-critters"
-import icon from "astro-icon"
+import 'dotenv/config'
+import { defineConfig } from 'astro/config'
+import svelte from '@astrojs/svelte'
+import sitemap from '@astrojs/sitemap'
+import robotsTxt from 'astro-robots-txt'
+import critters from 'astro-critters'
+import icon from 'astro-icon'
 
 const PAGE_ADMIN = process.env.PAGE_ADMIN || null
 
@@ -17,32 +17,32 @@ const PAGE_ADMIN = process.env.PAGE_ADMIN || null
 
 // @ts-check
 export default defineConfig({
-  site: "https://www.wanna-play.be/",
+  site: 'https://www.wanna-play.be/',
   image: {
     // Allow Astro image optimization on CMS images.
     // NOTE: Only usefull if we want to process images with Astro instead of serving directly from the CMS.
-    domains: ["cms.wanna-play.be"],
+    domains: ['cms.wanna-play.be'],
   },
   integrations: [
     svelte(),
     sitemap({
-      filter: (page) =>
+      filter: page =>
         !page.match(/\/(styleguide|email-error)\/$/) &&
         !(PAGE_ADMIN && page.endsWith(`${PAGE_ADMIN}/`)),
     }),
     robotsTxt({
       policy: [
         {
-          userAgent: "*",
-          allow: "/",
-          disallow: ["/styleguide", "/email-error"],
+          userAgent: '*',
+          allow: '/',
+          disallow: ['/styleguide', '/email-error'],
         },
       ],
     }),
     critters({
       logger: 1, // default is 2
       fonts: true,
-      exclude: [(file) => file.startsWith("./dist/fr/e")],
+      exclude: [file => file.startsWith('./dist/fr/e')],
     }),
     icon(),
   ],

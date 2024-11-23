@@ -1,7 +1,7 @@
 ---
 // import Fragment from 'astro/components'
-import { SkeletonPage, BasicPage } from "@layouts"
-import { SEO, MtObf } from "@components"
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO, MtObf } from '@components'
 
 const email = import.meta.env.CONTACT_EMAIL
 
@@ -9,80 +9,80 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <SkeletonPage lang="fr">
-	<SEO
-		slot="head"
-		ogType="website"
-		title="Contact"
-		description="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici."
-		canonicalUrl={canonicalURL.href + "/"}
-		socialImage="/assets/images/LOGO-1024px.png"
-		ogVideo={false}
-		twitterCard="summary"
-	/>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Contact"
+    description="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici."
+    canonicalUrl={canonicalURL.href + '/'}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+  />
 
-	<BasicPage lang={{ code: "fr" }}>
-		<main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
-			<h1 class="center text">Contacte-nous</h1>
+  <BasicPage lang={{ code: 'fr' }}>
+    <main class="max-width-measure-h2 center stack gap-down-h1 box no-border">
+      <h1 class="center text">Contacte-nous</h1>
 
-			<p class="h3">
-				<span>...par e-mail à</span>
-				<MtObf {email} />
-				<span>
-					ou par <a
-						href="https://www.facebook.com/WannaPlayBE/"
-						target="_blank"
-						rel="noopener noreferrer"
-						>Facebook
-					</a>
-				</span>
-			</p>
+      <p class="h3">
+        <span>...par e-mail à</span>
+        <MtObf {email} />
+        <span>
+          ou par <a
+            href="https://www.facebook.com/WannaPlayBE/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Facebook
+          </a>
+        </span>
+      </p>
 
-			<div>
-				<p>Retrouve nous aussi sur:</p>
-				<ul>
-					<li>
-						<a
-							href="https://www.instagram.com/wannaplay_be/"
-							target="_blank"
-							rel="noopener noreferrer"
-							>Instagram
-						</a>
-					</li>
-					<li>
-						<a
-							href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
-							target="_blank"
-							rel="noopener noreferrer"
-							>Youtube
-						</a>
-					</li>
-					<li>
-						<a
-							href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
-							target="_blank"
-							rel="noopener noreferrer"
-							>Spotify
-						</a>
-					</li>
-					<li>
-						<a
-							href="https://www.redbubble.com/fr/people/Wanna-Play-asbl/explore"
-							target="_blank"
-							rel="noopener noreferrer"
-							>Redbubble
-						</a>
-					</li>
-					<li>En live lors d'événements ludiques belges 😉</li>
-				</ul>
-			</div>
-		</main>
-	</BasicPage>
+      <div>
+        <p>Retrouve nous aussi sur:</p>
+        <ul>
+          <li>
+            <a
+              href="https://www.instagram.com/wannaplay_be/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Youtube
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Spotify
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.redbubble.com/fr/people/Wanna-Play-asbl/explore"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Redbubble
+            </a>
+          </li>
+          <li>En live lors d'événements ludiques belges 😉</li>
+        </ul>
+      </div>
+    </main>
+  </BasicPage>
 </SkeletonPage>
 
 <style>
-	img {
-		/* width: var(--measure-h2); */
-		max-width: 100%;
-		height: auto;
-	}
+  img {
+    /* width: var(--measure-h2); */
+    max-width: 100%;
+    height: auto;
+  }
 </style>

@@ -1,124 +1,118 @@
 /* nuds color system - default rules and values */
 /* -------------------------------------------- */
 
-@custom-selector :--c-p--any
-	[class*="color-palette-"],
-	[data-c-p],
-	[data-c-p-var];
+@custom-selector :--c-p--any [class*='color-palette-'], [data-c-p], [data-c-p-var];
 
 body,
 :--c-p--any {
-	/* Default variable names and fallback values for every css color-related properties */
-	/* Note: We provide a fallback value in case custom properties are supported but the variable is not set for some reason */
-	color: var(--color-text);
-	background-color: var(--color-bg);
-	/* other properties have a fallback of 'currentcolor' so we don't have to set a value if we are fine with that */
-	border-color: var(--color-border, currentcolor);
-	outline-color: var(--color-outline, currentcolor);
-	text-decoration-color: var(--color-text-decoration, currentcolor);
-	text-emphasis-color: var(--color-text-emphasis, currentcolor);
-	caret-color: var(--color-caret, currentcolor);
-	column-rule-color: var(--color-column-rule, currentcolor);
-	fill: var(--color-fill, currentcolor);
-	stroke: var(--color-stroke, transparent);
-	accent-color: var(--color-accent, currentcolor);
+  /* Default variable names and fallback values for every css color-related properties */
+  /* Note: We provide a fallback value in case custom properties are supported but the variable is not set for some reason */
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  /* other properties have a fallback of 'currentcolor' so we don't have to set a value if we are fine with that */
+  border-color: var(--color-border, currentcolor);
+  outline-color: var(--color-outline, currentcolor);
+  text-decoration-color: var(--color-text-decoration, currentcolor);
+  text-emphasis-color: var(--color-text-emphasis, currentcolor);
+  caret-color: var(--color-caret, currentcolor);
+  column-rule-color: var(--color-column-rule, currentcolor);
+  fill: var(--color-fill, currentcolor);
+  stroke: var(--color-stroke, transparent);
+  accent-color: var(--color-accent, currentcolor);
 }
 
 /* More variable names definitions and fallback values for css selectors */
 *:focus,
 :--c-p--any:focus,
 :--c-p--any *:focus {
-	outline-color: var(
-		--color-outline--focus,
-		var(--color-outline, currentcolor)
-	);
+  outline-color: var(--color-outline--focus, var(--color-outline, currentcolor));
 }
 *::selection,
 :--c-p--any::selection,
 :--c-p--any *::selection {
-	color: var(--color-bg, --color-text--selection);
-	background-color: var(--color-text, --color-bg--selection);
+  color: var(--color-bg, --color-text--selection);
+  background-color: var(--color-text, --color-bg--selection);
 }
 a,
 a:--c-p--any,
 :--c-p--any a {
-	color: var(--color-text, --color-text__a);
-	background-color: var(--color-bg__a);
+  color: var(--color-text, --color-text__a);
+  background-color: var(--color-bg__a);
 }
 a:hover,
 a:--c-p--any:hover,
 :--c-p--any a:hover {
-	color: var(--color-text__a--hover);
-	background-color: var(--color-bg__a--hover);
+  color: var(--color-text__a--hover);
+  background-color: var(--color-bg__a--hover);
 }
 :--button,
 :--button:--c-p--any,
 :--c-p--any :--button {
-	color: var(--color-text, --color-text__button);
-	background-color: var(--color-bg, --color-bg__button);
-	border-color: var(--color-border__button, currentcolor);
+  color: var(--color-text, --color-text__button);
+  background-color: var(--color-bg, --color-bg__button);
+  border-color: var(--color-border__button, currentcolor);
 }
 :--button:hover,
 :--button:--c-p--any:hover,
 :--c-p--any :--button:hover {
-	color: var(--color-bg, --color-text__button--hover);
-	background-color: var(--color-text, --color-bg__button--hover);
-	border-color: var(--color-border__button--hover, currentcolor);
+  color: var(--color-bg, --color-text__button--hover);
+  background-color: var(--color-text, --color-bg__button--hover);
+  border-color: var(--color-border__button--hover, currentcolor);
 }
 :--button:disabled,
 :--button:--c-p--any:disabled,
 :--c-p--any :--button:disabled {
-	color: var(--color-text__button--disabled);
-	background-color: var(--color-bg__button--disabled);
-	border-color: var(--color-border__button--disabled, currentcolor);
+  color: var(--color-text__button--disabled);
+  background-color: var(--color-bg__button--disabled);
+  border-color: var(--color-border__button--disabled, currentcolor);
 }
 :--code,
 :--code:--c-p--any,
 :--c-p--any :--code {
-	color: var(--color-text__code);
-	background-color: var(--color-bg__code);
-	border-color: var(--color-border__code);
+  color: var(--color-text__code);
+  background-color: var(--color-bg__code);
+  border-color: var(--color-border__code);
 }
 /* End of variables assignments and fallback values */
 
 /* Every element inherits colors for the closest defined parent */
 body *,
 :--c-p--any * {
-	color: inherit;
-	/* ... except for the background that should probably just remain transparent */
-	/* background-color: inherit; */
-	/* Note: if we want to enforce an inherited background, we can set a class of "color-palette-" on an element */
-	border-color: inherit;
-	outline-color: inherit;
-	text-decoration-color: inherit;
-	text-emphasis-color: inherit;
-	caret-color: inherit;
-	column-rule-color: inherit;
+  color: inherit;
+  /* ... except for the background that should probably just remain transparent */
+  /* background-color: inherit; */
+  /* Note: if we want to enforce an inherited background, we can set a class of "color-palette-" on an element */
+  border-color: inherit;
+  outline-color: inherit;
+  text-decoration-color: inherit;
+  text-emphasis-color: inherit;
+  caret-color: inherit;
+  column-rule-color: inherit;
 }
 
 /* This is useful to be able to use variations of the same palette */
 :root {
-	--color-neutral: var(--color-neutral-palette);
-	--color-primary: var(--color-primary-palette);
-	--color-secondary: var(--color-secondary-palette);
-	/* colorTertiary */
-	/* highlight */
-	/* muted */
-	/* Success */
-	/* Warning */
-	/* Danger */
-	/* Dark */
-	/* Medium */
-	/* Light */
-	/* — background-color and text color in each of the 4 states:
+  --color-neutral: var(--color-neutral-palette);
+  --color-primary: var(--color-primary-palette);
+  --color-secondary: var(--color-secondary-palette);
+  /* colorTertiary */
+  /* highlight */
+  /* muted */
+  /* Success */
+  /* Warning */
+  /* Danger */
+  /* Dark */
+  /* Medium */
+  /* Light */
+  /* — background-color and text color in each of the 4 states:
     - Resting
     - Hover
     - Focus
     - Disabled */
 
-	--color-front: var(--color-front-palette);
-	--color-back: var(--color-back-palette);
-	--color-alt: var(--color-alt-palette);
-	--color-accent: var(--color-accent-palette);
-	--color-dimmed: var(--color-dimmed-palette);
+  --color-front: var(--color-front-palette);
+  --color-back: var(--color-back-palette);
+  --color-alt: var(--color-alt-palette);
+  --color-accent: var(--color-accent-palette);
+  --color-dimmed: var(--color-dimmed-palette);
 }

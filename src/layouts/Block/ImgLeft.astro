@@ -1,11 +1,9 @@
 ---
 // import Markdown from '@astrojs/markdown-component';
-import { IO, Md, ImgDirectus } from "@components"
+import { IO, Md, ImgDirectus } from '@components'
 
 const { block, lang } = Astro.props
-const t = block?.translations.find(
-  ({ languages_code }) => languages_code === lang.code,
-)
+const t = block?.translations.find(({ languages_code }) => languages_code === lang.code)
 
 // const hasSomethingToShow = t?.title || t?.subtitle || t?.featured_image?.src || t?.text
 ---

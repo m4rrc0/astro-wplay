@@ -7,8 +7,10 @@ const {
 const $render = true
 ---
 
-{$render && (
-  <p {...props}>
-    <slot />
-  </p>
-)}
+{
+  $render && (
+    <p {...props}>
+      <slot />
+    </p>
+  )
+}

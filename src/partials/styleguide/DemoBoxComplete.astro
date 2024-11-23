@@ -1,7 +1,7 @@
 ---
-import Paragraph from "@partials/styleguide/Paragraph.astro"
+import Paragraph from '@partials/styleguide/Paragraph.astro'
 
-const { style = "", i = 1, palette = i, variation = "classic" } = Astro.props
+const { style = '', i = 1, palette = i, variation = 'classic' } = Astro.props
 ---
 
 <div data-c-p={palette} data-c-p-var={variation} class={`box stack`} {style}>
@@ -13,9 +13,8 @@ const { style = "", i = 1, palette = i, variation = "classic" } = Astro.props
     </pre>
   </code>
   <blockquote>
-    Alway pay attention to the coupling you are introducing in your code base
-    when using specific tools. Ask yourself: "if I want to change this piece,
-    how easy will it be?"
+    Alway pay attention to the coupling you are introducing in your code base when using specific
+    tools. Ask yourself: "if I want to change this piece, how easy will it be?"
   </blockquote>
   <div class="cluster overflow">
     <ul class="reset">

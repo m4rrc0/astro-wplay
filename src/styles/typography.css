@@ -9,12 +9,18 @@
 /* FONTS loading strategy: simply use font-display: swap; */
 :root {
   /* FONTS */
-  --font-body: var(--font-body-prefered, var(--font-body-critical,
-  var(--font-body-fallback, sans-serif)));
-  --font-heading: var(--font-heading-prefered, var(--font-heading-critical,
-  var(--font-heading-fallback, sans-serif)));
-  --font-mono: var(--font-mono-prefered, var(--font-mono-critical,
-  var(--font-mono-fallback, monospace)));
+  --font-body: var(
+    --font-body-prefered,
+    var(--font-body-critical, var(--font-body-fallback, sans-serif))
+  );
+  --font-heading: var(
+    --font-heading-prefered,
+    var(--font-heading-critical, var(--font-heading-fallback, sans-serif))
+  );
+  --font-mono: var(
+    --font-mono-prefered,
+    var(--font-mono-critical, var(--font-mono-fallback, monospace))
+  );
 
   --mono: 0; /* Monospace: Sans (natural-width) or Mono (fixed-width) */
   --casl: 0; /* Casual: Linear to Casual */
@@ -24,9 +30,9 @@
 }
 
 html {
-  font-family: var(--font-body-prefered), var(--font-body-critical),
-    var(--font-body-fallback), sans-serif;
-    /* --font-body-prefered: env(--font-body-prefered);
+  font-family: var(--font-body-prefered), var(--font-body-critical), var(--font-body-fallback),
+    sans-serif;
+  /* --font-body-prefered: env(--font-body-prefered);
     --font-body-critical: env(--font-body-critical);
     --font-body-fallback: env(--font-body-fallback); */
   /* font-family: var(--font-body-fallback, sans-serif); */
@@ -50,8 +56,12 @@ html {
 
 * {
   /* apply axis values with CSS custom properties */
-  font-variation-settings: 'MONO' var(--mono), 'CASL' var(--casl),
-    'wght' var(--wght), 'slnt' var(--slnt), 'ital' var(--ital);
+  font-variation-settings:
+    'MONO' var(--mono),
+    'CASL' var(--casl),
+    'wght' var(--wght),
+    'slnt' var(--slnt),
+    'ital' var(--ital);
 
   /* font-family: var(--font-body); */
 }
@@ -71,8 +81,8 @@ html {
   /* --casl: 1; */
   /* --ital: 1; */
   /* font-family: var(--font-mono); */
-  font-family: var(--font-mono-prefered), var(--font-mono-critical),
-    var(--font-mono-fallback), monospace;
+  font-family: var(--font-mono-prefered), var(--font-mono-critical), var(--font-mono-fallback),
+    monospace;
 }
 
 :--bold {

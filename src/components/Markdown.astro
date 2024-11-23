@@ -1,13 +1,13 @@
 ---
-import { Marked } from "marked"
+import { Marked } from 'marked'
 const marked = new Marked({
-	async: true,
-	pedantic: false,
-	gfm: true,
+  async: true,
+  pedantic: false,
+  gfm: true,
 })
 
 const {
-	props: { content, Element = "div" },
+  props: { content, Element = 'div' },
 } = Astro
 ---
 

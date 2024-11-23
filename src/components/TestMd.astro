@@ -1,9 +1,9 @@
 ---
-import { Icon } from "astro-icon/components"
-import { Md } from "@components"
-import { Markdown } from "@components"
+import { Icon } from 'astro-icon/components'
+import { Md } from '@components'
+import { Markdown } from '@components'
 
-const header = "Hello world"
+const header = 'Hello world'
 const content = `
 ## {header}
 <br />
@@ -17,15 +17,15 @@ const remoteContent = await renderMd(content)
 ---
 
 <Markdown>
-	### {header}
+  ### {header}
 
-	<br />
-	<Icon name="gridicons:share-computer" size="1em" />
+  <br />
+  <Icon name="gridicons:share-computer" size="1em" />
 </Markdown>
 
 <Markdown
-	{header}
-	content={`
+  {header}
+  content={`
 ### {header}
 <br />
 <Icon name="gridicons:share-computer" size="1em" />
@@ -33,13 +33,13 @@ const remoteContent = await renderMd(content)
 />
 
 <Markdown {header}>
-	{content}
+  {content}
 </Markdown>
 
 <Markdown {header} {content} />
 
 <Markdown {header}>
-	{remoteContent}
+  {remoteContent}
 </Markdown>
 
 <Markdown {header} content={remoteContent} />

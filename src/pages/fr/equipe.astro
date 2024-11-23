@@ -1,49 +1,49 @@
 ---
 // import Fragment from 'astro/components'
-import { SkeletonPage, BasicPage } from "@layouts"
-import { SEO, Img } from "@components"
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO, Img } from '@components'
 // import pictureTeam from "@images/team.jpg"
 
-import jenny from "@images/team/WannaPlayTeam_Jenny.png"
+import jenny from '@images/team/WannaPlayTeam_Jenny.png'
 // import jo from "@images/team/WannaPlayTeam_Jo.jpg"
-import marc from "@images/team/WannaPlayTeam_Marc.jpg"
+import marc from '@images/team/WannaPlayTeam_Marc.jpg'
 // import pierre from "@images/team/WannaPlayTeam_Pierre.png"
-import tess from "@images/team/WannaPlayTeam_Tess.jpg"
-import yves from "@images/team/WannaPlayTeam_Yves.jpg"
-import roxane from "@images/team/WannaPlayTeam_Roxane.jpg"
+import tess from '@images/team/WannaPlayTeam_Tess.jpg'
+import yves from '@images/team/WannaPlayTeam_Yves.jpg'
+import roxane from '@images/team/WannaPlayTeam_Roxane.jpg'
 
 const team = [
-	//
-	{ pic: marc, name: "Marc" },
-	{ pic: tess, name: "Tess" },
-	// { pic: jo, name: "Jo" },
-	{ pic: yves, name: "Yves" },
-	{ pic: jenny, name: "Jenny" },
-	// { pic: pierre, name: "Pierre" },
-	{ pic: roxane, name: "Roxane" },
+  //
+  { pic: marc, name: 'Marc' },
+  { pic: tess, name: 'Tess' },
+  // { pic: jo, name: "Jo" },
+  { pic: yves, name: 'Yves' },
+  { pic: jenny, name: 'Jenny' },
+  // { pic: pierre, name: "Pierre" },
+  { pic: roxane, name: 'Roxane' },
 ]
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <SkeletonPage lang="fr">
-	<SEO
-		slot="head"
-		ogType="website"
-		title="L'équipe"
-		description="Viens découvrir qui se cache derrière Wanna Play"
-		canonicalUrl={canonicalURL.href + "/"}
-		socialImage="/assets/images/LOGO-1024px.png"
-		ogVideo={false}
-		twitterCard="summary"
-	/>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="L'équipe"
+    description="Viens découvrir qui se cache derrière Wanna Play"
+    canonicalUrl={canonicalURL.href + '/'}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+  />
 
-	<BasicPage lang={{ code: "fr" }}>
-		<main class="max-width-measure-h2 center max stack gap-down-h1">
-			<!-- <main class="max-width-measure-h2 center stack gap-down-h1 box no-border"> -->
-			<h1 class="center text">L'équipe</h1>
-			<!-- <img src="/assets/images/team.jpg" alt="L'équipe" width="3334" height="1250" loading="lazy" /> -->
-			<!-- <Img
+  <BasicPage lang={{ code: 'fr' }}>
+    <main class="max-width-measure-h2 center max stack gap-down-h1">
+      <!-- <main class="max-width-measure-h2 center stack gap-down-h1 box no-border"> -->
+      <h1 class="center text">L'équipe</h1>
+      <!-- <img src="/assets/images/team.jpg" alt="L'équipe" width="3334" height="1250" loading="lazy" /> -->
+      <!-- <Img
         src={pictureTeam}
         alt="L'équipe"
         width="3334"
@@ -51,41 +51,41 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         loading="lazy"
       /> -->
 
-			<div class="grid" style="--width-column: 8rem;">
-				<ul class="reset">
-					{
-						team.map(({ pic, name }) => {
-							return (
-								<li>
-									<Img
-										src={pic}
-										alt={name}
-										loading="lazy"
-										class=""
-										style="width: 15rem; max-height: 15rem; max-width: 100%; height: auto;"
-										width="240"
-										height="240"
-									/>
-									<p class="center text">{name}</p>
-								</li>
-							)
-						})
-					}
-				</ul>
-			</div>
+      <div class="grid" style="--width-column: 8rem;">
+        <ul class="reset">
+          {
+            team.map(({ pic, name }) => {
+              return (
+                <li>
+                  <Img
+                    src={pic}
+                    alt={name}
+                    loading="lazy"
+                    class=""
+                    style="width: 15rem; max-height: 15rem; max-width: 100%; height: auto;"
+                    width="240"
+                    height="240"
+                  />
+                  <p class="center text">{name}</p>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
 
-			<!-- <div class="max-width-measure center size-h3">
+      <!-- <div class="max-width-measure center size-h3">
         <p>Voilà la nouvelle tribu Wanna Play.</p>
         <p>Reviens bientôt pour découvrir les profils de chacun.</p>
       </div> -->
-		</main>
-	</BasicPage>
+    </main>
+  </BasicPage>
 </SkeletonPage>
 
 <style>
-	img {
-		/* width: var(--measure-h2); */
-		max-width: 100%;
-		height: auto;
-	}
+  img {
+    /* width: var(--measure-h2); */
+    max-width: 100%;
+    height: auto;
+  }
 </style>

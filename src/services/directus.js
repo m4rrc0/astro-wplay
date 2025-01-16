@@ -78,111 +78,118 @@ export const areas = [
 })
 /* prettier-ignore */
 const dico = [
-	// links names
-	{ code_name: "website", fr: "Site web", iconName: "ph:link" },
-	{ code_name: "web_page", fr: "Page web", iconName: "ph:link" },
-	{
-		code_name: "facebook_page",
-		fr: "Page Facebook",
-		iconName: "ph:facebook-logo",
-	},
-	{
-		code_name: "facebook_event",
-		fr: "Événement Facebook",
-		iconName: "ph:facebook-logo",
-	},
-	{ code_name: "twitter", fr: "Twitter", iconName: "ph:twitter-logo" },
-	{ code_name: "instagram", fr: "Instagram", iconName: "ph:instagram-logo" },
-	{ code_name: "youtube_channel", fr: "Youtube", iconName: "ph:youtube-logo" },
+  // links names
+  { code_name: 'website', fr: 'Site web', iconName: 'ph:link' },
+  { code_name: 'web_page', fr: 'Page web', iconName: 'ph:link' },
+  {
+    code_name: 'facebook_page',
+    fr: 'Page Facebook',
+    iconName: 'ph:facebook-logo',
+  },
+  {
+    code_name: 'facebook_event',
+    fr: 'Événement Facebook',
+    iconName: 'ph:facebook-logo',
+  },
+  { code_name: 'twitter', fr: 'Twitter', iconName: 'ph:twitter-logo' },
+  { code_name: 'instagram', fr: 'Instagram', iconName: 'ph:instagram-logo' },
+  { code_name: 'youtube_channel', fr: 'Youtube', iconName: 'ph:youtube-logo' },
 
-	{ code_name: "spotify", fr: "Spotify", iconName: "ph:spotify-logo" },
-	{ code_name: "shop", fr: "Boutique", iconName: "ph:shopping-cart-simple" },
-	{ code_name: "tripadvisor", fr: "Tripadvisor", iconName: "cib:tripadvisor" },
-	{
-		code_name: "facebook_group",
-		fr: "Groupe Facebook",
-		iconName: "ph:facebook-logo",
-	},
-	{ code_name: "forum", fr: "Forum", iconName: "ph:chats" },
-	{ code_name: "talk", fr: "Le Talk", iconName: "ri:kakao-talk-line" },
-	// Areas
-	...areas,
-	// Days of week
-	{ code_name: "monday", fr: "Lundi" },
-	{ code_name: "tuesday", fr: "Mardi" },
-	{ code_name: "wednesday", fr: "Mercredi" },
-	{ code_name: "thursday", fr: "Jeudi" },
-	{ code_name: "friday", fr: "Vendredi" },
-	{ code_name: "saturday", fr: "Samedi" },
-	{ code_name: "sunday", fr: "Dimanche" },
-	// Amenities
-	{ code_name: "snacks", fr: "Snacks" },
-	{ code_name: "drinks", fr: "Boissons" },
-	{ code_name: "food", fr: "Nourriture" },
-	{ code_name: "vegetarian", fr: "Végétarien" },
-	{ code_name: "vegan", fr: "Végan" },
-	{ code_name: "handicapped", fr: "Accessible" },
-	{ code_name: "children", fr: "Enfants bienvenus" },
+  { code_name: 'spotify', fr: 'Spotify', iconName: 'ph:spotify-logo' },
+  { code_name: 'shop', fr: 'Boutique', iconName: 'ph:shopping-cart-simple' },
+  { code_name: 'tripadvisor', fr: 'Tripadvisor', iconName: 'cib:tripadvisor' },
+  {
+    code_name: 'facebook_group',
+    fr: 'Groupe Facebook',
+    iconName: 'ph:facebook-logo',
+  },
+  { code_name: 'forum', fr: 'Forum', iconName: 'ph:chats' },
+  { code_name: 'talk', fr: 'Le Talk', iconName: 'ri:kakao-talk-line' },
+  // Areas
+  ...areas,
+  // Days of week
+  { code_name: 'monday', fr: 'Lundi' },
+  { code_name: 'tuesday', fr: 'Mardi' },
+  { code_name: 'wednesday', fr: 'Mercredi' },
+  { code_name: 'thursday', fr: 'Jeudi' },
+  { code_name: 'friday', fr: 'Vendredi' },
+  { code_name: 'saturday', fr: 'Samedi' },
+  { code_name: 'sunday', fr: 'Dimanche' },
+  // Amenities
+  { code_name: 'snacks', fr: 'Snacks' },
+  { code_name: 'drinks', fr: 'Boissons' },
+  { code_name: 'food', fr: 'Nourriture' },
+  { code_name: 'vegetarian', fr: 'Végétarien' },
+  { code_name: 'vegan', fr: 'Végan' },
+  { code_name: 'handicapped', fr: 'Accessible' },
+  { code_name: 'children', fr: 'Enfants bienvenus' },
 
-	// More generic matches last just to be sure to match the rest first
-	{
-		code_name: "facebook",
-		fr: "Page Facebook",
-		iconName: "ph:facebook-logo",
-	},
-	{ code_name: "youtube", fr: "Youtube", iconName: "ph:youtube-logo" },
-	{
-		code_name: "linkedin",
-		fr: "LinkedIn",
-		iconName: "ph:linkedin-logo",
-	},
-	{
-		code_name: "linktr.ee|linktree",
-		fr: "Linktree",
-		iconName: "ph:linktree-logo",
-	},
-	{
-		code_name: "pinterest",
-		fr: "Pinterest",
-		iconName: "ph:pinterest-logo",
-	},
-	{
-		code_name: "discord",
-		fr: "Discord",
-		iconName: "ph:discord-logo",
-	},
-	{
-		code_name: "tiktok",
-		fr: "TikTok",
-		iconName: "ph:tiktok-logo",
-	},
-	{
-		code_name: "twitch",
-		fr: "Twitch",
-		iconName: "ph:twitch-logo",
-	},
-	{
-		code_name:
-			"ticket|tickets|inscription|réservation|billets|billet|billeterie",
-		// fr: "LinkedIn",
-		iconName: "ph:ticket-light",
-	},
-	{
-		code_name:
-			"date|dates|agenda|calendrier|calendrier|agenda|planning|plannings|event",
-		iconName: "ph:calendar-dots-light",
-	},
-	{
-		code_name:
-			"my ludo|myludo|Board game geek|boardgamegeek|jeux",
-		fr: "My Ludo",
-		iconName: "ph:checkerboard-thin",
-	},
-	{
-		code_name: "catalogue",
-		iconName: "ph:book-open-text-thin",
-	},
-	{ code_name: "web", fr: "Web", iconName: "ph:link" },
+  // More generic matches last just to be sure to match the rest first
+  {
+    code_name: 'facebook',
+    fr: 'Page Facebook',
+    iconName: 'ph:facebook-logo',
+  },
+  { code_name: 'youtube', fr: 'Youtube', iconName: 'ph:youtube-logo' },
+  {
+    code_name: 'linkedin',
+    fr: 'LinkedIn',
+    iconName: 'ph:linkedin-logo',
+  },
+  {
+    code_name: 'linktr.ee|linktree',
+    fr: 'Linktree',
+    iconName: 'ph:linktree-logo',
+  },
+  {
+    code_name: 'pinterest',
+    fr: 'Pinterest',
+    iconName: 'ph:pinterest-logo',
+  },
+  {
+    code_name: 'discord',
+    fr: 'Discord',
+    iconName: 'ph:discord-logo',
+  },
+  {
+    code_name: 'tiktok',
+    fr: 'TikTok',
+    iconName: 'ph:tiktok-logo',
+  },
+  {
+    code_name: 'twitch',
+    fr: 'Twitch',
+    iconName: 'ph:twitch-logo',
+  },
+  {
+    code_name: 'ticket|tickets|inscription|réservation|billets|billet|billeterie',
+    // fr: "LinkedIn",
+    iconName: 'ph:ticket-light',
+  },
+  {
+    code_name: 'date|dates|agenda|calendrier|calendrier|agenda|planning|plannings|event',
+    iconName: 'ph:calendar-dots-light',
+  },
+  {
+    code_name: 'my ludo|myludo|Board game geek|boardgamegeek|jeux',
+    fr: 'My Ludo',
+    iconName: 'ph:checkerboard-thin',
+  },
+  {
+    code_name: 'catalogue',
+    iconName: 'ph:book-open-text-thin',
+  },
+  { code_name: 'web', fr: 'Web', iconName: 'ph:link' },
+  {
+    code_name: 'Meetup|meetup',
+    fr: 'Meetup',
+    iconName: 'ph:cheers-light',
+  },
+  {
+    code_name: 'Collection|collection|Liste|liste',
+    fr: 'Collection',
+    iconName: 'ph:list-bullets-light',
+  },
 ]
 
 // --- UTILITY FUNCTIONS --- //
@@ -759,7 +766,7 @@ function fallbackOnParentsOfEvent({
 }
 
 function setEndDate({ startDate, endDate: endDateRaw, startTime, endTime }) {
-  if (!startDate || !startTime) return {}
+  if (!startDate) return {}
 
   // const startDateAsDate = new Date(startDate)
   // const startDateAsDatePlus1 = new Date(startDate)
@@ -776,7 +783,7 @@ function setEndDate({ startDate, endDate: endDateRaw, startTime, endTime }) {
     if (!endTime) endDate = endDateRaw
     else if (endTime <= startTime) endDate = startDatePlus1
     else if (endTime > startTime) endDate = startDate
-  } else if (endDate == startDatePlus1 && endTime > startTime) {
+  } else if (endDate == startDatePlus1 && (endTime > startTime || !endTime || !startTime)) {
     moreThan24h = true
   } else if (endDate > startDatePlus1) {
     moreThan24h = true
@@ -1074,6 +1081,7 @@ export function transformEvent(eventRaw, languages) {
   let recurrenceInferredFromData = undefined
   // here eventSchedule has already been purged of invalid parts
   if ((!!e?.startDate && eventSchedule?.length > 0) || moreThan24h)
+    // NOTE: We might get a mismatch here if startDate is set. It should not when defining a recurring event but it might...
     recurrenceInferredFromData = 'multidays'
   else if (!!e?.startDate) recurrenceInferredFromData = 'unique'
   else if (eventSchedule?.length > 0) recurrenceInferredFromData = 'recurring'
@@ -1086,14 +1094,21 @@ export function transformEvent(eventRaw, languages) {
   const recurrence = e?.recurrence ?? recurrenceInferredFromData
   const isRecurring = recurrence === 'recurring'
 
-  if (typeof recurrence === 'undefined' || recurrence !== recurrenceInferredFromData) {
-    console.warn(`Recurrence might be wrong for event '${e.name}'`)
+  if (typeof recurrence === 'undefined') {
+    console.warn(`--SELF WARNING-- No recurrence found for event '${e.name}'`)
+  }
+
+  if (recurrence !== recurrenceInferredFromData) {
+    console.warn(
+      `--SELF WARNING-- Recurrence mismatch -'${e.name}': Declared '${recurrence}' but inferred '${recurrenceInferredFromData}'`
+    )
     console.warn({
       recurrence,
       'event.recurrence': e.recurrence,
+      moreThan24h,
       recurrenceInferredFromData,
-      scheduleParts,
-      eventSchedule,
+      // scheduleParts,
+      // eventSchedule,
     })
   }
 

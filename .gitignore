@@ -4,6 +4,7 @@ dist
 # Cache directory
 _cache
 .astro/
+.cache
 
 # dependencies
 node_modules/

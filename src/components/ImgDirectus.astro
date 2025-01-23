@@ -5,6 +5,15 @@ import { imageDirectusSrc } from '@utils'
 import { IO } from '@components'
 
 // TODO: Check props of the new astro:assets service: https://docs.astro.build/en/guides/images/#properties
+// TODO: Update component to use the right props AND use <Picture /> if multiple formats are provided
+// <Image />
+// src, alt, width, height, format, quality,
+// inferSize can be set to true for remote images
+// densities or widths + sizes
+// <Picture />
+// ...all props from <Image /> +
+// formats, fallbackFormat, pictureAttributes,
+
 const {
   $skip,
   id,

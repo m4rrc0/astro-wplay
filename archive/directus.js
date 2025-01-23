@@ -16,9 +16,7 @@ export const client = createDirectus(DIRECTUS_URL, {
   },
 })
   .with(rest())
-  .with(authentication('json', { credentials: 'include', autoRefresh: true }))
-
-// export const client = createDirectus(DIRECTUS_URL).with(rest()).with(authentication('json'))
+  .with(authentication('json'))
 
 // --- STATIC VALUES --- //
 
@@ -252,39 +250,32 @@ const translationFromCode = (translations, code) =>
 // --- START DIRECTUS --- //
 
 export async function start() {
+  // But, we need to authenticate if data is private
   let authenticated = false
   let authFailedNumber = 0
   const allowedAuthFail = 20
-  const maxRetries = 3
 
-  const authenticate = async (retryCount = 0) => {
-    try {
-      // First try to refresh the token
-      await client.refresh()
+  // Try to authenticate with token if exists
+  await client
+    .refresh()
+    .then(() => {
       authenticated = true
-      console.info('--SELF INFO-- DIRECTUS AUTH = OK (via refresh)')
-    } catch (refreshError) {
-      // If refresh fails, try login
-      try {
-        await client.login(DIRECTUS_EMAIL, DIRECTUS_PW)
-        authenticated = true
-        console.info('--SELF INFO-- DIRECTUS AUTH = OK (via login)')
-      } catch (loginError) {
-        console.error('Authentication failed:', loginError?.message || 'Unknown error')
-        if (retryCount < maxRetries) {
-          // Wait a bit before retrying
-          await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)))
-          return authenticate(retryCount + 1)
-        }
-        authFailedNumber++
-      }
-    }
-  }
+    })
+    .catch(() => {})
 
+  // Let's login in case we don't have token or it is invalid / expired
   while (!authenticated && authFailedNumber < allowedAuthFail) {
-    await authenticate()
+    await client
+      .login(DIRECTUS_EMAIL, DIRECTUS_PW)
+      .then(() => {
+        authenticated = true
+        console.info('--SELF INFO-- DIRECTUS AUTH = OK')
+      })
+      .catch(() => {
+        console.error('Invalid credentials')
+        authFailedNumber += 1
+      })
   }
-
   if (authFailedNumber >= allowedAuthFail) {
     throw `Auth failed ${allowedAuthFail} times. Exiting Build.`
   }

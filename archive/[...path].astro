@@ -14,36 +14,26 @@ import {
 } from '@layouts'
 import { createPath } from '@utils'
 import {
-  areas as areasData,
+  areas,
   fetchArticles,
-  fetchEvents as directusFetchEvents,
+  fetchEvents,
   fetchLanguages,
   fetchDictionary,
+  fetchOrganizations,
   start as startDirectus,
 } from '../services/directus.js'
-import { getEvents, getOrganizations } from '../store/dataService.js'
-import { extractCanonicalEvents } from '../store/transforms/flatten.js'
-import { seedData } from '../store/seed.js'
-import { PAGE_ADMIN } from '../utils/env.js'
+
+const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
 export async function getStaticPaths() {
   await startDirectus()
-  await seedData()
+
+  const PAGE_ADMIN = import.meta.env.PAGE_ADMIN || null
 
   const languages = await fetchLanguages()
   const dictionary = await fetchDictionary()
-  const organizations = await getOrganizations()
-  // Using our new data service for events
-  const today = new Date()
-  // const oneDayAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1, today.getHours(), today.getMinutes(), today.getSeconds())
-  // const inSixMonths = new Date(today.getFullYear(), today.getMonth() + 6, today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds())
-
-  const events = await getEvents({
-    flatten: true,
-    after: today,
-  })
-  const canonicalEvents = extractCanonicalEvents(events)
-
+  const organizations = await fetchOrganizations()
+  const { events, canonicalEvents } = await fetchEvents()
   const articles = await fetchArticles()
 
   let staticPaths = [
@@ -73,7 +63,7 @@ export async function getStaticPaths() {
     const articlesStaticPaths = articles.map(article => {
       return { params: { path: article.path }, props: { lang, article } }
     })
-    const areasStaticPaths = areasData.map(area => {
+    const areasStaticPaths = areas.map(area => {
       const currentOrgs = organizations.filter(
         i => i?.location?.area.code_name === area.code_name && i?.boardgame_related
       )
@@ -91,14 +81,14 @@ export async function getStaticPaths() {
     const listsStaticPaths = [
       {
         params: { path: createPath({ type: 'home' }) },
-        props: { lang, areas: areasData, articles, events },
+        props: { lang, areas, articles, events },
       },
       {
         params: { path: createPath({ type: 'organizations' }) },
         props: {
           lang,
           organizations: organizations?.filter(o => o.boardgame_related),
-          areas: areasData,
+          areas,
           dictionary: dictionary?.sort((d1, d2) =>
             d1.translations
               .find(t => t.language_code === lang.code)
@@ -130,7 +120,7 @@ export async function getStaticPaths() {
       },
       {
         params: { path: createPath({ type: 'areas' }) },
-        props: { lang, areas: areasData },
+        props: { lang, areas },
       },
     ]
 

@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "clean": "rm -rf dist .cache",
+    "clean:cache": "rm -rf .cache",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
@@ -17,6 +19,7 @@
     "encrypt:local": ". ./.env && npx staticrypt dist/$PAGE_ADMIN -r -d dist/"
   },
   "devDependencies": {
+    "@11ty/eleventy-fetch": "^5.0.2",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/svelte": "^7.0.3",
     "@csstools/postcss-design-tokens": "^3.1.1",

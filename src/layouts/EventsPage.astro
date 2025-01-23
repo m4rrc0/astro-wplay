@@ -201,6 +201,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   isSameDay,
                 } = event
 
+                if (!location) {
+                  console.log('event: ', name)
+                  console.log('event.location: ', location)
+                  console.log("Organizer's location: ", organizers?.[0]?.location)
+                  console.log('Organizers: ', organizers)
+                }
+
                 const srcCover = imageDirectusSrc({
                   src: cover_image?.src,
                   width: '1000',
@@ -250,6 +257,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                       </div>
                     </div>
                     <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                      {/* TODO: repair geting location from organization */}
                       <IO
                         p
                         $skipNoInner

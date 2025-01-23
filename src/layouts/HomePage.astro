@@ -1,17 +1,16 @@
 ---
-import { createPath, imageDirectusSrc } from "@utils"
-import { SkeletonPage, BasicPage } from "@layouts"
-import { BelgiumMap } from "@partials"
-import { SEO, IO, ImgDirectus, Img } from "@components"
-import { CalendarIcon, OrgIcon, BxlIcon } from "@partials/icons"
+import { createPath, imageDirectusSrc } from '@utils'
+import { SkeletonPage, BasicPage } from '@layouts'
+import { BelgiumMap } from '@partials'
+import { SEO, IO, ImgDirectus, Img } from '@components'
+import { CalendarIcon, OrgIcon, BxlIcon } from '@partials/icons'
 
-import placeholderWPlayCircleBlue from "@images/WannaPlay-button-circle-blue.png"
-import paperMapBlue from "@images/paper-map/paper-map-belgium-blue.jpg"
-import paperMapTeal from "@images/paper-map/paper-map-belgium-teal.jpg"
-import animationCoord from "@images/photos/coordination-événements-Oriane-Delavallée.jpg"
-import animationNetwork from "@images/photos/réseau-animateurs.jpg"
-import volunteersFestival from "@images/photos/photo-bénévoles-Orian-Delavallée.jpg"
-
+import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
+import paperMapBlue from '@images/paper-map/paper-map-belgium-blue.jpg'
+import paperMapTeal from '@images/paper-map/paper-map-belgium-teal.jpg'
+import animationCoord from '@images/photos/coordination-événements-Oriane-Delavallée.jpg'
+import animationNetwork from '@images/photos/réseau-animateurs.jpg'
+import volunteersFestival from '@images/photos/photo-bénévoles-Orian-Delavallée.jpg'
 
 // import logo from '@images/LOGO-1024px.png?w=600'
 
@@ -22,7 +21,6 @@ import volunteersFestival from "@images/photos/photo-bénévoles-Orian-Delavall�
 // import londonPierre from "@images/photos-Festival-2022/london-pierre.jpg"
 // import moonArea from "@images/photos-Festival-2022/moon-area.jpg"
 // import speedGamingYves from "@images/photos-Festival-2022/speed-gaming-yves.jpg"
-
 
 const { lang, areas, articles: as, events } = Astro.props || {}
 
@@ -36,38 +34,41 @@ const { lang, areas, articles: as, events } = Astro.props || {}
 //   speedGamingYves,
 // ]
 // const articles = as.slice(0, 3)
-const festivals = events.filter((e) => e.typesTranslated.find((t) => t.code_name === "festival")).slice(0, 3)
-const wPlayEvents = events.filter((e) => e.organizers?.find((o) => o.slug === "wanna-play-asbl")).slice(0, 3)
-
+const festivals = events
+  .filter(e => e.typesTranslated.find(t => t.code_name === 'festival'))
+  .slice(0, 3)
+const wPlayEvents = events
+  .filter(e => e.organizers?.find(o => o.slug === 'wanna-play-asbl'))
+  .slice(0, 3)
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const description =
   "Wanna Play a pour mission de connecter les joueurs en live et en ligne. Toute l'info du jeu de société en Belgique."
-const imagePath = "/assets/images/LOGO-1024px.png"
+const imagePath = '/assets/images/LOGO-1024px.png'
 
 const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "NGO",
-  url: "https://www.wanna-play.be/",
-  name: "Wanna Play",
-  legalName: "Wanna Play ASBL",
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  url: 'https://www.wanna-play.be/',
+  name: 'Wanna Play',
+  legalName: 'Wanna Play ASBL',
   description,
   logo: imagePath,
   image: imagePath,
   location: {
-    "@type": "PostalAddress",
-    streetAddress: "Avenue Armand Huysmans 47 Bte 2",
-    postalCode: "1050",
-    addressLocality: "Ixelles",
-    addressCountry: "BE",
+    '@type': 'PostalAddress',
+    streetAddress: 'Avenue Armand Huysmans 47 Bte 2',
+    postalCode: '1050',
+    addressLocality: 'Ixelles',
+    addressCountry: 'BE',
   },
-  areaServed: "Belgium",
+  areaServed: 'Belgium',
   sameAs: [
-    "https://www.facebook.com/WannaPlayBE/",
-    "https://www.youtube.com/@WannaPlayBE",
-    "https://www.instagram.com/wannaplay_be/",
+    'https://www.facebook.com/WannaPlayBE/',
+    'https://www.youtube.com/@WannaPlayBE',
+    'https://www.instagram.com/wannaplay_be/',
   ],
-  knowsAbout: "board games",
+  knowsAbout: 'board games',
 }
 ---
 
@@ -76,8 +77,8 @@ const jsonLd = {
     slot="head"
     ogType="website"
     title="Connecte les joueurs"
-    description={description}
-    canonicalUrl={canonicalURL.href + "/"}
+    {description}
+    canonicalUrl={canonicalURL.href + '/'}
     socialImage={imagePath}
     ogVideo={false}
     twitterCard="summary"
@@ -109,33 +110,22 @@ const jsonLd = {
 
         <div class="max-width-measure-h2 center text">
           <p>
-            Tu cherches une soirée jeux, un événement, un magasin, une
-            ludothèque, un bar à jeux, un club, ...?
+            Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un
+            club, ...?
           </p>
-          <p>
-            Retrouve toute l'info liée au monde du jeu de société sur Wanna
-            Play!
-          </p>
+          <p>Retrouve toute l'info liée au monde du jeu de société sur Wanna Play!</p>
         </div>
 
         <!-- Picture Map -->
         <div class="center">
-          <Img
-            src={paperMapBlue}
-            alt=""
-            loading="eager"
-            class=""
-            style=""
-            width="800"
-          />
+          <Img src={paperMapBlue} alt="" loading="eager" class="" style="" width="800" />
         </div>
 
         <!-- SECTION: looking where to play? -->
         <section
           class="where-to-play center max text stack gap-down-h1 padding-y-h-1
             full-bleed-before full-bleed-after skew-border-before skew-border-after
-            color-palette-variation-contrast
-          "
+            color-palette-variation-contrast"
         >
           <div class="stack gap-down-h7">
             <h2>Tu veux jouer?</h2>
@@ -147,18 +137,24 @@ const jsonLd = {
             <div class="">
               <div class="center text intrinsic stack gap-down-h8 breakout-clickable">
                 <CalendarIcon style="height:120px;" />
-                <a href={'/' + createPath({ type: "events" }) + '/'} class="h3 clickable">Événements jeux</a>
+                <a href={'/' + createPath({ type: 'events' }) + '/'} class="h3 clickable"
+                  >Événements jeux</a
+                >
                 <p>(Aprem, soirée jeu, festival,…)</p>
               </div>
 
               <div class="center text intrinsic stack gap-down-h8 breakout-clickable">
                 <OrgIcon style="height:120px;" />
-                <a href={'/' + createPath({ type: "organizations" }) + '/'} class="h3 clickable">Organisations ludiques</a>
+                <a href={'/' + createPath({ type: 'organizations' }) + '/'} class="h3 clickable"
+                  >Organisations ludiques</a
+                >
                 <p>(Boutique, ludothèque, bar à jeux,…)</p>
               </div>
               <div class="center text intrinsic stack gap-down-h8 breakout-clickable">
                 <BxlIcon style="height:120px;" />
-                <a href={'/' + createPath({ type: "areas" }) + '/'} class="h3 clickable">Par province</a>
+                <a href={'/' + createPath({ type: 'areas' }) + '/'} class="h3 clickable"
+                  >Par province</a
+                >
                 <p>(Bruxelles, Namur, Anvers, Liège,…)</p>
               </div>
             </div>
@@ -168,13 +164,10 @@ const jsonLd = {
         <!-- SECTION: Festivals in Belgium -->
         <section class="next-festivals center max text stack gap-down-h1 padding-y-h-1">
           <h2>Les prochains festivals de jeu en Belgique</h2>
-          <div
-            class="grid gap-down-h4"
-            style="--width-column: var(--width-col-4);"
-          >
+          <div class="grid gap-down-h4" style="--width-column: var(--width-col-4);">
             <ul class="grid-events list reset">
               {
-                festivals?.map((festival) => {
+                festivals?.map(festival => {
                   const {
                     name,
                     typesTranslated,
@@ -188,16 +181,16 @@ const jsonLd = {
 
                   const srcCover = imageDirectusSrc({
                     src: cover_image?.src,
-                    width: "1000",
-                    fit: "cover",
-                    quality: "50",
+                    width: '1000',
+                    fit: 'cover',
+                    quality: '50',
                   })
 
                   return (
                     <li
                       class="card-event breakout-clickable box no-border no-padding border-radius-s"
                       style=""
-                      data-types={typesTranslated?.map((t) => t.code_name)}
+                      data-types={typesTranslated?.map(t => t.code_name)}
                     >
                       <div
                         class="box no-border padding-h4 with-sidebar gap-h4
@@ -218,9 +211,7 @@ const jsonLd = {
                             style="line-height: 1;"
                           >
                             <span class="size-h1">{time_start?.fr?.day}</span>
-                            <span class="size-h2">
-                              {time_start?.fr?.monthShort}
-                            </span>
+                            <span class="size-h2">{time_start?.fr?.monthShort}</span>
                             <span class="size-h2">{time_start?.fr?.year}</span>
                           </time>
                           <div>
@@ -287,14 +278,7 @@ const jsonLd = {
 
         <!-- SECTION: Meeple on map image -->
         <div class="cover-map-section full-bleed">
-          <Img
-              src={paperMapTeal}
-              alt=""
-              loading="lazy"
-              class=""
-              style=""
-              width="2000"
-            />
+          <Img src={paperMapTeal} alt="" loading="lazy" class="" style="" width="2000" />
         </div>
 
         <!-- SECTION: Festivals in Belgium -->
@@ -302,129 +286,125 @@ const jsonLd = {
           <h2>Viens rencontrer Wanna Play!</h2>
           {
             wPlayEvents && wPlayEvents.length > 0 ? (
-              <div
-                class="grid gap-down-h4"
-                style="--width-column: var(--width-col-4);"
-              >
+              <div class="grid gap-down-h4" style="--width-column: var(--width-col-4);">
                 <ul class="grid-events list reset">
-                  {
-                    wPlayEvents?.map((event) => {
-                      const {
-                        name,
-                        typesTranslated,
-                        location,
-                        cover_image,
-                        organizers,
-                        time_start,
-                        time_end,
-                        isSameDay,
-                      } = event
-      
-                      const srcCover = imageDirectusSrc({
-                        src: cover_image?.src,
-                        width: "1000",
-                        fit: "cover",
-                        quality: "50",
-                      })
-      
-                      return (
-                        <li
-                          class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                          style=""
-                          data-types={typesTranslated?.map((t) => t.code_name)}
-                        >
-                          <div
-                            class="box no-border padding-h4 with-sidebar gap-h4
+                  {wPlayEvents?.map(event => {
+                    const {
+                      name,
+                      typesTranslated,
+                      location,
+                      cover_image,
+                      organizers,
+                      time_start,
+                      time_end,
+                      isSameDay,
+                    } = event
+
+                    const srcCover = imageDirectusSrc({
+                      src: cover_image?.src,
+                      width: '1000',
+                      fit: 'cover',
+                      quality: '50',
+                    })
+
+                    return (
+                      <li
+                        class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                        style=""
+                        data-types={typesTranslated?.map(t => t.code_name)}
+                      >
+                        <div
+                          class="box no-border padding-h4 with-sidebar gap-h4
                                               color-palette-trans
                                               background-overlay
                                               "
-                            style={
-                              (srcCover
-                                ? `background-image: url("${srcCover}"); `
-                                : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
-                              `--content-min: 80%;`
-                            }
-                          >
+                          style={
+                            (srcCover
+                              ? `background-image: url("${srcCover}"); `
+                              : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                            `--content-min: 80%;`
+                          }
+                        >
+                          <div>
+                            <time
+                              datetime={time_start.dateTimeRaw}
+                              class="timestart stack gap-down-h8 center intrinsic"
+                              style="line-height: 1;"
+                            >
+                              <span class="size-h1">{time_start?.fr?.day}</span>
+                              <span class="size-h2">{time_start?.fr?.monthShort}</span>
+                              <span class="size-h2">{time_start?.fr?.year}</span>
+                            </time>
                             <div>
-                              <time
-                                datetime={time_start.dateTimeRaw}
-                                class="timestart stack gap-down-h8 center intrinsic"
-                                style="line-height: 1;"
-                              >
-                                <span class="size-h1">{time_start?.fr?.day}</span>
-                                <span class="size-h2">
-                                  {time_start?.fr?.monthShort}
-                                </span>
-                                <span class="size-h2">{time_start?.fr?.year}</span>
-                              </time>
-                              <div>
-                                <div class="cover no-gap" style="--min-height: 100%;">
-                                  <h2 class="h3 centered">
-                                    <a
-                                      href={`/${event.path}/`}
-                                      class="name reset clickable"
-                                      set:html={name}
-                                    />
-                                  </h2>
-                                </div>
+                              <div class="cover no-gap" style="--min-height: 100%;">
+                                <h2 class="h3 centered">
+                                  <a
+                                    href={`/${event.path}/`}
+                                    class="name reset clickable"
+                                    set:html={name}
+                                  />
+                                </h2>
                               </div>
                             </div>
                           </div>
-                          <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
-                            <p
-                              class="zip city h5"
-                              data-zip={location.postalCode}
-                              data-city={location.addressLocality}
-                              data-latitude={location.geo?.coordinates[1]}
-                              data-longitude={location.geo?.coordinates[0]}
-                            >
-                              {location.addressLocality}
-                            </p>
-                            <ul class="reset stack horizontal">
-                              {organizers?.map(({ name, logo }) => (
-                                <li>
-                                  {logo?.src ? (
-                                    <ImgDirectus
-                                      image={logo}
-                                      src={logo?.src}
-                                      alt={name}
-                                      loading="lazy"
-                                      class=""
-                                      style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                      width="32"
-                                      height="32"
-                                      fit="inside"
-                                      quality="99"
-                                    />
-                                  ) : (
-                                    <Img
-                                      src={placeholderWPlayCircleBlue}
-                                      alt="logo"
-                                      loading="lazy"
-                                      class=""
-                                      style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                      width="32"
-                                      height="32"
-                                    />
-                                  )}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </li>
-                      )
-                    })
-                  }
+                        </div>
+                        <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                          <p
+                            class="zip city h5"
+                            data-zip={location.postalCode}
+                            data-city={location.addressLocality}
+                            data-latitude={location.geo?.coordinates[1]}
+                            data-longitude={location.geo?.coordinates[0]}
+                          >
+                            {location.addressLocality}
+                          </p>
+                          <ul class="reset stack horizontal">
+                            {organizers?.map(({ name, logo }) => (
+                              <li>
+                                {logo?.src ? (
+                                  <ImgDirectus
+                                    image={logo}
+                                    src={logo?.src}
+                                    alt={name}
+                                    loading="lazy"
+                                    class=""
+                                    style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                    width="32"
+                                    height="32"
+                                    fit="inside"
+                                    quality="99"
+                                  />
+                                ) : (
+                                  <Img
+                                    src={placeholderWPlayCircleBlue}
+                                    alt="logo"
+                                    loading="lazy"
+                                    class=""
+                                    style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                    width="32"
+                                    height="32"
+                                  />
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </li>
+                    )
+                  })}
                 </ul>
               </div>
             ) : (
               <>
                 <p>
-                  Nous n'avons pas d'événement prévu pour l'instant.<br/>
+                  Nous n'avons pas d'événement prévu pour l'instant.
+                  <br />
                   N'hésite pas à nous contacter.
                 </p>
                 <p>
-                  <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">Nous contacter</a>
+                  <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">
+                    Nous contacter
+                  </a>
                 </p>
               </>
             )
@@ -432,110 +412,114 @@ const jsonLd = {
         </section>
 
         <!-- SECTION: Animation services -->
-        <section class="animation-services stack gap-down-h1 color-palette-variation-funky-contrast full-bleed-before padding-y-h-1">
+        <section
+          class="animation-services stack gap-down-h1 color-palette-variation-funky-contrast full-bleed-before padding-y-h-1"
+        >
           <div class="center max stack gap-down-h1">
             <div class="max-width-measure center text stack gap-down-h7">
               <h2>Services d'animation</h2>
+              <p>Envie d'apporter une dimansion ludique à ton événement?</p>
               <p>
-                Envie d'apporter une dimansion ludique à ton événement?
+                Que tu sois une organisation publique, une entreprise ou une association, nous
+                transformons tes événements en véritables expériences immersives. Grâce aux jeux de
+                société, aux techniques d'escape game ou aux jeux de piste par exemple, nous créons
+                des moments de convivialité et de collaboration, adaptés à tes objectifs et à ton
+                public.
               </p>
-              <p>
-                Que tu sois une organisation publique, une entreprise ou une association, nous transformons tes événements en véritables expériences immersives. Grâce aux jeux de société, aux techniques d'escape game ou aux jeux de piste par exemple, nous créons des moments de convivialité et de collaboration, adaptés à tes objectifs et à ton public.</p>
-              </p>
-            </duv>
-          </div>
-          <div class="coordination">
-            <div class="img-container">
-              <Img
-                src={animationCoord}
-                alt=""
-                loading="lazy"
-                class=""
-                style=""
-                width="500"
-              />
-            </div>
-            <div>
-              <h3>Coordination d'animations</h3>
-              <p>
-                Des expériences ludiques et immersives pour tous.
-              </p>
-              <p>
-                Que ce soit pour renforcer la cohésion d'équipe, dynamiser tes formations ou simplement offrir un moment de détente, nos animations ludiques s'adaptent à tes besoins. Avec une approche personnalisée, nous proposons des activités variées:
-              </p>
-              <ul>
-                <li>
-                  Jeux de société modernes: des classiques aux nouveautés, notre catalogue répond à tous les goûts.
-                </li>
-                <li>
-                  Jeux géants et jeux d'habilité: bonne ambiance garantie autour d'un jeu d'habilité en solo ou par équipes.
-                </li>
-                <li>
-                  Escape games et jeux de piste: enquêtes, énigmes et défis, parfaits pour des expériences engageantes en équipe.
-                </li>
-                <li>
-                  Animations sur mesure: nous concevons des activités adaptées à ton thème ou événement particulier.
-                </li>
-              </ul>
             </div>
           </div>
-          <div class="network">
-            <div class="img-container">
-              <Img
-                src={animationNetwork}
-                alt=""
-                loading="lazy"
-                class=""
-                style=""
-                width="500"
-              />
-            </div>
-            <div class="reversible">
-              <h3>Réseau d'animateurs ludiques</h3>
-              <p>
-                Un Réseau d'animateurs passionnés dans toute la Belgique.
-              </p>
-              <p>
-                Chez Wanna Play, nous collaborons avec des animateurs expérimentés partout en Belgique pour garantir des prestations de qualité.
-              </p>
-              <p>Nos animateurs partagent la passion du jeu et apportent leur expertise pour assurer des animations professionnelles et divertissantes, où que tu sois.</p>
-            </div>
+        </section>
+        <div class="coordination">
+          <div class="img-container">
+            <Img src={animationCoord} alt="" loading="lazy" class="" style="" width="500" />
           </div>
           <div>
-            <div class="center max text stack gap-down-h1">
-              <p>
-                <strong>Envie d'en savoir plus sur nos sevices ou de rejoindre notre réseau d'animateurs?</strong>
-              </p>
-              <p>
-                <strong><a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">Contacte-nous</a></strong>
-              </p>
-            </div>
+            <h3>Coordination d'animations</h3>
+            <p>Des expériences ludiques et immersives pour tous.</p>
+            <p>
+              Que ce soit pour renforcer la cohésion d'équipe, dynamiser tes formations ou
+              simplement offrir un moment de détente, nos animations ludiques s'adaptent à tes
+              besoins. Avec une approche personnalisée, nous proposons des activités variées:
+            </p>
+            <ul>
+              <li>
+                Jeux de société modernes: des classiques aux nouveautés, notre catalogue répond à
+                tous les goûts.
+              </li>
+              <li>
+                Jeux géants et jeux d'habilité: bonne ambiance garantie autour d'un jeu d'habilité
+                en solo ou par équipes.
+              </li>
+              <li>
+                Escape games et jeux de piste: enquêtes, énigmes et défis, parfaits pour des
+                expériences engageantes en équipe.
+              </li>
+              <li>
+                Animations sur mesure: nous concevons des activités adaptées à ton thème ou
+                événement particulier.
+              </li>
+            </ul>
           </div>
-        </section>
-
-        <!-- SECTION: Volunteers image -->
-        <div class="cover-volunteers-section full-bleed">
-          <Img
-              src={volunteersFestival}
-              alt=""
-              loading="lazy"
-              class=""
-              style=""
-              width="2000"
-            />
         </div>
+        <div class="network">
+          <div class="img-container">
+            <Img src={animationNetwork} alt="" loading="lazy" class="" style="" width="500" />
+          </div>
+          <div class="reversible">
+            <h3>Réseau d'animateurs ludiques</h3>
+            <p>Un Réseau d'animateurs passionnés dans toute la Belgique.</p>
+            <p>
+              Chez Wanna Play, nous collaborons avec des animateurs expérimentés partout en Belgique
+              pour garantir des prestations de qualité.
+            </p>
+            <p>
+              Nos animateurs partagent la passion du jeu et apportent leur expertise pour assurer
+              des animations professionnelles et divertissantes, où que tu sois.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="center max text stack gap-down-h1">
+            <p>
+              <strong
+                >Envie d'en savoir plus sur nos sevices ou de rejoindre notre réseau d'animateurs?</strong
+              >
+            </p>
+            <p>
+              <strong
+                ><a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7"
+                  >Contacte-nous</a
+                ></strong
+              >
+            </p>
+          </div>
+        </div>
+      </div>
 
-        <!-- SECTION: ASBL -->
-        <section class="home-asbl center text stack gap-down-h1">
-          <h2>L'ASBL</h2>
-          <p>
-            Wanna Play est <a href="/fr/projet/">une ASBL</a> qui vise depuis 2017 à connecter les joueurs et les différents acteurs du monde du jeu, tant particuliers que professionnels. Notre mission est de renforcer le réseau ludique belge, de créer plus de lien entre ses différents acteurs et de créer des opportunités pour le développer d'avantage. Si tu veux en savoir plus, on a une page dédiée à <a href="/fr/projet/">l'historique du projet</a> et une autre pour présenter <a href="/fr/equipe/">l'équipe</a>. Si tu es curieux, n'hésite pas à nous contacter!
-          </p>
-          <p><a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">Je suis curieux⋅se</a></p>
-        </section>
+      <!-- SECTION: Volunteers image -->
+      <div class="cover-volunteers-section full-bleed">
+        <Img src={volunteersFestival} alt="" loading="lazy" class="" style="" width="2000" />
+      </div>
 
+      <!-- SECTION: ASBL -->
+      <section class="home-asbl center text stack gap-down-h1">
+        <h2>L'ASBL</h2>
+        <p>
+          Wanna Play est <a href="/fr/projet/">une ASBL</a> qui vise depuis 2017 à connecter les joueurs
+          et les différents acteurs du monde du jeu, tant particuliers que professionnels. Notre mission
+          est de renforcer le réseau ludique belge, de créer plus de lien entre ses différents acteurs
+          et de créer des opportunités pour le développer d'avantage. Si tu veux en savoir plus, on a
+          une page dédiée à <a href="/fr/projet/">l'historique du projet</a> et une autre pour présenter
+          <a href="/fr/equipe/">l'équipe</a>. Si tu es curieux, n'hésite pas à nous contacter!
+        </p>
+        <p>
+          <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7"
+            >Je suis curieux⋅se</a>
+        </p>
+      </section>
 
-        {/* <section
+      {
+        /* <section
           class="countdown-section color-palette-variation-funky-contrast full-bleed"
         >
           <div class="center text stack gap-down-h3">
@@ -566,9 +550,11 @@ const jsonLd = {
             </div>
             <p id="countdown" class="h1">-J -H -m -s</p>
           </div>
-        </section> */}
+        </section> */
+      }
 
-        {/* <div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
+      {
+        /* <div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
           <h2 class="center text">Où veux-tu jouer?</h2>
           <div class="cluster gap-down-h6" style="--justify-content: center;">
             <ul class="reset">
@@ -589,9 +575,11 @@ const jsonLd = {
           <div>
             <BelgiumMap {lang} {areas} />
           </div>
-        </div> */}
+        </div> */
+      }
 
-        {/* <section
+      {
+        /* <section
           class="articles center max text stack gap-down-h1
           full-bleed-before full-bleed-after skew-border-before skew-border-after
           color-palette-variation-funky-contrast
@@ -678,14 +666,10 @@ const jsonLd = {
             </div>
           </div>
           <p><a href={`/${lang.code}/a`} class="h3">Tous les articles</a></p>
-        </section> */}
-      </div>
-      <script
-        is:inline
-        type="application/ld+json"
-        set:html={JSON.stringify(jsonLd)}
-      ></script>
+        </section> */
+      }
     </main>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </BasicPage>
 </SkeletonPage>
 
@@ -706,9 +690,9 @@ const jsonLd = {
     --skew-after: -1deg;
     --skew-after-origin: bottom right;
   }
-  {/* .countdown-section {
+  /* .countdown-section {
     padding: var(--padding);
-  } */}
+  } */
   .where-to-play {
     /* padding-block: 3rem; */
     --skew-before: 3deg;
@@ -725,7 +709,7 @@ const jsonLd = {
       --shadow-breakout-clickable-hover: 0;
       transform: none;
       transition: none;
-      
+
       &:hover {
         transition: none;
         color: var(--color-text__a--hover);
@@ -738,7 +722,8 @@ const jsonLd = {
   .card-event {
     max-width: 35rem;
   }
-  .cover-map-section, .cover-volunteers-section {
+  .cover-map-section,
+  .cover-volunteers-section {
     overflow: hidden;
     & > img {
       margin: auto;
@@ -764,7 +749,8 @@ const jsonLd = {
   }
   .animation-services {
     /* --side-width: 550px; */
-    .coordination, .network {
+    .coordination,
+    .network {
       display: flex;
       flex-direction: column;
       gap: var(--size-h4);
@@ -796,7 +782,8 @@ const jsonLd = {
   }
 </style>
 
-{/* <script>
+{
+  /* <script>
   // Fonction pour le décompte
   function countdown() {
     var eventDate = new Date("2023-07-08T10:00:00Z") // Date de l'événement (à adapter si nécessaire)
@@ -825,4 +812,5 @@ const jsonLd = {
 
   // Appeler la fonction de décompte toutes les secondes
   setInterval(countdown, 1000)
-</script> */}
+</script> */
+}

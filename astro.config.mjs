@@ -7,8 +7,8 @@ import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
 import critters from 'astro-critters'
 import icon from 'astro-icon'
-
-const PAGE_ADMIN = process.env.PAGE_ADMIN || null
+import { PAGE_ADMIN } from './src/utils/env'
+import Biome from '@playform/format'
 
 // @type-check enabled!
 // VSCode and other TypeScript-enabled text editors will provide auto-completion,
@@ -24,6 +24,7 @@ export default defineConfig({
     domains: ['cms.wanna-play.be'],
   },
   integrations: [
+    Biome(),
     svelte(),
     sitemap({
       filter: page =>
@@ -31,6 +32,7 @@ export default defineConfig({
         !(PAGE_ADMIN && page.endsWith(`${PAGE_ADMIN}/`)),
     }),
     robotsTxt({
+      host: 'wanna-play.be',
       policy: [
         {
           userAgent: '*',
@@ -39,11 +41,16 @@ export default defineConfig({
         },
       ],
     }),
-    critters({
+    (await import('astro-critters')).default({
       logger: 1, // default is 2
       fonts: true,
       exclude: [file => file.startsWith('./dist/fr/e')],
     }),
+    // critters({
+    //   logger: 1, // default is 2
+    //   fonts: true,
+    //   exclude: [file => file.startsWith('./dist/fr/e')],
+    // }),
     icon(),
   ],
 })

@@ -18,6 +18,7 @@ import Biome from '@playform/format'
 // @ts-check
 export default defineConfig({
   site: 'https://www.wanna-play.be/',
+  cacheDir: '.cache',
   image: {
     // Allow Astro image optimization on CMS images.
     // NOTE: Only usefull if we want to process images with Astro instead of serving directly from the CMS.

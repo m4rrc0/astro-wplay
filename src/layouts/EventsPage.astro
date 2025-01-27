@@ -6,10 +6,12 @@ import { imageDirectusSrc } from '@utils'
 import citiesUnordered from '@utils/areas/cities.json'
 import { Icon } from 'astro-icon/components'
 
-const { lang, events: eventsUnfiltered, dictionary } = Astro.props
+const { lang, events: eventsUnfiltered, dictionary: eventTypes } = Astro.props
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
 
-const cities = [...citiesUnordered].sort((a, b) => a.city.localeCompare(b.city, lang.code))
+const cities = [...citiesUnordered].sort((a, b) =>
+  a.code_name.localeCompare(b.code_name, lang.code)
+)
 
 const eventsCountPhrase = `${
   events.length === 1 ? `${events.length} événement` : `${events.length} événements`
@@ -37,6 +39,12 @@ const eventsPhrase =
       : `${eventsCountPhrase} entre le ${eventsTimeArr.join(' et le ')}`
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+
+const cssRulesDisplayByType = eventTypes
+  .map(({ code_name }) => {
+    return `#event-form-filter-wrapper:has(input[data-code='${code_name}']:checked) ~ div .card-event[data-type-${code_name}='true']:not(.hidden) { display: block !important; }`
+  })
+  .join('\n')
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -57,118 +65,129 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           >Événements et soirées jeux de Belgique</IO
         >
 
-        <script src="/assets/js/events-filter.js" defer type="module"></script>
-        <div class="center">
+        <!-- <script src="@assets/js/events-filter.js"></script> -->
+        <div id="event-form-filter-wrapper" class="center">
           <form
             id="eventsForm"
             class="stack horizontal justify-content-center gap-0"
             style="flex-wrap: wrap; gap: var(--size-h1)"
           >
-            <button
-              disabled
-              data-remove-disabled
-              popovertarget="proximity"
-              id="proximityBtn"
-              type="button"
-              class="stack horizontal align-items-center gap-h8"
-            >
-              <span>A proximité de</span>
-              <Icon
-                name="gridicons:chevron-down"
-                title="open ressources menu"
-                role="img"
-                style="flex-shrink: 0;"
-              />
-            </button>
-            <div popover id="proximity" class="padding-h3 border-radius-m">
-              <div class="stack gap-h3">
-                <div class="stack horizontal">
-                  <Icon name="gridicons:location" title="location" role="img" />
-                  <select name="position">
-                    <option value="">Choisir...</option>
-                    <option value="Ma position"> Ma position </option>
-                    {
-                      cities?.map(city => (
-                        <option
-                          id={'city' + city.city}
-                          value={city.city}
-                          data-latitude={city.lat}
-                          data-longitude={city.lng}
-                        >
-                          {city.city}
-                        </option>
-                      ))
-                    }
-                  </select>
-                </div>
-                <div class="distance stack justify-space-between">
-                  <label for="distance">Distance (km)</label>
-                  <div class="stack gap-0">
+            <div class="popover-wrapper">
+              <button
+                disabled
+                data-remove-disabled
+                popovertarget="proximity"
+                id="proximityBtn"
+                type="button"
+                class="stack horizontal align-items-center gap-h8"
+              >
+                <span>A proximité de</span>
+                <Icon
+                  name="gridicons:chevron-down"
+                  title="open ressources menu"
+                  role="img"
+                  style="flex-shrink: 0;"
+                />
+              </button>
+              <div popover id="proximity" class="padding-h3 border-radius-m">
+                <div class="stack gap-h3">
+                  <div class="stack horizontal">
+                    <Icon name="gridicons:location" title="location" role="img" />
                     <input
-                      type="range"
-                      id="distance"
-                      name="distance"
-                      min="1"
-                      max="99"
-                      value="10"
-                      list="distances"
+                      type="text"
+                      name="position"
+                      list="cityList"
+                      placeholder="Rechercher une ville..."
+                      autocomplete="off"
                     />
-                    <datalist
-                      id="distances"
-                      class="stack horizontal justify-space-between align-items-center h7 padding-x-h9"
-                    >
-                      <option value="1" label="01"></option>
-                      <option value="25" label="25"></option>
-                      <option value="50" label="50"></option>
-                      <option value="75" label="75"></option>
-                      <option value="99" label="99"></option>
+                    <datalist id="cityList">
+                      <option value="Ma position" data-latitude="" data-longitude=""></option>
+                      {
+                        cities?.map(city => (
+                          <option
+                            value={
+                              city.translations.find(t => t.lang === lang.code)?.value ||
+                              city.translations?.[0]?.value ||
+                              city.code_name
+                            }
+                            data-latitude={city.lat}
+                            data-longitude={city.lng}
+                          />
+                        ))
+                      }
                     </datalist>
+                  </div>
+                  <div class="distance stack justify-space-between">
+                    <label for="distance">Distance (km)</label>
+                    <div class="stack gap-0">
+                      <input
+                        type="range"
+                        id="distance"
+                        name="distance"
+                        min="1"
+                        max="99"
+                        value="10"
+                        list="distances"
+                      />
+                      <datalist
+                        id="distances"
+                        class="stack horizontal justify-space-between align-items-center h7 padding-x-h9"
+                      >
+                        <option value="1" label="01"></option>
+                        <option value="25" label="25"></option>
+                        <option value="50" label="50"></option>
+                        <option value="75" label="75"></option>
+                        <option value="99" label="99"></option>
+                      </datalist>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <button
-              disabled
-              data-remove-disabled
-              popovertarget="eventType"
-              id="eventTypeBtn"
-              class="max-width-col-5 stack horizontal align-items-center gap-h8"
-              type="button"
-            >
-              <span class="text-overflow-ellipsis">Types</span>
-              <Icon
-                name="gridicons:chevron-down"
-                title="open ressources menu"
-                role="img"
-                style="flex-shrink: 0;"
-              />
-            </button>
-            <div popover id="eventType" class="padding-h3 border-radius-m align-items-start">
-              <div class="stack gap-h3" style="white-space: nowrap">
-                {
-                  dictionary?.map(d => {
-                    return (
-                      <div class="stack horizontal align-items-center">
-                        <input
-                          type="checkbox"
-                          id={d.code_name}
-                          value={d.code_name}
-                          name="types"
-                          data-code={d.code_name}
-                          data-label={
-                            d.translations.find(t => t.language_code === lang.code).default_label
-                          }
-                        />
-                        <label for={d.code_name}>
-                          {d.translations.find(t => t.language_code === lang.code).default_label}
-                        </label>
-                      </div>
-                    )
-                  })
-                }
+            <div class="popover-wrapper">
+              <button
+                data-remove-disabled
+                popovertarget="eventType"
+                id="eventTypeBtn"
+                class="max-width-col-5 stack horizontal align-items-center gap-h8"
+                type="button"
+              >
+                <span class="text-overflow-ellipsis">Types</span>
+                <Icon
+                  name="gridicons:chevron-down"
+                  title="open ressources menu"
+                  role="img"
+                  style="flex-shrink: 0;"
+                />
+              </button>
+              <div popover id="eventType" class="padding-h3 border-radius-m align-items-start">
+                <div class="stack gap-h3" style="white-space: nowrap">
+                  {
+                    eventTypes?.map(d => {
+                      return (
+                        <div class="stack horizontal align-items-center">
+                          <input
+                            type="checkbox"
+                            id={d.code_name}
+                            value={d.code_name}
+                            name="types"
+                            data-code={d.code_name}
+                            data-label={
+                              d.translations.find(t => t.language_code === lang.code).default_label
+                            }
+                          />
+                          <label for={d.code_name}>
+                            {d.translations.find(t => t.language_code === lang.code).default_label}
+                          </label>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
               </div>
             </div>
-            <!-- <p>Trier par...</p>
+            {
+              /* <p>Trier par...</p>
             <div class="cluster" style="--gap: var(--size-h7);">
               <div>
                 <button
@@ -179,8 +198,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 </button>
                 <button class="sort" data-sort="zip">Code postal</button>
               </div>
-            </div> -->
-            <input type="reset" id="resetBtn" class="color-palette-teal" style="display: none;" />
+            </div> */
+            }
+            <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
           </form>
         </div>
 
@@ -208,11 +228,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   quality: '50',
                 })
 
+                const currentTypes = typesTranslated?.map(t => t.code_name)
+                const typeAttributes = currentTypes?.reduce(
+                  (acc, type) => ({ ...acc, [`data-type-${type}`]: true }),
+                  {}
+                )
+
+                const [lng, lat] = location?.geo?.coordinates || []
+
                 return (
                   <li
                     class="card-event breakout-clickable box no-border no-padding border-radius-s"
                     style=""
-                    data-types={typesTranslated?.map(t => t.code_name)}
+                    data-types={currentTypes}
+                    {...typeAttributes}
+                    data-latitude={lat}
+                    data-longitude={lng}
                   >
                     <div
                       class="box no-border padding-h4 with-sidebar gap-h4
@@ -302,6 +333,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       </div>
     </main>
   </BasicPage>
+  {
+    /* <Fragment slot="head-bottom">
+    {
+      eventTypes.map(({ code_name }) => {
+        const rule = `<style type="text/css">#event-form-filter-wrapper:has(input[data-code='${code_name}']:checked) ~ div .card-event[data-type-${code_name}='true'] { display: block !important; }</style>`
+        return <Fragment set:html={rule} />
+      })
+    }
+  </Fragment> */
+  }
 </SkeletonPage>
 
 <style>
@@ -316,8 +357,159 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     content: '\002B07';
     padding-left: 3px;
   }
-  [popover]#proximity:has(select > option[value='']:checked) > div > div:has(input[type='range']) {
+  [popover]#proximity:has(input[name='position']:placeholder-shown)
+    > div
+    > div:has(input[type='range']) {
     /* opacity: 0.5; */
     display: none;
   }
+  [popovertarget='eventType'] {
+    anchor-name: --event-type-anchor;
+  }
+  [popovertarget='proximity'] {
+    anchor-name: --proximity-anchor;
+  }
+  [popover] {
+    position: absolute;
+  }
+  [popover]::backdrop {
+    background-color: rgb(255, 255, 255, 0.5);
+  }
+  @supports (anchor-name: --anchor) {
+    [popover] {
+      position: absolute;
+      margin: 0;
+      margin-block-start: 0.25rem;
+      position-try-fallbacks: flip-inline;
+      &#eventType {
+        position-anchor: --event-type-anchor;
+        position-area: bottom span-right;
+      }
+      &#proximity {
+        position-anchor: --proximity-anchor;
+        position-area: bottom span-left;
+      }
+    }
+  }
+  #event-form-filter-wrapper:has(input:checked) ~ div .card-event {
+    display: none;
+  }
+  /* #event-form-filter-wrapper:has(input[data-code='gameTime']:checked)
+    ~ div
+    .card-event[data-type-gameTime='true'] {
+    display: block !important;
+  } */
 </style>
+
+<style type="text/css" set:html={cssRulesDisplayByType}></style>
+
+<script>
+  import FilterUrlManager from '@assets/js/FilterUrlManager'
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterUrlManager = new FilterUrlManager({
+      formSelector: '#eventsForm',
+      filters: [
+        {
+          type: 'checkbox',
+          selector: 'input[name="types"]',
+          paramName: 'types',
+          valueAttribute: 'data-code',
+          button: {
+            selector: '#eventTypeBtn',
+            textSelector: 'span.text-overflow-ellipsis',
+            defaultText: 'Types',
+          },
+        },
+        {
+          type: 'text',
+          selector: 'input[name="position"]',
+          paramName: 'city',
+          button: {
+            selector: '#proximityBtn',
+            textSelector: 'span',
+            defaultText: 'A proximité de',
+          },
+        },
+        // Add distance as its own filter instead of a dependent parameter
+        {
+          type: 'number',
+          selector: 'input[name="distance"]',
+          paramName: 'distance',
+        },
+      ],
+      resetButton: '#resetBtn',
+    })
+
+    // Function to get the selected city coordinates and radius from the DOM
+    function getCenterAndRadius() {
+      const selectedCity = document.querySelector('input[name="position"]').value
+      const cityOption = document.querySelector(`option[value="${selectedCity}"]`)
+      const centerLat = parseFloat(cityOption.dataset.latitude)
+      const centerLng = parseFloat(cityOption.dataset.longitude)
+
+      const radius = parseFloat(document.querySelector('input[name="distance"]').value) // Radius in km
+      return { centerLat, centerLng, radius }
+    }
+
+    // Haversine formula to calculate the distance
+    function haversine(lat1, lng1, lat2, lng2) {
+      const R = 6371 // Earth's radius in km
+      const toRad = deg => (deg * Math.PI) / 180
+
+      const dLat = toRad(lat2 - lat1)
+      const dLng = toRad(lng2 - lng1)
+
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2)
+
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+      return R * c
+    }
+
+    // Function to filter events based on proximity
+    function filterEventsByProximity() {
+      const { centerLat, centerLng, radius } = getCenterAndRadius()
+
+      if (isNaN(centerLat) || isNaN(centerLng)) {
+        console.warn('Center coordinates are not selected.')
+        return
+      }
+
+      document.querySelectorAll('.card-event').forEach(event => {
+        const eventLat = parseFloat(event.dataset.latitude)
+        const eventLng = parseFloat(event.dataset.longitude)
+
+        const distance = haversine(centerLat, centerLng, eventLat, eventLng)
+        if (distance > radius) {
+          event.classList.add('hidden')
+        } else {
+          event.classList.remove('hidden')
+        }
+      })
+    }
+
+    // Add event listeners for visual filtering updates only
+    const positionInput = document.querySelector('input[name="position"]')
+    const distanceInput = document.querySelector('input[name="distance"]')
+
+    // Update visual filtering when inputs change
+    positionInput?.addEventListener('input', filterEventsByProximity)
+    distanceInput?.addEventListener('input', filterEventsByProximity)
+
+    // Initial filtering if URL has initial values
+    if (positionInput?.value) {
+      filterEventsByProximity()
+    }
+  })
+</script>
+
+<!-- <style>
+  #event-form-filter-wrapper:has(input[data-code='festival']:checked)
+    ~ div
+    .card-event[data-type-festival='true'] {
+    display: block !important;
+  }
+</style> -->

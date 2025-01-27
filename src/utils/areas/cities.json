@@ -1,267 +1,266 @@
 [
   {
-    "city": "Brussels",
+    "code_name": "brussels",
+    "translations": [
+      { "lang": "fr", "value": "Bruxelles" },
+      { "lang": "nl", "value": "Brussel" }
+    ],
     "lat": "50.8467",
     "lng": "4.3525"
   },
   {
-    "city": "Antwerp",
-    "lat": "51.2178",
-    "lng": "4.4003"
+    "code_name": "antwerp",
+    "translations": [
+      { "lang": "nl", "value": "Antwerpen" },
+      { "lang": "fr", "value": "Anvers" }
+    ],
+    "lat": "51.2194",
+    "lng": "4.4025"
   },
   {
-    "city": "Gent",
-    "lat": "51.0536",
-    "lng": "3.7253"
+    "code_name": "ghent",
+    "translations": [
+      { "lang": "nl", "value": "Gent" },
+      { "lang": "fr", "value": "Gand" }
+    ],
+    "lat": "51.0543",
+    "lng": "3.7174"
   },
   {
-    "city": "Charleroi",
-    "lat": "50.4000",
-    "lng": "4.4333"
+    "code_name": "charleroi",
+    "translations": [{ "lang": "fr", "value": "Charleroi" }],
+    "lat": "50.4114",
+    "lng": "4.4447"
   },
   {
-    "city": "Liège",
-    "lat": "50.6397",
-    "lng": "5.5706"
+    "code_name": "liege",
+    "translations": [
+      { "lang": "fr", "value": "Liège" },
+      { "lang": "nl", "value": "Luik" }
+    ],
+    "lat": "50.6451",
+    "lng": "5.5734"
   },
   {
-    "city": "Schaarbeek",
-    "lat": "50.8675",
-    "lng": "4.3736"
+    "code_name": "bruges",
+    "translations": [
+      { "lang": "nl", "value": "Brugge" },
+      { "lang": "fr", "value": "Bruges" }
+    ],
+    "lat": "51.2093",
+    "lng": "3.2247"
   },
   {
-    "city": "Anderlecht",
-    "lat": "50.8333",
-    "lng": "4.3333"
+    "code_name": "namur",
+    "translations": [{ "lang": "fr", "value": "Namur" }],
+    "lat": "50.4674",
+    "lng": "4.8718"
   },
   {
-    "city": "Bruges",
-    "lat": "51.2089",
-    "lng": "3.2242"
+    "code_name": "leuven",
+    "translations": [
+      { "lang": "nl", "value": "Leuven" },
+      { "lang": "fr", "value": "Louvain" }
+    ],
+    "lat": "50.8796",
+    "lng": "4.7009"
   },
   {
-    "city": "Namur",
-    "lat": "50.4667",
-    "lng": "4.8667"
+    "code_name": "mons",
+    "translations": [{ "lang": "fr", "value": "Mons" }],
+    "lat": "50.4542",
+    "lng": "3.9523"
   },
   {
-    "city": "Moortebeek",
-    "lat": "50.8547",
-    "lng": "4.3386"
+    "code_name": "hasselt",
+    "translations": [{ "lang": "nl", "value": "Hasselt" }],
+    "lat": "50.9311",
+    "lng": "5.3378"
   },
   {
-    "city": "Aalst",
-    "lat": "50.9383",
-    "lng": "4.0392"
+    "code_name": "kortrijk",
+    "translations": [
+      { "lang": "nl", "value": "Kortrijk" },
+      { "lang": "fr", "value": "Courtrai" }
+    ],
+    "lat": "50.828",
+    "lng": "3.2649"
   },
   {
-    "city": "Mechelen",
-    "lat": "51.0278",
-    "lng": "4.4806"
+    "code_name": "mechelen",
+    "translations": [
+      { "lang": "nl", "value": "Mechelen" },
+      { "lang": "fr", "value": "Malines" }
+    ],
+    "lat": "51.0257",
+    "lng": "4.4776"
   },
   {
-    "city": "Deurne",
-    "lat": "51.2247",
-    "lng": "4.4625"
+    "code_name": "bastogne",
+    "translations": [{ "lang": "fr", "value": "Bastogne" }],
+    "lat": "50.0047",
+    "lng": "5.7185"
   },
   {
-    "city": "La Louvière",
-    "lat": "50.4667",
-    "lng": "4.1833"
+    "code_name": "marche_en_famenne",
+    "translations": [{ "lang": "fr", "value": "Marche-en-Famenne" }],
+    "lat": "50.2278",
+    "lng": "5.3448"
   },
   {
-    "city": "Sint-Niklaas",
-    "lat": "51.1667",
-    "lng": "4.1333"
+    "code_name": "tongeren",
+    "translations": [
+      { "lang": "nl", "value": "Tongeren" },
+      { "lang": "fr", "value": "Tongres" }
+    ],
+    "lat": "50.7792",
+    "lng": "5.4638"
   },
   {
-    "city": "Kortrijk",
-    "lat": "50.8275",
-    "lng": "3.2658"
+    "code_name": "nivelles",
+    "translations": [{ "lang": "fr", "value": "Nivelles" }],
+    "lat": "50.5946",
+    "lng": "4.3288"
   },
   {
-    "city": "Ostend",
-    "lat": "51.2258",
-    "lng": "2.9194"
+    "code_name": "binche",
+    "translations": [{ "lang": "fr", "value": "Binche" }],
+    "lat": "50.4103",
+    "lng": "4.1626"
   },
   {
-    "city": "Roeselare",
-    "lat": "50.9333",
-    "lng": "3.1167"
+    "code_name": "turnhout",
+    "translations": [{ "lang": "nl", "value": "Turnhout" }],
+    "lat": "51.3225",
+    "lng": "4.9456"
   },
   {
-    "city": "Seraing",
-    "lat": "50.5833",
-    "lng": "5.5000"
+    "code_name": "eupen",
+    "translations": [{ "lang": "de", "value": "Eupen" }],
+    "lat": "50.6306",
+    "lng": "6.0358"
   },
   {
-    "city": "Laeken",
-    "lat": "50.8778",
-    "lng": "4.3558"
+    "code_name": "verviers",
+    "translations": [{ "lang": "fr", "value": "Verviers" }],
+    "lat": "50.5921",
+    "lng": "5.8603"
   },
   {
-    "city": "Mouscron",
-    "lat": "50.7333",
-    "lng": "3.2167"
+    "code_name": "neufchateau",
+    "translations": [{ "lang": "fr", "value": "Neufchâteau" }],
+    "lat": "49.8397",
+    "lng": "5.4352"
   },
   {
-    "city": "Forest",
-    "lat": "50.8131",
-    "lng": "4.3247"
+    "code_name": "ieper",
+    "translations": [
+      { "lang": "nl", "value": "Ieper" },
+      { "lang": "fr", "value": "Ypres" }
+    ],
+    "lat": "50.8514",
+    "lng": "2.8856"
   },
   {
-    "city": "Verviers",
-    "lat": "50.5833",
-    "lng": "5.8500"
+    "code_name": "blankenberge",
+    "translations": [{ "lang": "nl", "value": "Blankenberge" }],
+    "lat": "51.3139",
+    "lng": "3.1328"
   },
   {
-    "city": "Jette",
-    "lat": "50.8667",
-    "lng": "4.3333"
+    "code_name": "bouillon",
+    "translations": [{ "lang": "fr", "value": "Bouillon" }],
+    "lat": "49.7939",
+    "lng": "5.0678"
   },
   {
-    "city": "Etterbeek",
-    "lat": "50.8333",
-    "lng": "4.3833"
+    "code_name": "genk",
+    "translations": [{ "lang": "nl", "value": "Genk" }],
+    "lat": "50.965",
+    "lng": "5.5008"
   },
   {
-    "city": "Borgerhout",
-    "lat": "51.2117",
-    "lng": "4.4407"
+    "code_name": "louvain_la_neuve",
+    "translations": [{ "lang": "fr", "value": "Louvain-la-Neuve" }],
+    "lat": "50.6689",
+    "lng": "4.6116"
   },
   {
-    "city": "Merksem",
-    "lat": "51.2428",
-    "lng": "4.4414"
+    "code_name": "ostend",
+    "translations": [
+      { "lang": "nl", "value": "Oostende" },
+      { "lang": "fr", "value": "Ostende" }
+    ],
+    "lat": "51.2158",
+    "lng": "2.9289"
   },
   {
-    "city": "Vilvoorde",
-    "lat": "50.9333",
-    "lng": "4.4167"
+    "code_name": "sint_niklaas",
+    "translations": [{ "lang": "nl", "value": "Sint-Niklaas" }],
+    "lat": "51.1651",
+    "lng": "4.1394"
   },
   {
-    "city": "Berchem",
-    "lat": "51.1833",
-    "lng": "4.4167"
+    "code_name": "arlon",
+    "translations": [{ "lang": "fr", "value": "Arlon" }],
+    "lat": "49.6836",
+    "lng": "5.8161"
   },
   {
-    "city": "Evere",
-    "lat": "50.8667",
-    "lng": "4.4000"
+    "code_name": "huy",
+    "translations": [{ "lang": "fr", "value": "Huy" }],
+    "lat": "50.5181",
+    "lng": "5.2418"
   },
   {
-    "city": "Hoboken",
-    "lat": "51.1667",
-    "lng": "4.3667"
+    "code_name": "tournai",
+    "translations": [
+      { "lang": "fr", "value": "Tournai" },
+      { "lang": "nl", "value": "Doornik" }
+    ],
+    "lat": "50.6094",
+    "lng": "3.3794"
   },
   {
-    "city": "Herstal",
-    "lat": "50.6667",
-    "lng": "5.6333"
+    "code_name": "roeselare",
+    "translations": [{ "lang": "nl", "value": "Roeselare" }],
+    "lat": "50.9466",
+    "lng": "3.1234"
   },
   {
-    "city": "Wilrijk",
-    "lat": "51.1667",
-    "lng": "4.3833"
+    "code_name": "malmedy",
+    "translations": [{ "lang": "fr", "value": "Malmedy" }],
+    "lat": "50.4263",
+    "lng": "6.0273"
   },
   {
-    "city": "Brasschaat",
-    "lat": "51.3000",
-    "lng": "4.5000"
+    "code_name": "de_panne",
+    "translations": [{ "lang": "nl", "value": "De Panne" }],
+    "lat": "51.0905",
+    "lng": "2.5881"
   },
   {
-    "city": "Châtelet",
-    "lat": "50.4000",
-    "lng": "4.5167"
+    "code_name": "herstal",
+    "translations": [{ "lang": "fr", "value": "Herstal" }],
+    "lat": "50.6676",
+    "lng": "5.6301"
   },
   {
-    "city": "Zaventem",
-    "lat": "50.8667",
-    "lng": "4.4667"
+    "code_name": "waregem",
+    "translations": [{ "lang": "nl", "value": "Waregem" }],
+    "lat": "50.8881",
+    "lng": "3.4273"
   },
   {
-    "city": "Schoten",
-    "lat": "51.2500",
-    "lng": "4.5000"
+    "code_name": "ath",
+    "translations": [{ "lang": "fr", "value": "Ath" }],
+    "lat": "50.6306",
+    "lng": "3.7783"
   },
   {
-    "city": "Menen",
-    "lat": "50.8000",
-    "lng": "3.1167"
-  },
-  {
-    "city": "Sint-Amandsberg",
-    "lat": "51.0539",
-    "lng": "3.7492"
-  },
-  {
-    "city": "Kessel-Lo",
-    "lat": "50.8853",
-    "lng": "4.7358"
-  },
-  {
-    "city": "Waterloo",
-    "lat": "50.7175",
-    "lng": "4.3979"
-  },
-  {
-    "city": "Izegem",
-    "lat": "50.9167",
-    "lng": "3.2000"
-  },
-  {
-    "city": "Ans",
-    "lat": "50.6667",
-    "lng": "5.5167"
-  },
-  {
-    "city": "Harelbeke",
-    "lat": "50.8500",
-    "lng": "3.3000"
-  },
-  {
-    "city": "Sint-Joost-ten-Node",
-    "lat": "50.8500",
-    "lng": "4.3833"
-  },
-  {
-    "city": "Willebroek",
-    "lat": "51.0667",
-    "lng": "4.3667"
-  },
-  {
-    "city": "Mortsel",
-    "lat": "51.1667",
-    "lng": "4.4667"
-  },
-  {
-    "city": "Ganshoren",
-    "lat": "50.8667",
-    "lng": "4.3167"
-  },
-  {
-    "city": "Saint-Nicolas",
-    "lat": "50.6333",
-    "lng": "5.5333"
-  },
-  {
-    "city": "Heverlee",
-    "lat": "50.8600",
-    "lng": "4.6897"
-  },
-  {
-    "city": "Manage",
-    "lat": "50.5000",
-    "lng": "4.2333"
-  },
-  {
-    "city": "Marcinelle",
-    "lat": "50.4000",
-    "lng": "4.4486"
-  },
-  {
-    "city": "Ekeren",
-    "lat": "51.2833",
-    "lng": "4.4167"
+    "code_name": "durbuy",
+    "translations": [{ "lang": "fr", "value": "Durbuy" }],
+    "lat": "50.3526",
+    "lng": "5.4548"
   }
 ]

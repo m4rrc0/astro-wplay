@@ -1,0 +1,267 @@
+[
+  {
+    "city": "Brussels",
+    "lat": "50.8467",
+    "lng": "4.3525"
+  },
+  {
+    "city": "Antwerp",
+    "lat": "51.2178",
+    "lng": "4.4003"
+  },
+  {
+    "city": "Gent",
+    "lat": "51.0536",
+    "lng": "3.7253"
+  },
+  {
+    "city": "Charleroi",
+    "lat": "50.4000",
+    "lng": "4.4333"
+  },
+  {
+    "city": "Liège",
+    "lat": "50.6397",
+    "lng": "5.5706"
+  },
+  {
+    "city": "Schaarbeek",
+    "lat": "50.8675",
+    "lng": "4.3736"
+  },
+  {
+    "city": "Anderlecht",
+    "lat": "50.8333",
+    "lng": "4.3333"
+  },
+  {
+    "city": "Bruges",
+    "lat": "51.2089",
+    "lng": "3.2242"
+  },
+  {
+    "city": "Namur",
+    "lat": "50.4667",
+    "lng": "4.8667"
+  },
+  {
+    "city": "Moortebeek",
+    "lat": "50.8547",
+    "lng": "4.3386"
+  },
+  {
+    "city": "Aalst",
+    "lat": "50.9383",
+    "lng": "4.0392"
+  },
+  {
+    "city": "Mechelen",
+    "lat": "51.0278",
+    "lng": "4.4806"
+  },
+  {
+    "city": "Deurne",
+    "lat": "51.2247",
+    "lng": "4.4625"
+  },
+  {
+    "city": "La Louvière",
+    "lat": "50.4667",
+    "lng": "4.1833"
+  },
+  {
+    "city": "Sint-Niklaas",
+    "lat": "51.1667",
+    "lng": "4.1333"
+  },
+  {
+    "city": "Kortrijk",
+    "lat": "50.8275",
+    "lng": "3.2658"
+  },
+  {
+    "city": "Ostend",
+    "lat": "51.2258",
+    "lng": "2.9194"
+  },
+  {
+    "city": "Roeselare",
+    "lat": "50.9333",
+    "lng": "3.1167"
+  },
+  {
+    "city": "Seraing",
+    "lat": "50.5833",
+    "lng": "5.5000"
+  },
+  {
+    "city": "Laeken",
+    "lat": "50.8778",
+    "lng": "4.3558"
+  },
+  {
+    "city": "Mouscron",
+    "lat": "50.7333",
+    "lng": "3.2167"
+  },
+  {
+    "city": "Forest",
+    "lat": "50.8131",
+    "lng": "4.3247"
+  },
+  {
+    "city": "Verviers",
+    "lat": "50.5833",
+    "lng": "5.8500"
+  },
+  {
+    "city": "Jette",
+    "lat": "50.8667",
+    "lng": "4.3333"
+  },
+  {
+    "city": "Etterbeek",
+    "lat": "50.8333",
+    "lng": "4.3833"
+  },
+  {
+    "city": "Borgerhout",
+    "lat": "51.2117",
+    "lng": "4.4407"
+  },
+  {
+    "city": "Merksem",
+    "lat": "51.2428",
+    "lng": "4.4414"
+  },
+  {
+    "city": "Vilvoorde",
+    "lat": "50.9333",
+    "lng": "4.4167"
+  },
+  {
+    "city": "Berchem",
+    "lat": "51.1833",
+    "lng": "4.4167"
+  },
+  {
+    "city": "Evere",
+    "lat": "50.8667",
+    "lng": "4.4000"
+  },
+  {
+    "city": "Hoboken",
+    "lat": "51.1667",
+    "lng": "4.3667"
+  },
+  {
+    "city": "Herstal",
+    "lat": "50.6667",
+    "lng": "5.6333"
+  },
+  {
+    "city": "Wilrijk",
+    "lat": "51.1667",
+    "lng": "4.3833"
+  },
+  {
+    "city": "Brasschaat",
+    "lat": "51.3000",
+    "lng": "4.5000"
+  },
+  {
+    "city": "Châtelet",
+    "lat": "50.4000",
+    "lng": "4.5167"
+  },
+  {
+    "city": "Zaventem",
+    "lat": "50.8667",
+    "lng": "4.4667"
+  },
+  {
+    "city": "Schoten",
+    "lat": "51.2500",
+    "lng": "4.5000"
+  },
+  {
+    "city": "Menen",
+    "lat": "50.8000",
+    "lng": "3.1167"
+  },
+  {
+    "city": "Sint-Amandsberg",
+    "lat": "51.0539",
+    "lng": "3.7492"
+  },
+  {
+    "city": "Kessel-Lo",
+    "lat": "50.8853",
+    "lng": "4.7358"
+  },
+  {
+    "city": "Waterloo",
+    "lat": "50.7175",
+    "lng": "4.3979"
+  },
+  {
+    "city": "Izegem",
+    "lat": "50.9167",
+    "lng": "3.2000"
+  },
+  {
+    "city": "Ans",
+    "lat": "50.6667",
+    "lng": "5.5167"
+  },
+  {
+    "city": "Harelbeke",
+    "lat": "50.8500",
+    "lng": "3.3000"
+  },
+  {
+    "city": "Sint-Joost-ten-Node",
+    "lat": "50.8500",
+    "lng": "4.3833"
+  },
+  {
+    "city": "Willebroek",
+    "lat": "51.0667",
+    "lng": "4.3667"
+  },
+  {
+    "city": "Mortsel",
+    "lat": "51.1667",
+    "lng": "4.4667"
+  },
+  {
+    "city": "Ganshoren",
+    "lat": "50.8667",
+    "lng": "4.3167"
+  },
+  {
+    "city": "Saint-Nicolas",
+    "lat": "50.6333",
+    "lng": "5.5333"
+  },
+  {
+    "city": "Heverlee",
+    "lat": "50.8600",
+    "lng": "4.6897"
+  },
+  {
+    "city": "Manage",
+    "lat": "50.5000",
+    "lng": "4.2333"
+  },
+  {
+    "city": "Marcinelle",
+    "lat": "50.4000",
+    "lng": "4.4486"
+  },
+  {
+    "city": "Ekeren",
+    "lat": "51.2833",
+    "lng": "4.4167"
+  }
+]

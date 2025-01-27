@@ -1,0 +1,5 @@
+- AstroJS v5
+- Fully static export (no SSR)
+- Prefer portable web components for lightwaight progressive enhancement
+- Data fetched from Directus backend at build time
+- Pagefind for search (static site generation)

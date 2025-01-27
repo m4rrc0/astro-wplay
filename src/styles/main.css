@@ -111,9 +111,9 @@ blockquote {
   max-width: 25rem;
 }
 
-div[popover],
+/* div[popover],
 .stack.horizontal > * + div[popover] {
   margin: auto;
   margin-left: auto;
   margin-right: auto;
-}
+} */

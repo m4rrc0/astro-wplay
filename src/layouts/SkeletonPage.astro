@@ -113,7 +113,7 @@ const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
     <SEO locale="fr_BE" siteName="Wanna Play" />
 
     <slot name="head" />
-
+    <slot name="head-bottom" />
     {
       process.env.CONTEXT === 'production' && (
         <script
@@ -136,7 +136,7 @@ const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
       });
     </script> -->
     <script src="/assets/js/instant.page.js" defer type="module"></script>
-    <script src="/assets/js/popover.js" defer></script>
+    <!-- <script src="/assets/js/popover.js" defer></script> -->
     <script src="/assets/js/popover-polyfill.min.js" defer type="module"></script>
     <!-- <script hoist>import '../assets/js/instant.page.js';</script> -->
     <!-- <script hoist src="https://instant.page/5.1.0" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script> -->

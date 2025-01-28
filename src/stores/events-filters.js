@@ -66,10 +66,20 @@ function decodeTypes(types) {
 
 // Helper actions to update state
 export function updateFilter(key, value) {
-  eventsFiltersStore.set({
-    ...eventsFiltersStore.get(),
-    [key]: value || '',
-  })
+  const state = eventsFiltersStore.get()
+
+  if (key === 'city' && !state.distance) {
+    eventsFiltersStore.set({
+      ...eventsFiltersStore.get(),
+      [key]: value || '',
+      distance: '10',
+    })
+  } else {
+    eventsFiltersStore.set({
+      ...eventsFiltersStore.get(),
+      [key]: value || '',
+    })
+  }
 }
 
 // Action to update types (handles array specially)

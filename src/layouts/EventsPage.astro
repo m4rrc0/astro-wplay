@@ -40,11 +40,13 @@ const eventsPhrase =
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
-const cssRulesDisplayByType = eventTypes
-  .map(({ code_name }) => {
-    return `#event-form-filter-wrapper:has(input[data-code='${code_name}']:checked) ~ div .card-event[data-type-${code_name}='true']:not(.hidden) { display: block !important; }`
-  })
-  .join('\n')
+const cssRulesDisplayByType =
+  `#event-form-filter-wrapper:has(input:checked) ~ div .card-event{display:none;}` +
+  (eventTypes || [])
+    .map(({ code_name }) => {
+      return `#event-form-filter-wrapper:has(input[data-code='${code_name}']:checked) ~ div .card-event[data-type-${code_name}='true']:not(.hidden) { display: block; }`
+    })
+    .join('\n')
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -391,9 +393,7 @@ const cssRulesDisplayByType = eventTypes
       }
     }
   }
-  #event-form-filter-wrapper:has(input:checked) ~ div .card-event {
-    display: none;
-  }
+
   /* #event-form-filter-wrapper:has(input[data-code='gameTime']:checked)
     ~ div
     .card-event[data-type-gameTime='true'] {
@@ -404,56 +404,54 @@ const cssRulesDisplayByType = eventTypes
 <style type="text/css" set:html={cssRulesDisplayByType}></style>
 
 <script>
-  import FilterUrlManager from '@assets/js/FilterUrlManager'
+  import {
+    eventsFiltersStore,
+    updateFilter,
+    updateTypes,
+    clearCity,
+    resetFilters,
+    getInitialState,
+  } from '@stores/events-filters'
 
-  // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', () => {
-    const filterUrlManager = new FilterUrlManager({
-      formSelector: '#eventsForm',
-      filters: [
-        {
-          type: 'checkbox',
-          selector: 'input[name="types"]',
-          paramName: 'types',
-          valueAttribute: 'data-code',
-          button: {
-            selector: '#eventTypeBtn',
-            textSelector: 'span.text-overflow-ellipsis',
-            defaultText: 'Types',
-          },
-        },
-        {
-          type: 'text',
-          selector: 'input[name="position"]',
-          paramName: 'city',
-          button: {
-            selector: '#proximityBtn',
-            textSelector: 'span',
-            defaultText: 'A proximité de',
-          },
-        },
-        // Add distance as its own filter instead of a dependent parameter
-        {
-          type: 'number',
-          selector: 'input[name="distance"]',
-          paramName: 'distance',
-        },
-      ],
-      resetButton: '#resetBtn',
+    const form = document.querySelector('#eventsForm')
+    const cityInput = document.querySelector('input[name="position"]')
+    const distanceInput = document.querySelector('input[name="distance"]')
+    const typeInputs = document.querySelectorAll('input[name="types"]')
+    const resetButton = document.querySelector('#resetBtn')
+
+    const proximityBtnspan = document.querySelector('#proximityBtn span')
+    const eventTypeBtnSpan = document.querySelector('#eventTypeBtn span.text-overflow-ellipsis')
+
+    const initialState = getInitialState()
+    cityInput.value = initialState.city
+    distanceInput.value = initialState.distance
+    typeInputs.forEach(input => {
+      input.checked = initialState.types.includes(input.getAttribute('data-code'))
     })
 
-    // Function to get the selected city coordinates and radius from the DOM
-    function getCenterAndRadius() {
-      const selectedCity = document.querySelector('input[name="position"]').value
-      const cityOption = document.querySelector(`option[value="${selectedCity}"]`)
-      const centerLat = parseFloat(cityOption.dataset.latitude)
-      const centerLng = parseFloat(cityOption.dataset.longitude)
+    function updateButtonTexts(state) {
+      proximityBtnspan.textContent = state.city || 'A proximité de'
 
-      const radius = parseFloat(document.querySelector('input[name="distance"]').value) // Radius in km
+      const checkedTypes = Array.from(typeInputs).filter(input => input.checked)
+      if (checkedTypes.length === 0) {
+        eventTypeBtnSpan.textContent = 'Types'
+      } else if (checkedTypes.length === 1) {
+        eventTypeBtnSpan.textContent = checkedTypes[0].getAttribute('data-label')
+      } else {
+        eventTypeBtnSpan.textContent = `Types (${checkedTypes.length})`
+      }
+    }
+
+    function getCenterAndRadius(state) {
+      const selectedCity = state.city
+      const cityOption = document.querySelector(`option[value="${selectedCity}"]`)
+      const centerLat = parseFloat(cityOption?.dataset.latitude)
+      const centerLng = parseFloat(cityOption?.dataset.longitude)
+      const radius = parseFloat(state.distance) // Radius in km
       return { centerLat, centerLng, radius }
     }
 
-    // Haversine formula to calculate the distance
     function haversine(lat1, lng1, lat2, lng2) {
       const R = 6371 // Earth's radius in km
       const toRad = deg => (deg * Math.PI) / 180
@@ -469,12 +467,21 @@ const cssRulesDisplayByType = eventTypes
       return R * c
     }
 
-    // Function to filter events based on proximity
-    function filterEventsByProximity() {
-      const { centerLat, centerLng, radius } = getCenterAndRadius()
+    function filterEvents(state) {
+      if (!state.city) {
+        document.querySelectorAll('.card-event').forEach(event => {
+          event.classList.remove('hidden')
+        })
+        return
+      }
+
+      const { centerLat, centerLng, radius } = getCenterAndRadius(state)
 
       if (isNaN(centerLat) || isNaN(centerLng)) {
         console.warn('Center coordinates are not selected.')
+        document.querySelectorAll('.card-event').forEach(event => {
+          event.classList.remove('hidden')
+        })
         return
       }
 
@@ -491,25 +498,40 @@ const cssRulesDisplayByType = eventTypes
       })
     }
 
-    // Add event listeners for visual filtering updates only
-    const positionInput = document.querySelector('input[name="position"]')
-    const distanceInput = document.querySelector('input[name="distance"]')
+    eventsFiltersStore.listen(state => {
+      updateButtonTexts(state)
+      filterEvents(state)
+    })
 
-    // Update visual filtering when inputs change
-    positionInput?.addEventListener('input', filterEventsByProximity)
-    distanceInput?.addEventListener('input', filterEventsByProximity)
+    cityInput.addEventListener('input', e => {
+      if (!e.target.value.trim()) {
+        clearCity()
+      } else {
+        updateFilter('city', e.target.value)
+      }
+    })
 
-    // Initial filtering if URL has initial values
-    if (positionInput?.value) {
-      filterEventsByProximity()
-    }
+    distanceInput.addEventListener('input', e => {
+      updateFilter('distance', e.target.value)
+    })
+
+    typeInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        const checkedTypes = Array.from(typeInputs)
+          .filter(input => input.checked)
+          .map(input => input.getAttribute('data-code'))
+        updateTypes(checkedTypes)
+      })
+    })
+
+    resetButton.addEventListener('click', () => {
+      setTimeout(() => {
+        resetFilters()
+      }, 0)
+    })
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+    })
   })
 </script>
-
-<!-- <style>
-  #event-form-filter-wrapper:has(input[data-code='festival']:checked)
-    ~ div
-    .card-event[data-type-festival='true'] {
-    display: block !important;
-  }
-</style> -->

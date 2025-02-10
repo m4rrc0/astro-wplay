@@ -54,11 +54,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 />
               </button>
               <div popover id="area" class="padding-h3 border-radius-m align-items-start">
-                <div class="stack gap-h3" style="white-space: nowrap">
+                <ul class="reset stack gap-h3" style="white-space: nowrap">
                   {
                     areas.map(area => {
                       return (
-                        <div class="stack horizontal align-items-center">
+                        <li class="stack horizontal align-items-center">
                           <input
                             type="checkbox"
                             id={area.code_name}
@@ -68,11 +68,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                             data-label={area.name[lang.code]}
                           />
                           <label for={area.code_name}>{area.name[lang.code]}</label>
-                        </div>
+                        </li>
                       )
                     })
                   }
-                </div>
+                </ul>
               </div>
             </div>
             <div class="popover-wrapper">
@@ -97,14 +97,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 id="organizationType"
                 class="padding-h3 border-radius-m align-items-start"
               >
-                <div class="stack gap-h3" style="white-space: nowrap">
+                <ul class="reset stack gap-h3" style="white-space: nowrap">
                   {
                     organizationTypes.map(d => {
                       const label = d.translations.find(
                         t => t.language_code === lang.code
                       ).default_label
                       return (
-                        <div class="stack horizontal align-items-center">
+                        <li class="stack horizontal align-items-center">
                           <input
                             type="checkbox"
                             id={d.code_name}
@@ -114,11 +114,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                             data-label={label}
                           />
                           <label for={d.code_name}>{label}</label>
-                        </div>
+                        </li>
                       )
                     })
                   }
-                </div>
+                </ul>
               </div>
             </div>
             <div class="popover-wrapper">
@@ -139,7 +139,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 />
               </button>
               <div popover id="service" class="padding-h3 border-radius-m align-items-start">
-                <div class="stack gap-h3" style="white-space: nowrap">
+                <ul class="reset stack gap-h3" style="white-space: nowrap">
                   {
                     gamesRelatedServices.map(d => {
                       const label = d.translations.find(
@@ -147,7 +147,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                       ).default_label
 
                       return (
-                        <div class="stack horizontal align-items-center">
+                        <li class="stack horizontal align-items-center">
                           <input
                             type="checkbox"
                             id={d.code_name}
@@ -157,11 +157,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                             data-label={label}
                           />
                           <label for={d.code_name}>{label}</label>
-                        </div>
+                        </li>
                       )
                     })
                   }
-                </div>
+                </ul>
               </div>
             </div>
             <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
@@ -276,7 +276,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   }
   [popover]::backdrop {
     background-color: rgb(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
   }
+
   @supports (anchor-name: --anchor) {
     [popover] {
       position: absolute;

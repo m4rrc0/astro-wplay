@@ -163,11 +163,11 @@ const cssRulesDisplayByType =
                 />
               </button>
               <div popover id="eventType" class="padding-h3 border-radius-m align-items-start">
-                <div class="stack gap-h3" style="white-space: nowrap">
+                <ul class="reset stack gap-h3" style="white-space: nowrap">
                   {
                     eventTypes?.map(d => {
                       return (
-                        <div class="stack horizontal align-items-center">
+                        <li class="stack horizontal align-items-center">
                           <input
                             type="checkbox"
                             id={d.code_name}
@@ -181,11 +181,11 @@ const cssRulesDisplayByType =
                           <label for={d.code_name}>
                             {d.translations.find(t => t.language_code === lang.code).default_label}
                           </label>
-                        </div>
+                        </li>
                       )
                     })
                   }
-                </div>
+                </ul>
               </div>
             </div>
             {
@@ -376,6 +376,7 @@ const cssRulesDisplayByType =
   }
   [popover]::backdrop {
     background-color: rgb(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
   }
   @supports (anchor-name: --anchor) {
     [popover] {

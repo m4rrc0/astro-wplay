@@ -39,7 +39,7 @@ const {
 
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
 
-const { description, opening_hours_remark } =
+const { description, opening_hours_remark, rich_text_content } =
   translations?.find(({ languages_code }) => languages_code === lang.code) || {}
 const presentation =
   typesTranslated?.[0] &&
@@ -62,6 +62,8 @@ const srcCover = imageDirectusSrc({
 })
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+
+console.log(rich_text_content)
 ---
 
 <!-- <Debug {name} /> -->
@@ -70,7 +72,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     slot="head"
     ogType="website"
     title={name}
-    description={presentation || description}
+    description={presentation}
     canonicalUrl={canonicalURL.href + '/'}
     socialImage={logo}
     ogVideo={false}
@@ -202,7 +204,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         </ul>
       </div>} -->
       {
-        description && (
+        description && !rich_text_content && (
           <div
             class="
         box no-border center
@@ -213,6 +215,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             <h2>Description</h2>
             <Markdown content={description} />
           </div>
+        )
+      }
+
+      {
+        rich_text_content && (
+          <div
+            class="
+        box no-border center
+        max-width-measure-h4
+        stack gap-down-h7
+      "
+            set:html={rich_text_content}
+          ></div>
         )
       }
 

@@ -23,6 +23,8 @@ export function createPath({ locale = 'fr', type, slug = undefined }) {
   if (type === 'event') return `${locale}/e/${slug}`
   if (type === 'organizations') return `${locale}/o`
   if (type === 'organization') return `${locale}/o/${slug}`
+  if (type === 'services') return `${locale}/s`
+  if (type === 'service') return `${locale}/s/${slug}`
   if (type === 'articles') return `${locale}/a`
   if (type === 'article') return `${locale}/a/${slug}`
   if (type === 'areas') return `${locale}/be`

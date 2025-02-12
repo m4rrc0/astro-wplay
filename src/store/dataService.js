@@ -117,6 +117,7 @@ const organizationFields = [
   'amenities',
   'links',
   'translations.*',
+  'admin_categories',
 
   // Only fetch minimal event data - full data will be fetched by getEvents
   'events.events_id.id',

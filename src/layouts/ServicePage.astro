@@ -1,0 +1,442 @@
+---
+import { IO, Img, ImgDirectus, SEO } from '@components'
+import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
+import { BasicPage, SkeletonPage } from '@layouts'
+import { Icon } from 'astro-icon/components'
+
+const { lang, organizations, areas, dictionary } = Astro.props
+const organizationTypes = dictionary.filter(d => d.tag_categories.includes('organization_type'))
+const gamesRelatedServices = dictionary.filter(d =>
+  d.tag_categories.includes('games_related_service')
+)
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+---
+
+<SkeletonPage lang={lang.code}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title={`Les acteurs du jeu de société en Belgique`}
+    description={`Bars à jeux, clubs, ludothèques, Escape rooms, ... Viens découvrir les organisations ludiques actives en Belgique.`}
+    canonicalUrl={canonicalURL.href + '/'}
+    socialImage="/assets/images/LOGO-1024px.png"
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage {lang}>
+    <main class="center width-max">
+      <div id="organizations-list-container" class="box no-border stack gap-down-h1">
+        <IO h1 $skip={!organizations?.[0]} class="center text"> Le jeu de société en Belgique </IO>
+
+        {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
+        <div id="organization-form-filter-wrapper" class="center">
+          <form
+            id="organizationsForm"
+            class="stack horizontal justify-content-center gap-0"
+            style="flex-wrap: wrap; gap: var(--size-h1)"
+          >
+            <div class="popover-wrapper">
+              <button
+                disabled
+                data-remove-disabled
+                popovertarget="area"
+                id="areaBtn"
+                class="max-width-col-5 stack horizontal align-items-center gap-h8"
+                type="button"
+              >
+                <span class="text-overflow-ellipsis">Provinces</span>
+                <Icon
+                  name="gridicons:chevron-down"
+                  title="open provinces menu"
+                  role="img"
+                  style="flex-shrink: 0;"
+                />
+              </button>
+              <div popover id="area" class="padding-h3 border-radius-m align-items-start">
+                <ul class="reset stack gap-h3" style="white-space: nowrap">
+                  {
+                    areas.map(area => {
+                      return (
+                        <li class="stack horizontal align-items-center">
+                          <input
+                            type="checkbox"
+                            id={area.code_name}
+                            value={area.code_name}
+                            name="areas"
+                            data-code={area.code_name}
+                            data-label={area.name[lang.code]}
+                          />
+                          <label for={area.code_name}>{area.name[lang.code]}</label>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              </div>
+            </div>
+            <div class="popover-wrapper">
+              <button
+                disabled
+                data-remove-disabled
+                popovertarget="organizationType"
+                id="organizationTypeBtn"
+                class="max-width-col-5 stack horizontal align-items-center gap-h8"
+                type="button"
+              >
+                <span class="text-overflow-ellipsis">Types</span>
+                <Icon
+                  name="gridicons:chevron-down"
+                  title="open types menu"
+                  role="img"
+                  style="flex-shrink: 0;"
+                />
+              </button>
+              <div
+                popover
+                id="organizationType"
+                class="padding-h3 border-radius-m align-items-start"
+              >
+                <ul class="reset stack gap-h3" style="white-space: nowrap">
+                  {
+                    organizationTypes.map(d => {
+                      const label = d.translations.find(
+                        t => t.language_code === lang.code
+                      ).default_label
+                      return (
+                        <li class="stack horizontal align-items-center">
+                          <input
+                            type="checkbox"
+                            id={d.code_name}
+                            value={d.code_name}
+                            name="types"
+                            data-code={d.code_name}
+                            data-label={label}
+                          />
+                          <label for={d.code_name}>{label}</label>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              </div>
+            </div>
+            <div class="popover-wrapper">
+              <button
+                disabled
+                data-remove-disabled
+                popovertarget="service"
+                id="serviceBtn"
+                class="max-width-col-5 stack horizontal align-items-center gap-h8"
+                type="button"
+              >
+                <span class="text-overflow-ellipsis">Services</span>
+                <Icon
+                  name="gridicons:chevron-down"
+                  title="open services menu"
+                  role="img"
+                  style="flex-shrink: 0;"
+                />
+              </button>
+              <div popover id="service" class="padding-h3 border-radius-m align-items-start">
+                <ul class="reset stack gap-h3" style="white-space: nowrap">
+                  {
+                    gamesRelatedServices.map(d => {
+                      const label = d.translations.find(
+                        t => t.language_code === lang.code
+                      ).default_label
+
+                      return (
+                        <li class="stack horizontal align-items-center">
+                          <input
+                            type="checkbox"
+                            id={d.code_name}
+                            value={d.code_name}
+                            name="services"
+                            data-code={d.code_name}
+                            data-label={label}
+                          />
+                          <label for={d.code_name}>{label}</label>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              </div>
+            </div>
+            <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
+          </form>
+        </div>
+
+        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
+          <IO ul $skipNoInner class="reset">
+            {
+              organizations?.map(organization => {
+                const { name, path, logo, typesTranslated, location, servicesTranslated } =
+                  organization
+
+                const nameIsLong = name.length > 30
+
+                return (
+                  <li
+                    class="card-organization
+                      box no-border stack gap-down-h7
+                      border-radius-s
+                      breakout-clickable"
+                    style=""
+                    data-area={location?.area.code_name}
+                    data-types={typesTranslated?.map(t => t.code_name)}
+                    data-services={servicesTranslated?.map(t => t.code_name)}
+                  >
+                    <div
+                      class="center intrinsic"
+                      style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
+                    >
+                      {logo?.src ? (
+                        <ImgDirectus
+                          image={logo}
+                          src={logo?.src}
+                          alt={name}
+                          loading="lazy"
+                          class=""
+                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                          width="120"
+                          height="120"
+                          fit="inside"
+                          quality="99"
+                        />
+                      ) : (
+                        <Img
+                          src={placeholderWPlayCircleBlue}
+                          alt="logo"
+                          loading="lazy"
+                          class=""
+                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                          width="120"
+                          height="120"
+                        />
+                      )}
+                    </div>
+                    <h3>
+                      <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
+                        {name}
+                      </a>
+                    </h3>
+                    <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
+                      <ul class="reset">
+                        {typesTranslated?.map(type => {
+                          const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
+                          return (
+                            <li
+                              class={`box no-border padding-x-h8 padding-y-h9
+                                                            ${currentPalette} color-palette-variation-contrast
+                                                            border-radius-s`}
+                            >
+                              {
+                                type.translations.find(t => t.language_code === lang.code)
+                                  .default_label
+                              }
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </IO>
+                  </li>
+                )
+              })
+            }
+          </IO>
+        </IO>
+      </div>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+  .sort.asc::after {
+    content: '\002B06';
+    padding-left: 3px;
+  }
+  .sort.desc::after {
+    content: '\002B07';
+    padding-left: 3px;
+  }
+
+  [popovertarget='area'] {
+    anchor-name: --area-anchor;
+  }
+  [popovertarget='organizationType'] {
+    anchor-name: --organizationType-anchor;
+  }
+  [popovertarget='service'] {
+    anchor-name: --service-anchor;
+  }
+  [popover] {
+    position: absolute;
+  }
+  [popover]::backdrop {
+    background-color: rgb(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
+  }
+
+  @supports (anchor-name: --anchor) {
+    [popover] {
+      position: absolute;
+      margin: 0;
+      margin-block-start: 0.25rem;
+      position-try-fallbacks: flip-inline;
+      &#area {
+        position-anchor: --area-anchor;
+        position-area: bottom span-right;
+      }
+      &#organizationType {
+        position-anchor: --organizationType-anchor;
+        position-area: bottom;
+      }
+      &#service {
+        position-anchor: --service-anchor;
+        position-area: bottom span-left;
+      }
+    }
+  }
+</style>
+
+<script>
+  import {
+    organizationsFiltersStore,
+    updateFilter,
+    resetFilters,
+    getInitialState,
+  } from '@stores/organizations-filters'
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('#organizationsForm')
+    const areaInputs = document.querySelectorAll('input[name="areas"]')
+    const typeInputs = document.querySelectorAll('input[name="types"]')
+    const serviceInputs = document.querySelectorAll('input[name="services"]')
+    const resetButton = document.querySelector('#resetBtn')
+
+    const areaBtnSpan = document.querySelector('#areaBtn span')
+    const typeBtnSpan = document.querySelector('#organizationTypeBtn span')
+    const serviceBtnSpan = document.querySelector('#serviceBtn span')
+
+    function updateButtonTexts(state) {
+      const { areas, types, services } = state
+      const areaLabel = Array.from(areaInputs)
+        .filter(input => input.checked)[0]
+        ?.getAttribute('data-label')
+
+      const typeLabel = Array.from(typeInputs)
+        .filter(input => input.checked)[0]
+        ?.getAttribute('data-label')
+
+      const serviceLabel = Array.from(serviceInputs)
+        .filter(input => input.checked)[0]
+        ?.getAttribute('data-label')
+
+      areaBtnSpan.textContent =
+        areas.length > 1
+          ? `Provinces${areas.length ? ` (${areas.length})` : ''}`
+          : areaLabel || 'Provinces'
+      typeBtnSpan.textContent =
+        types.length > 1 ? `Types${types.length ? ` (${types.length})` : ''}` : typeLabel || 'Types'
+      serviceBtnSpan.textContent =
+        services.length > 1
+          ? `Services${services.length ? ` (${services.length})` : ''}`
+          : serviceLabel || 'Services'
+    }
+
+    function filterOrganizations(state) {
+      const { areas, types, services } = state
+
+      // If nothing is selected, show all organizations
+      if (areas.length === 0 && types.length === 0 && services.length === 0) {
+        document.querySelectorAll('.card-organization').forEach(org => {
+          org.classList.remove('hidden')
+        })
+        return
+      }
+
+      document.querySelectorAll('.card-organization').forEach(org => {
+        const orgArea = org.getAttribute('data-area')
+        const orgTypes = org
+          .getAttribute('data-types')
+          .split(',')
+          .map(type => type.trim())
+        const orgServices = org
+          .getAttribute('data-services')
+          .split(',')
+          .map(type => type.trim())
+        if (
+          (!areas.length || areas.some(area => orgArea === area)) &&
+          (!types.length || types.some(type => orgTypes.includes(type))) &&
+          (!services.length || services.some(service => orgServices.includes(service)))
+        ) {
+          org.classList.remove('hidden')
+        } else {
+          org.classList.add('hidden')
+        }
+      })
+    }
+
+    // Initialize form values once from URL params
+    const initialState = getInitialState()
+    areaInputs.forEach(input => {
+      input.checked = initialState.areas.includes(input.getAttribute('data-code'))
+    })
+    typeInputs.forEach(input => {
+      input.checked = initialState.types.includes(input.getAttribute('data-code'))
+    })
+    serviceInputs.forEach(input => {
+      input.checked = initialState.services.includes(input.getAttribute('data-code'))
+    })
+
+    // Handle distance input changes
+    areaInputs?.forEach(input => {
+      input.addEventListener('change', () => {
+        const checkedAreas = Array.from(areaInputs)
+          .filter(input => input.checked)
+          .map(input => input.getAttribute('data-code'))
+        updateFilter('areas', checkedAreas)
+      })
+    })
+
+    // Handle type checkbox changes
+    typeInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        const checkedTypes = Array.from(typeInputs)
+          .filter(input => input.checked)
+          .map(input => input.getAttribute('data-code'))
+        updateFilter('types', checkedTypes)
+      })
+    })
+
+    // Handle service checkbox changes
+    serviceInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        const checkedServices = Array.from(serviceInputs)
+          .filter(input => input.checked)
+          .map(input => input.getAttribute('data-code'))
+        updateFilter('services', checkedServices)
+      })
+    })
+
+    organizationsFiltersStore.listen(state => {
+      // Update UI only
+      updateButtonTexts(state)
+      filterOrganizations(state)
+    })
+
+    // Handle form reset
+    resetButton?.addEventListener('click', () => {
+      setTimeout(() => {
+        resetFilters()
+      }, 0)
+    })
+
+    // Prevent form submission
+    form?.addEventListener('submit', e => {
+      e.preventDefault()
+    })
+  })
+</script>

@@ -10,6 +10,8 @@ export { default as EventsPage } from './EventsPage.astro'
 export { default as HomePage } from './HomePage.astro'
 export { default as OrganizationPage } from './OrganizationPage.astro'
 export { default as OrganizationsPage } from './OrganizationsPage.astro'
+export { default as ServicesPage } from './ServicesPage.astro'
+export { default as ServicePage } from './ServicePage.astro'
 export { default as SkeletonPage } from './SkeletonPage.astro'
 
 // export { default as BlogLayout } from './BlogLayout.astro'

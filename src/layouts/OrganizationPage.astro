@@ -33,6 +33,7 @@ const {
     // description,
     // gallery,
     links,
+    admin_categories,
     events: eventsUnfiltered,
   },
 } = Astro.props
@@ -62,8 +63,6 @@ const srcCover = imageDirectusSrc({
 })
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-
-console.log(rich_text_content)
 ---
 
 <!-- <Debug {name} /> -->
@@ -227,7 +226,7 @@ console.log(rich_text_content)
         stack gap-down-h7
       "
             set:html={rich_text_content}
-          ></div>
+          />
         )
       }
 

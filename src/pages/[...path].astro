@@ -11,8 +11,10 @@ import {
   HomePage,
   OrganizationPage,
   OrganizationsPage,
+  ServicesPage,
+  ServicePage,
 } from '@layouts'
-import { createPath } from '@utils'
+import { createPath, slugify } from '@utils'
 import { areas as areasData } from '../store/transforms/utils.js'
 import {
   // areas as areasData,
@@ -34,6 +36,12 @@ export async function getStaticPaths() {
   const languages = await fetchLanguages()
   const dictionary = await fetchDictionary()
   const organizations = await getOrganizations()
+  const gamesRelatedServices = dictionary?.filter(d =>
+    d.tag_categories?.some(category => category === 'games_related_service')
+  )
+  const paidPartners = organizations?.filter(o =>
+    o.admin_categories?.some(category => category === 'paid_partner')
+  )
   // Using our new data service for events
   const today = new Date()
   // const oneDayAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1, today.getHours(), today.getMinutes(), today.getSeconds())
@@ -66,6 +74,25 @@ export async function getStaticPaths() {
       return {
         params: { path: organization.path },
         props: { lang, organization },
+      }
+    })
+    const gamesRelatedServicesStaticPaths = gamesRelatedServices.map(service => {
+      const path = createPath({ type: 'service', slug: slugify(service.code_name) })
+      return {
+        params: { path },
+        props: {
+          lang,
+          service,
+          services: gamesRelatedServices,
+          dictionary,
+          areas: areasData,
+          // organizations: paidPartners,
+          organizations: paidPartners.filter(o => {
+            return o.games_related_services?.some(
+              service2 => service2.service.code_name === service.code_name
+            )
+          }),
+        },
       }
     })
     const eventsStaticPaths = [...events, ...canonicalEvents].map(event => {
@@ -110,6 +137,22 @@ export async function getStaticPaths() {
         },
       },
       {
+        params: { path: createPath({ type: 'services' }) },
+        props: {
+          lang,
+          organizations: paidPartners,
+          areas: areasData,
+          services: gamesRelatedServices,
+          dictionary: dictionary?.sort((d1, d2) =>
+            d1.translations
+              .find(t => t.language_code === lang.code)
+              .default_label.localeCompare(
+                d2.translations.find(t => t.language_code === lang.code).default_label
+              )
+          ),
+        },
+      },
+      {
         params: { path: createPath({ type: 'events' }) },
         props: {
           lang,
@@ -138,6 +181,7 @@ export async function getStaticPaths() {
     staticPaths = [
       ...staticPaths,
       ...organizationsStaticPaths,
+      ...gamesRelatedServicesStaticPaths,
       ...eventsStaticPaths,
       ...articlesStaticPaths,
       ...areasStaticPaths,
@@ -154,6 +198,8 @@ const {
   dictionary,
   organization,
   organizations,
+  service,
+  services,
   event,
   events,
   article,
@@ -175,8 +221,14 @@ const {
       <OrganizationsPage {organizations} {lang} {areas} {dictionary} />
     )
   }
+  {
+    path === createPath({ type: 'services' }) && (
+      <ServicesPage {organizations} {lang} {areas} {services} {dictionary} />
+    )
+  }
   <!-- ITEMS PAGES -->
   {organization && <OrganizationPage {organization} {lang} />}
+  {service && <ServicePage {organizations} {service} {lang} {areas} {services} {dictionary} />}
   {event && <EventPage {event} {lang} />}
   {article && <ArticlePage {article} {lang} />}
   {area && <AreaPage {area} {lang} {events} {organizations} />}

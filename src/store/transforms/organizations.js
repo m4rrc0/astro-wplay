@@ -1,5 +1,11 @@
 import { createPath } from '@utils'
-import { transformAddress, transformImage, transformLink, translateFromCodeName } from './utils'
+import {
+  transformAddress,
+  transformImage,
+  transformLink,
+  translateFromCodeName,
+  transformRichText,
+} from './utils'
 
 /**
  * Transform a raw organization from Directus into our normalized format
@@ -24,6 +30,11 @@ export function transformOrganization(orgRaw) {
     links,
     events,
   } = orgRaw
+
+  const translations = orgRaw?.translations?.map(t => ({
+    ...t,
+    rich_text_content: transformRichText(t?.rich_text_content),
+  }))
 
   // Transform location
   const locationTransformed = transformAddress(location)
@@ -74,6 +85,7 @@ export function transformOrganization(orgRaw) {
     amenities_translated,
     logo: logoTransformed,
     cover_image: cover_image_transformed,
+    translations,
     links: linksTransformed,
     // Store event IDs for normalization
     eventIds: events?.map(e => e.events_id?.id).filter(Boolean),

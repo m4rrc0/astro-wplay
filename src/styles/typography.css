@@ -99,6 +99,7 @@ html {
 /* LINE HEIGHT */
 body {
   line-height: 1.45;
+  text-wrap-style: pretty;
 }
 :--headings {
   line-height: 1.1;

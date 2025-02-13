@@ -97,12 +97,12 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
             : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}
         >
           <h1 class="" set:html={name} />
-          <div>
+          <div class="stack gap-down-h8">
             {presentation && <p class="h3">{presentation}</p>}
             {
               location?.string && (
                 <p class="h6">
-                  <a href={location.gMapLink} target="_blank" rel="noopener noreferrer">
+                  <a href={location.gMapLink} target="_blank" rel="noopener noreferrer nofollow">
                     {location.fullString}
                   </a>
                 </p>
@@ -151,7 +151,7 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
                     <a
                       href={boardgame_related ? `/${path}/` : links?.[0]?.url}
                       target={boardgame_related ? '_self' : '_blank'}
-                      rel={boardgame_related ? 'self' : 'noopener noreferrer'}
+                      rel={boardgame_related ? 'self' : 'noopener noreferrer nofollow'}
                       class="box no-border stack center intrinsic gap-down-h8"
                     >
                       {logo?.src && (
@@ -297,21 +297,25 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
         links?.[0] && (
           <div class="box no-border cluster center max-width-measure-h4">
             <ul class="reset justify-content-space-around">
-              {links.map(({ name, url, iconName }) => (
-                <li>
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="
+              {links.map(({ name, url, iconName }) => {
+                const followPolicy = name?.code_name === 'website' ? 'dofollow' : 'nofollow'
+
+                return (
+                  <li>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel={`noopener noreferrer ${followPolicy}`}
+                      class="
                   box no-border stack center intrinsic gap-down-h8
                 "
-                  >
-                    <Icon name={iconName} size="1em" class="size-h1" />
-                    <div class="size-h4">{name.fr}</div>
-                  </a>
-                </li>
-              ))}
+                    >
+                      <Icon name={iconName} size="1em" class="size-h1" />
+                      <div class="size-h4">{name.fr}</div>
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         )

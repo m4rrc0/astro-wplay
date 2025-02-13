@@ -82,7 +82,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <main class="center max" style="margin-top: 0;">
       <header>
         <div
-          class="center text box no-border
+          class="center text box no-border stack gap-down-h7
             color-palette-trans
             h1 padding-y-relative-xl
             background-overlay"
@@ -95,7 +95,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           {
             location?.string && (
               <p class="h6">
-                <a href={location.gMapLink} target="_blank" rel="noopener noreferrer">
+                <a href={location.gMapLink} target="_blank" rel="noopener noreferrer nofollow">
                   {location.string}
                 </a>
               </p>
@@ -235,21 +235,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         links?.[0] && (
           <div class="box no-border cluster center max-width-measure-h4">
             <ul class="reset justify-content-space-around">
-              {links.map(({ name, url, iconName }) => (
-                <li>
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="
+              {links.map(({ name, url, iconName }) => {
+                const followPolicy = name?.code_name === 'website' ? 'dofollow' : 'nofollow'
+                return (
+                  <li>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel={`noopener noreferrer ${followPolicy}`}
+                      class="
                   box no-border stack center intrinsic gap-down-h8
                 "
-                  >
-                    <Icon name={iconName} size="1em" class="size-h1" />
-                    <div class="size-h4">{name.fr}</div>
-                  </a>
-                </li>
-              ))}
+                    >
+                      <Icon name={iconName} size="1em" class="size-h1" />
+                      <div class="size-h4">{name.fr}</div>
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         )

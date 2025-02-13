@@ -247,3 +247,31 @@ export function transformLink({ name, url }, warningCue) {
     iconName,
   }
 }
+
+export function transformRichText(html) {
+  if (!html) return html
+
+  // Remove potentially dangerous elements and attributes
+  const dangerousElements = ['script', 'iframe', 'object', 'embed', 'form']
+  const dangerousAttributes = ['onerror', 'onload', 'onmouseover', 'onclick', 'onmouseout', 'onkeydown', 'onkeyup']
+  
+  let sanitizedHtml = html
+
+  // Remove dangerous elements
+  dangerousElements.forEach(element => {
+    const regex = new RegExp(`<${element}[^>]*>.*?<\/${element}>`, 'gis')
+    sanitizedHtml = sanitizedHtml.replace(regex, '')
+  })
+
+  // Remove dangerous attributes
+  dangerousAttributes.forEach(attr => {
+    const regex = new RegExp(`\\s${attr}=["'][^"']*["']`, 'gi')
+    sanitizedHtml = sanitizedHtml.replace(regex, '')
+  })
+
+  // Remove javascript: and data: URLs
+  sanitizedHtml = sanitizedHtml.replace(/(?:\bon[a-z]+\s*=|href\s*=\s*["'](?:javascript:|data:))[^"']*/gi, '')
+
+  // Add security attributes to all links
+  return sanitizedHtml.replaceAll('<a href', '<a target="_blank" rel="noopener noreferrer nofollow" href')
+}

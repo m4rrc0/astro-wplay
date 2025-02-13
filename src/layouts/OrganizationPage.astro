@@ -212,7 +212,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       "
           >
             <h2>Description</h2>
-            <Markdown content={description} />
+            <Markdown content={description} class="stack" style="--gap:1em" />
           </div>
         )
       }
@@ -223,8 +223,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             class="
         box no-border center
         max-width-measure-h4
-        stack gap-down-h7
+        stack
       "
+            style="--gap:1em"
             set:html={rich_text_content}
           />
         )

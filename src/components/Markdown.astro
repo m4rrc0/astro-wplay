@@ -7,8 +7,8 @@ const marked = new Marked({
 })
 
 const {
-  props: { content, Element = 'div' },
+  props: { content, Element = 'div', ...props },
 } = Astro
 ---
 
-<Element set:html={marked.parse(content)} />
+<Element {...props} set:html={marked.parse(content)} />

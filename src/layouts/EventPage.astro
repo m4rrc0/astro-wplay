@@ -41,7 +41,7 @@ const {
 } = Astro.props
 
 const { day, monthLong, year } = time_start?.[lang.code] || {}
-const { description, highlighted_details } =
+const { description, highlighted_details, rich_text_content } =
   translations?.find(({ languages_code }) => languages_code === lang.code) || {}
 const presentation =
   location?.addressLocality &&
@@ -260,7 +260,7 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
       "
           >
             <h2>Infos importantes</h2>
-            <Markdown content={highlighted_details} />
+            <Markdown content={highlighted_details} class="stack" style="--gap:1em" />
           </div>
         )
       }
@@ -274,8 +274,22 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
       "
           >
             <h2>Description</h2>
-            <Markdown content={description} />
+            <Markdown content={description} class="stack" style="--gap:1em" />
           </div>
+        )
+      }
+
+      {
+        rich_text_content && (
+          <div
+            class="
+        box no-border center
+        max-width-measure-h4
+        stack
+      "
+            style="--gap:1em"
+            set:html={rich_text_content}
+          />
         )
       }
 

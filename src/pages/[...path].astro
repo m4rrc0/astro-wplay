@@ -181,7 +181,7 @@ export async function getStaticPaths() {
     staticPaths = [
       ...staticPaths,
       ...organizationsStaticPaths,
-      ...gamesRelatedServicesStaticPaths,
+      // ...gamesRelatedServicesStaticPaths,
       ...eventsStaticPaths,
       ...articlesStaticPaths,
       ...areasStaticPaths,
@@ -228,7 +228,9 @@ const {
   }
   <!-- ITEMS PAGES -->
   {organization && <OrganizationPage {organization} {lang} />}
-  {service && <ServicePage {organizations} {service} {lang} {areas} {services} {dictionary} />}
+  {
+    /* {service && <ServicePage {organizations} {service} {lang} {areas} {services} {dictionary} />} */
+  }
   {event && <EventPage {event} {lang} />}
   {article && <ArticlePage {article} {lang} />}
   {area && <AreaPage {area} {lang} {events} {organizations} />}

@@ -1,6 +1,7 @@
 import { atom, onMount } from 'nanostores'
-import { createRouter, redirectPage } from '@nanostores/router'
+import { createRouter as cr, redirectPage } from '@nanostores/router'
 
+export const createRouter = cr
 // Create router with search params
 export const router = createRouter({
   organizations: '/fr/o/', // Our base route
@@ -14,12 +15,12 @@ const defaultState = {
 
 // Extract initial state from URL search params
 export function getInitialState() {
-  const { search } = router.get()
+  const { search } = router.get() || {}
   return {
     ...defaultState,
-    ...((search.areas?.length ?? 0) > 0 ? { areas: decodeArray(search.areas) } : {}),
-    ...((search.types?.length ?? 0) > 0 ? { types: decodeArray(search.types) } : {}),
-    ...((search.services?.length ?? 0) > 0 ? { services: decodeArray(search.services) } : {}),
+    ...((search?.areas?.length ?? 0) > 0 ? { areas: decodeArray(search?.areas) } : {}),
+    ...((search?.types?.length ?? 0) > 0 ? { types: decodeArray(search?.types) } : {}),
+    ...((search?.services?.length ?? 0) > 0 ? { services: decodeArray(search?.services) } : {}),
   }
 }
 

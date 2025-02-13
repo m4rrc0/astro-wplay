@@ -3,7 +3,14 @@ import { IO, Img, ImgDirectus, SEO } from '@components'
 import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
 import { BasicPage, SkeletonPage } from '@layouts'
 import { Icon } from 'astro-icon/components'
-import { Content as ServicesText, getHeadings, frontmatter } from '@partials/texts/fr/services.md'
+// import { Content as ServicesText, getHeadings, frontmatter } from '@partials/texts/fr/services.md'
+import {
+  Content as IntroServicesText,
+  getHeadings,
+  frontmatter,
+} from '@partials/texts/fr/services/intro.md'
+import { Content as BottomServicesText } from '@partials/texts/fr/services/bottom.md'
+import { Content as CTAWPlayText } from '@partials/texts/fr/services/cta-wplay.md'
 
 const { lang, organizations, areas, dictionary } = Astro.props
 const organizationTypes = dictionary.filter(d => d.tag_categories.includes('organization_type'))
@@ -30,15 +37,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   />
   <BasicPage {lang}>
     <main class="center width-max">
-      <div id="organizations-list-container" class="box no-border stack gap-down-h1">
+      <div id="organizations-list-container" class="box no-border stack gap-down-h-1">
         <!-- <h1 class="center text">Le jeu de société en Belgique</h1> -->
 
-        <div class="center max-width-measure-h3">
-          <ServicesText />
+        <div class="center max-width-measure-h3 stack gap-down" style="--gap-down:1em">
+          <IntroServicesText />
         </div>
 
-        <h2 class="center max-width-measure-h3">Nos experts</h2>
+        <h2 class="h1 center max-width-measure-h3">Nos partenaires</h2>
         {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
+        {
+          /*
         <div id="organization-form-filter-wrapper" class="center">
           <form
             id="organizationsForm"
@@ -84,52 +93,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 </ul>
               </div>
             </div>
-            <div class="popover-wrapper">
-              <button
-                disabled
-                data-remove-disabled
-                popovertarget="organizationType"
-                id="organizationTypeBtn"
-                class="max-width-col-5 stack horizontal align-items-center gap-h8"
-                type="button"
-              >
-                <span class="text-overflow-ellipsis">Types</span>
-                <Icon
-                  name="gridicons:chevron-down"
-                  title="open types menu"
-                  role="img"
-                  style="flex-shrink: 0;"
-                />
-              </button>
-              <div
-                popover
-                id="organizationType"
-                class="padding-h3 border-radius-m align-items-start"
-              >
-                <ul class="reset stack gap-h3" style="white-space: nowrap">
-                  {
-                    organizationTypes.map(d => {
-                      const label = d.translations.find(
-                        t => t.language_code === lang.code
-                      ).default_label
-                      return (
-                        <li class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={d.code_name}
-                            value={d.code_name}
-                            name="types"
-                            data-code={d.code_name}
-                            data-label={label}
-                          />
-                          <label for={d.code_name}>{label}</label>
-                        </li>
-                      )
-                    })
-                  }
-                </ul>
-              </div>
-            </div>
+
             <div class="popover-wrapper">
               <button
                 disabled
@@ -176,9 +140,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
           </form>
         </div>
+         */
+        }
 
         <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
-          <IO ul $skipNoInner class="reset">
+          <ul class="reset">
             {
               organizations?.map(organization => {
                 const { name, path, logo, typesTranslated, location, servicesTranslated } =
@@ -226,12 +192,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                         />
                       )}
                     </div>
-                    <h3>
+                    <h4>
                       <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
                         {name}
                       </a>
-                    </h3>
-                    <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
+                    </h4>
+                    <div class="cluster gap-down-h8">
                       <ul class="reset">
                         {typesTranslated?.map(type => {
                           const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
@@ -249,13 +215,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                           )
                         })}
                       </ul>
-                    </IO>
+                    </div>
                   </li>
                 )
               })
             }
-          </IO>
+          </ul>
         </IO>
+        <div class="center max-width-measure-h3 stack gap-down" style="--gap-down:1em">
+          <BottomServicesText />
+        </div>
+        <div class="center max-width-measure-h3 stack gap-down box" style="--gap-down:1em">
+          <CTAWPlayText />
+        </div>
       </div>
     </main>
   </BasicPage>
@@ -310,8 +282,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   }
 </style>
 
+{
+  /*
 <script>
   import {
+    // createRouter,
     organizationsFiltersStore,
     updateFilter,
     resetFilters,
@@ -321,21 +296,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#organizationsForm')
     const areaInputs = document.querySelectorAll('input[name="areas"]')
-    const typeInputs = document.querySelectorAll('input[name="types"]')
     const serviceInputs = document.querySelectorAll('input[name="services"]')
     const resetButton = document.querySelector('#resetBtn')
 
     const areaBtnSpan = document.querySelector('#areaBtn span')
-    const typeBtnSpan = document.querySelector('#organizationTypeBtn span')
     const serviceBtnSpan = document.querySelector('#serviceBtn span')
 
     function updateButtonTexts(state) {
-      const { areas, types, services } = state
+      const { areas, services } = state
       const areaLabel = Array.from(areaInputs)
-        .filter(input => input.checked)[0]
-        ?.getAttribute('data-label')
-
-      const typeLabel = Array.from(typeInputs)
         .filter(input => input.checked)[0]
         ?.getAttribute('data-label')
 
@@ -347,8 +316,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         areas.length > 1
           ? `Provinces${areas.length ? ` (${areas.length})` : ''}`
           : areaLabel || 'Provinces'
-      typeBtnSpan.textContent =
-        types.length > 1 ? `Types${types.length ? ` (${types.length})` : ''}` : typeLabel || 'Types'
       serviceBtnSpan.textContent =
         services.length > 1
           ? `Services${services.length ? ` (${services.length})` : ''}`
@@ -356,10 +323,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     }
 
     function filterOrganizations(state) {
-      const { areas, types, services } = state
+      const { areas, services } = state
 
       // If nothing is selected, show all organizations
-      if (areas.length === 0 && types.length === 0 && services.length === 0) {
+      if (areas.length === 0 && services.length === 0) {
         document.querySelectorAll('.card-organization').forEach(org => {
           org.classList.remove('hidden')
         })
@@ -368,17 +335,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
       document.querySelectorAll('.card-organization').forEach(org => {
         const orgArea = org.getAttribute('data-area')
-        const orgTypes = org
-          .getAttribute('data-types')
-          .split(',')
-          .map(type => type.trim())
         const orgServices = org
           .getAttribute('data-services')
           .split(',')
           .map(type => type.trim())
         if (
           (!areas.length || areas.some(area => orgArea === area)) &&
-          (!types.length || types.some(type => orgTypes.includes(type))) &&
           (!services.length || services.some(service => orgServices.includes(service)))
         ) {
           org.classList.remove('hidden')
@@ -389,12 +351,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     }
 
     // Initialize form values once from URL params
-    const initialState = getInitialState()
+    const initialState = getInitialState(router)
     areaInputs.forEach(input => {
       input.checked = initialState.areas.includes(input.getAttribute('data-code'))
-    })
-    typeInputs.forEach(input => {
-      input.checked = initialState.types.includes(input.getAttribute('data-code'))
     })
     serviceInputs.forEach(input => {
       input.checked = initialState.services.includes(input.getAttribute('data-code'))
@@ -407,16 +366,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           .filter(input => input.checked)
           .map(input => input.getAttribute('data-code'))
         updateFilter('areas', checkedAreas)
-      })
-    })
-
-    // Handle type checkbox changes
-    typeInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        const checkedTypes = Array.from(typeInputs)
-          .filter(input => input.checked)
-          .map(input => input.getAttribute('data-code'))
-        updateFilter('types', checkedTypes)
       })
     })
 
@@ -448,4 +397,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       e.preventDefault()
     })
   })
-</script>
+</script> */
+}

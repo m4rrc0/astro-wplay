@@ -19,65 +19,65 @@ export function generateOccurrences(event, eventSchedule, scheduleRuleSet) {
 
   const occurrences = event.isRecurring
     ? scheduleRuleSet.all().map(date => {
-        const dateStr = stripDate(date).slice(0, -3)
-        const dateSlug = dateStr.replace(':', 'h').toLowerCase()
-        const slug = `${event.nameSlug}-${dateSlug}`
-        const path = createPath({ type: 'event', slug })
+      const dateStr = stripDate(date).slice(0, -3)
+      const dateSlug = dateStr.replace(':', 'h').toLowerCase()
+      const slug = `${event.nameSlug}-${dateSlug}`
+      const path = createPath({ type: 'event', slug })
 
-        // Map an occurance to its corresponding eventSchedule.
-        // eventSchedule of type unique take precedence in this case because we might want to overwrite an occurance to add more data
-        let matchingSchedule = allSchedulesArray.find(schedule => {
-          // First run looks for more precise eventSchedulePart
-          if (schedule.type === 'recurring') return false
+      // Map an occurance to its corresponding eventSchedule.
+      // eventSchedule of type unique take precedence in this case because we might want to overwrite an occurance to add more data
+      let matchingSchedule = allSchedulesArray.find(schedule => {
+        // First run looks for more precise eventSchedulePart
+        if (schedule.type === 'recurring') return false
 
-          let currentDateStr =
-            schedule?.startDateStr || // in case of eventSchedule
-            schedule?.time_start?.dateStr // in case of formattedSchedule
+        let currentDateStr =
+          schedule?.startDateStr || // in case of eventSchedule
+          schedule?.time_start?.dateStr // in case of formattedSchedule
 
-          return currentDateStr === dateStr
-        })
-
-        if (!matchingSchedule) {
-          // Second run looks for a match in recurring eventSchedulePart
-          matchingSchedule = allSchedulesArray.find(schedule => {
-            // First run looks for more precise eventSchedulePart
-            if (schedule.type !== 'recurring') return false
-
-            return schedule.rrule.all().some(d => d.getTime() === date.getTime())
-          })
-        }
-
-        const time_start = transformDateTime(date)
-        let time_end = undefined
-        if (matchingSchedule?.time_end) {
-          time_end = matchingSchedule.time_end
-        } else if (matchingSchedule?.type === 'recurring') {
-          const occEndTime = matchingSchedule.endTime
-          let occEndDate = undefined
-          if (matchingSchedule.endTime < matchingSchedule.startTime) {
-            const { string } = datePlus1Day(date)
-            occEndDate = string.split('T')[0]
-          } else {
-            occEndDate = dateStr.split('T')[0]
-          }
-
-          const occEndDateTime = occEndDate + (occEndTime ? `T${occEndTime}` : '')
-          time_end = transformDateTime(occEndDateTime)
-        } else if (matchingSchedule?.type === 'unique') {
-          time_end = transformDateTime(matchingSchedule.endDateStr)
-        }
-
-        return {
-          date,
-          dateStr,
-          dateSlug,
-          slug,
-          path,
-          time_start,
-          time_end,
-          isPast: matchingSchedule?.isPast,
-        }
+        return currentDateStr === dateStr
       })
+
+      if (!matchingSchedule) {
+        // Second run looks for a match in recurring eventSchedulePart
+        matchingSchedule = allSchedulesArray.find(schedule => {
+          // First run looks for more precise eventSchedulePart
+          if (schedule.type !== 'recurring') return false
+
+          return schedule.rrule.all().some(d => d.getTime() === date.getTime())
+        })
+      }
+
+      const time_start = transformDateTime(date)
+      let time_end = undefined
+      if (matchingSchedule?.time_end) {
+        time_end = matchingSchedule.time_end
+      } else if (matchingSchedule?.type === 'recurring') {
+        const occEndTime = matchingSchedule.endTime
+        let occEndDate = undefined
+        if (matchingSchedule.endTime < matchingSchedule.startTime) {
+          const { string } = datePlus1Day(date)
+          occEndDate = string.split('T')[0]
+        } else {
+          occEndDate = dateStr.split('T')[0]
+        }
+
+        const occEndDateTime = occEndDate + (occEndTime ? `T${occEndTime}` : '')
+        time_end = transformDateTime(occEndDateTime)
+      } else if (matchingSchedule?.type === 'unique') {
+        time_end = transformDateTime(matchingSchedule.endDateStr)
+      }
+
+      return {
+        date,
+        dateStr,
+        dateSlug,
+        slug,
+        path,
+        time_start,
+        time_end,
+        isPast: matchingSchedule?.isPast,
+      }
+    })
     : null
 
   return occurrences
@@ -160,9 +160,9 @@ export function flattenEvents(eventsUnflat = [], { after, before }) {
 
     // console.log({ startStr, endStr, afterStr, beforeStr })
     if (!endStr) {
-      return (afterStr ? startStr > afterStr : true) && (beforeStr ? startStr < beforeStr : true)
+      return (afterStr ? startStr >= afterStr : true) && (beforeStr ? startStr <= beforeStr : true)
     }
-    return (afterStr ? endStr > afterStr : true) && (beforeStr ? startStr < beforeStr : true)
+    return (afterStr ? endStr >= afterStr : true) && (beforeStr ? startStr <= beforeStr : true)
   })
 
   events.sort((prev, next) => {

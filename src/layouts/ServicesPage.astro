@@ -35,7 +35,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     ogVideo={false}
     twitterCard="summary"
   />
-  <BasicPage {lang}>
+  <BasicPage {lang} class="color-palette-darker color-palette-variation-contrast">
     <main class="center width-max">
       <div id="organizations-list-container" class="box no-border stack gap-down-h-1">
         <!-- <h1 class="center text">Le jeu de société en Belgique</h1> -->
@@ -157,7 +157,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     class="card-organization
                       box no-border stack gap-down-h7
                       border-radius-s
-                      breakout-clickable"
+                      breakout-clickable
+                      color-palette-main color-palette-variation-classic"
                     style=""
                     data-area={location?.area.code_name}
                     data-types={typesTranslated?.map(t => t.code_name)}
@@ -222,11 +223,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             }
           </ul>
         </IO>
-        <div class="center max-width-measure-h3 stack gap-down" style="--gap-down:1em">
-          <BottomServicesText />
-        </div>
         <div class="center max-width-measure-h3 stack gap-down box" style="--gap-down:1em">
           <CTAWPlayText />
+        </div>
+        <div
+          class="bottom-services-text center max-width-measure-h3 stack gap-down"
+          style="--gap-down:1em"
+        >
+          <BottomServicesText />
         </div>
       </div>
     </main>
@@ -279,6 +283,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         position-area: bottom span-left;
       }
     }
+  }
+  .bottom-services-text > :global(ul) {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 </style>
 

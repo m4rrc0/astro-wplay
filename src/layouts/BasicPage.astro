@@ -2,7 +2,7 @@
 import { MtObf } from '@components'
 import { Icon } from 'astro-icon/components'
 
-const { lang } = Astro.props
+const { lang, class: className } = Astro.props
 
 const email = import.meta.env.CONTACT_EMAIL
 
@@ -18,10 +18,10 @@ const ariaCurrentAttr = currentHref => {
 
 <div
   id="layout-page-base"
-  class="layout-page stack split-after-2 gap-down-h1 justify-start"
+  class={`layout-page stack split-after-2 gap-down-h1 justify-start ${className}`}
   style="min-height: 100vh;"
 >
-  <div id="menu-main" class="color-palette-">
+  <div id="menu-main" class="color-palette-main">
     <div class="center width-max">
       <nav class="box no-border cluster overflow gap-h6-down">
         <ul class="reset reset-down-a size-h3">
@@ -156,8 +156,11 @@ const ariaCurrentAttr = currentHref => {
 
   <slot />
 
-  <footer id="footer-main" class="skew-border-before
-    color-palette-variation-contrast">
+  <footer
+    id="footer-main"
+    class="skew-border-before
+    color-palette-main color-palette-variation-contrast"
+  >
     <div class="box no-border center intrinsic text stack gap-down-h7">
       <div class="cluster justify-center size-h3">
         <div>
@@ -225,47 +228,48 @@ const ariaCurrentAttr = currentHref => {
       </div> -->
     </div>
   </footer>
+</div>
 
-  <style>
-    /* #template-global {
+<style>
+  /* #template-global {
     margin-bottom: var(--gap-xxl);
   } */
-    #menu-main {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
-    }
-    nav {
-      /* --gap: var(--size-h6); */
-      /* margin: var(--gap) 0; */
-      --justify-content: flex-end;
-    }
-    nav > ul > li:first-child {
-      --justify-content: flex-start;
-      flex-grow: 1;
-    }
-    nav > ul > li:first-child > a {
-      max-width: max-content;
-    }
-    nav > ul > li > input {
-      padding: 0;
-    }
-    nav > ul > li > input:hover {
-      background-color: initial;
-      color: var(--color-text__a--hover);
-    }
-    :where(#searchBtn) {
-      cursor: pointer;
-    }
-    nav [aria-current='page'] {
-      color: var(--color-text__a--hover);
-      background-color: var(--color-bg__a--hover);
-    }
-    #footer-main {
-      margin-top: 4vw;
-      --skew-before: -1.5deg;
-      --skew-before-origin: top left;
-    }
-  </style>
-</div>
+
+  #menu-main {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+  }
+  nav {
+    /* --gap: var(--size-h6); */
+    /* margin: var(--gap) 0; */
+    --justify-content: flex-end;
+  }
+  nav > ul > li:first-child {
+    --justify-content: flex-start;
+    flex-grow: 1;
+  }
+  nav > ul > li:first-child > a {
+    max-width: max-content;
+  }
+  nav > ul > li > input {
+    padding: 0;
+  }
+  nav > ul > li > input:hover {
+    background-color: initial;
+    color: var(--color-text__a--hover);
+  }
+  :where(#searchBtn) {
+    cursor: pointer;
+  }
+  nav [aria-current='page'] {
+    color: var(--color-text__a--hover);
+    background-color: var(--color-bg__a--hover);
+  }
+  #footer-main {
+    margin-top: 4vw;
+    --skew-before: -1.5deg;
+    --skew-before-origin: top left;
+  }
+</style>

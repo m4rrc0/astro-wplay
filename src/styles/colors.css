@@ -7,6 +7,12 @@
   --color-white: hsl(var(--hsl-white));
   --hsl-blue: 221deg, 55%, 41%;
   --color-blue: hsl(var(--hsl-blue));
+  --hsl-blue-dark: 217deg, 50%, 34%;
+  --color-blue-dark: hsl(var(--hsl-blue-dark));
+  --hsl-blue-darker: 217deg, 49%, 27%;
+  --color-blue-darker: hsl(var(--hsl-blue-darker));
+  --hsl-blue-darkest: 216deg, 50%, 20%;
+  --color-blue-darkest: hsl(var(--hsl-blue-darkest));
   --color-blue-trans: hsla(var(--hsl-blue), 0.8);
   --hsl-teal: 181deg, 100%, 34%;
   --color-teal: hsl(var(--hsl-teal));
@@ -35,7 +41,8 @@ body,
   /* --color-outline: var(); */
   --color-text-decoration: var(--color-secondary);
   /* --color-text-emphasis: var(); */
-  --color-shadow: var(--color-blue-trans); /* has to be used manually in box-shadow definitions */
+  --color-shadow: var(--color-blue-trans);
+  /* has to be used manually in box-shadow definitions */
   /* --color-caret: var(); */
   /* --color-column-rule: var(); */
   /* --color-fill: var(); */
@@ -84,6 +91,7 @@ body,
   --color-primary-palette: var(--color-blue);
   --color-secondary-palette: var(--color-teal);
 }
+
 [data-c-p='teal'],
 [data-c-p='shop'],
 .color-palette-teal,
@@ -92,6 +100,7 @@ body,
   --color-primary-palette: var(--color-teal);
   --color-secondary-palette: var(--color-blue);
 }
+
 [data-c-p='red'],
 [data-c-p='danger'],
 [data-c-p='escape_room'],
@@ -104,6 +113,7 @@ body,
   --color-primary-palette: var(--color-red);
   --color-secondary-palette: var(--color-blue);
 }
+
 [data-c-p='trans'],
 [data-c-p='blue-trans'],
 .color-palette-trans,
@@ -112,6 +122,7 @@ body,
   --color-primary-palette: var(--color-white);
   --color-secondary-palette: var(--color-teal);
 }
+
 [data-c-p='purple'],
 [data-c-p='club'],
 [data-c-p='association'],
@@ -122,6 +133,7 @@ body,
   --color-primary-palette: var(--color-purple);
   --color-secondary-palette: var(--color-orange);
 }
+
 [data-c-p='orange'],
 [data-c-p='warning'],
 [data-c-p='toy_library'],
@@ -132,6 +144,7 @@ body,
   --color-primary-palette: var(--color-orange);
   --color-secondary-palette: var(--color-purple);
 }
+
 [data-c-p='green'],
 [data-c-p='success'],
 [data-c-p='bar'],
@@ -145,6 +158,23 @@ body,
   --color-secondary-palette: var(--color-blue);
 }
 
+[data-c-p='dark'],
+.color-palette-dark,
+.color-palette-darker,
+.color-palette-darkest {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-blue-dark);
+  --color-secondary-palette: var(--color-teal);
+}
+
+.color-palette-darker {
+  --color-primary-palette: var(--color-blue-darker);
+}
+
+.color-palette-darkest {
+  --color-primary-palette: var(--color-blue-darkest);
+}
+
 /* color palette VARIATIONS */
 [data-c-p-var='classic'],
 .color-palette-variation-classic,
@@ -155,24 +185,28 @@ body,
   --color-primary: var(--color-primary-palette);
   --color-secondary: var(--color-secondary-palette);
 }
+
 [data-c-p-var='contrast'],
 .color-palette-variation-contrast {
   --color-neutral: var(--color-primary-palette);
   --color-primary: var(--color-neutral-palette);
   --color-secondary: var(--color-secondary-palette);
 }
+
 [data-c-p-var='funky'],
 .color-palette-variation-funky {
   --color-neutral: var(--color-neutral-palette);
   --color-primary: var(--color-secondary-palette);
   --color-secondary: var(--color-primary-palette);
 }
+
 [data-c-p-var='funky-contrast'],
 .color-palette-variation-funky-contrast {
   --color-neutral: var(--color-secondary-palette);
   --color-primary: var(--color-neutral-palette);
   --color-secondary: var(--color-primary-palette);
 }
+
 /* we can manage exceptions on a variation basis if necessary
   or with more complex selectors */
 /* :--button[data-c-p~="contrast"], */

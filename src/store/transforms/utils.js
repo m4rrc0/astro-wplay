@@ -273,9 +273,9 @@ export function transformRichText(html) {
   // Remove javascript: and data: URLs
   sanitizedHtml = sanitizedHtml.replace(/(?:\bon[a-z]+\s*=|href\s*=\s*["'](?:javascript:|data:))[^"']*/gi, '')
 
+  // NOTE: Old implementation
   // Add security attributes to all links
   // sanitizedHtml = sanitizedHtml.replaceAll('<a href', '<a target="_blank" rel="noopener noreferrer nofollow" href')
-
 
   // initialize DOM Parsing
   const doc = DomParser().parseFromString(sanitizedHtml).root;
@@ -286,5 +286,5 @@ export function transformRichText(html) {
     link.setAttribute("rel", "noopener noreferrer nofollow");
   })
 
-  return doc?.children[0]?.outerHTML || sanitizedHtml
+  return doc?.children?.map(c => c.outerHTML).join('') || sanitizedHtml
 }

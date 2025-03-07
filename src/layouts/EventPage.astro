@@ -252,35 +252,7 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
       </div>} -->
 
       {
-        highlighted_details && (
-          <div
-            class="
-        box no-border center
-        max-width-measure-h4
-      "
-          >
-            <h2>Infos importantes</h2>
-            <Markdown content={highlighted_details} class="stack" style="--gap:1em" />
-          </div>
-        )
-      }
-
-      {
-        description && (
-          <div
-            class="
-        box no-border center
-        max-width-measure-h4
-      "
-          >
-            <h2>Description</h2>
-            <Markdown content={description} class="stack" style="--gap:1em" />
-          </div>
-        )
-      }
-
-      {
-        rich_text_content && (
+        (rich_text_content && (
           <div
             class="
         box no-border center
@@ -290,7 +262,30 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
             style="--gap:1em"
             set:html={rich_text_content}
           />
-        )
+        )) || [
+          highlighted_details && (
+            <div
+              class="
+        box no-border center
+        max-width-measure-h4
+      "
+            >
+              <h2>Infos importantes</h2>
+              <Markdown content={highlighted_details} class="stack" style="--gap:1em" />
+            </div>
+          ),
+          description && (
+            <div
+              class="
+        box no-border center
+        max-width-measure-h4
+      "
+            >
+              <h2>Description</h2>
+              <Markdown content={description} class="stack" style="--gap:1em" />
+            </div>
+          ),
+        ]
       }
 
       {

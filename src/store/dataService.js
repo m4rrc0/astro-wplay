@@ -96,9 +96,9 @@ const eventFields = [
   // ...imageFields("organizers.organizations_id.gallery.*."),
   'organizers.organizations_id.translations.languages_code',
   'organizers.organizations_id.translations.description',
-  'translations.languages_code',
-  'translations.highlighted_details',
-  'translations.description',
+  // 'translations.languages_code',
+  // 'translations.highlighted_details',
+  // 'translations.description',
 ]
 
 const organizationFields = [

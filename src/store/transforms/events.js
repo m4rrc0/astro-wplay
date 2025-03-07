@@ -1,5 +1,5 @@
 import { slugify, createPath } from '@utils'
-import { transformAddress, translateFromCodeName, transformImage, transformLink } from './utils'
+import { transformAddress, translateFromCodeName, transformImage, transformLink, transformRichText } from './utils'
 import { transformSchedulePart, transformSchedules } from './schedule'
 import { setEndDate, setDateTimes, transformDateTime } from './dates'
 import { generateOccurrences } from './flatten'
@@ -56,15 +56,15 @@ export function transformEvent(eventRaw, languages) {
     // amenities_translated: eventRaw.amenities_translated,
     gallery: eventRaw.gallery || mainOrganizer?.gallery,
     // TODO: fetch languages and pass it to this function
-    translations: ['fr'].map(code => {
-      const eventTr = eventRaw.translations?.find(t => t.languages_code === code)
-      const orgTr = mainOrganizer?.translations?.find(t => t.languages_code === code)
-      return {
-        languages_code: code,
-        highlighted_details: eventTr?.highlighted_details || orgTr?.highlighted_details || '',
-        description: eventTr?.description || orgTr?.description || '',
-      }
-    }),
+    // translations: ['fr'].map(code => {
+    //   const eventTr = eventRaw.translations?.find(t => t.languages_code === code)
+    //   const orgTr = mainOrganizer?.translations?.find(t => t.languages_code === code)
+    //   return {
+    //     languages_code: code,
+    //     highlighted_details: eventTr?.highlighted_details || orgTr?.highlighted_details || '',
+    //     description: eventTr?.description || orgTr?.description || '',
+    //   }
+    // }),
 
     // Store only IDs for relationships and minimal organizer data
     organizerIds: (eventRaw.organizers || []).map(org => org.organizations_id?.id).filter(Boolean),
@@ -75,6 +75,17 @@ export function transformEvent(eventRaw, languages) {
       })
       .filter(Boolean),
   }
+
+  event.translations = eventRaw?.translations?.map(t => {
+    // const orgTr = mainOrganizer?.translations?.find(orgT => orgT.languages_code === t.code)
+
+    return ({
+      ...t,
+      // highlighted_details: t.highlighted_details || orgTr?.highlighted_details || '',
+      // description: t.description || orgTr?.description || '',
+      rich_text_content: transformRichText(t?.rich_text_content),
+    })
+  })
 
   const scheduleParts = eventRaw?.eventSchedule?.map(transformSchedulePart)
   const { schedule: eventSchedule, rRuleSet: scheduleRuleSet } = transformSchedules(scheduleParts)
@@ -147,16 +158,16 @@ export function transformEvent(eventRaw, languages) {
 
   const unique = /unique|multidays/.test(event.recurrence)
     ? {
-        slug: slugCanonical,
-        path: createPath({ type: 'event', slug: slugCanonical }),
-      }
+      slug: slugCanonical,
+      path: createPath({ type: 'event', slug: slugCanonical }),
+    }
     : null
 
   const canonical = event.isRecurring
     ? {
-        slug: slugCanonical,
-        path: createPath({ type: 'event', slug: slugCanonical }),
-      }
+      slug: slugCanonical,
+      path: createPath({ type: 'event', slug: slugCanonical }),
+    }
     : null
 
   // compute event occurrences

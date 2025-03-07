@@ -1,3 +1,4 @@
+import { DomParser } from '@thednp/domparser';
 import { DIRECTUS_URL } from '@utils/env'
 import { slugify, createPath, areasBe, toTzDate, stripDate, datePlus1Day } from '@utils'
 
@@ -221,9 +222,9 @@ export function translateFromCodeName(code_name, warningCue) {
 export function transformImage(i) {
   return i?.id
     ? {
-        ...i,
-        src: `${cmsAssetsUrl}/${i?.id}`,
-      }
+      ...i,
+      src: `${cmsAssetsUrl}/${i?.id}`,
+    }
     : i
 }
 
@@ -254,7 +255,7 @@ export function transformRichText(html) {
   // Remove potentially dangerous elements and attributes
   const dangerousElements = ['script', 'iframe', 'object', 'embed', 'form']
   const dangerousAttributes = ['onerror', 'onload', 'onmouseover', 'onclick', 'onmouseout', 'onkeydown', 'onkeyup']
-  
+
   let sanitizedHtml = html
 
   // Remove dangerous elements
@@ -273,5 +274,17 @@ export function transformRichText(html) {
   sanitizedHtml = sanitizedHtml.replace(/(?:\bon[a-z]+\s*=|href\s*=\s*["'](?:javascript:|data:))[^"']*/gi, '')
 
   // Add security attributes to all links
-  return sanitizedHtml.replaceAll('<a href', '<a target="_blank" rel="noopener noreferrer nofollow" href')
+  // sanitizedHtml = sanitizedHtml.replaceAll('<a href', '<a target="_blank" rel="noopener noreferrer nofollow" href')
+
+
+  // initialize DOM Parsing
+  const doc = DomParser().parseFromString(sanitizedHtml).root;
+
+  const links = doc.getElementsByTagName("a");
+  links.forEach(link => {
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener noreferrer nofollow");
+  })
+
+  return doc?.children[0]?.outerHTML || sanitizedHtml
 }

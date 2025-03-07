@@ -4,7 +4,6 @@ import { Icon } from 'astro-icon/components'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, IO, ImgDirectus } from '@components'
 import { imageDirectusSrc } from '@utils'
-import { Div } from '@src/elements'
 
 const {
   lang,
@@ -29,8 +28,6 @@ const {
     twitter,
     youtube_channel,
     translations,
-    // opening_hours_remark,
-    // description,
     // gallery,
     links,
     admin_categories,
@@ -40,7 +37,7 @@ const {
 
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
 
-const { description, opening_hours_remark, rich_text_content } =
+const { description, opening_hours_remark, rich_text_content, opening_hours_notes } =
   translations?.find(({ languages_code }) => languages_code === lang.code) || {}
 const presentation =
   typesTranslated?.[0] &&
@@ -78,7 +75,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <!-- <div class="stack gap-down-h1"> -->
     <main class="center max" style="margin-top: 0;">
       <header>
         <div
@@ -170,7 +166,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       }
 
       {
-        (opening_hours_strings?.[0] || opening_hours_remark) && (
+        (opening_hours_strings?.[0] || opening_hours_remark || opening_hours_notes) && (
           <div
             class="
         box no-border
@@ -186,11 +182,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                   ))}
                 </div>
               )}
-              {opening_hours_remark && (
-                <div class="">
-                  <Markdown content={opening_hours_remark} />
-                </div>
-              )}
+              {(opening_hours_notes && <div class="" set:html={opening_hours_notes} />) ||
+                (opening_hours_remark && (
+                  <div class="">
+                    <Markdown content={opening_hours_remark} />
+                  </div>
+                ))}
             </div>
           </div>
         )
@@ -202,25 +199,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             ))}
         </ul>
       </div>} -->
-      {
-        description && !rich_text_content && (
-          <div
-            class="
-        box no-border center
-        max-width-measure-h4
-        stack gap-down-h7
-      "
-          >
-            <h2>Description</h2>
-            <Markdown content={description} class="stack" style="--gap:1em" />
-          </div>
-        )
-      }
 
       {
-        rich_text_content && (
+        (rich_text_content && (
           <div
             class="
+        rich-text-content
         box no-border center
         max-width-measure-h4
         stack
@@ -228,7 +212,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             style="--gap:1em"
             set:html={rich_text_content}
           />
-        )
+        )) ||
+          (description && (
+            <div
+              class="
+        description
+        box no-border center
+        max-width-measure-h4
+        stack gap-down-h7
+      "
+            >
+              <h2>Description</h2>
+              <Markdown content={description} class="stack" style="--gap:1em" />
+            </div>
+          ))
       }
 
       {
@@ -338,7 +335,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         )
       }
     </main>
-
-    <!-- </div> -->
   </BasicPage>
 </SkeletonPage>

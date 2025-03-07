@@ -1,7 +1,7 @@
 ---
 description:
-  'Dynamisez vos événements et projets en Belgique avec nos experts en services ludiques !
-  Animation, création de jeux, formations, team building... Découvrez le réseau Wanna Play.'
+  'Dynamise tes événements, formations et projets en Belgique avec nos experts en services ludiques!
+  Animation, création de jeux, formations, team building... Découvre le réseau Wanna Play.'
 ---
 
 # Services ludiques professionnels en Belgique

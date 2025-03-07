@@ -34,6 +34,7 @@ export function transformOrganization(orgRaw) {
   const translations = orgRaw?.translations?.map(t => ({
     ...t,
     rich_text_content: transformRichText(t?.rich_text_content),
+    opening_hours_notes: transformRichText(t?.opening_hours_notes),
   }))
 
   // Transform location

@@ -6,12 +6,13 @@ description:
 
 # Services ludiques professionnels en Belgique
 
-**Pour des événements, formations et projets plus engageants et interactifs en Belgique**, découvre nos experts en services ludiques.  
+**Pour des événements, formations et projets plus engageants et interactifs.**
+
 Que tu représentes une entreprise, un organisme de formation, un acteur culturel ou un organisateur
 d'événements, notre plateforme te met en relation avec les meilleurs professionnels belges du
 secteur.
 
-## Innover avec le jeu: décuple l'engagement de tes participants
+## Le jeu pour décupler l'engagement
 
 Le jeu est bien plus qu'un divertissement: c'est un outil puissant pour l'engagement et
 l'apprentissage. **Imagine une formation où tes participants apprennent en collaborant sur un jeu de
@@ -22,7 +23,7 @@ innovants.
 
 ## Trouve facilement ton expert ludique en Belgique
 
-**Gagne du temps et trouve le prestataire idéal** pour ton projet grâce à Wanna Play.  
+**Gagne du temps et trouve le prestataire idéal** pour ton projet.  
 Nous rassemblons les meilleurs experts en services ludiques de toute la Belgique sur une seule
 plateforme.  
 **Chaque professionnel est sélectionné pour son expertise et son innovation**.  

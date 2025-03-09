@@ -4,6 +4,7 @@
   /* transition: transform 300ms ease-in-out, box-shadow 400ms ease, background 100ms ease; */
   transition: all 100ms ease;
 }
+
 :focus {
   outline-width: var(--size-outline, 0.2rem);
   outline-style: solid;
@@ -27,7 +28,7 @@
   overflow-x: hidden;
 }
 
-.layout-page > main {
+.layout-page>main {
   flex-grow: 1;
 }
 
@@ -37,6 +38,7 @@ a {
   text-decoration-style: solid;
   text-decoration-thickness: 4px;
 }
+
 /* Repetition from reset.css because of cascade */
 a.reset,
 a.reset *,
@@ -49,16 +51,20 @@ a.reset *,
 
 input:not([type='submit']):not([type='button']):not([type='reset']),
 textarea {
-  border-width: 1px; /* TODO: remove this when sizing lib is ok */
+  border-width: 1px;
+  /* TODO: remove this when sizing lib is ok */
 }
+
 :--button {
   border-radius: var(--border-radius-s);
 }
+
 :--button:disabled,
 [role='button'][aria-disabled] {
   opacity: 0.4;
   cursor: auto;
 }
+
 [popover] {
   box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
 }
@@ -91,6 +97,7 @@ blockquote {
   --align-items: center;
   text-align: center;
 }
+
 .card-article .featured-image {
   width: 590px;
   height: auto;
@@ -99,10 +106,12 @@ blockquote {
   border-top-left-radius: var(--border-radius-m);
   border-top-right-radius: var(--border-radius-m);
 }
+
 .card-article hr {
   width: 8rem;
   border-top: 1px solid var(--color-secondary);
 }
+
 .card-article .author-name {
   line-height: 32px;
 }
@@ -121,6 +130,7 @@ blockquote {
 #popover-anti-clickthrough:has(+ main :popover-open) {
   display: block;
 }
+
 #popover-anti-clickthrough {
   display: none;
   position: fixed;
@@ -131,4 +141,15 @@ blockquote {
   right: 0;
   background: transparent;
   pointer-events: all;
+}
+
+.popover-filter-wrapper [popover]::backdrop {
+  background-color: rgb(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.popover-filter-wrapper [popover] {
+  position: fixed;
+  max-height: 90vh;
+  overflow-y: auto;
 }

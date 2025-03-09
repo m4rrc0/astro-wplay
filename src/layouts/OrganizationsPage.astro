@@ -36,7 +36,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             class="stack horizontal justify-content-center gap-0"
             style="flex-wrap: wrap; gap: var(--size-h1)"
           >
-            <div class="popover-wrapper">
+            <div class="popover-filter-wrapper">
               <button
                 disabled
                 data-remove-disabled
@@ -75,7 +75,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 </ul>
               </div>
             </div>
-            <div class="popover-wrapper">
+            <div class="popover-filter-wrapper">
               <button
                 disabled
                 data-remove-disabled
@@ -121,7 +121,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 </ul>
               </div>
             </div>
-            <div class="popover-wrapper">
+            <div class="popover-filter-wrapper">
               <button
                 disabled
                 data-remove-disabled
@@ -270,13 +270,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   }
   [popovertarget='service'] {
     anchor-name: --service-anchor;
-  }
-  [popover] {
-    position: absolute;
-  }
-  [popover]::backdrop {
-    background-color: rgb(255, 255, 255, 0.5);
-    backdrop-filter: blur(2px);
   }
 
   @supports (anchor-name: --anchor) {

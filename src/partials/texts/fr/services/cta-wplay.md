@@ -1,6 +1,6 @@
 ## Accompagnement personnalisé: parlons de ton projet ludique!
 
-Besoin d'aide pour coordonner ou optimiser ton projet ludique en Belgique? **Notre équipe est à
+Besoin d'aide pour coordonner ton projet ludique en Belgique? **Notre équipe est à
 ton écoute** pour t'accompagner.  
 Nous proposons une approche sur mesure et **mobilisons notre réseau d'experts pour transformer
 tes idées en expérience ludique inoubliable**.

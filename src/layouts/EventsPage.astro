@@ -74,7 +74,7 @@ const cssRulesDisplayByType =
             class="stack horizontal justify-content-center gap-0"
             style="flex-wrap: wrap; gap: var(--size-h1)"
           >
-            <div class="popover-wrapper">
+            <div class="popover-filter-wrapper">
               <button
                 disabled
                 data-remove-disabled
@@ -146,7 +146,7 @@ const cssRulesDisplayByType =
                 </div>
               </div>
             </div>
-            <div class="popover-wrapper">
+            <div class="popover-filter-wrapper">
               <button
                 data-remove-disabled
                 popovertarget="eventType"
@@ -371,13 +371,7 @@ const cssRulesDisplayByType =
   [popovertarget='proximity'] {
     anchor-name: --proximity-anchor;
   }
-  [popover] {
-    position: absolute;
-  }
-  [popover]::backdrop {
-    background-color: rgb(255, 255, 255, 0.5);
-    backdrop-filter: blur(2px);
-  }
+
   @supports (anchor-name: --anchor) {
     [popover] {
       position: absolute;

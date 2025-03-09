@@ -46,6 +46,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
         <h2 class="h1 center max-width-measure-h3">Nos partenaires</h2>
         {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
+
         {
           /*
         <div id="organization-form-filter-wrapper" class="center">
@@ -54,7 +55,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             class="stack horizontal justify-content-center gap-0"
             style="flex-wrap: wrap; gap: var(--size-h1)"
           >
-            <div class="popover-wrapper">
+            <div class="popover-filter-wrapper">
               <button
                 disabled
                 data-remove-disabled
@@ -94,7 +95,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
               </div>
             </div>
 
-            <div class="popover-wrapper">
+            <div class="popover-filter-wrapper">
               <button
                 disabled
                 data-remove-disabled
@@ -140,11 +141,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
           </form>
         </div>
-         */
+        */
         }
 
         <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
-          <ul class="reset">
+          <ul class="reset" style="--width-column: var(--width-col-4);">
             {
               organizations?.map(organization => {
                 const { name, path, logo, typesTranslated, location, servicesTranslated } =
@@ -159,7 +160,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                       border-radius-s
                       breakout-clickable
                       color-palette-main color-palette-variation-classic"
-                    style=""
+                    style="max-width: 35rem;"
                     data-area={location?.area.code_name}
                     data-types={typesTranslated?.map(t => t.code_name)}
                     data-services={servicesTranslated?.map(t => t.code_name)}
@@ -200,8 +201,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                     </h4>
                     <div class="cluster gap-down-h8">
                       <ul class="reset">
-                        {typesTranslated?.map(type => {
-                          const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
+                        {servicesTranslated?.map(service => {
+                          const currentPalette = `color-palette-${service.colorPalette || service.code_name}`
                           return (
                             <li
                               class={`box no-border padding-x-h8 padding-y-h9
@@ -209,7 +210,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                                                             border-radius-s`}
                             >
                               {
-                                type.translations.find(t => t.language_code === lang.code)
+                                service.translations.find(t => t.language_code === lang.code)
                                   .default_label
                               }
                             </li>
@@ -256,9 +257,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   [popovertarget='service'] {
     anchor-name: --service-anchor;
   }
-  [popover] {
-    position: absolute;
-  }
+
   [popover]::backdrop {
     background-color: rgb(255, 255, 255, 0.5);
     backdrop-filter: blur(2px);

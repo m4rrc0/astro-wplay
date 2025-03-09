@@ -1,6 +1,6 @@
 ## Nos services d'expertise ludique
 
-- ### Animation & présentation en présentiel pour tes événements
+- ### Animation & présentation pour tes événements
 
   Des animateurs dynamiques transforment tes _événements d'entreprise, lancements de produits ou soirées_ en
   _expériences interactives et mémorables_ grâce à des _animations live et des démonstrations

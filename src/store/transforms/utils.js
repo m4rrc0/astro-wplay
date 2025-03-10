@@ -145,12 +145,12 @@ const dico = [
     iconName: 'ph:twitch-logo',
   },
   {
-    code_name: 'ticket|tickets|inscription|réservation|billets|billet|billeterie',
+    code_name: 'ticket|tickets|inscription|réservation|billets|billet|billeterie|booking',
     // fr: "LinkedIn",
     iconName: 'ph:ticket-light',
   },
   {
-    code_name: 'date|dates|agenda|calendrier|calendrier|agenda|planning|plannings|event',
+    code_name: 'date|dates|agenda|calendrier|calendrier|agenda|planning|plannings|event|calendar',
     iconName: 'ph:calendar-dots-light',
   },
   {

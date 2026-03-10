@@ -101,7 +101,14 @@ const PUBLIC_ANALYTICS_CLOUDFLARE = import.meta.env.PUBLIC_ANALYTICS_CLOUDFLARE
       }
     </script>
 
-    <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+    <!-- Async loading these styles makes @playform/inline a bit quieter -->
+    <!-- <link href="/pagefind/pagefind-ui.css" rel="stylesheet" /> -->
+    <link
+      rel="preload"
+      href="/pagefind/pagefind-ui.css"
+      as="style"
+      onload="this.rel='stylesheet'"
+    />
     <script is:inline src="/pagefind/pagefind-ui.js"></script>
 
     <!-- Microsoft -->

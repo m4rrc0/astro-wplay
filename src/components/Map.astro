@@ -1,10 +1,15 @@
 ---
 import 'maplibre-gl/dist/maplibre-gl.css'
 
-const { organizations = [] } = Astro.props
+export interface Props {
+  itemType?: 'organizations' | 'events'
+  area?: string
+}
+
+const { itemType = 'organizations', area } = Astro.props
 ---
 
-<div id="map" style="width: 100%; height: 700px"></div>
+<div id="map" data-item-type={itemType} data-area={area} style="width: 100%; height: 700px"></div>
 
 <!-- https://maplibre.org/maplibre-gl-js/docs/examples/create-and-style-clusters/ 
 time slider, clusters, locate the user -->
@@ -12,11 +17,33 @@ time slider, clusters, locate the user -->
 <script>
   import maplibregl from 'maplibre-gl'
   import { organizationsFiltersStore } from '@src/stores/organizations-filters'
+  import { eventsFiltersStore } from '@src/stores/events-filters'
 
   const bounds: [[number, number], [number, number]] = [
     [1.9, 49.4], // Sud-Ouest
     [7.1, 51.55], // Nord-Est
   ]
+
+  const mapContainer = document.getElementById('map')
+  const itemType = mapContainer?.getAttribute('data-item-type') || 'organizations'
+  const filterArea = mapContainer?.getAttribute('data-area')
+
+  // Function to calculate distance (in km) between two geographical points (latitude/longitude)
+  // Used for the "Nearby" filter to show or hide events based on a defined radius
+  function haversine(lat1: number, lng1: number, lat2: number, lng2: number) {
+    const R = 6371 // Earth's radius in km
+    const toRad = (deg: number) => (deg * Math.PI) / 180
+
+    const dLat = toRad(lat2 - lat1)
+    const dLng = toRad(lng2 - lng1)
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2)
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    return R * c
+  }
   const map = new maplibregl.Map({
     style: 'https://tiles.openfreemap.org/styles/bright',
     // center: [4.35, 50.85],
@@ -33,13 +60,19 @@ time slider, clusters, locate the user -->
       compact: true,
     })
   )
-  // Fetch the organizations GeoJSON from our dedicated API endpoint
+  // Fetch the GeoJSON from our dedicated API endpoint
   let geojson: any = { type: 'FeatureCollection', features: [] }
   try {
-    const response = await fetch('/assets/data/organizations.json')
+    const endpoint =
+      itemType === 'events' ? '/assets/data/events.json' : '/assets/data/organizations.json'
+    const response = await fetch(endpoint)
     geojson = await response.json()
+
+    if (filterArea) {
+      geojson.features = geojson.features.filter((f: any) => f.properties.area === filterArea)
+    }
   } catch (e) {
-    console.error('Failed to load organizations GeoJSON:', e)
+    console.error('Failed to load GeoJSON:', e)
   }
 
   // We loop through the features to resolve the dynamic CSS color tokens into actual Hex codes
@@ -63,26 +96,21 @@ time slider, clusters, locate the user -->
 
   map.on('load', () => {
     map.fitBounds(bounds, {
-      padding: 20, // Optionnel : ajoute une petite marge interne
+      padding: 20,
       animate: false,
     })
-    // Add a new source from our GeoJSON data and
-    // set the 'cluster' option to true. GL-JS will
-    // add the point_count property to your source data.
-    map.addSource('organizations', {
+    map.addSource('items-source', {
       type: 'geojson',
-      // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-      // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
       data: geojson,
       cluster: true,
-      clusterMaxZoom: 14, // Max zoom to cluster points on
-      clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
+      clusterMaxZoom: 14,
+      clusterRadius: 50,
     })
 
     map.addLayer({
       id: 'clusters',
       type: 'circle',
-      source: 'organizations',
+      source: 'items-source',
       filter: ['has', 'point_count'],
       paint: {
         // Use step expressions (https://maplibre.org/maplibre-style-spec/#expressions-step)
@@ -98,7 +126,7 @@ time slider, clusters, locate the user -->
     map.addLayer({
       id: 'cluster-count',
       type: 'symbol',
-      source: 'organizations',
+      source: 'items-source',
       filter: ['has', 'point_count'],
       layout: {
         'text-field': '{point_count_abbreviated}',
@@ -110,7 +138,7 @@ time slider, clusters, locate the user -->
     map.addLayer({
       id: 'unclustered-point',
       type: 'circle',
-      source: 'organizations',
+      source: 'items-source',
       filter: ['!', ['has', 'point_count']],
       paint: {
         'circle-color': ['get', 'typeColor'],
@@ -126,7 +154,7 @@ time slider, clusters, locate the user -->
         layers: ['clusters'],
       })
       const clusterId = features[0].properties.cluster_id
-      const zoom = await map.getSource('organizations').getClusterExpansionZoom(clusterId)
+      const zoom = await map.getSource('items-source').getClusterExpansionZoom(clusterId)
       map.easeTo({
         center: features[0].geometry.coordinates,
         zoom,
@@ -167,7 +195,8 @@ time slider, clusters, locate the user -->
       const langCode = currentPath.split('/')[1] || 'fr' // default 'fr' if not found
 
       // Determine the redirect URL (/fr/o/mon-orga/)
-      const orgUrl = `/${langCode}/o/${slug}/`
+      const subpath = itemType === 'events' ? 'e' : 'o'
+      const itemUrl = props.path ? `/${props.path}/` : `/${langCode}/${subpath}/${slug}/`
 
       // Image source logic using Directus Assets endpoint (if logoId exists)
       const directusUrl = 'https://cms.wanna-play.be' // Same base as configured in Astro
@@ -190,12 +219,12 @@ time slider, clusters, locate the user -->
         .join('')
 
       const htmlContent = `
-        <div class="card-organization box no-border stack gap-down-h7 border-radius-s breakout-clickable map-popup-card">
+        <div class="card-${itemType === 'events' ? 'event' : 'organization'} box no-border stack gap-down-h7 border-radius-s breakout-clickable map-popup-card">
           <div class="center intrinsic" style="justify-content: center; height: 120px; overflow: hidden; margin-bottom: 8px;">
             ${imgFallbackHtml}
           </div>
           <h3 style="margin-top:0; margin-bottom: 8px;">
-            <a href="${orgUrl}" class="reset clickable${nameIsLong ? ' h4' : ''}" style="text-decoration:none; color:inherit;">
+            <a href="${itemUrl}" class="reset clickable${nameIsLong ? ' h4' : ''}" style="text-decoration:none; color:inherit;">
               ${name}
             </a>
           </h3>
@@ -237,71 +266,96 @@ time slider, clusters, locate the user -->
     })
 
     // --- APPLY FILTERS FROM STORE ---
-    organizationsFiltersStore.listen(state => {
-      const { areas, types, services } = state
+    if (itemType === 'organizations') {
+      organizationsFiltersStore.listen(state => {
+        const { areas, types, services } = state
 
-      // Start with a valid all-inclusive filter
-      // MapLibre filters use an array syntax: ['all', condition1, condition2...]
-      let mapFilter: any[] = ['all']
+        // Start with a valid all-inclusive filter
+        // MapLibre filters use an array syntax: ['all', condition1, condition2...]
+        let mapFilter: any[] = ['all']
 
-      // 1. Filter by Area
-      if (areas && areas.length > 0) {
-        // Condition: 'area' property must be in the 'areas' array
-        mapFilter.push(['in', ['get', 'area'], ['literal', areas]])
-      }
+        // 1. Filter by Area
+        if (areas && areas.length > 0) {
+          mapFilter.push(['in', ['get', 'area'], ['literal', areas]])
+        }
 
-      // 2. Filter by Type
-      if (types && types.length > 0) {
-        // MapLibre logic for arrays: we need to check if ANY of the selected types exist in the 'types' array property
-        // We use ['any', ['in', 'type1', ['get', 'types']], ['in', 'type2', ['get', 'types']]]
-        const typeConditions = types.map(t => ['in', t, ['get', 'types']])
-        mapFilter.push(['any', ...typeConditions])
-      }
+        // 2. Filter by Type
+        if (types && types.length > 0) {
+          const typeConditions = types.map((t: string) => ['in', t, ['get', 'types']])
+          mapFilter.push(['any', ...typeConditions])
+        }
 
-      // 3. Filter by Services
-      if (services && services.length > 0) {
-        const serviceConditions = services.map(s => ['in', s, ['get', 'services']])
-        mapFilter.push(['any', ...serviceConditions])
-      }
+        // 3. Filter by Services
+        if (services && services.length > 0) {
+          const serviceConditions = services.map((s: string) => ['in', s, ['get', 'services']])
+          mapFilter.push(['any', ...serviceConditions])
+        }
 
-      // If no filters are active, we just use a simple 'has' id or 'all'
-      const finalFilter = mapFilter.length > 1 ? mapFilter : ['has', 'id']
+        const filteredFeatures = geojson.features.filter((feature: any) => {
+          const fArea = feature.properties.area
+          const fTypes = feature.properties.types?.map((t: any) => t.code) || []
+          const fServices = feature.properties.services || []
 
-      // Apply the constructed filter to our three layers
+          const matchArea = areas.length === 0 || areas.includes(fArea)
+          const matchType = types.length === 0 || types.some((t: string) => fTypes.includes(t))
+          const matchService =
+            services.length === 0 || services.some((s: string) => fServices.includes(s))
 
-      // For clustered layers, MapLibre doesn't automatically recalculate clusters when you just filter the visual layer.
-      // To properly recalculate points inside clusters, we MUST apply the filter to the SOURCE itself:
-      // Note: MapLibre GL JS unfortunately doesn't support setFilter on sources directly,
-      // so we use the unclustered-point layer for the raw display.
-      //
-      // ACTUALLY, in MapLibre/MapBox, to dynamically filter clustered sources, we inject a filter
-      // when adding the source, OR we just set the filter on the layers. Since MapLibre doesn't filter clusters
-      // dynamically via layer filters (the numbers won't update), the standard hack is to just filter the layers anyway,
-      // but if we want numbers to update, we must rebuild the GeoJSON source.
+          return matchArea && matchType && matchService
+        })
 
-      // Let's implement the robust way: filtering the original GeoJSON and updating the source data.
-      const filteredFeatures = geojson.features.filter((feature: any) => {
-        const fArea = feature.properties.area
-        const fTypes = feature.properties.types?.map((t: any) => t.code) || []
-        const fServices = feature.properties.services || []
+        const filteredGeojson = {
+          type: 'FeatureCollection',
+          features: filteredFeatures,
+        }
 
-        const matchArea = areas.length === 0 || areas.includes(fArea)
-        const matchType = types.length === 0 || types.some(t => fTypes.includes(t))
-        const matchService = services.length === 0 || services.some(s => fServices.includes(s))
-
-        return matchArea && matchType && matchService
+        if (map.getSource('items-source')) {
+          ;(map.getSource('items-source') as any).setData(filteredGeojson)
+        }
       })
+    } else if (itemType === 'events') {
+      eventsFiltersStore.listen(state => {
+        const { city, distance, types } = state
 
-      const filteredGeojson = {
-        type: 'FeatureCollection',
-        features: filteredFeatures,
-      }
+        let centerLat = NaN
+        let centerLng = NaN
+        let radius = parseFloat(distance) || 10
 
-      // Update the source data directly! This automatically triggers MapLibre to recalculate clusters and point counts perfectly!
-      if (map.getSource('organizations')) {
-        ;(map.getSource('organizations') as any).setData(filteredGeojson)
-      }
-    })
+        if (city) {
+          const cityOption = document.querySelector(`option[value="${city}"]`) as HTMLOptionElement
+          if (cityOption) {
+            centerLat = parseFloat(cityOption.dataset.latitude || '')
+            centerLng = parseFloat(cityOption.dataset.longitude || '')
+          }
+        }
+
+        const filteredFeatures = geojson.features.filter((feature: any) => {
+          const fTypes = feature.properties.types?.map((t: any) => t.code) || []
+          const matchType = types.length === 0 || types.some((t: any) => fTypes.includes(t))
+
+          let matchProximity = true
+          if (city && !isNaN(centerLat) && !isNaN(centerLng)) {
+            const fLng = feature.geometry.coordinates[0]
+            const fLat = feature.geometry.coordinates[1]
+            const dist = haversine(centerLat, centerLng, fLat, fLng)
+            if (dist > radius) {
+              matchProximity = false
+            }
+          }
+
+          return matchType && matchProximity
+        })
+
+        const filteredGeojson = {
+          type: 'FeatureCollection',
+          features: filteredFeatures,
+        }
+
+        if (map.getSource('items-source')) {
+          ;(map.getSource('items-source') as any).setData(filteredGeojson)
+        }
+      })
+    }
   })
 </script>
 

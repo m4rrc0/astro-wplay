@@ -5,6 +5,7 @@ import { BasicPage, SkeletonPage } from '@layouts'
 import { imageDirectusSrc } from '@utils'
 import citiesUnordered from '@utils/areas/cities.json'
 import { Icon } from 'astro-icon/components'
+import Map from '@components/Map.astro'
 
 const { lang, events: eventsUnfiltered, dictionary: eventTypes } = Astro.props
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
@@ -66,8 +67,7 @@ const cssRulesDisplayByType =
         <IO h1 $skip={!events?.[0]?.name} class="center text"
           >Événements et soirées jeux de Belgique</IO
         >
-
-        <!-- <script src="@assets/js/events-filter.js"></script> -->
+        <Map itemType="events" />        <!-- <script src="@assets/js/events-filter.js"></script> -->
         <div id="event-form-filter-wrapper" class="center">
           <form
             id="eventsForm"

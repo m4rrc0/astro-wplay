@@ -4,6 +4,7 @@ import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, IO, ImgDirectus, Img } from '@components'
 import { imageDirectusSrc } from '@utils'
 import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
+import Map from '@components/Map.astro'
 
 const { lang, area, events: eventsUnfiltered, organizations } = Astro.props
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
@@ -76,6 +77,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         <h1 class="center text">{areaName}</h1>
         <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
         <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
+        <Map itemType="events" area={area.code_name} />
         <!-- TODO: HERE -->
         <script>
           import List from 'list.js'
@@ -212,6 +214,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           </IO>
         </IO>
         <IO h2 $skip={!organizations?.[0]} class="center text"> Organisations </IO>
+        <Map itemType="organizations" area={area.code_name} />
         <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
           <IO ul $skipNoInner class="reset">
             {

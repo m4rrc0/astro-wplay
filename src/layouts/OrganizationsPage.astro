@@ -29,9 +29,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <main class="center width-max">
       <div id="organizations-list-container" class="box no-border stack gap-down-h1">
         <IO h1 $skip={!organizations?.[0]} class="center text"> Le jeu de société en Belgique </IO>
-
-        <Map {organizations} />
-
+        <Map itemType="organizations" />
         {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
         <div id="organization-form-filter-wrapper" class="center">
           <form

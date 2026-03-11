@@ -7,6 +7,7 @@ import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
 import critters from 'astro-critters'
 import icon from 'astro-icon'
+import mdx from '@astrojs/mdx' // import MDX files
 import { PAGE_ADMIN } from './src/utils/env'
 // import Biome from '@playform/format'
 
@@ -28,6 +29,7 @@ export default defineConfig({
   },
   integrations: [
     // Biome(),
+    mdx(), // import MDX files
     svelte(),
     sitemap({
       filter: page =>

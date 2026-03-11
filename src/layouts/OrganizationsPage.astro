@@ -3,6 +3,7 @@ import { IO, Img, ImgDirectus, SEO } from '@components'
 import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
 import { BasicPage, SkeletonPage } from '@layouts'
 import { Icon } from 'astro-icon/components'
+import Map from '@components/Map.astro'
 
 const { lang, organizations, areas, dictionary } = Astro.props
 const organizationTypes = dictionary.filter(d => d.tag_categories.includes('organization_type'))
@@ -28,6 +29,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <main class="center width-max">
       <div id="organizations-list-container" class="box no-border stack gap-down-h1">
         <IO h1 $skip={!organizations?.[0]} class="center text"> Le jeu de société en Belgique </IO>
+
+        <Map {organizations} />
 
         {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
         <div id="organization-form-filter-wrapper" class="center">

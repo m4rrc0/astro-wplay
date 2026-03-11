@@ -1,0 +1,169 @@
+---
+import 'maplibre-gl/dist/maplibre-gl.css'
+
+const { organizations = [] } = Astro.props
+---
+
+<div id="map" style="width: 100%; height: 700px"></div>
+
+<!-- https://maplibre.org/maplibre-gl-js/docs/examples/create-and-style-clusters/ 
+time slider, clusters, locate the user -->
+
+<script>
+  import maplibregl from 'maplibre-gl'
+  // import jsonOrganizations from '@src/pages/assets/data/organizations.json.astro'
+
+  const bounds: [[number, number], [number, number]] = [
+    [1.9, 49.4], // Sud-Ouest
+    [7.1, 51.55], // Nord-Est
+  ]
+  const map = new maplibregl.Map({
+    style: 'https://tiles.openfreemap.org/styles/bright',
+    // center: [4.35, 50.85],
+    zoom: 6,
+    minZoom: 6,
+    container: 'map',
+    maxBounds: bounds,
+    fadeDuration: 0,
+    attributionControl: false,
+  })
+
+  map.addControl(
+    new maplibregl.AttributionControl({
+      compact: true,
+    })
+  )
+  // Fetch the organizations GeoJSON from our dedicated API endpoint
+  let geojson: any = { type: 'FeatureCollection', features: [] }
+  try {
+    const response = await fetch('/assets/data/organizations.json')
+    geojson = await response.json()
+  } catch (e) {
+    console.error('Failed to load organizations GeoJSON:', e)
+  }
+
+  // We loop through the features to resolve the dynamic CSS color tokens into actual Hex codes
+  geojson.features = geojson.features.map((feature: any) => {
+    // We retrieve the colorPaletteToken that we added in organizations.json.astro
+    const colorPaletteToken = feature.properties.color || 'default'
+
+    // Try getting CSS variable --color-{colorPaletteToken} or --color-palette-{colorPaletteToken}
+    let cssColor = getComputedStyle(document.body)
+      .getPropertyValue(`--color-${colorPaletteToken}`)
+      .trim()
+    if (!cssColor) {
+      cssColor = getComputedStyle(document.body)
+        .getPropertyValue(`--color-palette-${colorPaletteToken}`)
+        .trim()
+    }
+
+    feature.properties.typeColor = cssColor || '#000000' // Fallback
+    return feature
+  })
+
+  map.on('load', () => {
+    map.fitBounds(bounds, {
+      padding: 20, // Optionnel : ajoute une petite marge interne
+      animate: false,
+    })
+    // Add a new source from our GeoJSON data and
+    // set the 'cluster' option to true. GL-JS will
+    // add the point_count property to your source data.
+    map.addSource('organizations', {
+      type: 'geojson',
+      // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
+      // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+      data: geojson,
+      cluster: true,
+      clusterMaxZoom: 14, // Max zoom to cluster points on
+      clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
+    })
+
+    map.addLayer({
+      id: 'clusters',
+      type: 'circle',
+      source: 'organizations',
+      filter: ['has', 'point_count'],
+      paint: {
+        // Use step expressions (https://maplibre.org/maplibre-style-spec/#expressions-step)
+        // with three steps to implement three types of circles:
+        //   * Blue, 20px circles when point count is less than 10
+        //   * Yellow, 30px circles when point count is between 10 and 50
+        //   * Pink, 40px circles when point count is greater than or equal to 50
+        'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 10, '#f1f075', 50, '#f28cb1'],
+        'circle-radius': ['step', ['get', 'point_count'], 20, 10, 30, 50, 40],
+      },
+    })
+
+    map.addLayer({
+      id: 'cluster-count',
+      type: 'symbol',
+      source: 'organizations',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': '{point_count_abbreviated}',
+        'text-font': ['Noto Sans Regular'],
+        'text-size': 12,
+      },
+    })
+
+    map.addLayer({
+      id: 'unclustered-point',
+      type: 'circle',
+      source: 'organizations',
+      filter: ['!', ['has', 'point_count']],
+      paint: {
+        'circle-color': ['get', 'typeColor'],
+        'circle-radius': 8,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#fff',
+      },
+    })
+
+    // inspect a cluster on click
+    map.on('click', 'clusters', async e => {
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: ['clusters'],
+      })
+      const clusterId = features[0].properties.cluster_id
+      const zoom = await map.getSource('organizations').getClusterExpansionZoom(clusterId)
+      map.easeTo({
+        center: features[0].geometry.coordinates,
+        zoom,
+      })
+    })
+
+    // When a click event occurs on a feature in
+    // the unclustered-point layer, open a popup at
+    // the location of the feature, with
+    // description HTML from its properties.
+    map.on('click', 'unclustered-point', e => {
+      const coordinates = e.features[0].geometry.coordinates.slice()
+      const orgName = e.features[0].properties.name
+
+      // Ensure that if the map is zoomed out such that
+      // multiple copies of the feature are visible, the
+      // popup appears over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
+      }
+
+      new maplibregl.Popup().setLngLat(coordinates).setHTML(`<h1>${orgName}</h1>`).addTo(map)
+    })
+
+    map.on('mouseenter', 'clusters', () => {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+    map.on('mouseleave', 'clusters', () => {
+      map.getCanvas().style.cursor = ''
+    })
+
+    // Also add pointer cursor for unclustered points
+    map.on('mouseenter', 'unclustered-point', () => {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+    map.on('mouseleave', 'unclustered-point', () => {
+      map.getCanvas().style.cursor = ''
+    })
+  })
+</script>

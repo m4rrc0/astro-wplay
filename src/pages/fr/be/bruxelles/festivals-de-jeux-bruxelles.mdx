@@ -1,9 +1,12 @@
 ---
-layout: ../../../../layouts/MarkdownPage.astro
+layout: '@layouts/MarkdownPage.astro'
 title: "Festivals de jeux à Bruxelles"
 author: "Rabia C."
 date: "10-03-2026"
+organizationTypeFilter: 'festival'
+areaCode: 'brussels'
 ---
+import OrganizationsList from '@components/OrganizationsList.astro'
 
 # Les festivals de jeux à Bruxelles
 
@@ -17,8 +20,7 @@ Sur cette page, tu retrouves les festivals de jeux à Bruxelles avec les informa
 
 ## Liste complète et infos pratiques
 
-**[Liste des organisations/événements]**
-
+<OrganizationsList organizationTypeFilter="festival" areaCode="brussels" />
 
 ## Pourquoi participer à un festival de jeux à Bruxelles?
 

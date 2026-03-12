@@ -1,9 +1,12 @@
 ---
-layout: ../../../../layouts/MarkdownPage.astro
+layout: '@layouts/MarkdownPage.astro'
 title: "Bars à jeux à Bruxelles"
 author: "Mathias B."
 date: "06-03-2026"
+organizationTypeFilter: 'bar'
+areaCode: 'brussels'
 ---
+import OrganizationsList from '@components/OrganizationsList.astro'
 
 
 # **Les bars à jeux à Bruxelles**
@@ -19,6 +22,7 @@ Tu veux passer une soirée autour d’un jeu de société à Bruxelles? Découvr
 ## Liste complète et infos pratiques
 
 **[Liste des organisations/événements]**
+<OrganizationsList organizationTypeFilter="bar" areaCode="brussels" />
 
 
 ## **Jeux de société en buvant un verre à Bruxelles?**

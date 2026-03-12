@@ -1,9 +1,13 @@
 ---
-layout: ../../../../layouts/MarkdownPage.astro
+layout: '@layouts/MarkdownPage.astro'
 title: 'Escapes rooms à Bruxelles'
 author: 'Rabia C.'
 date: '06-03-2026'
+organizationTypeFilter: 'escape_room'
+areaCode: 'brussels'
 ---
+
+import OrganizationsList from '@components/OrganizationsList.astro'
 
 # Les escapes rooms à Bruxelles
 
@@ -15,7 +19,7 @@ la fin du temps imparti.
 
 ## Liste complète et infos pratiques
 
-**[liste des organisations/événements]**
+<OrganizationsList organizationTypeFilter="escape_room" areaCode="brussels" />
 
 Tu veux vivre une expérience ludique différente, complémentaire aux jeux de société traditionnels?
 Bruxelles regorge de jeux d’évasion et d’énigmes pour tous les goûts. Wanna Play te propose de

@@ -4,29 +4,39 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 export interface Props {
   itemType?: 'organizations' | 'events'
   area?: string
+  date?: number
 }
 
-const { itemType = 'organizations', area } = Astro.props
+const { itemType = 'organizations', area, date } = Astro.props
 ---
 
-<div id="map" data-item-type={itemType} data-area={area} style="width: 100%; height: 700px"></div>
+<div
+  id="map"
+  data-item-type={itemType}
+  data-area={area}
+  data-date={date}
+  style="width: 100%; height: 700px"
+>
+</div>
 
 <!-- https://maplibre.org/maplibre-gl-js/docs/examples/create-and-style-clusters/ 
 time slider, clusters, locate the user -->
 
 <script>
-  import maplibregl from 'maplibre-gl'
+  import maplibregl, { NavigationControl } from 'maplibre-gl'
   import { organizationsFiltersStore } from '@src/stores/organizations-filters'
   import { eventsFiltersStore } from '@src/stores/events-filters'
 
   const bounds: [[number, number], [number, number]] = [
-    [1.9, 49.4], // Sud-Ouest
-    [7.1, 51.55], // Nord-Est
+    [1.9, 49.4], // West, South
+    [7.1, 51.55], // East, North
   ]
 
   const mapContainer = document.getElementById('map')
   const itemType = mapContainer?.getAttribute('data-item-type') || 'organizations'
   const filterArea = mapContainer?.getAttribute('data-area')
+  const dateAttr = mapContainer?.getAttribute('data-date')
+  const filterDate = dateAttr ? parseInt(dateAttr) : 10
 
   // Function to calculate distance (in km) between two geographical points (latitude/longitude)
   // Used for the "Nearby" filter to show or hide events based on a defined radius
@@ -53,6 +63,7 @@ time slider, clusters, locate the user -->
     maxBounds: bounds,
     fadeDuration: 0,
     attributionControl: false,
+    cooperativeGestures: true,
   })
 
   map.addControl(
@@ -60,6 +71,9 @@ time slider, clusters, locate the user -->
       compact: true,
     })
   )
+  let nav = new NavigationControl()
+  map.addControl(nav, 'top-right')
+
   // Fetch the GeoJSON from our dedicated API endpoint
   let geojson: any = { type: 'FeatureCollection', features: [] }
   try {
@@ -71,13 +85,47 @@ time slider, clusters, locate the user -->
     if (filterArea) {
       geojson.features = geojson.features.filter((f: any) => f.properties.area === filterArea)
     }
+
+    if (filterDate && itemType === 'events') {
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      const filterDateObj = new Date(today)
+      filterDateObj.setDate(today.getDate() + filterDate + 1)
+      geojson.features = geojson.features.filter(
+        (f: any) =>
+          f.properties.endDate >= today.toISOString() &&
+          f.properties.endDate <= filterDateObj.toISOString()
+      )
+    }
   } catch (e) {
     console.error('Failed to load GeoJSON:', e)
   }
 
+  // Configuration variables for easily customizing the cluster donut charts
+  const clusterConfig = {
+    // Different sizes depending on the number of elements in the cluster
+    sizes: [
+      { minCount: 100, radius: 45, fontSize: 18 },
+      { minCount: 50, radius: 35, fontSize: 16 },
+      { minCount: 10, radius: 28, fontSize: 14 },
+      { minCount: 0, radius: 20, fontSize: 12 },
+    ],
+    // Width of the colored ring as a ratio of radius (0.4 = 40% ring, 60% inner circle)
+    donutWidthRatio: 0.5,
+    fontFamily: 'inherit',
+    textColor: 'var(--color-black, black)',
+    innerCircleColor: 'var(--color-white, white)',
+    innerCircleStrokeColor: 'transparent',
+    innerCircleStrokeWidth: 0,
+  }
+
   // We loop through the features to resolve the dynamic CSS color tokens into actual Hex codes
+  const uniqueColorsSet = new Set<string>()
+  // Maps resolved hex color → Set of unique translated labels
+  const legendItemsMap = new Map<string, Set<string>>()
+
   geojson.features = geojson.features.map((feature: any) => {
-    // We retrieve the colorPaletteToken that we added in organizations.json.astro
+    // We retrieve the colorPaletteToken that we added in organizations.json.js
     const colorPaletteToken = feature.properties.color || 'default'
 
     // Try getting CSS variable --color-{colorPaletteToken} or --color-palette-{colorPaletteToken}
@@ -90,8 +138,60 @@ time slider, clusters, locate the user -->
         .trim()
     }
 
-    feature.properties.typeColor = cssColor || '#000000' // Fallback
+    const resolvedColor = cssColor || '#000000'
+    feature.properties.typeColor = resolvedColor // Fallback
+    uniqueColorsSet.add(resolvedColor)
+
+    // Collect ALL types for the Map Legend, using the pre-translated label from the GeoJSON
+    if (feature.properties.types && Array.isArray(feature.properties.types)) {
+      feature.properties.types.forEach((t: any) => {
+        const translationObj = feature.properties.typesTranslated?.find(
+          (item: any) => item.code_name === t.code
+        )
+        const translatedLabel = translationObj?.translations?.[0]?.default_label
+        const labelText = translatedLabel || t.label || t.code
+
+        const typeColorToken = t.color || t.code || colorPaletteToken
+        let typeColor = getComputedStyle(document.body)
+          .getPropertyValue(`--color-${typeColorToken}`)
+          .trim()
+
+        if (!typeColor)
+          typeColor = getComputedStyle(document.body)
+            .getPropertyValue(`--color-palette-${typeColorToken}`)
+            .trim()
+
+        const typeResolvedColor = typeColor || resolvedColor
+
+        if (labelText) {
+          if (!legendItemsMap.has(typeResolvedColor))
+            legendItemsMap.set(typeResolvedColor, new Set())
+          legendItemsMap.get(typeResolvedColor)!.add(labelText)
+        }
+      })
+    } else {
+      if (!legendItemsMap.has(resolvedColor)) legendItemsMap.set(resolvedColor, new Set())
+      legendItemsMap.get(resolvedColor)!.add(colorPaletteToken)
+    }
+
     return feature
+  })
+
+  const uniqueColors = Array.from(uniqueColorsSet)
+
+  // Build legendItems grouped by color, with labels sorted alphabetically within each group
+  const legendItems = Array.from(legendItemsMap.entries()).flatMap(([color, labelsSet]) =>
+    Array.from(labelsSet)
+      .sort((a, b) => a.localeCompare(b))
+      .map(label => ({ color, label }))
+  )
+
+  // Build cluster properties for MapLibre
+  const clusterProperties: Record<string, any> = {}
+  uniqueColors.forEach(color => {
+    // Make sure the property name only contains valid characters
+    const colorKey = 'color_' + color.replace(/[^a-zA-Z0-9]/g, '')
+    clusterProperties[colorKey] = ['+', ['case', ['==', ['get', 'typeColor'], color], 1, 0]]
   })
 
   map.on('load', () => {
@@ -105,34 +205,7 @@ time slider, clusters, locate the user -->
       cluster: true,
       clusterMaxZoom: 14,
       clusterRadius: 50,
-    })
-
-    map.addLayer({
-      id: 'clusters',
-      type: 'circle',
-      source: 'items-source',
-      filter: ['has', 'point_count'],
-      paint: {
-        // Use step expressions (https://maplibre.org/maplibre-style-spec/#expressions-step)
-        // with three steps to implement three types of circles:
-        //   * Blue, 20px circles when point count is less than 10
-        //   * Yellow, 30px circles when point count is between 10 and 50
-        //   * Pink, 40px circles when point count is greater than or equal to 50
-        'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 10, '#f1f075', 50, '#f28cb1'],
-        'circle-radius': ['step', ['get', 'point_count'], 20, 10, 30, 50, 40],
-      },
-    })
-
-    map.addLayer({
-      id: 'cluster-count',
-      type: 'symbol',
-      source: 'items-source',
-      filter: ['has', 'point_count'],
-      layout: {
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['Noto Sans Regular'],
-        'text-size': 12,
-      },
+      clusterProperties: clusterProperties,
     })
 
     map.addLayer({
@@ -148,30 +221,155 @@ time slider, clusters, locate the user -->
       },
     })
 
-    // inspect a cluster on click
-    map.on('click', 'clusters', async e => {
-      const features = map.queryRenderedFeatures(e.point, {
-        layers: ['clusters'],
-      })
-      const clusterId = features[0].properties.cluster_id
-      const zoom = await map.getSource('items-source').getClusterExpansionZoom(clusterId)
-      map.easeTo({
-        center: features[0].geometry.coordinates,
-        zoom,
-      })
+    // objects for caching and keeping track of HTML marker objects (for performance)
+    const markers: Record<string, maplibregl.Marker> = {}
+    let markersOnScreen: Record<string, maplibregl.Marker> = {}
+
+    function updateMarkers() {
+      const newMarkers: Record<string, maplibregl.Marker> = {}
+      const features = map.querySourceFeatures('items-source')
+
+      // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
+      // and add it to the map if it's not there already
+      for (let i = 0; i < features.length; i++) {
+        const coords = features[i].geometry.coordinates as [number, number]
+        const props = features[i].properties
+        if (!props.cluster) continue
+        const id = props.cluster_id
+
+        // Build a cache key that changes if the cluster content changes (e.g., after filtering)
+        const counts = uniqueColors.map(c => props['color_' + c.replace(/[^a-zA-Z0-9]/g, '')] || 0)
+        const cacheKey = `${id}_${props.point_count}_${counts.join('-')}`
+
+        let marker = markers[cacheKey]
+        if (!marker) {
+          const el = createDonutChart(props, counts)
+
+          // Add click event for expanding cluster
+          el.addEventListener('click', async e => {
+            e.stopPropagation()
+            const source = map.getSource('items-source') as any
+            if (source.getClusterExpansionZoom) {
+              const zoom = await source.getClusterExpansionZoom(id)
+              map.easeTo({
+                center: coords,
+                zoom,
+              })
+            }
+          })
+
+          marker = markers[cacheKey] = new maplibregl.Marker({
+            element: el,
+          }).setLngLat(coords)
+        }
+        newMarkers[cacheKey] = marker
+
+        if (!markersOnScreen[cacheKey]) marker.addTo(map)
+      }
+      // for every marker we've added previously, remove those that are no longer visible
+      for (const key in markersOnScreen) {
+        if (!newMarkers[key]) markersOnScreen[key].remove()
+      }
+      markersOnScreen = newMarkers
+    }
+
+    // after the GeoJSON data is loaded, update markers on the screen and do so on every map move/moveend
+    map.on('data', e => {
+      if (e.sourceId !== 'items-source' || !e.isSourceLoaded) return
+      map.on('move', updateMarkers)
+      map.on('moveend', updateMarkers)
+      updateMarkers()
     })
 
-    // When a click event occurs on a feature in
-    // the unclustered-point layer, open a popup at
-    // the location of the feature, with
-    // description HTML from its properties.
+    // code for creating an SVG donut chart from feature properties
+    function createDonutChart(props: any, counts: number[]) {
+      const offsets: number[] = []
+      let total = 0
+      for (let i = 0; i < counts.length; i++) {
+        offsets.push(total)
+        total += counts[i]
+      }
+
+      // Find the appropriate size config based on point_count
+      let sizeConfig = clusterConfig.sizes[clusterConfig.sizes.length - 1] // Fallback to smallest
+      for (let i = 0; i < clusterConfig.sizes.length; i++) {
+        if (total >= clusterConfig.sizes[i].minCount) {
+          sizeConfig = clusterConfig.sizes[i]
+          break
+        }
+      }
+
+      const fontSize = sizeConfig.fontSize
+      const r = sizeConfig.radius
+      const r0 = Math.round(r * (1 - clusterConfig.donutWidthRatio))
+      const w = r * 2
+
+      let html = `<div style="cursor: pointer;"><svg width="${w}" height="${w}" viewbox="0 0 ${w} ${w}" text-anchor="middle" style="font: ${fontSize}px ${clusterConfig.fontFamily}; display: block">`
+
+      for (let i = 0; i < counts.length; i++) {
+        if (counts[i] > 0) {
+          html += donutSegment(
+            offsets[i] / total,
+            (offsets[i] + counts[i]) / total,
+            r,
+            r0,
+            uniqueColors[i]
+          )
+        }
+      }
+      html += `<circle cx="${r}" cy="${r}" r="${r0}" fill="${clusterConfig.innerCircleColor}" stroke="${clusterConfig.innerCircleStrokeColor}" stroke-width="${clusterConfig.innerCircleStrokeWidth}" /><text dominant-baseline="central" transform="translate(${r}, ${r})" fill="${clusterConfig.textColor}" style="font-weight: bold;">${total.toLocaleString()}</text></svg></div>`
+
+      const el = document.createElement('div')
+      el.innerHTML = html
+      return el.firstChild as HTMLElement
+    }
+
+    function donutSegment(start: number, end: number, r: number, r0: number, color: string) {
+      if (end - start === 1) end -= 0.00001
+      const a0 = 2 * Math.PI * (start - 0.25)
+      const a1 = 2 * Math.PI * (end - 0.25)
+      const x0 = Math.cos(a0),
+        y0 = Math.sin(a0)
+      const x1 = Math.cos(a1),
+        y1 = Math.sin(a1)
+      const largeArc = end - start > 0.5 ? 1 : 0
+
+      return [
+        '<path d="M',
+        r + r0 * x0,
+        r + r0 * y0,
+        'L',
+        r + r * x0,
+        r + r * y0,
+        'A',
+        r,
+        r,
+        0,
+        largeArc,
+        1,
+        r + r * x1,
+        r + r * y1,
+        'L',
+        r + r0 * x1,
+        r + r0 * y1,
+        'A',
+        r0,
+        r0,
+        0,
+        largeArc,
+        0,
+        r + r0 * x0,
+        r + r0 * y0,
+        `" fill="${color}" />`,
+      ].join(' ')
+    }
+
+    // When a click event occurs on a feature in the unclustered-point layer, open a popup at the location of the feature, with description HTML from its properties.
     map.on('click', 'unclustered-point', e => {
       const coordinates = e.features[0].geometry.coordinates.slice()
       const props = e.features[0].properties
 
-      // Ensure that if the map is zoomed out such that
-      // multiple copies of the feature are visible, the
-      // popup appears over the copy being pointed to.
+      // Ensure that if the map is zoomed out such that multiple copies of the feature are visible, the popup appears over the copy being pointed to.
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
       }
@@ -248,13 +446,6 @@ time slider, clusters, locate the user -->
         .setLngLat(coordinates)
         .setHTML(htmlContent)
         .addTo(map)
-    })
-
-    map.on('mouseenter', 'clusters', () => {
-      map.getCanvas().style.cursor = 'pointer'
-    })
-    map.on('mouseleave', 'clusters', () => {
-      map.getCanvas().style.cursor = ''
     })
 
     // Also add pointer cursor for unclustered points
@@ -357,13 +548,88 @@ time slider, clusters, locate the user -->
       })
     }
   })
+
+  // --- ADD MAP LEGEND CONTROL ---
+  if (legendItems.length > 0) {
+    class LegendControl {
+      _container: HTMLDivElement | null = null
+      _map: maplibregl.Map | undefined
+      _legendItems: { color: string; label: string }[]
+
+      constructor(items: { color: string; label: string }[]) {
+        this._legendItems = items
+      }
+
+      onAdd(map: maplibregl.Map) {
+        this._map = map
+        this._container = document.createElement('div')
+        this._container.className = 'maplibregl-ctrl map-legend-control'
+        this._container.style.backgroundColor = '#ffffff'
+        this._container.style.padding = '12px'
+        this._container.style.borderRadius = 'var(--radius-s, 8px)'
+        this._container.style.boxShadow = 'var(--shadow-s, 0 2px 4px rgba(0,0,0,0.1))'
+        this._container.style.maxHeight = '50vh'
+        this._container.style.overflowY = 'auto'
+        this._container.style.pointerEvents = 'auto'
+        // this._container.style.backdropFilter = 'blur(4px)'
+
+        const chevronSvg = `<svg width="1em" height="1em" role="img" style="flex-shrink: 0; transition: transform 0.3s ease; transform: rotate(180deg);" viewBox="0 0 24 24"><path fill="currentColor" d="m20 9l-8 8l-8-8l1.414-1.414L12 14.172l6.586-6.586z"></path></svg>`
+
+        let html = `<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+            <strong style="font-size: 14px; color: var(--color-black, black);">Légende</strong>
+            <button id="legend-toggle" style="background: var(--color-grey-light, #eee); border: none; cursor: pointer; padding: 4px; border-radius: 4px; color: var(--color-black, black); display: flex; align-items: center; justify-content: center;">
+              ${chevronSvg}
+            </button>
+          </div>`
+
+        html += '<div id="legend-content" style="display: none; flex-direction: column; gap: 6px;">'
+        this._legendItems.forEach(item => {
+          html += `<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-black, black);"><span style="width: 14px; height: 14px; border-radius: 50%; background-color: ${item.color}; display: inline-block; flex-shrink: 0; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);"></span><span style="line-height: 1.2;">${item.label}</span></div>`
+        })
+        html += '</div>'
+
+        this._container.innerHTML = html
+
+        // Add toggle logic
+        // Use timeout to make sure elements are mounted in the DOM
+        setTimeout(() => {
+          const toggleBtn = this._container?.querySelector('#legend-toggle')
+          const svgIcon = toggleBtn?.querySelector('svg')
+          const content = this._container?.querySelector('#legend-content') as HTMLElement
+          if (toggleBtn && content && svgIcon) {
+            toggleBtn.addEventListener('click', e => {
+              e.stopPropagation()
+              if (content.style.display === 'none') {
+                content.style.display = 'flex'
+                svgIcon.style.transform = 'rotate(180deg)' // Pointing up when expanded
+              } else {
+                content.style.display = 'none'
+                svgIcon.style.transform = 'rotate(0deg)' // Pointing down when collapsed
+              }
+            })
+          }
+        }, 0)
+
+        return this._container
+      }
+
+      onRemove() {
+        if (this._container?.parentNode) {
+          this._container.parentNode.removeChild(this._container)
+        }
+        this._map = undefined
+      }
+    }
+
+    // Add control at the bottom left like requested
+    map.addControl(new LegendControl(legendItems) as any, 'bottom-left')
+  }
 </script>
 
 <style is:global>
   /* Override MapLibre default popup styles to match our cards */
   .custom-card-popup .maplibregl-popup-content {
     padding: 0;
-    background: transparent;
     box-shadow: none;
     border-radius: 0;
   }

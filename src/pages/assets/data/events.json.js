@@ -39,12 +39,15 @@ export async function GET({ params, request }) {
           properties: {
             id: event.id,
             name: event.name,
+            startDate: event.time_start?.dateStr,
+            endDate: event.time_end?.dateStr,
             slug: event.slug || event.id, // Utilisé pour l'URL
             path: event.path, // Le vrai chemin pré-calculé
             logo: event.cover_image?.id || null, // ID de l'image Directus pour la popup
             color: colorPaletteToken,
             area,
             types,
+            typesTranslated: event.typesTranslated,
           },
           geometry: {
             type: 'Point',

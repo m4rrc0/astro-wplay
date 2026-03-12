@@ -44,6 +44,7 @@ export async function GET({ params, request }) {
             color: colorPaletteToken,
             area,
             types,
+            typesTranslated: org.typesTranslated,
             services,
           },
           geometry: {

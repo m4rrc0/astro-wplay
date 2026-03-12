@@ -1,5 +1,11 @@
 import { slugify, createPath } from '@utils'
-import { transformAddress, translateFromCodeName, transformImage, transformLink, transformRichText } from './utils'
+import {
+  transformAddress,
+  translateFromCodeName,
+  transformImage,
+  transformLink,
+  transformRichText,
+} from './utils'
 import { transformSchedulePart, transformSchedules } from './schedule'
 import { setEndDate, setDateTimes, transformDateTime } from './dates'
 import { generateOccurrences } from './flatten'
@@ -79,12 +85,12 @@ export function transformEvent(eventRaw, languages) {
   event.translations = eventRaw?.translations?.map(t => {
     // const orgTr = mainOrganizer?.translations?.find(orgT => orgT.languages_code === t.code)
 
-    return ({
+    return {
       ...t,
       // highlighted_details: t.highlighted_details || orgTr?.highlighted_details || '',
       // description: t.description || orgTr?.description || '',
       rich_text_content: transformRichText(t?.rich_text_content),
-    })
+    }
   })
 
   const scheduleParts = eventRaw?.eventSchedule?.map(transformSchedulePart)
@@ -158,16 +164,16 @@ export function transformEvent(eventRaw, languages) {
 
   const unique = /unique|multidays/.test(event.recurrence)
     ? {
-      slug: slugCanonical,
-      path: createPath({ type: 'event', slug: slugCanonical }),
-    }
+        slug: slugCanonical,
+        path: createPath({ type: 'event', slug: slugCanonical }),
+      }
     : null
 
   const canonical = event.isRecurring
     ? {
-      slug: slugCanonical,
-      path: createPath({ type: 'event', slug: slugCanonical }),
-    }
+        slug: slugCanonical,
+        path: createPath({ type: 'event', slug: slugCanonical }),
+      }
     : null
 
   // compute event occurrences

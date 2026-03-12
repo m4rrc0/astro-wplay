@@ -60,6 +60,31 @@ const srcCover = imageDirectusSrc({
 })
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+
+const jsonLd = {
+     "@context": "https://schema.org",
+     "@type": "LocalBusiness || HobbyShop || Library || BarOrPub", // Ou "HobbyShop", "Library", "BarOrPub" selon le type
+    url: "https://www.wanna-play.be/fr/o/slug",
+    name: "Nom de l'organisation",
+    legalName: "Nom légal de l'organisation",
+    description: "Description de l'organisation",
+    logo: "https://url-logo.jpg",
+    image: "https://url-logo.jpg",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Adresse",
+      addressLocality: "Ville",
+      postalCode: "Code Postal",
+      addressCountry: "BE"
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 50.8503,
+      longitude: 4.3517
+    },
+    telephone: "+32..."
+}
+
 ---
 
 <!-- <Debug {name} /> -->

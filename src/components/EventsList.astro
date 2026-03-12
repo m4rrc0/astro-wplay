@@ -1,0 +1,153 @@
+---
+import { IO, Img, ImgDirectus } from '@components'
+import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
+import { getEvents } from '../store/dataService.js'
+import { start as startDirectus } from '../services/directus.js'
+import { imageDirectusSrc } from '@utils'
+
+// Props passed from the MDX page
+const { eventTypeFilter, areaCode, lang = { code: 'fr' } } = Astro.props
+
+// // Start Directus (login/refresh) before using data
+await startDirectus()
+
+const now = new Date()
+const in10Days = new Date(now)
+in10Days.setDate(in10Days.getDate() + 10)
+
+// Fetch all events (from Directus or cache); async so use await; result stored in allEvents
+const allEvents = await getEvents({
+// Filter out past events; only include events with start date from now
+  after: now, 
+// Only events within the next 10 days
+  before: in10Days, 
+})
+
+// Holds filtered events (by type and area); make sure MDX page always provides the props (type: festival, gameTime, gamesMarket, tournament, workshop)
+const filteredEvents = (allEvents ?? [])
+// Keep only dated event instances (next 10 days); exclude canonical master records
+  .filter(event => !event.isCanonical) 
+  .filter(event => event.typesTranslated?.some(t => t?.code_name === eventTypeFilter))
+  .filter(event => event.location?.area?.code_name === areaCode)
+---
+
+<section class="events-list">
+  {
+    !filteredEvents.length && (
+      <p class="center">Aucun événement trouvé pour ces critères pour le moment.</p>
+    )
+  }
+
+  {
+    filteredEvents.length > 0 && (
+      <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
+        <IO ul $skipNoInner class="list reset">
+          {filteredEvents.map(event => {
+            const { name, location, cover_image, organizers, time_start } = event
+
+            const srcCover = imageDirectusSrc({
+              src: cover_image?.src,
+              width: '1000',
+              fit: 'cover',
+              quality: '50',
+            })
+
+            return (
+              <li
+                class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                style=""
+              >
+                <div
+                  class="box no-border padding-h4 with-sidebar gap-h4
+                      color-palette-trans
+                      background-overlay
+                      "
+                  style={
+                    (srcCover
+                      ? `background-image: url("${srcCover}"); `
+                      : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                    `--content-min: 80%;`
+                  }
+                >
+                  <div>
+                    <time
+                      datetime={time_start?.dateTimeRaw}
+                      class="timestart stack gap-down-h8 center intrinsic"
+                      style="line-height: 1;"
+                    >
+                      <span class="size-h1">{time_start?.fr?.day}</span>
+                      <span class="size-h2">{time_start?.fr?.monthShort}</span>
+                      <span class="size-h2">{time_start?.fr?.year}</span>
+                    </time>
+                    <div>
+                      <div class="cover no-gap" style="--min-height: 100%;">
+                        <h2 class="h3 centered">
+                          <a
+                            href={`/${event.path}/`}
+                            class="name reset clickable"
+                            set:html={name}
+                          />
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                  <IO
+                    p
+                    $skipNoInner
+                    class="zip city h5"
+                    data-zip={location?.postalCode}
+                    data-city={location?.addressLocality}
+                  >
+                    {location?.addressLocality}
+                  </IO>
+                  <ul class="reset stack horizontal">
+                    {organizers?.map(({ name, logo }) => (
+                      <li>
+                        {logo?.src ? (
+                          <ImgDirectus
+                            image={logo}
+                            src={logo?.src}
+                            alt={name}
+                            loading="lazy"
+                            class=""
+                            style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                            width="32"
+                            height="32"
+                            fit="inside"
+                            quality="99"
+                          />
+                        ) : (
+                          <Img
+                            src={placeholderWPlayCircleBlue}
+                            alt="logo"
+                            loading="lazy"
+                            class=""
+                            style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                            width="32"
+                            height="32"
+                          />
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            )
+          })}
+        </IO>
+      </IO>
+    )
+  }
+</section>
+
+<!-- temporary style card for now -->
+<style>
+  .events-list {
+    margin-block: var(--size-h2);
+  }
+  .card-event-footer {
+    line-height: 32px;
+  }
+</style>

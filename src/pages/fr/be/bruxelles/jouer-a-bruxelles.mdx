@@ -3,7 +3,10 @@ layout: '@layouts/MarkdownPage.astro'
 title: "Jouer à Bruxelles"
 author: "Rabia C."
 date: "06-03-2026"
+eventTypeFilter: 'gameTime'
+areaCode: 'brussels'
 ---
+import EventsList from '@components/EventsList.astro'
 
 # **Jouer à Bruxelles**
 
@@ -17,7 +20,7 @@ Que tu sois joueur occasionnel ou passionné, tu peux retrouver facilement où j
 ## Liste complète et infos pratiques:
 
 **[liste des organisations/événements]**
-
+<EventsList eventTypeFilter="gameTime" areaCode="brussels" />
 
 ## **Des événements ludiques partout à Bruxelles**
 
@@ -51,7 +54,7 @@ Chaque semaine, des évènements jeux de société sont organisés dans différe
 
 Clique ici pour retrouver plus d’événements à venir et trouver les festivals qui te correspondent. \
 **[lien vers festivals de jeux à Bruxelles]**
-
+<EventsList eventTypeFilter="festival" areaCode="brussels" />
 
 ## **Un agenda centralisé pour jouer plus facilement**
 

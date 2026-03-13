@@ -71,6 +71,39 @@ const d = new Date()
 
 // const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
+
+let jsonldType
+if (isRecurring) {
+  jsonldType = 'EventSeries'
+} else {
+  jsonldType = 'Event'
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': jsonldType,
+  url: canonicalURL.href,
+  name,
+  description
+}
+
+if(jsonldType === 'EventSeries'){
+  jsonLd.repatFrequency:
+
+} else if (jsonldType === 'Event'){
+  jsonLd.startDate,
+  jsonLd.endDate,
+  jsonLd.location: {
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: location.streetAddress,
+      addressLocality: location.addressLocality,
+      postalCode: location.postalCode,
+      addressCountry: 'BE',
+    },
+  },
+  jsonLd.image: cover_image?.src
+}
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -137,7 +170,7 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
             "
             style="
             max-width: 90%;
-            width: fit-content; 
+            width: fit-content;
             margin-top: calc(var(--size-h2) * -1);
             margin-bottom: var(--size-h2);
             box-shadow: 0 0px 6px rgb(0 0 0 / 30%);

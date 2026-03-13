@@ -61,30 +61,81 @@ const srcCover = imageDirectusSrc({
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
+let jsonldType
+const allowedLinks = [
+  'website',
+  'web_page',
+  'twitch',
+  'linkedin',
+  'facebook',
+  'facebook_page',
+  'instagram',
+  'twitter',
+  'youtube',
+  'youtube_channel',
+  'tiktok',
+  'tripadvisor',
+  'linktree',
+]
+const filteredLinks = links?.filter(link => allowedLinks.includes(link.name?.code_name))
+const linksSameAs = filteredLinks?.map(link => link.url) || []
+
+const typeCode = typesTranslated?.[0]?.code_name
+
+if (typeCode === 'lodge') jsonldType = 'LodgingBusiness'
+else if (typeCode === 'bar') jsonldType = 'BarOrPub'
+else if (typeCode === 'restaurant') jsonldType = 'Restaurant'
+else if (typeCode === 'boardgame_services') jsonldType = 'ProfessionalService'
+else if (typeCode === 'shop') jsonldType = 'HobbyShop'
+else if (['escape_room', 'publisher'].includes(typeCode)) jsonldType = 'EntertainmentBusiness'
+else if (typeCode === 'distributor') jsonldType = 'LocalBusiness'
+else if (typeCode === 'toy_library') jsonldType = 'Library'
+else if (typeCode === 'school') jsonldType = 'EducationalOrganization'
+else jsonldType = 'Organization'
+
 const jsonLd = {
-     "@context": "https://schema.org",
-     "@type": "LocalBusiness || HobbyShop || Library || BarOrPub", // Ou "HobbyShop", "Library", "BarOrPub" selon le type
-    url: "https://www.wanna-play.be/fr/o/slug",
-    name: "Nom de l'organisation",
-    legalName: "Nom légal de l'organisation",
-    description: "Description de l'organisation",
-    logo: "https://url-logo.jpg",
-    image: "https://url-logo.jpg",
+  '@context': 'https://schema.org',
+  '@type': jsonldType,
+  url: canonicalURL.href,
+  name,
+  legalName: name,
+  description,
+  logo: logo?.src,
+  image: logo?.src,
+  ...(location && {
     address: {
-      "@type": "PostalAddress",
-      streetAddress: "Adresse",
-      addressLocality: "Ville",
-      postalCode: "Code Postal",
-      addressCountry: "BE"
+      '@type': 'PostalAddress',
+      streetAddress: location.streetAddress,
+      addressLocality: location.addressLocality,
+      postalCode: location.postalCode,
+      addressCountry: 'BE',
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 50.8503,
-      longitude: 4.3517
-    },
-    telephone: "+32..."
+  }),
+  sameAs: linksSameAs,
 }
 
+if (location?.geo?.coordinates && jsonldType !== 'Organization') {
+  jsonLd.geo = {
+    '@type': 'GeoCoordinates',
+    longitude: location.geo.coordinates[0],
+    latitude: location.geo.coordinates[1],
+  }
+}
+
+if (location?.area) {
+  jsonLd.areaServed = {
+    '@type': 'AdministrativeArea',
+    name: location.area.name?.fr,
+  }
+}
+
+if (typeCode === 'toy_library') {
+  jsonLd.amenityFeature = {
+    '@type': 'LocationFeatureSpecification',
+    name: 'Ludothèque',
+    value: 'true',
+  }
+}
 ---
 
 <!-- <Debug {name} /> -->
@@ -360,5 +411,6 @@ const jsonLd = {
         )
       }
     </main>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </BasicPage>
 </SkeletonPage>

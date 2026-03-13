@@ -43,16 +43,18 @@ onMount(eventsFiltersStore, () => {
 if (typeof window !== 'undefined') {
   // Keep router in sync with store
   eventsFiltersStore.listen(state => {
-    redirectPage(
-      router,
-      'events',
-      {},
-      {
-        ...(state.types.length > 0 ? { types: encodeTypes(state.types) } : {}),
-        ...(state.city ? { city: state.city } : {}),
-        ...(state.city && state.distance ? { distance: state.distance } : {}),
-      }
-    )
+    if (router.get()?.route === 'events') {
+      redirectPage(
+        router,
+        'events',
+        {},
+        {
+          ...(state.types.length > 0 ? { types: encodeTypes(state.types) } : {}),
+          ...(state.city ? { city: state.city } : {}),
+          ...(state.city && state.distance ? { distance: state.distance } : {}),
+        }
+      )
+    }
   })
 }
 

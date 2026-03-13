@@ -40,16 +40,18 @@ onMount(organizationsFiltersStore, () => {
 if (typeof window !== 'undefined') {
   // Keep router in sync with store
   organizationsFiltersStore.listen(state => {
-    redirectPage(
-      router,
-      'organizations',
-      {},
-      {
-        ...((state.areas?.length ?? 0) > 0 ? { areas: encodeArray(state.areas) } : {}),
-        ...((state.types?.length ?? 0) > 0 ? { types: encodeArray(state.types) } : {}),
-        ...((state.services?.length ?? 0) > 0 ? { services: encodeArray(state.services) } : {}),
-      }
-    )
+    if (router.get()?.route === 'organizations') {
+      redirectPage(
+        router,
+        'organizations',
+        {},
+        {
+          ...((state.areas?.length ?? 0) > 0 ? { areas: encodeArray(state.areas) } : {}),
+          ...((state.types?.length ?? 0) > 0 ? { types: encodeArray(state.types) } : {}),
+          ...((state.services?.length ?? 0) > 0 ? { services: encodeArray(state.services) } : {}),
+        }
+      )
+    }
   })
 }
 

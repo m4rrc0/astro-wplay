@@ -10,22 +10,34 @@ export interface Props {
 const { itemType = 'organizations', area, date } = Astro.props
 ---
 
-<div
-  id="map"
-  data-item-type={itemType}
-  data-area={area}
-  data-date={date}
-  style="width: 100%; height: 700px"
->
+<div>
+  <div
+    id="map"
+    data-item-type={itemType}
+    data-area={area}
+    data-date={date}
+    style="width: 100%; height: 700px; height: min(700px, 80vh)"
+  >
+  </div>
+  <p class="map-notice color-palette-teal">
+    <small>
+      Cette carte est en phase d'expérimentation. N'hésite pas à <a href="/fr/contact/"
+        >nous contacter</a
+      > si tu rencontres des problèmes.
+    </small>
+  </p>
 </div>
 
-<!-- https://maplibre.org/maplibre-gl-js/docs/examples/create-and-style-clusters/ 
+<!-- https://maplibre.org/maplibre-gl-js/docs/examples/create-and-style-clusters/
 time slider, clusters, locate the user -->
 
 <script>
   import maplibregl, { NavigationControl } from 'maplibre-gl'
-  import { organizationsFiltersStore } from '@src/stores/organizations-filters'
-  import { eventsFiltersStore } from '@src/stores/events-filters'
+  import {
+    getInitialState as orgasInit,
+    organizationsFiltersStore,
+  } from '@src/stores/organizations-filters'
+  import { getInitialState as eventsInit, eventsFiltersStore } from '@src/stores/events-filters'
 
   const bounds: [[number, number], [number, number]] = [
     [1.9, 49.4], // West, South
@@ -53,6 +65,54 @@ time slider, clusters, locate the user -->
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     return R * c
+  }
+
+  function filterOrganizationsFeatures(features: any[], state: any) {
+    const { areas, types, services } = state
+    return features.filter((feature: any) => {
+      const fArea = feature.properties.area
+      const fTypes = feature.properties.types?.map((t: any) => t.code) || []
+      const fServices = feature.properties.services || []
+
+      const matchArea = areas.length === 0 || areas.includes(fArea)
+      const matchType = types.length === 0 || types.some((t: string) => fTypes.includes(t))
+      const matchService =
+        services.length === 0 || services.some((s: string) => fServices.includes(s))
+
+      return matchArea && matchType && matchService
+    })
+  }
+
+  function filterEventsFeatures(features: any[], state: any) {
+    const { city, distance, types } = state
+    let centerLat = NaN
+    let centerLng = NaN
+    let radius = parseFloat(distance) || 10
+
+    if (city) {
+      const cityOption = document.querySelector(`option[value="${city}"]`) as HTMLOptionElement
+      if (cityOption) {
+        centerLat = parseFloat(cityOption.dataset.latitude || '')
+        centerLng = parseFloat(cityOption.dataset.longitude || '')
+      }
+    }
+
+    return features.filter((feature: any) => {
+      const fTypes = feature.properties.types?.map((t: any) => t.code) || []
+      const matchType = types.length === 0 || types.some((t: any) => fTypes.includes(t))
+
+      let matchProximity = true
+      if (city && !isNaN(centerLat) && !isNaN(centerLng)) {
+        const fLng = feature.geometry.coordinates[0]
+        const fLat = feature.geometry.coordinates[1]
+        const dist = haversine(centerLat, centerLng, fLat, fLng)
+        if (dist > radius) {
+          matchProximity = false
+        }
+      }
+
+      return matchType && matchProximity
+    })
   }
   const map = new maplibregl.Map({
     style: 'https://tiles.openfreemap.org/styles/bright',
@@ -199,9 +259,22 @@ time slider, clusters, locate the user -->
       padding: 20,
       animate: false,
     })
+
+    // Apply initial state filters from URL before adding source to avoid flash
+    let initialData = geojson
+    if (itemType === 'organizations') {
+      const initialState = orgasInit()
+      const filteredFeatures = filterOrganizationsFeatures(geojson.features, initialState)
+      initialData = { ...geojson, features: filteredFeatures }
+    } else if (itemType === 'events') {
+      const initialState = eventsInit()
+      const filteredFeatures = filterEventsFeatures(geojson.features, initialState)
+      initialData = { ...geojson, features: filteredFeatures }
+    }
+
     map.addSource('items-source', {
       type: 'geojson',
-      data: geojson,
+      data: initialData,
       cluster: true,
       clusterMaxZoom: 14,
       clusterRadius: 50,
@@ -459,41 +532,7 @@ time slider, clusters, locate the user -->
     // --- APPLY FILTERS FROM STORE ---
     if (itemType === 'organizations') {
       organizationsFiltersStore.listen(state => {
-        const { areas, types, services } = state
-
-        // Start with a valid all-inclusive filter
-        // MapLibre filters use an array syntax: ['all', condition1, condition2...]
-        let mapFilter: any[] = ['all']
-
-        // 1. Filter by Area
-        if (areas && areas.length > 0) {
-          mapFilter.push(['in', ['get', 'area'], ['literal', areas]])
-        }
-
-        // 2. Filter by Type
-        if (types && types.length > 0) {
-          const typeConditions = types.map((t: string) => ['in', t, ['get', 'types']])
-          mapFilter.push(['any', ...typeConditions])
-        }
-
-        // 3. Filter by Services
-        if (services && services.length > 0) {
-          const serviceConditions = services.map((s: string) => ['in', s, ['get', 'services']])
-          mapFilter.push(['any', ...serviceConditions])
-        }
-
-        const filteredFeatures = geojson.features.filter((feature: any) => {
-          const fArea = feature.properties.area
-          const fTypes = feature.properties.types?.map((t: any) => t.code) || []
-          const fServices = feature.properties.services || []
-
-          const matchArea = areas.length === 0 || areas.includes(fArea)
-          const matchType = types.length === 0 || types.some((t: string) => fTypes.includes(t))
-          const matchService =
-            services.length === 0 || services.some((s: string) => fServices.includes(s))
-
-          return matchArea && matchType && matchService
-        })
+        const filteredFeatures = filterOrganizationsFeatures(geojson.features, state)
 
         const filteredGeojson = {
           type: 'FeatureCollection',
@@ -506,36 +545,7 @@ time slider, clusters, locate the user -->
       })
     } else if (itemType === 'events') {
       eventsFiltersStore.listen(state => {
-        const { city, distance, types } = state
-
-        let centerLat = NaN
-        let centerLng = NaN
-        let radius = parseFloat(distance) || 10
-
-        if (city) {
-          const cityOption = document.querySelector(`option[value="${city}"]`) as HTMLOptionElement
-          if (cityOption) {
-            centerLat = parseFloat(cityOption.dataset.latitude || '')
-            centerLng = parseFloat(cityOption.dataset.longitude || '')
-          }
-        }
-
-        const filteredFeatures = geojson.features.filter((feature: any) => {
-          const fTypes = feature.properties.types?.map((t: any) => t.code) || []
-          const matchType = types.length === 0 || types.some((t: any) => fTypes.includes(t))
-
-          let matchProximity = true
-          if (city && !isNaN(centerLat) && !isNaN(centerLng)) {
-            const fLng = feature.geometry.coordinates[0]
-            const fLat = feature.geometry.coordinates[1]
-            const dist = haversine(centerLat, centerLng, fLat, fLng)
-            if (dist > radius) {
-              matchProximity = false
-            }
-          }
-
-          return matchType && matchProximity
-        })
+        const filteredFeatures = filterEventsFeatures(geojson.features, state)
 
         const filteredGeojson = {
           type: 'FeatureCollection',
@@ -627,6 +637,9 @@ time slider, clusters, locate the user -->
 </script>
 
 <style is:global>
+  .map-notice a {
+    text-decoration: underline currentColor 1px;
+  }
   /* Override MapLibre default popup styles to match our cards */
   .custom-card-popup .maplibregl-popup-content {
     padding: 0;

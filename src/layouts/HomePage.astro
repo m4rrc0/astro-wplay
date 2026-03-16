@@ -193,7 +193,7 @@ const jsonLd = {
                       data-types={typesTranslated?.map(t => t.code_name)}
                     >
                       <div
-                        class="box no-border padding-h4 with-sidebar gap-h4
+                        class="card-event-main box no-border padding-h4 with-sidebar gap-h4
                                           color-palette-trans
                                           background-overlay
                                           "
@@ -314,7 +314,7 @@ const jsonLd = {
                         data-types={typesTranslated?.map(t => t.code_name)}
                       >
                         <div
-                          class="box no-border padding-h4 with-sidebar gap-h4
+                          class="card-event-main box no-border padding-h4 with-sidebar gap-h4
                                               color-palette-trans
                                               background-overlay
                                               "
@@ -721,6 +721,11 @@ const jsonLd = {
   }
   .card-event {
     max-width: 35rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-event-main {
+    flex-grow: 1;
   }
   .cover-map-section,
   .cover-volunteers-section {

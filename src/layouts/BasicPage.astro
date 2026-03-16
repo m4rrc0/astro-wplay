@@ -1,4 +1,6 @@
 ---
+import { createPath } from '@utils'
+import { CalendarIcon, OrgIcon, BxlIcon } from '@partials/icons'
 import { MtObf } from '@components'
 import { Icon } from 'astro-icon/components'
 
@@ -7,6 +9,7 @@ const { lang, class: className } = Astro.props
 const email = import.meta.env.CONTACT_EMAIL
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const isPro = canonicalURL.pathname.startsWith('/' + lang.code + '/s/')
 
 const ariaCurrentAttr = currentHref => {
   if (currentHref === canonicalURL.pathname) {
@@ -43,18 +46,28 @@ const ariaCurrentAttr = currentHref => {
           </li>
           <!-- <li><a href={`/${lang.code}/be`}>Où jouer?</a></li> -->
           <li>
-            <a href={`/${lang.code}/e/`} aria-current={ariaCurrentAttr(`/${lang.code}/e/`)}
-              >Agenda</a
-            >
-          </li>
-          <li>
-            <a href={`/${lang.code}/o/`} aria-current={ariaCurrentAttr(`/${lang.code}/o/`)}
-              >Annuaire</a
+            <a href={`/${lang.code}/`} aria-current={ariaCurrentAttr(`/${lang.code}/`)}
+              >Pour les joueurs</a
             >
           </li>
           <li>
             <a href={`/${lang.code}/s/`} aria-current={ariaCurrentAttr(`/${lang.code}/s/`)}
-              >Services pro</a
+              >Ressources pro</a
+            >
+          </li>
+          <!-- <li>
+            <a href={`/${lang.code}/e/`} aria-current={ariaCurrentAttr(`/${lang.code}/e/`)}
+              >Agenda</a
+            >
+          </li> -->
+          <!-- <li>
+            <a href={`/${lang.code}/o/`} aria-current={ariaCurrentAttr(`/${lang.code}/o/`)}
+              >Annuaire</a
+            >
+          </li> -->
+          <li>
+            <a href={`/${lang.code}/s/`} aria-current={ariaCurrentAttr(`/${lang.code}/s/`)}
+              >Services</a
             >
           </li>
           <!-- <li>
@@ -119,6 +132,39 @@ const ariaCurrentAttr = currentHref => {
       </nav>
     </div>
   </div>
+  {
+    !isPro && (
+      <div id="menu-secondary" class="color-palette-variation-funky-contrast">
+        <div class="center width-max">
+          <nav class="box no-border cluster overflow gap-h6-down">
+            <ul class="reset reset-down-a size-h3">
+              <li>
+                <a href={`/${lang.code}/e/`} aria-current={ariaCurrentAttr(`/${lang.code}/e/`)}>
+                  <CalendarIcon style="height:2.5em;" />
+                  <span>Agenda</span>
+                </a>
+              </li>
+              <li>
+                <a href={`/${lang.code}/o/`} aria-current={ariaCurrentAttr(`/${lang.code}/o/`)}>
+                  <OrgIcon style="height:2.5em;" />
+                  <span>Annuaire</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={'/' + createPath({ type: 'areas' }) + '/'}
+                  aria-current={ariaCurrentAttr('/' + createPath({ type: 'areas' }) + '/')}
+                >
+                  <BxlIcon style="height:2.5em;" />
+                  <span>Ma province</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    )
+  }
 
   <dialog
     id="searchContainer"
@@ -246,7 +292,7 @@ const ariaCurrentAttr = currentHref => {
     /* margin: var(--gap) 0; */
     --justify-content: flex-end;
   }
-  nav > ul > li:first-child {
+  #menu-main nav > ul > li:first-child {
     --justify-content: flex-start;
     flex-grow: 1;
   }
@@ -260,12 +306,21 @@ const ariaCurrentAttr = currentHref => {
     background-color: initial;
     color: var(--color-text__a--hover);
   }
-  :where(#searchBtn) {
+  [data-icon='gridicons:search'] {
     cursor: pointer;
+    color: var(--color-text);
   }
   nav [aria-current='page'] {
     color: var(--color-text__a--hover);
     background-color: var(--color-bg__a--hover);
+  }
+  #menu-secondary {
+    margin-top: 0;
+  }
+  #menu-secondary li > a {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
   #footer-main {
     margin-top: 4vw;

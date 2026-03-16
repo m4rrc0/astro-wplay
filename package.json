@@ -57,6 +57,6 @@
     "staticrypt": "^3.3.2"
   },
   "dependencies": {
-    "maplibre-gl": "^5.19.0"
+    "maplibre-gl": "5.11"
   }
 }

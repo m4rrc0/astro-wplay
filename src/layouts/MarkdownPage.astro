@@ -1,4 +1,5 @@
 ---
+import path from 'node:path'
 // this file is a general layout for all .md pages
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
@@ -9,7 +10,8 @@ const { frontmatter, headings, url, file } = props
 // default lang (fr) to avoid undefined
 const lang = props.lang ?? { code: 'fr' }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 const defaultDescription =
   "Wanna Play a pour mission de connecter les joueurs en live et en ligne. Toute l'info du jeu de société en Belgique."
 const imagePath = '/assets/images/LOGO-1024px.png'
@@ -26,7 +28,7 @@ const description = frontmatter.description ?? defaultDescription
     ogType="website"
     {title}
     {description}
-    canonicalUrl={canonicalURL.href + '/'}
+    {canonicalUrl}
     socialImage={imagePath}
     ogVideo={false}
     twitterCard="summary"

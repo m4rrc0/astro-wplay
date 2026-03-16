@@ -1,4 +1,5 @@
 ---
+import path from 'node:path'
 import { createPath, imageDirectusSrc } from '@utils'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { BelgiumMap } from '@partials'
@@ -41,7 +42,8 @@ const wPlayEvents = events
   .filter(e => e.organizers?.find(o => o.slug === 'wanna-play-asbl'))
   .slice(0, 3)
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 const description =
   "Wanna Play a pour mission de connecter les joueurs en live et en ligne. Toute l'info du jeu de société en Belgique."
 const imagePath = '/assets/images/LOGO-1024px.png'
@@ -78,7 +80,7 @@ const jsonLd = {
     ogType="website"
     title="Connecte les joueurs"
     {description}
-    canonicalUrl={canonicalURL.href + '/'}
+    {canonicalUrl}
     socialImage={imagePath}
     ogVideo={false}
     twitterCard="summary"

@@ -1,4 +1,5 @@
 ---
+import path from 'node:path'
 import { SkeletonPage, BasicPage } from '@layouts'
 
 // Component Imports
@@ -8,7 +9,8 @@ import DemoBoxComplete from '@partials/styleguide/DemoBoxComplete.astro'
 
 let list6 = ['main', 'danger', 'trans']
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 ---
 
 <SkeletonPage lang="fr">
@@ -17,7 +19,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       ogType="website"
       title="Styleguide"
       description="A (soon to be) extensive style guide using nuds libraries"
-      canonicalUrl={canonicalURL.href + '/'}
+      {canonicalUrl}
       socialImage="/assets/images/LOGO-1024px.png"
       ogVideo={false}
       twitterCard="summary"
@@ -26,10 +28,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   </Fragment>
 
   <BasicPage lang={{ code: 'fr' }}>
-    <!-- <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
+    <!-- <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalUrl.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
     <!-- <a href={`https://web.dev/measure/?url=https%3A%2F%2Fwww.wanna-play.be%2F`} target="_blank" rel="noopener noreferrer">Lighthouse score of this page</a> -->
     <!-- <iframe
-      src={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`}
+      src={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalUrl.href}%26meta=false%26insights=true`}
     ></iframe> -->
     <div class="box no-border stack gap-down" style="--gap-down: 1em">
       <h1>Styleguide</h1>

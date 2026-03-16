@@ -1,11 +1,13 @@
 ---
+import path from 'node:path'
 // import Fragment from 'astro/components'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, MtObf } from '@components'
 
 const email = import.meta.env.CONTACT_EMAIL
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 ---
 
 <SkeletonPage lang="fr">
@@ -14,7 +16,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     ogType="website"
     title="Contact"
     description="Tu as une question? Tu veux ajouter ton organisation sur le site? C'est par ici."
-    canonicalUrl={canonicalURL.href + '/'}
+    {canonicalUrl}
     socialImage="/assets/images/LOGO-1024px.png"
     ogVideo={false}
     twitterCard="summary"

@@ -30,8 +30,7 @@ export async function GET({ params, request }) {
             color: t.colorPalette || t.code_name,
             // on prend le label français par défaut pour le JSON
             label:
-              t.translations?.find(tr => tr.language_code === 'fr-FR' || tr.language_code === 'fr')
-                ?.default_label || t.code_name,
+              t.translations?.find(tr => tr.language_code === 'fr')?.default_label || t.code_name,
           })) || []
 
         return {

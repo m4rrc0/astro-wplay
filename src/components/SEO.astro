@@ -1,23 +1,28 @@
 ---
-  const {
-    setViewport = false,
-    charset = "",
-    siteName = "",
-    favicon = "",
-    locale = "", // e.g. en_US or fr_BE // og:locale - The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US.
-    localeAlternates = "", // og:locale:alternate - An array of other locales this page is available in.
-    ogType = "", // probably "website" or "article" or ...
-    title = "",
-    description = "",
-    canonicalUrl = "",
-    socialImage = "", // og:image - 1200:630 is recommended according to https://www.kapwing.com/resources/what-is-an-og-image-make-and-format-og-images-for-your-blog-or-webpage/
-    ogVideo = "", // og:video - A URL to a video file that complements this object.
-    twitterCard = "", // "summary", "summary_large_image", "app", or "player".
-    meta = [],
-  } = Astro.props;
+import { getImage } from "astro:assets";
+const {
+  setViewport = false,
+  charset = "",
+  siteName = "",
+  favicon = "",
+  locale = "", // e.g. en_US or fr_BE // og:locale - The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US.
+  localeAlternates = "", // og:locale:alternate - An array of other locales this page is available in.
+  ogType = "", // probably "website" or "article" or ...
+  title = "",
+  description = "",
+  canonicalUrl = "",
+  socialImage: socialImageRaw = "", // og:image - 1200:630 is recommended according to https://www.kapwing.com/resources/what-is-an-og-image-make-and-format-og-images-for-your-blog-or-webpage/
+  ogVideo = "", // og:video - A URL to a video file that complements this object.
+  twitterCard = "", // "summary", "summary_large_image", "app", or "player".
+  meta = [],
+} = Astro.props;
 
-  // const titleComposed = title + siteName ? ` | ${siteName}` : ''
-  const titleComposed = title ? `${title}${siteName ? ` | ${siteName}` : ''}` : siteName
+// const titleComposed = title + siteName ? ` | ${siteName}` : ''
+const titleComposed = title ? `${title}${siteName ? ` | ${siteName}` : ''}` : siteName
+
+const srcRaw = socialImageRaw?.src || socialImageRaw
+const socialImage = srcRaw ? await getImage({ src: srcRaw, alt: title, width: 1200, height: 630 }) : null
+console.log({ canonicalUrl, socialImageRaw, socialImage })
 
 ---
 
@@ -32,11 +37,11 @@
 
 {siteName && <meta property="og:site_name" content={siteName} />}
 
-{title && 
+{title &&
   <title>{titleComposed}</title>
   <meta property="og:title" content={titleComposed} />}
 
-{description && 
+{description &&
   <meta name="description" content={description} />
   <meta property="og:description" content={description} />}
 
@@ -46,7 +51,15 @@
 
 {favicon && <link rel="icon" type="image/png" sizes="32x32" href={favicon} />}
 
-{socialImage && <meta property="og:image" content={socialImage} />}
+{socialImage?.src &&
+	<meta property="og:image" content={socialImage?.src} />
+  <meta property="og:image:secure_url" content={socialImage?.src} />
+}
+{socialImage?.options?.format && <meta property="og:image:type" content={`image/` + socialImage?.options?.format} />}
+{socialImage?.attributes?.width && <meta property="og:image:width" content={socialImage?.attributes?.width} />}
+{socialImage?.attributes?.height && <meta property="og:image:height" content={socialImage?.attributes?.height} />}
+{socialImage?.attributes?.alt && <meta property="og:image:alt" content={socialImage?.attributes?.alt} />}
+
 {ogVideo && <meta property="og:video" content={ogVideo} />}
 
 {twitterCard && <meta name="twitter:card" content={twitterCard} />}

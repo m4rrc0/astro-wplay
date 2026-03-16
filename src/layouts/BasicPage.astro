@@ -8,11 +8,11 @@ const { lang, class: className } = Astro.props
 
 const email = import.meta.env.CONTACT_EMAIL
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-const isPro = canonicalURL.pathname.startsWith('/' + lang.code + '/s/')
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const isPro = pageUrl.pathname.startsWith('/' + lang.code + '/s/')
 
 const ariaCurrentAttr = currentHref => {
-  if (currentHref === canonicalURL.pathname) {
+  if (currentHref === pageUrl.pathname) {
     return 'page'
   }
   return false
@@ -44,14 +44,16 @@ const ariaCurrentAttr = currentHref => {
               <span>Wanna Play</span>
             </a>
           </li>
-          <!-- <li><a href={`/${lang.code}/be`}>Où jouer?</a></li> -->
-          <li>
+          {/* <li><a href={`/${lang.code}/be`}>Où jouer?</a></li> */}
+          {
+            /* <li>
             <a href={`/${lang.code}/`} aria-current={ariaCurrentAttr(`/${lang.code}/`)}
               >Pour les joueurs</a
             >
-          </li>
+          </li> */
+          }
           <li>
-            <a href={`/${lang.code}/s/`} aria-current={ariaCurrentAttr(`/${lang.code}/s/`)}
+            <a href={`/${lang.code}/pro/`} aria-current={ariaCurrentAttr(`/${lang.code}/pro/`)}
               >Ressources pro</a
             >
           </li>
@@ -268,8 +270,8 @@ const ariaCurrentAttr = currentHref => {
       <!-- <div class="cluster justify-center size-h6">
         <div>
           <span>Tester cette page: </span>
-          <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalURL.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Performance</a>
-          <a href={`https://ecograder.com/report?site_submitted=${canonicalURL.href.replaceAll(/\//g, '%2F').replaceAll(':', '%3A')}`} target="_blank" rel="noopener noreferrer">Indice écologique</a>
+          <a href={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalUrl.href}%26meta=false%26insights=true`} target="_blank" rel="noopener noreferrer">Performance</a>
+          <a href={`https://ecograder.com/report?site_submitted=${canonicalUrl.href.replaceAll(/\//g, '%2F').replaceAll(':', '%3A')}`} target="_blank" rel="noopener noreferrer">Indice écologique</a>
         </div>
       </div> -->
     </div>

@@ -1,4 +1,5 @@
 ---
+import path from 'node:path'
 import { Markdown } from '@components'
 import { Icon } from 'astro-icon/components'
 import { SkeletonPage, BasicPage } from '@layouts'
@@ -58,8 +59,16 @@ const srcCover = imageDirectusSrc({
   fit: 'cover',
   quality: '50',
 })
+const srcSocial = imageDirectusSrc({
+  src: cover_image?.src || logo?.src,
+  width: '1200',
+  height: '630',
+  fit: 'cover',
+  quality: '99',
+})
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 ---
 
 <!-- <Debug {name} /> -->
@@ -69,8 +78,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     ogType="website"
     title={name}
     description={presentation}
-    canonicalUrl={canonicalURL.href + '/'}
-    socialImage={logo}
+    {canonicalUrl}
+    socialImage={srcSocial || '/assets/images/LOGO-1024px.png'}
     ogVideo={false}
     twitterCard="summary"
   />

@@ -1,4 +1,5 @@
 ---
+import path from 'node:path'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { Markdown } from '@components'
 import { Icon } from 'astro-icon/components'
@@ -69,8 +70,11 @@ const metaDescription = [presentation, startLong].filter(z => z).join(' le ')
 const today = new Date().toISOString().split('T')[0]
 const d = new Date()
 
-// const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+// Rewrite canonical URL to the EventSeries page if available
+const canonicalUrl = (
+  canonical?.path ? pageUrl.origin + path.join('/', canonical?.path, '/') : pageUrl.href + '/'
+).replace(/[\/]+$/, '/')
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -79,8 +83,8 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
     ogType="website"
     title={metaTitle}
     description={metaDescription || description}
-    canonicalUrl={canonicalURL.href + '/'}
-    socialImage={srcSocial}
+    {canonicalUrl}
+    socialImage={srcSocial || '/assets/images/LOGO-1024px.png'}
     ogVideo={false}
     twitterCard="summary"
   />
@@ -137,7 +141,7 @@ const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
             "
             style="
             max-width: 90%;
-            width: fit-content; 
+            width: fit-content;
             margin-top: calc(var(--size-h2) * -1);
             margin-bottom: var(--size-h2);
             box-shadow: 0 0px 6px rgb(0 0 0 / 30%);

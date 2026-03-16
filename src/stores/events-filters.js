@@ -18,12 +18,12 @@ const defaultState = {
 
 // Extract initial state from URL search params
 export function getInitialState() {
-  const { search } = router.get()
+  const { search } = router.get() || {}
   return {
     ...defaultState,
-    ...((search.types?.length ?? 0) > 0 ? { types: decodeTypes(search.types) } : {}),
-    ...(search.city ? { city: search.city } : {}),
-    ...(search.city && search.distance ? { distance: search.distance } : {}),
+    ...((search?.types?.length ?? 0) > 0 ? { types: decodeTypes(search?.types) } : {}),
+    ...(search?.city ? { city: search?.city } : {}),
+    ...(search?.city && search?.distance ? { distance: search?.distance } : {}),
   }
 }
 

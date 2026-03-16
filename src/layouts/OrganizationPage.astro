@@ -62,7 +62,7 @@ const srcCover = imageDirectusSrc({
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
 let jsonldType
-const allowedLinks = [
+const allowedSameAs = [
   'website',
   'web_page',
   'twitch',
@@ -77,8 +77,8 @@ const allowedLinks = [
   'tripadvisor',
   'linktree',
 ]
-const filteredLinks = links?.filter(link => allowedLinks.includes(link.name?.code_name))
-const linksSameAs = filteredLinks?.map(link => link.url) || []
+const linksSameAsRaw = links?.filter(link => allowedSameAs.includes(link.name?.code_name))
+const linksSameAs = linksSameAsRaw?.map(link => link.url) || []
 
 const typeCode = typesTranslated?.[0]?.code_name
 
@@ -103,15 +103,50 @@ const jsonLd = {
   logo: logo?.src,
   image: logo?.src,
   ...(location && {
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: location.streetAddress,
-      addressLocality: location.addressLocality,
-      postalCode: location.postalCode,
-      addressCountry: 'BE',
+    location: {
+      '@type': 'Place',
+      name: location?.name?.fr || location?.addressLocality,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: location.streetAddress,
+        addressLocality: location.addressLocality,
+        postalCode: location.postalCode,
+        addressCountry: 'BE',
+      },
     },
   }),
   sameAs: linksSameAs,
+}
+
+if (events && events.length > 0) {
+  jsonLd.event = events.map(event => {
+    const baseUrl = new URL(event.path, Astro.site).href
+
+    const isSeries = event.isRecurring && event.isCanonical
+    const idSuffix = isSeries ? '#eventseries' : '#event'
+
+    const eventStub = {
+      '@type': isSeries ? 'EventSeries' : 'Event',
+      '@id': baseUrl + idSuffix,
+      name: event.name,
+      url: baseUrl,
+      startDate: event?.time_start?.dateTimeRaw,
+      endDate: event?.time_end?.dateTimeRaw,
+      location: {
+        '@type': 'Place',
+        name: event?.location?.name?.fr || event?.location?.addressLocality,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: event.location.streetAddress,
+          addressLocality: event.location.addressLocality,
+          postalCode: event.location.postalCode,
+          addressCountry: 'BE',
+        },
+      },
+    }
+
+    return eventStub
+  })
 }
 
 if (location?.geo?.coordinates && jsonldType !== 'Organization') {

@@ -99,27 +99,36 @@ const jsonLd = {
   url: canonicalURL.href,
   name,
   description,
+  organizer: {
+    '@type': 'Organization',
+    '@id': new URL(organizers[0]?.path, Astro.site).href + '#organization',
+    name: organizers[0]?.name,
+    url: new URL(organizers[0]?.path, Astro.site).href,
+  },
 }
 
 if (jsonldType === 'EventSeries' && isCanonical) {
-  jsonLd.eventSchedule = schedule.map(s => ({
-    '@type': 'Schedule',
-    startDate: s?.startDate,
-    endDate: s?.endDate,
-    repeatFrequency: frequencyCode,
-    byDay: s?.byDay,
-    startTime: s?.startTime,
-    endTime: s?.endTime,
-    scheduleTimezone: 'Europe/Belgium',
-  }))
+  if (frequencyCode) {
+    jsonLd.eventSchedule = schedule.map(s => ({
+      '@type': 'Schedule',
+      startDate: s?.startDate,
+      endDate: s?.endDate,
+      repeatFrequency: frequencyCode,
+      byDay: s?.byDay,
+      startTime: s?.startTime,
+      endTime: s?.endTime,
+      scheduleTimezone: 'Europe/Belgium',
+    }))
+  }
+
   jsonLd.location = {
     '@type': 'Place',
     name: location?.name?.fr || location?.addressLocality,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: location.streetAddress,
-      addressLocality: location.addressLocality,
-      postalCode: location.postalCode,
+      streetAddress: location?.streetAddress,
+      addressLocality: location?.addressLocality,
+      postalCode: location?.postalCode,
       addressCountry: 'BE',
     },
   }
@@ -128,20 +137,21 @@ if (jsonldType === 'EventSeries' && isCanonical) {
     jsonLd.subEvent = futureOccurrences.map(occ => {
       const subEvent = {
         '@type': 'Event',
+        '@id': occ?.path + '#event',
         name,
-        startDate: occ.time_start?.dateTimeRaw,
-        ...(occ.time_end?.dateTimeRaw && { endDate: occ.time_end.dateTimeRaw }),
+        url: occ?.path,
+        startDate: occ?.time_start?.dateTimeRaw,
+        ...(occ?.time_end?.dateTimeRaw && { endDate: occ?.time_end.dateTimeRaw }),
         eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
         eventStatus: 'https://schema.org/EventScheduled',
-        url: new URL(occ.path, Astro.site).href,
         location: {
           '@type': 'Place',
           name: location?.name?.fr || location?.addressLocality,
           address: {
             '@type': 'PostalAddress',
-            streetAddress: location.streetAddress,
-            addressLocality: location.addressLocality,
-            postalCode: location.postalCode,
+            streetAddress: location?.streetAddress,
+            addressLocality: location?.addressLocality,
+            postalCode: location?.postalCode,
             addressCountry: 'BE',
           },
         },
@@ -159,7 +169,8 @@ if (jsonldType === 'EventSeries' && isCanonical) {
   }
   jsonLd.superEvent = {
     '@type': 'EventSeries',
-    name: name,
+    '@id': canonicalURL.href + '#eventseries',
+    name,
     url: canonicalURL.href,
   }
 } else if (jsonldType === 'Event' && isRecurring === false) {
@@ -170,9 +181,9 @@ if (jsonldType === 'EventSeries' && isCanonical) {
     name: location?.name?.fr || location?.addressLocality,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: location.streetAddress,
-      addressLocality: location.addressLocality,
-      postalCode: location.postalCode,
+      streetAddress: location?.streetAddress,
+      addressLocality: location?.addressLocality,
+      postalCode: location?.postalCode,
       addressCountry: 'BE',
     },
   }

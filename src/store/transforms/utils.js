@@ -1,4 +1,4 @@
-import { DomParser } from '@thednp/domparser';
+import { DomParser } from '@thednp/domparser'
 import { DIRECTUS_URL } from '@utils/env'
 import { slugify, createPath, areasBe, toTzDate, stripDate, datePlus1Day } from '@utils'
 
@@ -12,11 +12,12 @@ const cmsAssetsUrl = `${cmsBaseUrl}/assets`
  */
 export function transformAddress(location) {
   const l = location?.postalCode && location
+  const postalCode = l?.postalCode.trim()
   if (!l) return null
 
   const string = [
     [l.streetAddress, l.streetNumber].filter(z => z).join(' '),
-    [l.postalCode, l.addressLocality].filter(z => z).join(' '),
+    [postalCode, l.addressLocality].filter(z => z).join(' '),
   ]
     .filter(z => z)
     .join(', ')
@@ -24,7 +25,15 @@ export function transformAddress(location) {
   const fullString = `${l.name ? l.name + ' - ' : ''}${string}`
   const gMapLink = `https://maps.google.com/maps?q=${string.replace(/\s/g, '+')}+belgium`
 
-  let area = areasBe.find(area => l.postalCode >= area.zipMin && l.postalCode <= area.zipMax)
+  let area
+  if (postalCode.length === 4) {
+    area = areasBe.find(areaBe => postalCode >= areaBe.zipMin && postalCode <= areaBe.zipMax)
+  } else if (postalCode.length === 5) {
+    area = {
+      code_name: 'france',
+      countryCode: 'fr',
+    }
+  }
   if (!area) console.warn(`--SELF WARNING-- ZIP missing for place: '${string}'`)
 
   area = area && {
@@ -47,6 +56,8 @@ export const areas = [
   { code_name: 'limburg', fr: 'Limbourg' },
   { code_name: 'luxembourg', fr: 'Luxembourg' },
   { code_name: 'namur', fr: 'Namur' },
+  //
+  { code_name: 'france', fr: 'France' },
 ].map(a => {
   const slug = { fr: slugify(a.fr) }
   const path = { fr: createPath({ type: 'area', slug: slug.fr }) }
@@ -222,9 +233,9 @@ export function translateFromCodeName(code_name, warningCue) {
 export function transformImage(i) {
   return i?.id
     ? {
-      ...i,
-      src: `${cmsAssetsUrl}/${i?.id}`,
-    }
+        ...i,
+        src: `${cmsAssetsUrl}/${i?.id}`,
+      }
     : i
 }
 
@@ -254,7 +265,15 @@ export function transformRichText(html) {
 
   // Remove potentially dangerous elements and attributes
   const dangerousElements = ['script', 'iframe', 'object', 'embed', 'form']
-  const dangerousAttributes = ['onerror', 'onload', 'onmouseover', 'onclick', 'onmouseout', 'onkeydown', 'onkeyup']
+  const dangerousAttributes = [
+    'onerror',
+    'onload',
+    'onmouseover',
+    'onclick',
+    'onmouseout',
+    'onkeydown',
+    'onkeyup',
+  ]
 
   let sanitizedHtml = html
 
@@ -271,19 +290,22 @@ export function transformRichText(html) {
   })
 
   // Remove javascript: and data: URLs
-  sanitizedHtml = sanitizedHtml.replace(/(?:\bon[a-z]+\s*=|href\s*=\s*["'](?:javascript:|data:))[^"']*/gi, '')
+  sanitizedHtml = sanitizedHtml.replace(
+    /(?:\bon[a-z]+\s*=|href\s*=\s*["'](?:javascript:|data:))[^"']*/gi,
+    ''
+  )
 
   // NOTE: Old implementation
   // Add security attributes to all links
   // sanitizedHtml = sanitizedHtml.replaceAll('<a href', '<a target="_blank" rel="noopener noreferrer nofollow" href')
 
   // initialize DOM Parsing
-  const doc = DomParser().parseFromString(sanitizedHtml).root;
+  const doc = DomParser().parseFromString(sanitizedHtml).root
 
-  const links = doc.getElementsByTagName("a");
+  const links = doc.getElementsByTagName('a')
   links.forEach(link => {
-    link.setAttribute("target", "_blank");
-    link.setAttribute("rel", "noopener noreferrer nofollow");
+    link.setAttribute('target', '_blank')
+    link.setAttribute('rel', 'noopener noreferrer nofollow')
   })
 
   return doc?.children?.map(c => c.outerHTML).join('') || sanitizedHtml

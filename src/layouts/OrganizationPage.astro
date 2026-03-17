@@ -1,4 +1,5 @@
 ---
+import { getImage } from 'astro:assets'
 import { Markdown } from '@components'
 import { Icon } from 'astro-icon/components'
 import { SkeletonPage, BasicPage } from '@layouts'
@@ -14,6 +15,7 @@ const {
     // slug,
     // types,
     typesTranslated,
+    jsonldType,
     logo,
     cover_image,
     // opening_hours,
@@ -29,16 +31,63 @@ const {
     youtube_channel,
     translations,
     // gallery,
+    areaServedByArea,
     links,
     admin_categories,
     events: eventsUnfiltered,
+    canonicalEvents,
   },
 } = Astro.props
 
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
+const eventsLd = [...canonicalEvents, ...eventsUnfiltered]
+  ?.filter(e => {
+    // console.log({ e })
+    return e.recurrence === 'unique' || e.recurrence === 'multidays' || e.isCanonical
+  })
+  .map(event => {
+    const baseUrl = new URL(event.path, Astro.site).href
+
+    const isSeries = event.isRecurring
+    const type = isSeries ? 'EventSeries' : 'Event'
+    const locationName = event?.location?.name
+
+    const eventStub = {
+      '@type': type,
+      '@id': baseUrl + '#' + type,
+      name: event.name,
+      url: baseUrl,
+      ...(isSeries
+        ? {}
+        : {
+            startDate: event?.time_start?.dateTimeRaw,
+            endDate: event?.time_end?.dateTimeRaw,
+          }),
+      location: {
+        '@type': 'Place',
+        ...(locationName ? { name: locationName } : {}),
+        address: {
+          '@type': 'PostalAddress',
+          ...(event.location.streetAddress ? { streetAddress: event.location.streetAddress } : {}),
+          ...(event.location.addressLocality
+            ? { addressLocality: event.location.addressLocality }
+            : {}),
+          ...(event.location.postalCode ? { postalCode: event.location.postalCode } : {}),
+          addressCountry: 'BE',
+        },
+      },
+    }
+    return eventStub
+  })
 
 const { description, opening_hours_remark, rich_text_content, opening_hours_notes } =
   translations?.find(({ languages_code }) => languages_code === lang.code) || {}
+const presentationInStr =
+  location?.area?.code_name === 'france'
+    ? ' en France'
+    : ` dans la ${
+        location?.area?.code_name === 'brussels' ? 'région' : 'province'
+      } de ${location?.area?.name?.fr}`
 const presentation =
   typesTranslated?.[0] &&
   location?.addressLocality &&
@@ -47,11 +96,7 @@ const presentation =
     ?.map(type => type.translations.find(t => t.language_code === lang.code).default_label)
     .join(', ') +
     ` à ${location.addressLocality}` +
-    (location.addressLocality !== location?.area?.name?.fr
-      ? ` dans la ${
-          location?.area?.code_name === 'brussels' ? 'région' : 'province'
-        } de ${location?.area?.name?.fr}`
-      : '')
+    (location.addressLocality !== location?.area?.name?.fr ? presentationInStr : '')
 const srcCover = imageDirectusSrc({
   src: cover_image?.src,
   width: '1300',
@@ -61,7 +106,7 @@ const srcCover = imageDirectusSrc({
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
-let jsonldType
+// let jsonldType
 const allowedSameAs = [
   'website',
   'web_page',
@@ -80,73 +125,34 @@ const allowedSameAs = [
 const linksSameAsRaw = links?.filter(link => allowedSameAs.includes(link.name?.code_name))
 const linksSameAs = linksSameAsRaw?.map(link => link.url) || []
 
-const typeCode = typesTranslated?.[0]?.code_name
-
-if (typeCode === 'lodge') jsonldType = 'LodgingBusiness'
-else if (typeCode === 'bar') jsonldType = 'BarOrPub'
-else if (typeCode === 'restaurant') jsonldType = 'Restaurant'
-else if (typeCode === 'boardgame_services') jsonldType = 'ProfessionalService'
-else if (typeCode === 'shop') jsonldType = 'HobbyShop'
-else if (['escape_room', 'publisher'].includes(typeCode)) jsonldType = 'EntertainmentBusiness'
-else if (typeCode === 'distributor') jsonldType = 'LocalBusiness'
-else if (typeCode === 'toy_library') jsonldType = 'Library'
-else if (typeCode === 'school') jsonldType = 'EducationalOrganization'
-else jsonldType = 'Organization'
+const logoLd = logo ? await getImage({ ...logo }) : null
+const imageLd = cover_image ? await getImage({ ...cover_image }) : null
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': jsonldType,
+  '@id': canonicalURL.href + '#Organization',
   url: canonicalURL.href,
   name,
-  legalName: name,
-  description,
-  logo: logo?.src,
-  image: logo?.src,
+  // legalName: name,
+  description: presentation,
+  ...(logoLd?.src && { logo: logoLd.src }),
+  ...(imageLd?.src && { image: imageLd.src }),
   ...(location && {
     location: {
       '@type': 'Place',
-      name: location?.name?.fr || location?.addressLocality,
+      ...(location?.name ? { name: location?.name } : {}),
       address: {
         '@type': 'PostalAddress',
-        streetAddress: location.streetAddress,
-        addressLocality: location.addressLocality,
-        postalCode: location.postalCode,
+        ...(location.streetAddress ? { streetAddress: location.streetAddress } : {}),
+        ...(location.addressLocality ? { addressLocality: location.addressLocality } : {}),
+        ...(location.postalCode ? { postalCode: location.postalCode } : {}),
         addressCountry: 'BE',
       },
     },
   }),
-  sameAs: linksSameAs,
-}
-
-if (events && events.length > 0) {
-  jsonLd.event = events.map(event => {
-    const baseUrl = new URL(event.path, Astro.site).href
-
-    const isSeries = event.isRecurring && event.isCanonical
-    const idSuffix = isSeries ? '#eventseries' : '#event'
-
-    const eventStub = {
-      '@type': isSeries ? 'EventSeries' : 'Event',
-      '@id': baseUrl + idSuffix,
-      name: event.name,
-      url: baseUrl,
-      startDate: event?.time_start?.dateTimeRaw,
-      endDate: event?.time_end?.dateTimeRaw,
-      location: {
-        '@type': 'Place',
-        name: event?.location?.name?.fr || event?.location?.addressLocality,
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: event.location.streetAddress,
-          addressLocality: event.location.addressLocality,
-          postalCode: event.location.postalCode,
-          addressCountry: 'BE',
-        },
-      },
-    }
-
-    return eventStub
-  })
+  ...(linksSameAs && { sameAs: linksSameAs }),
+  ...(eventsLd.length && { event: eventsLd }),
 }
 
 if (location?.geo?.coordinates && jsonldType !== 'Organization') {
@@ -157,20 +163,29 @@ if (location?.geo?.coordinates && jsonldType !== 'Organization') {
   }
 }
 
-if (location?.area) {
-  jsonLd.areaServed = {
-    '@type': 'AdministrativeArea',
-    name: location.area.name?.fr,
-  }
+if (areaServedByArea.length) {
+  jsonLd.areaServed = areaServedByArea.map(area => {
+    const { default_label } = area.tag.translations.find(t => t.language_code === lang.code) || {}
+    return {
+      '@type': 'AdministrativeArea',
+      name: default_label || area.tag.code_name,
+    }
+  })
 }
 
-if (typeCode === 'toy_library') {
+if (jsonldType === 'Library') {
   jsonLd.amenityFeature = {
     '@type': 'LocationFeatureSpecification',
     name: 'Ludothèque',
-    value: 'true',
+    // value: 'true',
   }
 }
+
+// TODO: Add
+// - additional types
+// - opening hours
+// - servicesTranslated -> amenityFeature??
+// - ...
 ---
 
 <!-- <Debug {name} /> -->

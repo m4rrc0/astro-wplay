@@ -117,6 +117,8 @@ const organizationFields = [
   'amenities',
   'links',
   'translations.*',
+  'areaServedByArea.tag.code_name',
+  'areaServedByArea.tag.translations.*',
   'admin_categories',
 
   // Only fetch minimal event data - full data will be fetched by getEvents

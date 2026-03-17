@@ -43,6 +43,21 @@ export function transformOrganization(orgRaw) {
   // Transform types
   const typesTranslated = organization_types?.map(t => t.type)
 
+  // JSON-LD type
+  let jsonldType = 'Organization'
+  const typeCodes = typesTranslated?.map(type => type.code_name) || []
+  if (typeCodes.includes('lodge')) jsonldType = 'LodgingBusiness'
+  else if (typeCodes.includes('bar')) jsonldType = 'BarOrPub'
+  else if (typeCodes.includes('restaurant')) jsonldType = 'Restaurant'
+  else if (typeCodes.includes('boardgame_services')) jsonldType = 'ProfessionalService'
+  else if (typeCodes.includes('shop')) jsonldType = 'HobbyShop'
+  else if (typeCodes.includes('escape_room')) jsonldType = 'EntertainmentBusiness'
+  else if (typeCodes.includes('publisher')) jsonldType = 'EntertainmentBusiness'
+  else if (typeCodes.includes('distributor')) jsonldType = 'LocalBusiness'
+  else if (typeCodes.includes('toy_library')) jsonldType = 'Library'
+  else if (typeCodes.includes('school')) jsonldType = 'EducationalOrganization'
+  else jsonldType = 'Organization'
+
   // Transform services
   const servicesTranslated = games_related_services?.map(s => s.service)
 
@@ -81,6 +96,7 @@ export function transformOrganization(orgRaw) {
     path,
     location: locationTransformed,
     typesTranslated,
+    jsonldType,
     servicesTranslated,
     opening_hours_strings,
     amenities_translated,

@@ -1,4 +1,5 @@
 ---
+import path from 'node:path'
 import { getImage } from 'astro:assets'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { Markdown } from '@components'
@@ -70,9 +71,11 @@ const metaDescription = [presentation, startLong].filter(z => z).join(' le ')
 const today = new Date().toISOString().split('T')[0]
 const d = new Date()
 
-// const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const currentURL = new URL(Astro.url.pathname, Astro.site)
-const canonicalURL = new URL(canonical?.path || Astro.url.pathname, Astro.site)
+// Rewrite canonical URL to the EventSeries page if available
+const canonicalUrl = (
+  canonical?.path ? currentURL.origin + path.join('/', canonical?.path, '/') : currentURL.href + '/'
+).replace(/[\/]+$/, '/')
 const futureOccurrences = occurrences?.filter(event => event.time_start.dateStr >= today) || []
 // const nextOccurrence = occurrences?.find(event => event.time_start.dateStr >= today)
 
@@ -201,8 +204,8 @@ if (jsonldType === 'EventSeries') {
     ogType="website"
     title={metaTitle}
     description={metaDescription || description}
-    canonicalUrl={canonicalURL.href + '/'}
-    socialImage={srcSocial}
+    {canonicalUrl}
+    socialImage={srcSocial || '/assets/images/LOGO-1024px.png'}
     ogVideo={false}
     twitterCard="summary"
   />

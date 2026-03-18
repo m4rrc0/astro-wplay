@@ -1,0 +1,689 @@
+---
+import 'maplibre-gl/dist/maplibre-gl.css'
+
+export interface Props {
+  itemType?: 'organizations' | 'events'
+  area?: string
+  date?: number
+}
+
+const { itemType = 'organizations', area, date } = Astro.props
+---
+
+<div>
+  <div
+    id="map"
+    data-item-type={itemType}
+    data-area={area}
+    data-date={date}
+    style="width: 100%; height: 700px; height: min(700px, 80vh)"
+  >
+  </div>
+  <p class="map-notice color-palette-teal">
+    <small>
+      Cette carte est en phase d'expérimentation. N'hésite pas à <a href="/fr/contact/"
+        >nous contacter</a
+      > si tu rencontres des problèmes.
+    </small>
+  </p>
+</div>
+
+<!-- https://maplibre.org/maplibre-gl-js/docs/examples/create-and-style-clusters/
+time slider, clusters, locate the user -->
+
+<script>
+  import maplibregl, { NavigationControl } from 'maplibre-gl'
+  import {
+    getInitialState as orgasInit,
+    organizationsFiltersStore,
+  } from '@src/stores/organizations-filters'
+  import { getInitialState as eventsInit, eventsFiltersStore } from '@src/stores/events-filters'
+
+  const bounds: [[number, number], [number, number]] = [
+    [1.9, 49.4], // West, South
+    [7.1, 51.55], // East, North
+  ]
+
+  const mapContainer = document.getElementById('map')
+  const itemType = mapContainer?.getAttribute('data-item-type') || 'organizations'
+  const filterArea = mapContainer?.getAttribute('data-area')
+  const dateAttr = mapContainer?.getAttribute('data-date')
+  const filterDate = dateAttr ? parseInt(dateAttr) : 10
+
+  // Function to calculate distance (in km) between two geographical points (latitude/longitude)
+  // Used for the "Nearby" filter to show or hide events based on a defined radius
+  function haversine(lat1: number, lng1: number, lat2: number, lng2: number) {
+    const R = 6371 // Earth's radius in km
+    const toRad = (deg: number) => (deg * Math.PI) / 180
+
+    const dLat = toRad(lat2 - lat1)
+    const dLng = toRad(lng2 - lng1)
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2)
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    return R * c
+  }
+
+  function filterOrganizationsFeatures(features: any[], state: any) {
+    const { areas, types, services } = state
+    return features.filter((feature: any) => {
+      const fArea = feature.properties.area
+      const fTypes = feature.properties.types?.map((t: any) => t.code) || []
+      const fServices = feature.properties.services || []
+
+      const matchArea = areas.length === 0 || areas.includes(fArea)
+      const matchType = types.length === 0 || types.some((t: string) => fTypes.includes(t))
+      const matchService =
+        services.length === 0 || services.some((s: string) => fServices.includes(s))
+
+      return matchArea && matchType && matchService
+    })
+  }
+
+  function filterEventsFeatures(features: any[], state: any) {
+    const { city, distance, types } = state
+    let centerLat = NaN
+    let centerLng = NaN
+    let radius = parseFloat(distance) || 10
+
+    if (city) {
+      const cityOption = document.querySelector(`option[value="${city}"]`) as HTMLOptionElement
+      if (cityOption) {
+        centerLat = parseFloat(cityOption.dataset.latitude || '')
+        centerLng = parseFloat(cityOption.dataset.longitude || '')
+      }
+    }
+
+    return features.filter((feature: any) => {
+      const fTypes = feature.properties.types?.map((t: any) => t.code) || []
+      const matchType = types.length === 0 || types.some((t: any) => fTypes.includes(t))
+
+      let matchProximity = true
+      if (city && !isNaN(centerLat) && !isNaN(centerLng)) {
+        const fLng = feature.geometry.coordinates[0]
+        const fLat = feature.geometry.coordinates[1]
+        const dist = haversine(centerLat, centerLng, fLat, fLng)
+        if (dist > radius) {
+          matchProximity = false
+        }
+      }
+
+      return matchType && matchProximity
+    })
+  }
+  const map = new maplibregl.Map({
+    style: 'https://tiles.openfreemap.org/styles/bright',
+    // center: [4.35, 50.85],
+    zoom: 6,
+    minZoom: 6,
+    container: 'map',
+    maxBounds: bounds,
+    fadeDuration: 0,
+    attributionControl: false,
+    cooperativeGestures: true,
+  })
+
+  map.addControl(
+    new maplibregl.AttributionControl({
+      compact: true,
+    })
+  )
+  let nav = new NavigationControl()
+  map.addControl(nav, 'top-right')
+
+  // Fetch the GeoJSON from our dedicated API endpoint
+  let geojson: any = { type: 'FeatureCollection', features: [] }
+  try {
+    const endpoint =
+      itemType === 'events' ? '/assets/data/events.json' : '/assets/data/organizations.json'
+    const response = await fetch(endpoint)
+    geojson = await response.json()
+
+    if (filterArea) {
+      geojson.features = geojson.features.filter((f: any) => f.properties.area === filterArea)
+    }
+
+    if (filterDate && itemType === 'events') {
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      const filterDateObj = new Date(today)
+      filterDateObj.setDate(today.getDate() + filterDate + 1)
+      geojson.features = geojson.features.filter(
+        (f: any) =>
+          f.properties.endDate >= today.toISOString() &&
+          f.properties.endDate <= filterDateObj.toISOString()
+      )
+    }
+  } catch (e) {
+    console.error('Failed to load GeoJSON:', e)
+  }
+
+  // Configuration variables for easily customizing the cluster donut charts
+  const clusterConfig = {
+    // Different sizes depending on the number of elements in the cluster
+    sizes: [
+      { minCount: 100, radius: 45, fontSize: 18 },
+      { minCount: 50, radius: 35, fontSize: 16 },
+      { minCount: 10, radius: 28, fontSize: 14 },
+      { minCount: 0, radius: 20, fontSize: 12 },
+    ],
+    // Width of the colored ring as a ratio of radius (0.4 = 40% ring, 60% inner circle)
+    donutWidthRatio: 0.5,
+    fontFamily: 'inherit',
+    textColor: 'var(--color-black, black)',
+    innerCircleColor: 'var(--color-white, white)',
+    innerCircleStrokeColor: 'transparent',
+    innerCircleStrokeWidth: 0,
+  }
+
+  // We loop through the features to resolve the dynamic CSS color tokens into actual Hex codes
+  const uniqueColorsSet = new Set<string>()
+  // Maps resolved hex color → Set of unique translated labels
+  const legendItemsMap = new Map<string, Set<string>>()
+
+  geojson.features = geojson.features.map((feature: any) => {
+    // We retrieve the colorPaletteToken that we added in organizations.json.js
+    const colorPaletteToken = feature.properties.color || 'default'
+
+    // Try getting CSS variable --color-{colorPaletteToken} or --color-palette-{colorPaletteToken}
+    let cssColor = getComputedStyle(document.body)
+      .getPropertyValue(`--color-${colorPaletteToken}`)
+      .trim()
+    if (!cssColor) {
+      cssColor = getComputedStyle(document.body)
+        .getPropertyValue(`--color-palette-${colorPaletteToken}`)
+        .trim()
+    }
+
+    const resolvedColor = cssColor || '#000000'
+    feature.properties.typeColor = resolvedColor // Fallback
+    uniqueColorsSet.add(resolvedColor)
+
+    // Collect ALL types for the Map Legend, using the pre-translated label from the GeoJSON
+    if (feature.properties.types && Array.isArray(feature.properties.types)) {
+      feature.properties.types.forEach((t: any) => {
+        const translationObj = feature.properties.typesTranslated?.find(
+          (item: any) => item.code_name === t.code
+        )
+        const translatedLabel = translationObj?.translations?.[0]?.default_label
+        const labelText = translatedLabel || t.label || t.code
+
+        const typeColorToken = t.color || t.code || colorPaletteToken
+        let typeColor = getComputedStyle(document.body)
+          .getPropertyValue(`--color-${typeColorToken}`)
+          .trim()
+
+        if (!typeColor)
+          typeColor = getComputedStyle(document.body)
+            .getPropertyValue(`--color-palette-${typeColorToken}`)
+            .trim()
+
+        const typeResolvedColor = typeColor || resolvedColor
+
+        if (labelText) {
+          if (!legendItemsMap.has(typeResolvedColor))
+            legendItemsMap.set(typeResolvedColor, new Set())
+          legendItemsMap.get(typeResolvedColor)!.add(labelText)
+        }
+      })
+    } else {
+      if (!legendItemsMap.has(resolvedColor)) legendItemsMap.set(resolvedColor, new Set())
+      legendItemsMap.get(resolvedColor)!.add(colorPaletteToken)
+    }
+
+    return feature
+  })
+
+  const uniqueColors = Array.from(uniqueColorsSet)
+
+  // Build legendItems grouped by color, with labels sorted alphabetically within each group
+  const legendItems = Array.from(legendItemsMap.entries()).flatMap(([color, labelsSet]) =>
+    Array.from(labelsSet)
+      .sort((a, b) => a.localeCompare(b))
+      .map(label => ({ color, label }))
+  )
+
+  // Build cluster properties for MapLibre
+  const clusterProperties: Record<string, any> = {}
+  uniqueColors.forEach(color => {
+    // Make sure the property name only contains valid characters
+    const colorKey = 'color_' + color.replace(/[^a-zA-Z0-9]/g, '')
+    clusterProperties[colorKey] = ['+', ['case', ['==', ['get', 'typeColor'], color], 1, 0]]
+  })
+
+  map.on('load', () => {
+    map.fitBounds(bounds, {
+      padding: 20,
+      animate: false,
+    })
+
+    // Apply initial state filters from URL before adding source to avoid flash
+    let initialData = geojson
+    if (itemType === 'organizations') {
+      const initialState = orgasInit()
+      const filteredFeatures = filterOrganizationsFeatures(geojson.features, initialState)
+      initialData = { ...geojson, features: filteredFeatures }
+    } else if (itemType === 'events') {
+      const initialState = eventsInit()
+      const filteredFeatures = filterEventsFeatures(geojson.features, initialState)
+      initialData = { ...geojson, features: filteredFeatures }
+    }
+
+    map.addSource('items-source', {
+      type: 'geojson',
+      data: initialData,
+      cluster: true,
+      clusterMaxZoom: 14,
+      clusterRadius: 50,
+      clusterProperties: clusterProperties,
+    })
+
+    map.addLayer({
+      id: 'unclustered-point',
+      type: 'circle',
+      source: 'items-source',
+      filter: ['!', ['has', 'point_count']],
+      paint: {
+        'circle-color': ['get', 'typeColor'],
+        'circle-radius': 8,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#fff',
+      },
+    })
+
+    // objects for caching and keeping track of HTML marker objects (for performance)
+    const markers: Record<string, maplibregl.Marker> = {}
+    let markersOnScreen: Record<string, maplibregl.Marker> = {}
+
+    function updateMarkers() {
+      const newMarkers: Record<string, maplibregl.Marker> = {}
+      const features = map.querySourceFeatures('items-source')
+
+      // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
+      // and add it to the map if it's not there already
+      for (let i = 0; i < features.length; i++) {
+        const coords = features[i].geometry.coordinates as [number, number]
+        const props = features[i].properties
+        if (!props.cluster) continue
+        const id = props.cluster_id
+
+        // Build a cache key that changes if the cluster content changes (e.g., after filtering)
+        const counts = uniqueColors.map(c => props['color_' + c.replace(/[^a-zA-Z0-9]/g, '')] || 0)
+        const cacheKey = `${id}_${props.point_count}_${counts.join('-')}`
+
+        let marker = markers[cacheKey]
+        if (!marker) {
+          const el = createDonutChart(props, counts)
+
+          // Add click event for expanding cluster
+          el.addEventListener('click', async e => {
+            e.stopPropagation()
+            const source = map.getSource('items-source') as any
+            if (source.getClusterExpansionZoom) {
+              const zoom = await source.getClusterExpansionZoom(id)
+              map.easeTo({
+                center: coords,
+                zoom,
+              })
+            }
+          })
+
+          marker = markers[cacheKey] = new maplibregl.Marker({
+            element: el,
+          }).setLngLat(coords)
+        }
+        newMarkers[cacheKey] = marker
+
+        if (!markersOnScreen[cacheKey]) marker.addTo(map)
+      }
+      // for every marker we've added previously, remove those that are no longer visible
+      for (const key in markersOnScreen) {
+        if (!newMarkers[key]) markersOnScreen[key].remove()
+      }
+      markersOnScreen = newMarkers
+    }
+
+    // after the GeoJSON data is loaded, update markers on the screen and do so on every map move/moveend
+    map.on('data', e => {
+      if (e.sourceId !== 'items-source' || !e.isSourceLoaded) return
+      map.on('move', updateMarkers)
+      map.on('moveend', updateMarkers)
+      updateMarkers()
+    })
+
+    // code for creating an SVG donut chart from feature properties
+    function createDonutChart(props: any, counts: number[]) {
+      const offsets: number[] = []
+      let total = 0
+      for (let i = 0; i < counts.length; i++) {
+        offsets.push(total)
+        total += counts[i]
+      }
+
+      // Find the appropriate size config based on point_count
+      let sizeConfig = clusterConfig.sizes[clusterConfig.sizes.length - 1] // Fallback to smallest
+      for (let i = 0; i < clusterConfig.sizes.length; i++) {
+        if (total >= clusterConfig.sizes[i].minCount) {
+          sizeConfig = clusterConfig.sizes[i]
+          break
+        }
+      }
+
+      const fontSize = sizeConfig.fontSize
+      const r = sizeConfig.radius
+      const r0 = Math.round(r * (1 - clusterConfig.donutWidthRatio))
+      const w = r * 2
+
+      let html = `<div style="cursor: pointer;"><svg width="${w}" height="${w}" viewbox="0 0 ${w} ${w}" text-anchor="middle" style="font: ${fontSize}px ${clusterConfig.fontFamily}; display: block">`
+
+      for (let i = 0; i < counts.length; i++) {
+        if (counts[i] > 0) {
+          html += donutSegment(
+            offsets[i] / total,
+            (offsets[i] + counts[i]) / total,
+            r,
+            r0,
+            uniqueColors[i]
+          )
+        }
+      }
+      html += `<circle cx="${r}" cy="${r}" r="${r0}" fill="${clusterConfig.innerCircleColor}" stroke="${clusterConfig.innerCircleStrokeColor}" stroke-width="${clusterConfig.innerCircleStrokeWidth}" /><text dominant-baseline="central" transform="translate(${r}, ${r})" fill="${clusterConfig.textColor}" style="font-weight: bold;">${total.toLocaleString()}</text></svg></div>`
+
+      const el = document.createElement('div')
+      el.innerHTML = html
+      return el.firstChild as HTMLElement
+    }
+
+    function donutSegment(start: number, end: number, r: number, r0: number, color: string) {
+      if (end - start === 1) end -= 0.00001
+      const a0 = 2 * Math.PI * (start - 0.25)
+      const a1 = 2 * Math.PI * (end - 0.25)
+      const x0 = Math.cos(a0),
+        y0 = Math.sin(a0)
+      const x1 = Math.cos(a1),
+        y1 = Math.sin(a1)
+      const largeArc = end - start > 0.5 ? 1 : 0
+
+      return [
+        '<path d="M',
+        r + r0 * x0,
+        r + r0 * y0,
+        'L',
+        r + r * x0,
+        r + r * y0,
+        'A',
+        r,
+        r,
+        0,
+        largeArc,
+        1,
+        r + r * x1,
+        r + r * y1,
+        'L',
+        r + r0 * x1,
+        r + r0 * y1,
+        'A',
+        r0,
+        r0,
+        0,
+        largeArc,
+        0,
+        r + r0 * x0,
+        r + r0 * y0,
+        `" fill="${color}" />`,
+      ].join(' ')
+    }
+
+    // When a click event occurs on a feature in the unclustered-point layer, open a popup at the location of the feature, with description HTML from its properties.
+    map.on('click', 'unclustered-point', e => {
+      const coordinates = e.features[0].geometry.coordinates.slice()
+      const props = e.features[0].properties
+
+      // Ensure that if the map is zoomed out such that multiple copies of the feature are visible, the popup appears over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
+      }
+
+      // Generate HTML for the popup card, mimicking the OrganizationsPage list items
+      const name = props.name || ''
+      const slug = props.slug || props.id
+      const logoId = props.logo
+      const nameIsLong = name.length > 30
+
+      // MapLibre stringifies arrays/objects in properties, so we must parse 'types' back to an array
+      let types = []
+      try {
+        types = JSON.parse(props.types)
+      } catch (err) {
+        console.warn('Could not parse types for map popup', err)
+      }
+
+      // Base URL path logic: The page is either /fr/o/, /nl/o/, etc. We can get the lang from the current URL
+      const currentPath = window.location.pathname
+      const langCode = currentPath.split('/')[1] || 'fr' // default 'fr' if not found
+
+      // Determine the redirect URL (/fr/o/mon-orga/)
+      const subpath = itemType === 'events' ? 'e' : 'o'
+      const itemUrl = props.path ? `/${props.path}/` : `/${langCode}/${subpath}/${slug}/`
+
+      // Image source logic using Directus Assets endpoint (if logoId exists)
+      const directusUrl = 'https://cms.wanna-play.be' // Same base as configured in Astro
+      const imgSrc = logoId
+        ? `${directusUrl}/assets/${logoId}?width=120&height=120&fit=inside&quality=99`
+        : '/assets/images/placeholder.svg' // Fallback image (similar to the Astro <Img> fallback)
+
+      const imgFallbackHtml = logoId
+        ? `<img src="${imgSrc}" alt="${name}" loading="lazy" style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;" width="120" height="120" />`
+        : `<div style="width:120px;height:120px;background-color:#010fff;border-radius:50%;display:flex;align-items:center;justify-content:center"><span style="color:white;font-weight:bold">WP</span></div>`
+
+      // Types list generator
+      const typesHtml = types
+        .map((t: any) => {
+          const palette = `color-palette-${t.color || t.code}`
+          // Get the translation for the current lang, or default back to french, or code
+          const labelText = t.labels?.[langCode] || t.labels?.['fr'] || t.label || t.code
+          return `<li class="box no-border padding-x-h8 padding-y-h9 ${palette} color-palette-variation-contrast border-radius-s">${labelText}</li>`
+        })
+        .join('')
+
+      const htmlContent = `
+        <div class="card-${itemType === 'events' ? 'event' : 'organization'} box no-border stack gap-down-h7 border-radius-s breakout-clickable map-popup-card">
+          <div class="center intrinsic" style="justify-content: center; height: 120px; overflow: hidden; margin-bottom: 8px;">
+            ${imgFallbackHtml}
+          </div>
+          <h3 style="margin-top:0; margin-bottom: 8px;">
+            <a href="${itemUrl}" class="reset clickable${nameIsLong ? ' h4' : ''}" style="text-decoration:none; color:inherit;">
+              ${name}
+            </a>
+          </h3>
+          ${
+            typesHtml
+              ? `
+            <div class="cluster gap-down-h8" style="margin-top: 10px;">
+              <ul class="reset" style="list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:8px;">
+                ${typesHtml}
+              </ul>
+            </div>
+          `
+              : ''
+          }
+        </div>
+      `
+
+      // We add a custom CSS class to the popup to override MapLibre's default padding/background
+      // so it looks exactly like the card CSS
+      new maplibregl.Popup({ className: 'custom-card-popup', closeButton: true, maxWidth: '300px' })
+        .setLngLat(coordinates)
+        .setHTML(htmlContent)
+        .addTo(map)
+    })
+
+    // Also add pointer cursor for unclustered points
+    map.on('mouseenter', 'unclustered-point', () => {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+    map.on('mouseleave', 'unclustered-point', () => {
+      map.getCanvas().style.cursor = ''
+    })
+
+    // --- APPLY FILTERS FROM STORE ---
+    if (itemType === 'organizations') {
+      organizationsFiltersStore.listen(state => {
+        const filteredFeatures = filterOrganizationsFeatures(geojson.features, state)
+
+        const filteredGeojson = {
+          type: 'FeatureCollection',
+          features: filteredFeatures,
+        }
+
+        if (map.getSource('items-source')) {
+          ;(map.getSource('items-source') as any).setData(filteredGeojson)
+        }
+      })
+    } else if (itemType === 'events') {
+      eventsFiltersStore.listen(state => {
+        const filteredFeatures = filterEventsFeatures(geojson.features, state)
+
+        const filteredGeojson = {
+          type: 'FeatureCollection',
+          features: filteredFeatures,
+        }
+
+        if (map.getSource('items-source')) {
+          ;(map.getSource('items-source') as any).setData(filteredGeojson)
+        }
+      })
+    }
+  })
+
+  // --- ADD MAP LEGEND CONTROL ---
+  if (legendItems.length > 0) {
+    class LegendControl {
+      _container: HTMLDivElement | null = null
+      _map: maplibregl.Map | undefined
+      _legendItems: { color: string; label: string }[]
+
+      constructor(items: { color: string; label: string }[]) {
+        this._legendItems = items
+      }
+
+      onAdd(map: maplibregl.Map) {
+        this._map = map
+        this._container = document.createElement('div')
+        this._container.className = 'maplibregl-ctrl map-legend-control'
+        this._container.style.backgroundColor = '#ffffff'
+        this._container.style.padding = '12px'
+        this._container.style.borderRadius = 'var(--radius-s, 8px)'
+        this._container.style.boxShadow = 'var(--shadow-s, 0 2px 4px rgba(0,0,0,0.1))'
+        this._container.style.maxHeight = '50vh'
+        this._container.style.overflowY = 'auto'
+        this._container.style.pointerEvents = 'auto'
+        // this._container.style.backdropFilter = 'blur(4px)'
+
+        const chevronSvg = `<svg width="1em" height="1em" role="img" style="flex-shrink: 0; transition: transform 0.3s ease; transform: rotate(180deg);" viewBox="0 0 24 24"><path fill="currentColor" d="m20 9l-8 8l-8-8l1.414-1.414L12 14.172l6.586-6.586z"></path></svg>`
+
+        let html = `<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+            <strong style="font-size: 14px; color: var(--color-black, black);">Légende</strong>
+            <button id="legend-toggle" style="background: var(--color-grey-light, #eee); border: none; cursor: pointer; padding: 4px; border-radius: 4px; color: var(--color-black, black); display: flex; align-items: center; justify-content: center;">
+              ${chevronSvg}
+            </button>
+          </div>`
+
+        html += '<div id="legend-content" style="display: none; flex-direction: column; gap: 6px;">'
+        this._legendItems.forEach(item => {
+          html += `<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-black, black);"><span style="width: 14px; height: 14px; border-radius: 50%; background-color: ${item.color}; display: inline-block; flex-shrink: 0; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);"></span><span style="line-height: 1.2;">${item.label}</span></div>`
+        })
+        html += '</div>'
+
+        this._container.innerHTML = html
+
+        // Add toggle logic
+        // Use timeout to make sure elements are mounted in the DOM
+        setTimeout(() => {
+          const toggleBtn = this._container?.querySelector('#legend-toggle')
+          const svgIcon = toggleBtn?.querySelector('svg')
+          const content = this._container?.querySelector('#legend-content') as HTMLElement
+          if (toggleBtn && content && svgIcon) {
+            toggleBtn.addEventListener('click', e => {
+              e.stopPropagation()
+              if (content.style.display === 'none') {
+                content.style.display = 'flex'
+                svgIcon.style.transform = 'rotate(180deg)' // Pointing up when expanded
+              } else {
+                content.style.display = 'none'
+                svgIcon.style.transform = 'rotate(0deg)' // Pointing down when collapsed
+              }
+            })
+          }
+        }, 0)
+
+        return this._container
+      }
+
+      onRemove() {
+        if (this._container?.parentNode) {
+          this._container.parentNode.removeChild(this._container)
+        }
+        this._map = undefined
+      }
+    }
+
+    // Add control at the bottom left like requested
+    map.addControl(new LegendControl(legendItems) as any, 'bottom-left')
+  }
+</script>
+
+<style is:global>
+  .map-notice a {
+    text-decoration: underline currentColor 1px;
+  }
+  /* Override MapLibre default popup styles to match our cards */
+  .custom-card-popup .maplibregl-popup-content {
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .custom-card-popup .maplibregl-popup-tip {
+    display: none; /* Hide the little triangle arrow */
+  }
+
+  .custom-card-popup .maplibregl-popup-close-button {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    top: -10px;
+    right: -10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .custom-card-popup .maplibregl-popup-close-button:hover {
+    background-color: var(--color-grey-light);
+  }
+
+  /* Ensure the card inside the popup has background and shadow */
+  .map-popup-card.card-organization {
+    background-color: var(--color-white);
+    /* box class handles padding normally, but we ensure it's not collapsed by a bad var */
+    padding: var(--padding, 24px);
+    box-shadow: var(--shadow-m, 0 4px 6px rgba(0, 0, 0, 0.1));
+    border: 1px solid var(--color-grey-light, #e0e0e0);
+  }
+
+  /* Force link color to normal instead of MapLibre default blue */
+  .custom-card-popup .map-popup-card a,
+  .custom-card-popup .maplibregl-popup-content a {
+    color: var(--color-black, #000) !important;
+    text-decoration: none !important;
+  }
+</style>

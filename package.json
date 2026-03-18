@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy-fetch": "^5.0.2",
+    "@astrojs/mdx": "^4.3.14",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/svelte": "^7.2.5",
     "@csstools/postcss-design-tokens": "^3.1.1",
@@ -54,5 +55,8 @@
     "rrule": "^2.8.1",
     "sharp": "^0.32.6",
     "staticrypt": "^3.3.2"
+  },
+  "dependencies": {
+    "maplibre-gl": "5.11"
   }
 }

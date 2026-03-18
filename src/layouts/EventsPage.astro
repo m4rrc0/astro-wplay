@@ -1,10 +1,12 @@
 ---
+import path from 'node:path'
 import { IO, Img, ImgDirectus, SEO } from '@components'
 import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
 import { BasicPage, SkeletonPage } from '@layouts'
 import { imageDirectusSrc } from '@utils'
 import citiesUnordered from '@utils/areas/cities.json'
 import { Icon } from 'astro-icon/components'
+import Map from '@components/Map.astro'
 
 const { lang, events: eventsUnfiltered, dictionary: eventTypes } = Astro.props
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
@@ -38,7 +40,8 @@ const eventsPhrase =
       ? `${eventsCountPhrase} le ${eventsTimeArr[0]}`
       : `${eventsCountPhrase} entre le ${eventsTimeArr.join(' et le ')}`
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 
 const cssRulesDisplayByType =
   `#event-form-filter-wrapper:has(input:checked) ~ div .card-event{display:none;}` +
@@ -55,7 +58,7 @@ const cssRulesDisplayByType =
     ogType="website"
     title={`Événements et soirées jeux de Belgique`}
     description={`Tu cherche une soirée jeux près de chez toi? Viens découvrir la liste d'événements ludiques la plus complète de Belgique sur Wanna Play.`}
-    canonicalUrl={canonicalURL.href + '/'}
+    {canonicalUrl}
     socialImage="/assets/images/LOGO-1024px.png"
     ogVideo={false}
     twitterCard="summary"
@@ -66,8 +69,6 @@ const cssRulesDisplayByType =
         <IO h1 $skip={!events?.[0]?.name} class="center text"
           >Événements et soirées jeux de Belgique</IO
         >
-
-        <!-- <script src="@assets/js/events-filter.js"></script> -->
         <div id="event-form-filter-wrapper" class="center">
           <form
             id="eventsForm"
@@ -207,6 +208,8 @@ const cssRulesDisplayByType =
         </div>
 
         <IO p $skip={!events?.[0]?.name} id="eventsPhrase" class="center text">{eventsPhrase}</IO>
+
+        <Map itemType="events" date="10" />
 
         <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
           <IO ul $skip={!events?.[0]?.name} class="list reset">

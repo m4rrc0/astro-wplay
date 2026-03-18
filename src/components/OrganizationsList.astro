@@ -1,0 +1,126 @@
+---
+import { IO, Img, ImgDirectus } from '@components'
+import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
+import { getOrganizations } from '../store/dataService.js'
+import { start as startDirectus } from '../services/directus.js'
+
+// Props passed from the MDX page
+const { organizationTypeFilter, areaCode, lang = { code: 'fr' } } = Astro.props
+
+// // Start Directus (login/refresh) before using data
+await startDirectus()
+
+// Get all organizations from the database
+const allOrganizations = await getOrganizations()
+
+// Holds filtered organizations (by type and area); make sure MDX page always provides the props. (type: association, bar, escape_room, festival, ...)
+const filteredOrganizations = (allOrganizations ?? [])
+  .filter(org => org.typesTranslated?.some(t => t?.code_name === organizationTypeFilter))
+  .filter(org => org.location?.area?.code_name === areaCode)
+
+/* Holds filtered organizations (by type and area); Needed for reusability: allow no type filter with `if (!organizationTypeFilter) return true`
+const filteredOrganizations =
+  (allOrganizations ?? []).filter(org => {
+    if (!organizationTypeFilter) return true
+    return org.typesTranslated?.some(
+      t => t?.code_name === organizationTypeFilter
+    )
+  }).filter(org => {
+    if (!areaCode) return true
+    return org.location?.area?.code_name === areaCode
+  })
+  */
+---
+
+<section class="organizations-list">
+  {
+    !filteredOrganizations.length && (
+      <p class="center">Aucune organisation trouvée pour ces critères pour le moment.</p>
+    )
+  }
+
+  {
+    filteredOrganizations.length > 0 && (
+      <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
+        <IO ul $skipNoInner class="reset">
+          {filteredOrganizations.map(organization => {
+            const { name, path, logo, typesTranslated, location, servicesTranslated } = organization
+
+            const nameIsLong = name?.length > 30
+
+            return (
+              <li
+                class="card-organization
+                    box no-border stack gap-down-h7
+                    border-radius-s
+                    breakout-clickable"
+                style=""
+                data-zip={location?.postalCode}
+                data-city={location?.addressLocality}
+                data-services={servicesTranslated?.map(s => s.code_name)}
+              >
+                <div
+                  class="center intrinsic"
+                  style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
+                >
+                  {logo?.src ? (
+                    <ImgDirectus
+                      image={logo}
+                      src={logo?.src}
+                      alt={name}
+                      loading="lazy"
+                      class=""
+                      style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                      width="120"
+                      height="120"
+                      fit="inside"
+                      quality="99"
+                    />
+                  ) : (
+                    <Img
+                      src={placeholderWPlayCircleBlue}
+                      alt="logo"
+                      loading="lazy"
+                      class=""
+                      style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                      width="120"
+                      height="120"
+                    />
+                  )}
+                </div>
+                <h3>
+                  <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
+                    {name}
+                  </a>
+                </h3>
+                <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
+                  <ul class="reset">
+                    {typesTranslated?.map(type => {
+                      const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
+                      return (
+                        <li
+                          class={`box no-border padding-x-h8 padding-y-h9
+                              ${currentPalette} color-palette-variation-contrast
+                              border-radius-s`}
+                        >
+                          {type.translations.find(t => t.language_code === lang.code).default_label}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </IO>
+              </li>
+            )
+          })}
+        </IO>
+      </IO>
+    )
+  }
+</section>
+
+<!-- temporary style card for now -->
+<style>
+  .organizations-list {
+    margin-block: var(--size-h2);
+  }
+</style>

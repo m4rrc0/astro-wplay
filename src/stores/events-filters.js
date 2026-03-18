@@ -18,12 +18,12 @@ const defaultState = {
 
 // Extract initial state from URL search params
 export function getInitialState() {
-  const { search } = router.get()
+  const { search } = router.get() || {}
   return {
     ...defaultState,
-    ...((search.types?.length ?? 0) > 0 ? { types: decodeTypes(search.types) } : {}),
-    ...(search.city ? { city: search.city } : {}),
-    ...(search.city && search.distance ? { distance: search.distance } : {}),
+    ...((search?.types?.length ?? 0) > 0 ? { types: decodeTypes(search?.types) } : {}),
+    ...(search?.city ? { city: search?.city } : {}),
+    ...(search?.city && search?.distance ? { distance: search?.distance } : {}),
   }
 }
 
@@ -43,16 +43,18 @@ onMount(eventsFiltersStore, () => {
 if (typeof window !== 'undefined') {
   // Keep router in sync with store
   eventsFiltersStore.listen(state => {
-    redirectPage(
-      router,
-      'events',
-      {},
-      {
-        ...(state.types.length > 0 ? { types: encodeTypes(state.types) } : {}),
-        ...(state.city ? { city: state.city } : {}),
-        ...(state.city && state.distance ? { distance: state.distance } : {}),
-      }
-    )
+    if (router.get()?.route === 'events') {
+      redirectPage(
+        router,
+        'events',
+        {},
+        {
+          ...(state.types.length > 0 ? { types: encodeTypes(state.types) } : {}),
+          ...(state.city ? { city: state.city } : {}),
+          ...(state.city && state.distance ? { distance: state.distance } : {}),
+        }
+      )
+    }
   })
 }
 

@@ -1,4 +1,5 @@
 ---
+import path from 'node:path'
 // import Debug from 'astro/debug';
 import { SkeletonPage, BasicPage } from '@layouts'
 // import { Div, P } from '@elements'
@@ -32,7 +33,8 @@ const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
 
 const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fit: 'cover', quality: '99' })
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 ---
 
 <!-- <TestMd /> -->
@@ -42,7 +44,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     ogType="article"
     title={title}
     description={text}
-    canonicalUrl={canonicalURL.href + '/'}
+    {canonicalUrl}
     socialImage={srcSocial}
     ogVideo={false}
     twitterCard="summary"
@@ -146,7 +148,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
                 <IO p $skip={!date_published?.fr?.date}><strong>{date_published?.fr?.date}</strong></IO>
               </IO>
             </IO>
-            
+
             <IO div $skipNoInner>
               <ImgDirectus
                 $skip={!headerT?.featured_image?.src}
@@ -167,7 +169,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           </header>
         )
       }
-      
+
 
       <IO div $skip={!main?.[0]?.id} class="box no-border center stack gap-down-h2">
         {main.map((block, i) => {

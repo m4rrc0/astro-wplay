@@ -83,7 +83,8 @@ const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('
         {
         /* default is 'center' */ }
         position="center"
-        background="rgba(100,100,100, 0)"
+        {
+        /* background="rgba(100,100,100, 0)" */ }
         {...(id ? { id } : {})}
         {...(_class ? { class: _class } : {})}
         {...(style ? { style } : {})}

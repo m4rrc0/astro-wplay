@@ -1,5 +1,6 @@
 ---
 import path from 'node:path'
+import { getImage } from 'astro:assets'
 import { Markdown } from '@components'
 import { Icon } from 'astro-icon/components'
 import { SkeletonPage, BasicPage } from '@layouts'
@@ -15,6 +16,7 @@ const {
     // slug,
     // types,
     typesTranslated,
+    jsonldType,
     logo,
     cover_image,
     // opening_hours,
@@ -30,16 +32,63 @@ const {
     youtube_channel,
     translations,
     // gallery,
+    areaServedByArea,
     links,
     admin_categories,
     events: eventsUnfiltered,
+    canonicalEvents,
   },
 } = Astro.props
 
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
+const eventsLd = [...canonicalEvents, ...eventsUnfiltered]
+  ?.filter(e => {
+    // console.log({ e })
+    return e.recurrence === 'unique' || e.recurrence === 'multidays' || e.isCanonical
+  })
+  .map(event => {
+    const baseUrl = new URL(event.path, Astro.site).href
+
+    const isSeries = event.isRecurring
+    const type = isSeries ? 'EventSeries' : 'Event'
+    const locationName = event?.location?.name
+
+    const eventStub = {
+      '@type': type,
+      '@id': baseUrl + '#' + type,
+      name: event.name,
+      url: baseUrl,
+      ...(isSeries
+        ? {}
+        : {
+            startDate: event?.time_start?.dateTimeRaw,
+            endDate: event?.time_end?.dateTimeRaw,
+          }),
+      location: {
+        '@type': 'Place',
+        ...(locationName ? { name: locationName } : {}),
+        address: {
+          '@type': 'PostalAddress',
+          ...(event.location.streetAddress ? { streetAddress: event.location.streetAddress } : {}),
+          ...(event.location.addressLocality
+            ? { addressLocality: event.location.addressLocality }
+            : {}),
+          ...(event.location.postalCode ? { postalCode: event.location.postalCode } : {}),
+          addressCountry: 'BE',
+        },
+      },
+    }
+    return eventStub
+  })
 
 const { description, opening_hours_remark, rich_text_content, opening_hours_notes } =
   translations?.find(({ languages_code }) => languages_code === lang.code) || {}
+const presentationInStr =
+  location?.area?.code_name === 'france'
+    ? ' en France'
+    : ` dans la ${
+        location?.area?.code_name === 'brussels' ? 'région' : 'province'
+      } de ${location?.area?.name?.fr}`
 const presentation =
   typesTranslated?.[0] &&
   location?.addressLocality &&
@@ -48,11 +97,7 @@ const presentation =
     ?.map(type => type.translations.find(t => t.language_code === lang.code).default_label)
     .join(', ') +
     ` à ${location.addressLocality}` +
-    (location.addressLocality !== location?.area?.name?.fr
-      ? ` dans la ${
-          location?.area?.code_name === 'brussels' ? 'région' : 'province'
-        } de ${location?.area?.name?.fr}`
-      : '')
+    (location.addressLocality !== location?.area?.name?.fr ? presentationInStr : '')
 const srcCover = imageDirectusSrc({
   src: cover_image?.src,
   width: '1300',
@@ -69,6 +114,87 @@ const srcSocial = imageDirectusSrc({
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site)
 const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
+
+// let jsonldType
+const allowedSameAs = [
+  'website',
+  'web_page',
+  'twitch',
+  'linkedin',
+  'facebook',
+  'facebook_page',
+  'instagram',
+  'twitter',
+  'youtube',
+  'youtube_channel',
+  'tiktok',
+  'tripadvisor',
+  'linktree',
+]
+const linksSameAsRaw = links?.filter(link => allowedSameAs.includes(link.name?.code_name))
+const linksSameAs = linksSameAsRaw?.map(link => link.url) || []
+
+const logoLd = logo ? await getImage({ ...logo }) : null
+const imageLd = cover_image ? await getImage({ ...cover_image }) : null
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': jsonldType,
+  '@id': canonicalURL.href + '#Organization',
+  url: canonicalURL.href,
+  name,
+  // legalName: name,
+  description: presentation,
+  ...(logoLd?.src && { logo: logoLd.src }),
+  ...(imageLd?.src && { image: imageLd.src }),
+  ...(location && {
+    location: {
+      '@type': 'Place',
+      ...(location?.name ? { name: location?.name } : {}),
+      address: {
+        '@type': 'PostalAddress',
+        ...(location.streetAddress ? { streetAddress: location.streetAddress } : {}),
+        ...(location.addressLocality ? { addressLocality: location.addressLocality } : {}),
+        ...(location.postalCode ? { postalCode: location.postalCode } : {}),
+        addressCountry: 'BE',
+      },
+    },
+  }),
+  ...(linksSameAs && { sameAs: linksSameAs }),
+  ...(eventsLd.length && { event: eventsLd }),
+}
+
+if (location?.geo?.coordinates && jsonldType !== 'Organization') {
+  jsonLd.geo = {
+    '@type': 'GeoCoordinates',
+    longitude: location.geo.coordinates[0],
+    latitude: location.geo.coordinates[1],
+  }
+}
+
+if (areaServedByArea.length) {
+  jsonLd.areaServed = areaServedByArea.map(area => {
+    const { default_label } = area.tag.translations.find(t => t.language_code === lang.code) || {}
+    return {
+      '@type': 'AdministrativeArea',
+      name: default_label || area.tag.code_name,
+    }
+  })
+}
+
+if (jsonldType === 'Library') {
+  jsonLd.amenityFeature = {
+    '@type': 'LocationFeatureSpecification',
+    name: 'Ludothèque',
+    // value: 'true',
+  }
+}
+
+// TODO: Add
+// - additional types
+// - opening hours
+// - servicesTranslated -> amenityFeature??
+// - ...
 ---
 
 <!-- <Debug {name} /> -->
@@ -344,5 +470,6 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         )
       }
     </main>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </BasicPage>
 </SkeletonPage>

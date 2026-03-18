@@ -1,5 +1,6 @@
 ---
 import path from 'node:path'
+import { getImage } from 'astro:assets'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { Markdown } from '@components'
 import { Icon } from 'astro-icon/components'
@@ -70,11 +71,131 @@ const metaDescription = [presentation, startLong].filter(z => z).join(' le ')
 const today = new Date().toISOString().split('T')[0]
 const d = new Date()
 
-const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const currentURL = new URL(Astro.url.pathname, Astro.site)
 // Rewrite canonical URL to the EventSeries page if available
 const canonicalUrl = (
-  canonical?.path ? pageUrl.origin + path.join('/', canonical?.path, '/') : pageUrl.href + '/'
+  canonical?.path ? currentURL.origin + path.join('/', canonical?.path, '/') : currentURL.href + '/'
 ).replace(/[\/]+$/, '/')
+const futureOccurrences = occurrences?.filter(event => event.time_start.dateStr >= today) || []
+// const nextOccurrence = occurrences?.find(event => event.time_start.dateStr >= today)
+
+let jsonldType
+const locationName = location?.name
+const imageLd = cover_image ? await getImage({ ...cover_image }) : null
+
+if (isRecurring && isCanonical) {
+  jsonldType = 'EventSeries'
+} else {
+  jsonldType = 'Event'
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': jsonldType,
+  url: currentURL.href,
+  '@id': currentURL.href + '#' + jsonldType,
+  name,
+  description: presentation,
+  // TODO: same as Organization
+  ...(imageLd?.src && { image: imageLd.src }),
+  // TODO: Array here
+  organizer: organizers.map(o => {
+    const org = {
+      '@type': o.jsonldType,
+      '@id': new URL(o?.path, Astro.site).href + '#Organization',
+      name: o?.name,
+      url: new URL(o?.path, Astro.site).href,
+    }
+    return org
+  }),
+  location: {
+    '@type': 'Place',
+    ...(locationName ? { name: locationName } : {}),
+    address: {
+      '@type': 'PostalAddress',
+      ...(location.streetAddress ? { streetAddress: location.streetAddress } : {}),
+      ...(location.addressLocality ? { addressLocality: location.addressLocality } : {}),
+      ...(location.postalCode ? { postalCode: location.postalCode } : {}),
+      addressCountry: 'BE',
+    },
+  },
+}
+
+// NOTE: Should we implement EventSeries for multi-days events?
+if (jsonldType === 'EventSeries') {
+  jsonLd.eventSchedule = schedule
+    .map(s => {
+      const freqFirstLetter = s.frequency && s.frequency[0].toUpperCase()
+      const frequencyCode = freqFirstLetter && 'P' + (s.interval || 1) + freqFirstLetter
+      console.log({ exceptDate: s.exceptDate })
+      return frequencyCode
+        ? {
+            '@type': 'Schedule',
+            // startDate: occ?.time_start?.dateTimeRaw
+            startDate: s?.startDate,
+            endDate: s?.endDate,
+            repeatFrequency: frequencyCode,
+            byDay: s?.byDay,
+            startTime: s?.startTime,
+            endTime: s?.endTime,
+            scheduleTimezone: 'Europe/Belgium',
+            ...(s.exceptDate ? { exceptDate: s.exceptDate.map(e => e.date) } : {}),
+          }
+        : null
+    })
+    .filter(Boolean)
+
+  if (jsonLd.eventSchedule.length === 0) {
+    delete jsonLd.eventSchedule
+  }
+
+  // subEvent
+  if (futureOccurrences.length > 0) {
+    jsonLd.subEvent = futureOccurrences.slice(0, 10).map(occ => {
+      const subEvent = {
+        '@type': 'Event',
+        // TODO: Full URL, not path
+        '@id': new URL(occ?.path, Astro.site).href + '#Event',
+        name,
+        // TODO: Full URL, not path
+        url: new URL(occ?.path, Astro.site).href,
+        startDate: occ?.time_start?.dateTimeRaw,
+        ...(occ?.time_end?.dateTimeRaw && { endDate: occ?.time_end.dateTimeRaw }),
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        eventStatus: 'https://schema.org/EventScheduled',
+        location: {
+          '@type': 'Place',
+          // TODO: same as Organization
+          ...(locationName ? { name: locationName } : {}),
+          // TODO: same as Organization
+          address: {
+            '@type': 'PostalAddress',
+            ...(location.streetAddress ? { streetAddress: location.streetAddress } : {}),
+            ...(location.addressLocality ? { addressLocality: location.addressLocality } : {}),
+            ...(location.postalCode ? { postalCode: location.postalCode } : {}),
+            addressCountry: 'BE',
+          },
+        },
+      }
+      return subEvent
+    })
+  }
+} else {
+  jsonLd.startDate = time_start?.dateTimeRaw
+  if (time_end) {
+    jsonLd.endDate = time_end?.dateTimeRaw || time_start?.dateTimeRaw
+  }
+  if (isRecurring) {
+    jsonLd.superEvent = {
+      '@type': 'EventSeries',
+      '@id': canonicalURL.href + '#EventSeries',
+      url: canonicalURL.href,
+      name,
+    }
+  } else {
+    // ???
+  }
+}
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -357,5 +478,6 @@ const canonicalUrl = (
         )
       }
     </main>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </BasicPage>
 </SkeletonPage>

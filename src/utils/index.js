@@ -1,3 +1,5 @@
+import { getImage as getImageAstro } from 'astro:assets'
+
 export * from './areas/be.js'
 
 export function slugify(string) {
@@ -88,6 +90,18 @@ export function imageDirectusSrc({
   const src = `${srcRaw}${querryString ? '?' + querryString : ''}`
 
   return src
+}
+
+export async function getImage({ ...imgProps }) {
+  const format = imgProps.type?.replace('image/', '').replace(/\+xml$/, '')
+  console.log({ format })
+  const props = {
+    ...imgProps,
+    width: imgProps.width || 2000,
+    height: imgProps.height || 2000,
+    ...(format === 'svg' ? { format: 'svg' } : {}),
+  }
+  return await getImageAstro({ ...props })
 }
 
 export function destructureEmail(str) {

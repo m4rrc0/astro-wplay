@@ -41,8 +41,9 @@ const src = imageDirectusSrc({
   type: image?.type,
 })
 
-const [typePre, typePost] = image?.type?.split('/') || []
-const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('svg')))
+// const [typePre, typePost] = image?.type?.split('/') || []
+// const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('svg')))
+const formatInferred = image?.type?.replace('image/', '').replace(/\+xml$/, '')
 ---
 
 {
@@ -71,14 +72,14 @@ const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('
 }
 <IO wrapper {$skip}>
   {
-    !src ? null : useImageTools ? (
+    !src ? null : (
       <Image
         {...props}
         {src}
-        {format}
+        format={format || formatInferred === 'svg' ? 'svg' : 'webp'}
         {quality}
-        {width}
-        {height}
+        width={width || 2000}
+        height={height || 2000}
         {fit}
         {
         /* default is 'center' */ }
@@ -90,8 +91,6 @@ const useImageTools = !(image?.type && (typePre !== 'image' || typePost?.match('
         {...(style ? { style } : {})}
         onload={`this.style.background = 'transparent';${onload || ''}`}
       />
-    ) : (
-      <img {...props} {src} {width} {height} {id} class={_class} {style} />
     )
   }
 </IO>

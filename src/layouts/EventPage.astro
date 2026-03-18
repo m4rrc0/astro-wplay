@@ -1,11 +1,10 @@
 ---
 import path from 'node:path'
-import { getImage } from 'astro:assets'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { Markdown } from '@components'
 import { Icon } from 'astro-icon/components'
 import { SEO, IO, ImgDirectus, Img } from '@components'
-import { imageDirectusSrc } from '@utils'
+import { imageDirectusSrc, getImage } from '@utils'
 
 const {
   lang,
@@ -195,7 +194,6 @@ if (jsonldType === 'EventSeries') {
     // ???
   }
 }
-console.log(jsonLd)
 ---
 
 <SkeletonPage lang={lang.code}>

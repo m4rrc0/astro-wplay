@@ -68,7 +68,7 @@ const areaElems = {
   {
     areas.map(({ code_name, name, slug, path }) => {
       const aElem = areaElems[code_name]
-      return (
+      return !aElem?.shape ? null : (
         <a href={`/${path[lang.code]}/`} class={`area-${code_name} reset`}>
           <Fragment set:html={aElem.shape} />
           <switch>

@@ -127,7 +127,6 @@ if (jsonldType === 'EventSeries') {
     .map(s => {
       const freqFirstLetter = s.frequency && s.frequency[0].toUpperCase()
       const frequencyCode = freqFirstLetter && 'P' + (s.interval || 1) + freqFirstLetter
-      console.log({ exceptDate: s.exceptDate })
       return frequencyCode
         ? {
             '@type': 'Schedule',
@@ -188,14 +187,15 @@ if (jsonldType === 'EventSeries') {
   if (isRecurring) {
     jsonLd.superEvent = {
       '@type': 'EventSeries',
-      '@id': canonicalURL.href + '#EventSeries',
-      url: canonicalURL.href,
+      '@id': canonicalUrl + '#EventSeries',
+      url: canonicalUrl,
       name,
     }
   } else {
     // ???
   }
 }
+console.log(jsonLd)
 ---
 
 <SkeletonPage lang={lang.code}>

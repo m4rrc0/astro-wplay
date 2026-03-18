@@ -22,7 +22,6 @@ const titleComposed = title ? `${title}${siteName ? ` | ${siteName}` : ''}` : si
 
 const srcRaw = socialImageRaw?.src || socialImageRaw
 const socialImage = srcRaw ? await getImage({ src: srcRaw, alt: title, width: 1200, height: 630 }) : null
-console.log({ canonicalUrl, socialImageRaw, socialImage })
 
 ---
 

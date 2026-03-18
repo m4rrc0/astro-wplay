@@ -140,8 +140,8 @@ const imageLd = cover_image ? await getImage({ ...cover_image }) : null
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': jsonldType,
-  '@id': canonicalURL.href + '#Organization',
-  url: canonicalURL.href,
+  '@id': pageUrl.href + '#Organization',
+  url: pageUrl.href,
   name,
   // legalName: name,
   description: presentation,

@@ -4,11 +4,10 @@ import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, Img } from '@components'
 
 // Imports des images de l'équipe
-import jenny from '@images/team/WannaPlayTeam_Jenny.png'
 import marc from '@images/team/WannaPlayTeam_Marc.jpg'
 import tess from '@images/team/WannaPlayTeam_Tess.jpg'
+import jo from '@images/team/WannaPlayTeam_Jo.jpg'
 import yves from '@images/team/WannaPlayTeam_Yves.jpg'
-import roxane from '@images/team/WannaPlayTeam_Roxane.jpg'
 
 const team = [
   {
@@ -70,8 +69,23 @@ const team = [
       { label: 'Instagram', url: 'https://www.instagram.com/le_ludenne/' },
     ],
   },
-  { pic: jenny, name: 'Jenny', status: '', role: '', email: '', description: [], links: [] },
-  { pic: roxane, name: 'Roxane', status: '', role: '', email: '', description: [], links: [] },
+  {
+    pic: jo,
+    name: 'Jo',
+    status: 'Administrateur de 2020 à 2024 – Membre effectif depuis 2025',
+    role: 'ANIMATION',
+    email: 'jo@wanna-play.be',
+    description: [
+      'Le couteau suisse de l’animation.',
+      'Bibliothécaire-documentaliste de formation, passionné de jeux depuis 2012, Jo aime comprendre les mécaniques en profondeur pour mieux les adapter aux différents profils de joueurs.',
+      'Chargé des animations à l’Espace Carême d’Anderlecht, il a rejoint l’équipe pour prendre en main le pôle animation et faire vivre le jeu sur le terrain.',
+      'Jo, c’est l’expert en tout. Ou du moins, il le prétend.',
+      'Problème technique? Idée à structurer? Animation à monter? Il trouve une solution.',
+      'En 2024, il co-crée MTJeux avec Jea.',
+      'MTJeux se situe à la croisée des chemins ludiques et touche à tous les aspects du jeu : animation, création, formation. L’objectif est clair: donner vie à vos idées, que ce soit dans un cadre professionnel ou privé.',
+    ],
+    links: [{ label: 'MTJeux', url: 'https://mtjeux.com/' }],
+  },
 ]
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site)
@@ -332,6 +346,16 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             Wanna Play, c’est aussi toutes les personnes qui sont passées par l’asbl. Merci à tous!
           </p>
         </div>
+      </section>
+
+      <section>
+        <h2>Wanna Play ASBL</h2>
+        <p>L’asbl a été fondée le 27-04-2018.</p>
+        <p>BE0695.574.033</p>
+        <a href="https://www.companyweb.be/fr/0695574033/wanna-play">Statut de l’ASBL Wanna Play</a>
+        <p>Avenue Armand Huysmans 47 Bte 2, 1050 Ixelles, Belgique</p>
+        <a href="mailto:info@wanna-play.be">info@wanna-play.be</a>
+        <p>IBAN BE54 5230 8139 4997</p>
       </section>
     </main>
   </BasicPage>

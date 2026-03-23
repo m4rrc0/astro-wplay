@@ -9,6 +9,126 @@ import kidsStoryTime from '../../../assets/images/photos-Festival-2022/kids-stor
 import kids from '../../../assets/images/photos-Festival-2022/kids.jpg'
 import londonPierre from '../../../assets/images/photos-Festival-2022/london-pierre.jpg'
 import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
+import pressRelease2023 from '@assets/pdf/Wanna-Play-in-Brussels_communique-de-press-08-07-2023.pdf'
+import rapport2023 from '@assets/pdf/Wanna-Play-Rapport-Activité-08-juillet-2023.pdf'
+
+// VIP partners
+const vipPartners = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/partners/vip/*.{jpeg,jpg,png,gif,webp,svg}',
+  { eager: true }
+)
+const ordreListImageVip = [
+  'logo-ludeo',
+  'logo-art-of-games',
+  'logo-happy-meeple',
+  'logo-critical-',
+  'logo-hachette',
+  'logo-explor8',
+  'logo-asmo',
+  'logo-byr',
+  'logo-ludotrotter-ixelles',
+]
+
+const imagesVipPartners = Object.entries(vipPartners)
+  .map(([path, file]) => {
+    const name = path.split('/').pop().split('.')[0]
+    return { name, img: file.default }
+  })
+  .sort((a, b) => {
+    // We compare against our list
+    const indexA = ordreListImageVip.indexOf(a.name)
+    const indexB = ordreListImageVip.indexOf(b.name)
+
+    // Unlisted items get a high value so they go to the bottom
+    const weightA = indexA === -1 ? 999 : indexA
+    const weightB = indexB === -1 ? 999 : indexB
+
+    return weightA - weightB
+  })
+
+// General partners
+const generalPartners = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/partners/general/*.{jpeg,jpg,png,gif,webp,svg}',
+  { eager: true }
+)
+const ordreListImageGeneral = [
+  'logo-sajou',
+  'logo-kaedama',
+  'logo-njoy-games',
+  'logo-ludobel-asbl',
+  'logo-repos-production',
+  'logo-girl-dot-game',
+  'logo-schmeta',
+  'logo-iello',
+  'logo-mind-cycling',
+  'logo-sit-down',
+  'logo-univers-de-thot',
+  'logo-wana-game',
+  'logo-foxtroll-games',
+  'logo-ploef',
+  'logo-auberjeux',
+  'logo-ludiris-asbl',
+  'logo-sdc',
+  'logo-le-game-au-vert',
+  'logo-ludenne',
+  'logo-ludo-ludo',
+  'quentin-lammerant',
+  'logo-des-mentiel',
+  'logo-au-fil-des-mot',
+  'logo-yapaka',
+  'logo-alpa-ludismes',
+  'logo-des-jeux-une-fois',
+]
+
+const imagesGeneralPartners = Object.entries(generalPartners)
+  .map(([path, file]) => {
+    const name = path.split('/').pop().split('.')[0]
+    return { name, img: file.default }
+  })
+  .sort((a, b) => {
+    // We compare against our list
+    const indexA = ordreListImageGeneral.indexOf(a.name)
+    const indexB = ordreListImageGeneral.indexOf(b.name)
+
+    // Unlisted items get a high value so they go to the bottom
+    const weightA = indexA === -1 ? 999 : indexA
+    const weightB = indexB === -1 ? 999 : indexB
+
+    return weightA - weightB
+  })
+
+// Conference partners
+const conferencePartners = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/partners/conference/*.{jpeg,jpg,png,gif,webp,svg}',
+  { eager: true }
+)
+
+// Define everything here: the display order, the real names, and the image file name."
+const conferenceData = [
+  { fileName: 'thierry-et-amaya', name: 'Thierry Saeys & Amaya Louis' },
+  { fileName: 'theo-riviere', name: 'Théo Rivière' },
+  { fileName: 'gioia-et-anthony', name: 'Gioia & Anthony' },
+  { fileName: 'michel-van-langendonckt', name: 'Michel Van Langendonckt' },
+  { fileName: 'geraldine-volders', name: 'Géraldine Volders' },
+  { fileName: 'tatiana-dronjak', name: 'Tatiana Dronjak' },
+]
+
+// Build the display-ready list by combining your configuration and the local images
+const imagesConferencePartners = conferenceData
+  .map(confPartners => {
+    // Find the image key (the full path) that contains the file name
+    const pathImage = Object.keys(conferencePartners).find(path =>
+      path.includes(confPartners.fileName)
+    )
+
+    return {
+      img: pathImage ? conferencePartners[pathImage].default : null, // image if it exists
+      displayName: confPartners.name,
+      fileName: confPartners.fileName, // on repasse le nom de fichier pour le lien
+    }
+  })
+  // We remove from the display anything that couldn't find a local image"
+  .filter(p => p.img) // We remove from the display anything that couldn't find a local image"
 
 // const { lang } = Astro.props
 const lang = { code: 'fr' }
@@ -89,6 +209,88 @@ const lang = { code: 'fr' }
               </div>
             </li>
           </ol>
+        </div>
+        <div>
+          <iframe
+            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <div class="carousel" role="region" aria-roledescription="carousel">
+          <ul class="carousel__inner">
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Toute l’organisation me semblait au top, et l’endroit choisi pour la bourse aux
+                    jeux était une bonne idée. Des bénévoles et un transpalette ont beaucoup aidé à
+                    ce que tout se passe sans problème."
+                  </p>
+                </blockquote>
+                <figcaption>— Benjamin, <cite>Vendeur bourse aux jeux</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Chouette festival qui permet de découvrir ou redécouvrir le monde ludique, de
+                    belles personnes et plein de nouveaux jeux. À refaire !"
+                  </p>
+                </blockquote>
+                <figcaption>— Céleste, <cite>Visiteur</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    “Un évènement immanquable, beaucoup de choix de jeux et d’activités pour tous
+                    les âges, dans un lieu très agréable.”
+                  </p>
+                </blockquote>
+                <figcaption>— Ooki, <cite>Visiteur</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>"Un chouette petit festival très convivial dans un endroit magique."</p>
+                </blockquote>
+                <figcaption>— Le meeple à lunettes, <cite>Visiteur</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    “Super événement ! L’occasion de découvrir et tester plein de nouveaux jeux dans
+                    une ambiance relax et conviviale.”
+                  </p>
+                </blockquote>
+                <figcaption>— U1, <cite>Visiteur</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    “Conférences pertinentes, atelier peinture et jeu de rôle qui donnent envie, et
+                    des jeux bien sûr.”
+                  </p>
+                </blockquote>
+                <figcaption>— Lilouch, <cite>Visiteur</cite></figcaption>
+              </figure>
+            </li>
+          </ul>
         </div>
         <div>
           <div>
@@ -180,13 +382,6 @@ const lang = { code: 'fr' }
 
       <section>
         <h2>Vidéos</h2>
-        <iframe
-          src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen></iframe>
         <div>
           <iframe
             width="560"
@@ -218,12 +413,30 @@ const lang = { code: 'fr' }
               Pour cette conférence nous avons rassemblé plusieurs intervenants de renom, tels que :
             </p>
             <ul>
-              <li><strong>Théo Rivière</strong> (Auteur)</li>
               <li><strong>Thierry Saeys</strong> (SAJOU)</li>
+              <li><strong>Théo Rivière</strong> (Auteur)</li>
               <li><strong>Gioia et Anthony</strong> (Njoy Games)</li>
               <li><strong>Michel Van Langendonckt</strong> (Ludo asbl)</li>
               <li><strong>Géraldine Volders</strong> (Repos Production)</li>
+              <li><strong>Tatiana Dronjak</strong> (Girl dot Game)</li>
             </ul>
+            <!-- Section Conférences -->
+            <div class="partners-grid">
+              {
+                imagesConferencePartners.map(({ img, displayName, fileName }) => {
+                  return (
+                    <figure class="stack gap-down-p" style="text-align: center; margin: 0;">
+                      <a href={`/fr/o/${fileName}/`}>
+                        <Image src={img} alt={`Logo ${displayName}`} />
+                      </a>
+                      <figcaption>
+                        <strong>{displayName}</strong>
+                      </figcaption>
+                    </figure>
+                  )
+                })
+              }
+            </div>
           </div>
           <p>
             Les participants ont pu découvrir les parcours de ces experts du jeu de société et ont
@@ -261,19 +474,94 @@ const lang = { code: 'fr' }
           Certains n’ont pas pu venir le jour J mais nous ont envoyés des jeux qui ont été animés
           par les bénévoles.
         </p>
-        <div>
-          <div>
-            <Image src={gagBack} alt="" />
-            <Image src={hoplaFlorent} alt="" />
+        <div class="stack gap-down-h4">
+          <div class="partners-grid">
+            {/* On boucle sur le tableau des images */}
+            {
+              imagesVipPartners.map(({ img, name }) => (
+                <a href={`/fr/o/${name.replace(/^logo-/, '')}/`}>
+                  <Image src={img} alt={`Logo ${name}`} />
+                </a>
+              ))
+            }
           </div>
-          <div>
-            <Image src={gagBack} alt="" />
-            <Image src={hoplaFlorent} alt="" />
-            <Image src={kidsStoryTime} alt="" />
-            <Image src={kids} alt="" />
-            <Image src={londonPierre} alt="" />
-            <Image src={moonArea} alt="" />
+          <!-- <div class="partners-grid">
+            {/* On boucle sur le tableau des images */}
+            {imagesConferencePartners.map(({img, name}) => <Image src={img} alt={`Logo ${name}`} />)}
+          </div>-->
+          <div class="partners-grid">
+            {/* On boucle sur le tableau des images */}
+            {
+              imagesGeneralPartners.map(({ img, name }) => (
+                <a href={`/fr/o/${name.replace(/^logo-/, '')}/`}>
+                  <Image src={img} alt={`Logo ${name}`} />
+                </a>
+              ))
+            }
           </div>
+        </div>
+        <div class="carousel" role="region" aria-roledescription="carousel">
+          <ul class="carousel__inner">
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Super organisation ! Un grand merci à toute l’équipe de Wanna Play pour ce
+                    festival super sympa et bien organisé."
+                  </p>
+                </blockquote>
+                <figcaption>— Ludo, <cite>Cook & run</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Wanna Play nous offre un très bel évènement, dans un cadre incroyable et avec
+                    plein de chouettes choses à découvrir."
+                  </p>
+                </blockquote>
+                <figcaption>— Théo, <cite>rivière</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Avec cette deuxième édition, le festival Wanna Play in Brussel a trouvé sa
+                    place parmi les évènements importants du monde ludique."
+                  </p>
+                </blockquote>
+                <figcaption>— Paul, <cite>ploef !</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Une très belle première expérience pour nous. Que de belles rencontres et
+                    découvertes de jeux."
+                  </p>
+                </blockquote>
+                <figcaption>— Guillaume, <cite>le game au vent</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "L’expérience était enrichissante. Nous avons rencontré une équipe agréable et
+                    sympathique."
+                  </p>
+                </blockquote>
+                <figcaption>— Thomas, <cite>critical hut</cite></figcaption>
+              </figure>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -419,6 +707,201 @@ const lang = { code: 'fr' }
       </section>
 
       <section>
+        <h2>Visibilité</h2>
+
+        <div>
+          <h3>PROMOTION À TRAVERS DIVERS MÉDIAS</h3>
+
+          <div>
+            <h4>Presse</h4>
+            <p>
+              Articles qui ont présenté les objectifs de l’ASBL et du festival, sur les sites web de
+              :
+            </p>
+            <ul>
+              <li>
+                <a href="https://ludeo.be/wanna-play-connecte-les-joueurs/" target="_blank"
+                  >Ludeo - Wanna Play connecte les joueurs</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://desjeuxunefois.be/index.php/2023/07/05/festival-wanna-play-encore-une-fois/"
+                  target="_blank">Des Jeux Une Fois - Festival Wanna Play encore une fois !</a
+                >
+              </li>
+            </ul>
+
+            <p>Plusieurs mentions du festival et de la bourse aux jeux :</p>
+            <ul>
+              <li>
+                <a href="https://bruxelles.article27.be/Activites-gratuites" target="_blank"
+                  >Article 27 - Activités gratuites</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://happeningnext.com/event/bourse-aux-jeux-wanna-play-in-brussels-eid3a0a8vcq5m"
+                  target="_blank">Happening Next - Bourse aux jeux</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://bruxelles-city-news.be/jeux-wanna-play-festival-un-estival-ludique-dans-le-grand-hospice-de-bruxelles/"
+                  target="_blank">Bruxelles City News</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://allevents.in/ixelles/wanna-play-in-brussels/200024299947255?ref=past-event-page"
+                  target="_blank">All Events - WPiB 2023</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.uitinvlaanderen.be/agenda/e/wanna-play-in-brussels-2023-gratis-bordspelfestival/8f07f424-d549-4dee-b4bc-802d520d1d9b"
+                  target="_blank">UiT in Vlaanderen</a
+                >
+              </li>
+              <li>
+                <a href="https://ludeo.be/evenement/wanna-play-in-brussels/" target="_blank"
+                  >Ludeo - Événement</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.out.be/fr/evenements/126570_wpib-wanna-play-in-brussels-2023-festival-de-jeu-de-societe.html"
+                  target="_blank">Out.be</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.visit.brussels/fr/visiteurs/agenda/event-detail.Wanna-Play-in-Brussels-2023-Festival-de-jeu-de-societe-gratuit.557559"
+                  target="_blank">Visit.brussels</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://subverti.com/fr/maps/festivals/wanna-play-in-brussels/"
+                  target="_blank">Subverti - Map</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://iello.fr/evenements/festival-wanna-play-in-brussels/"
+                  target="_blank">Iello - Événements</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://drive.google.com/file/d/15NhUBpEMAhJUXc9k_lEptAgFSIhAQJVL/view?usp=sharing"
+                  target="_blank">Femmes d’aujourd’hui n°26 (PDF)</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Interviews</h4>
+            <ul>
+              <li>
+                <strong>Hunivers Boardgames :</strong> Interview filmée et publiée sur Instagram quelques
+                semaines avant le festival.
+                <a href="https://www.instagram.com/p/CtW__EOgMkt/" target="_blank">Lien Instagram</a
+                >
+              </li>
+              <li>
+                <strong>RTBF :</strong> Passage radio le jour même du festival.
+                <a
+                  href="https://www.rtbf.be/article/wanna-play-festival-un-festival-bruxellois-dedie-aux-jeux-de-societe-11225443"
+                  target="_blank">Lien RTBF</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <h3>Espace Presse</h3>
+          <p>
+            Le communiqué de presse officiel détaillant les objectifs, les chiffres de l'édition
+            précédente et les informations pratiques est disponible en consultation.
+          </p>
+          <a
+            href={pressRelease2023}
+            target="_blank"
+            download="Wanna-Play-in-Brussels_communique-de-press-08-07-2023"
+          >
+            Télécharger le Communiqué de Presse (PDF)
+          </a>
+        </div>
+
+        <div>
+          <h3>Rapport d'activités</h3>
+          <p>
+            Le communiqué de presse officiel détaillant les objectifs, les chiffres de l'édition
+            précédente et les informations pratiques est disponible en consultation.
+          </p>
+          <a
+            href={pressRelease2023}
+            target="_blank"
+            download="Wanna-Play-in-Brussels_communique-de-press-08-07-2023"
+          >
+            Télécharger le Communiqué de Presse (PDF)
+          </a>
+        </div>
+
+        <div>
+          <h3>Supports de communication</h3>
+
+          <div>
+            <h4>Graphisme</h4>
+            <p>
+              Affiches et flyers réalisés pour promouvoir l’événement avant et pendant le festival.
+            </p>
+          </div>
+
+          <div>
+            <h4>Signalétique améliorée</h4>
+            <p>
+              Des flèches réutilisables reprenant les couleurs de la charte graphique ont été créées
+              par un membre pour guider les visiteurs sur place.
+            </p>
+          </div>
+
+          <div>
+            <h4>Autres supports</h4>
+            <ul>
+              <li>
+                Des affiches A3 plastifiées afin de délimiter les différentes zones sur place.
+              </li>
+              <li>Des fiches avec les logos des partenaires pour indiquer leurs emplacements.</li>
+              <li>
+                Des petits «kits» de bienvenue avec sticker, flyer, plan, programme et étiquettes
+                nominatives pour chaque partenaire et bénévole, permettant de les identifier et leur
+                donnant notamment accès à l’eau gratuite au bar.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Documents à télécharger</h2>
+        <ul>
+          <li>
+            <a
+              href={rapport2023}
+              target="_blank"
+              download="Wanna-Play-Rapport-Activité-08-juillet-2023"
+            >
+              <strong>Rapport d'Activité 2023</strong> (PDF)
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section>
         <h2>Budget & Surprises</h2>
         <h3>Budget</h3>
         <p>
@@ -489,3 +972,29 @@ const lang = { code: 'fr' }
     </main>
   </BasicPage>
 </SkeletonPage>
+
+<style>
+  .partners-grid {
+    display: grid;
+    /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 3rem 2rem;
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 2rem;
+  }
+
+  /* Pour s'assurer que les logos sur une grille complète ne dépassent pas */
+  @media (min-width: 1024px) {
+    .partners-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  .partners-grid img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 100px;
+  }
+</style>

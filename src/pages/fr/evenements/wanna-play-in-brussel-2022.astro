@@ -1,6 +1,7 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
+import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
 import gagBack from '../../../assets/images/photos-Festival-2022/gag_back.jpg'
@@ -71,6 +72,17 @@ const lang = { code: 'fr' }
               Games Festival et du Jette’s Gaming Tour.
             </li>
           </ol>
+        </div>
+        <div>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/-QKaLnTcTr0?si=soq7AM3vRK7je99S"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
         </div>
         <div>
           <div>
@@ -154,27 +166,11 @@ const lang = { code: 'fr' }
 
       <section>
         <h2>Vidéos</h2>
-        <iframe
-          src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen></iframe>
         <div>
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            src="https://www.youtube.com/embed/PMNHLvEaFm4?si=YXSK8_l-d9OEfFr1"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -216,14 +212,6 @@ const lang = { code: 'fr' }
           <div>
             <Image src={gagBack} alt="" />
             <Image src={hoplaFlorent} alt="" />
-          </div>
-          <div>
-            <Image src={gagBack} alt="" />
-            <Image src={hoplaFlorent} alt="" />
-            <Image src={kidsStoryTime} alt="" />
-            <Image src={kids} alt="" />
-            <Image src={londonPierre} alt="" />
-            <Image src={moonArea} alt="" />
           </div>
         </div>
       </section>

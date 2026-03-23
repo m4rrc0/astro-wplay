@@ -1,0 +1,265 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
+import { Image } from 'astro:assets'
+import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
+import gagBack from '../../../assets/images/photos-Festival-2022/gag_back.jpg'
+import hoplaFlorent from '../../../assets/images/photos-Festival-2022/hopla-florent.jpg'
+import kidsStoryTime from '../../../assets/images/photos-Festival-2022/kids-story-time.jpg'
+import kids from '../../../assets/images/photos-Festival-2022/kids.jpg'
+import londonPierre from '../../../assets/images/photos-Festival-2022/london-pierre.jpg'
+import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
+
+// const { lang } = Astro.props
+const lang = { code: 'fr' }
+---
+
+<SkeletonPage {lang}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Wanna Play in Brussel 2022"
+    description="Un festival gratuit d’une journée consacré aux jeux de société"
+    socialImage={'/assets/images/LOGO-1024px.png'}
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage {lang}>
+    <main class="center max" style="margin-top: 0;">
+      <header>
+        <Image src={bannerPaper} alt="" />
+        <h1>Wanna Play in Brussel 2022</h1>
+      </header>
+
+      <section>
+        <div>
+          <p>
+            <strong>WANNA PLAY IN BRUSSELS 2022 - 1ÈRE ÉDITION</strong>
+          </p>
+          <p>
+            Un festival gratuit d’une journée consacré aux jeux de société dans un lieu historique
+            en plein centre de Bruxelles.
+          </p>
+          <p>
+            Le festival a eu lieu le 30 juillet 2022 de 12h à 23h au coeur des jardins du Grand
+            Hospice Pacheco - Rue du Grand Hospice 7, 1000 Bruxelles.
+          </p>
+          <p>
+            Le jardin, composé de pelouses, d’allées et de petites cours pavées, pouvait accueillir
+            jusqu’à 500 personnes simultanément dont environ 250 places couvertes sous chapiteau.
+          </p>
+          <p>
+            Le bar intérieur, également mis à notre disposition, pouvait accueillir une cinquantaine
+            de personnes.
+          </p>
+        </div>
+        <div>
+          <p>
+            <strong>LE FESTIVAL AVAIT PLUSIEURS OBJECTIFS PRINCIPAUX</strong>
+          </p>
+          <ol>
+            <li>
+              Promouvoir le jeu à Bruxelles comme canal privilégié pour créer du lien entre
+              individus de tous horizons socioculturels.
+            </li>
+            <li>
+              Toucher un public moins joueur par un accueil chaleureux et en proposant des activités
+              de découverte et de rencontre autour du jeu.
+            </li>
+            <li>
+              Faire jouer Bruxelles à la sortie des confinements, surtout en l’absence du Brussels
+              Games Festival et du Jette’s Gaming Tour.
+            </li>
+          </ol>
+        </div>
+        <div>
+          <div>
+            <p>±2500</p>
+            <p>participants</p>
+          </div>
+          <div>
+            <p>170</p>
+            <p>jeux différents</p>
+          </div>
+          <div>
+            <p>+70</p>
+            <p>tables de jeux</p>
+          </div>
+          <div>
+            <p>36</p>
+            <p>animateurs</p>
+          </div>
+          <div>
+            <p>20</p>
+            <p>partenaires</p>
+          </div>
+          <div>
+            <p>26</p>
+            <p>bénévoles</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Photos</h2>
+        <div>
+          <Image src={gagBack} alt="" />
+          <Image src={hoplaFlorent} alt="" />
+          <Image src={kidsStoryTime} alt="" />
+          <Image src={kids} alt="" />
+          <Image src={londonPierre} alt="" />
+          <Image src={moonArea} alt="" />
+        </div>
+      </section>
+
+      <section>
+        <h2>Activités</h2>
+        <ul>
+          <li>
+            <div>
+              <p>TABLES DE JEUX</p>
+              <p>
+                Des espaces étaient dédiés aux jeux de société où les visiteurs pouvaient jouer et
+                découvrir de nouveaux titres, chaque table était tenue par un partenaire ou un
+                bénévole, afin d'y animer les parties tout en expliquant les règles des jeux.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>JEUX GÉANTS ET D'EXTÉRIEUR</p>
+              <p>
+                Plusieurs jeux de grande taille étaient disponibles en extérieur pour le plaisir des
+                petits et des grands.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>BOURSE AUX JEUX</p>
+              <p>Une opportunité d'acheter et de vendre des jeux d'occasion.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>ZONE PROTOTYPES</p>
+              <p>
+                Un espace dédié aux auteurs pour présenter leurs créations en cours de
+                développement.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Vidéos</h2>
+        <iframe
+          src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+        <div>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <section>
+        <h2>Partenaires</h2>
+        <p>
+          Nous avons également reçu le soutien de nombreux acteurs ludiques Bruxellois et Belges
+          dont :
+        </p>
+        <ul>
+          <li>
+            Thierry Saeys (propriétaire du magasin Sajou, ex-organisateur du Jette’s Gaming Tour,
+            chroniqueur RTBF, papa du jeu ‘Assosiation 10 dés’) qui nous a beaucoup conseillé lors
+            de la préparation de l’événement et pour la diffusion sur les réseaux sociaux.
+          </li>
+          <li>
+            Toute l’équipe du Jardin pour la mise à disposition des lieux, la coordination
+            logistique,…
+          </li>
+          <li>La ludothèque de l’espace Carême</li>
+          <li>
+            Etienne Espreman : auteur de jeux (dont Bruxelles 1893) et copropriétaire de la maison
+            d’édition Geek Attitude Games
+          </li>
+          <li>Asmodée Belgique</li>
+          <li>Repos Production</li>
+          <li>Geronimo</li>
+          <li>Pearl Games</li>
+          <li>PLOEF!</li>
+          <li>Chez Cubitus</li>
+          <li>...</li>
+        </ul>
+        <div>
+          <div>
+            <Image src={gagBack} alt="" />
+            <Image src={hoplaFlorent} alt="" />
+          </div>
+          <div>
+            <Image src={gagBack} alt="" />
+            <Image src={hoplaFlorent} alt="" />
+            <Image src={kidsStoryTime} alt="" />
+            <Image src={kids} alt="" />
+            <Image src={londonPierre} alt="" />
+            <Image src={moonArea} alt="" />
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Bénévoles</h2>
+        <p>
+          Nos bénévoles ont été la véritable force motrice du festival cette année. Une équipe de 14
+          bénévoles dévoués s'est mobilisée pour assurer le bon déroulement de l'événement.
+        </p>
+        <p>
+          Leur dévouement a créé une ambiance conviviale et bienveillante tout au long de la
+          journée. Nous exprimons notre profonde gratitude envers eux pour leur travail acharné.
+        </p>
+      </section>
+
+      <section>
+        <h2>Budget & Surprises</h2>
+        <h3>BUDGET</h3>
+        <p>
+          L'édition 2022 a été auto-financée par l'ASBL Wanna Play, avec le soutien logistique de
+          nos partenaires. Nous avons dû composer avec un budget limité pour cette première année.
+        </p>
+        <h3>SURPRISES</h3>
+        <p>Malgré une planification rigoureuse, nous avons été confrontés à quelques imprévus.</p>
+        <h4>Affluence</h4>
+        <p>
+          Le succès a été plus grand que prévu, ce qui nous a demandé une grande réactivité pour
+          accueillir tout le monde dans les meilleures conditions.
+        </p>
+        <h4>Logistique</h4>
+        <p>
+          L'installation dans le Jardin du Grand Hospice a présenté quelques défis techniques que
+          nous avons su surmonter grâce à l'implication de l'équipe.
+        </p>
+      </section>
+    </main>
+  </BasicPage>
+</SkeletonPage>

@@ -1,0 +1,491 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
+import { Image } from 'astro:assets'
+import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
+import gagBack from '../../../assets/images/photos-Festival-2022/gag_back.jpg'
+import hoplaFlorent from '../../../assets/images/photos-Festival-2022/hopla-florent.jpg'
+import kidsStoryTime from '../../../assets/images/photos-Festival-2022/kids-story-time.jpg'
+import kids from '../../../assets/images/photos-Festival-2022/kids.jpg'
+import londonPierre from '../../../assets/images/photos-Festival-2022/london-pierre.jpg'
+import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
+
+// const { lang } = Astro.props
+const lang = { code: 'fr' }
+---
+
+<SkeletonPage {lang}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Wanna Play in Brussel 2023"
+    description="Un festival gratuit d’une journée consacré aux jeux de société"
+    socialImage={'/assets/images/LOGO-1024px.png'}
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage {lang}>
+    <main class="center max" style="margin-top: 0;">
+      <header>
+        <Image src={bannerPaper} alt="" />
+        <h1>Wanna Play in Brussel 2023</h1>
+      </header>
+
+      <section>
+        <div>
+          <p>
+            <strong>WANNA PLAY IN BRUSSELS 2023 - 2E ÉDITION</strong>
+          </p>
+          <p>
+            Le festival «Wanna Play in Brussels» a connu sa deuxième édition cette année. Après le
+            succès fulgurant de la première édition. Cet événement ludique a été une véritable
+            surprise dans le monde du jeu de société en Belgique, et nous avons décidé de redoubler
+            d’efforts pour offrir une expérience encore plus incroyable cette année-ci.
+          </p>
+          <p>
+            Le festival s’est déroulé le samedi 08.07.2023 au Jardin du Grand Hospice Pacheco dans
+            le centre de Bruxelles, cette année avec le soutien de la COCOF et autres partenaires.
+            L’événement était gratuit pour les visiteurs et visait un public adulte varié, ainsi que
+            les familles avec enfants.
+          </p>
+        </div>
+        <div>
+          <p>
+            <strong>LE FESTIVAL AVAIT PLUSIEURS OBJECTIFS PRINCIPAUX</strong>
+          </p>
+          <ol>
+            <li>
+              <div>
+                <p><strong>Faire découvrir les jeux de société modernes</strong></p>
+                <p>
+                  Nous avons souhaité offrir aux participants l’opportunité de découvrir et
+                  d’explorer les jeux de société contemporains, en mettant en avant des créateurs,
+                  auteurs, éditeurs et distributeurs de jeux.
+                </p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <p><strong>Présence des acteurs ludiques belges</strong></p>
+                <p>
+                  Une grande diversité d’acteurs ludiques belges étaient présents, tels que des
+                  associations, des clubs, des éditeurs, des distributeurs, des créateurs de
+                  contenu, une école et des ludothèques. Le festival permet de favoriser les
+                  échanges et les rencontres.
+                </p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <p><strong>Ateliers, conférences et animations</strong></p>
+                <p>
+                  Le programme était varié comprenant des activités pour les familles et le grand
+                  public tout au long de la journée. Nous avions également des activités plus
+                  ciblées pour les curieux ou les joueurs plus avertis, tels que des conférences
+                  inspirantes, des ateliers de découverte sur différents sujets, des sessions de
+                  speed-gaming pour favoriser les rencontres, ainsi qu’un tournois et des
+                  initiations.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div>
+          <div>
+            <p>2000</p>
+            <p>participants</p>
+          </div>
+          <div>
+            <p>200</p>
+            <p>jeux différents</p>
+          </div>
+          <div>
+            <p>+100</p>
+            <p>tables de jeux</p>
+          </div>
+          <div>
+            <p>+74</p>
+            <p>animateurs</p>
+          </div>
+          <div>
+            <p>41</p>
+            <p>partenaires</p>
+          </div>
+          <div>
+            <p>33</p>
+            <p>bénévoles</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Photos</h2>
+        <div>
+          <Image src={gagBack} alt="" />
+          <Image src={hoplaFlorent} alt="" />
+          <Image src={kidsStoryTime} alt="" />
+          <Image src={kids} alt="" />
+          <Image src={londonPierre} alt="" />
+          <Image src={moonArea} alt="" />
+        </div>
+      </section>
+
+      <section>
+        <h2>Activités</h2>
+        <ul>
+          <li>
+            <div>
+              <p>TABLES DE JEUX</p>
+              <p>
+                Des espaces étaient dédiés aux jeux de société où les visiteurs pouvaient jouer et
+                découvrir de nouveaux titres, chaque table était tenue par un partenaire ou un
+                bénévole, afin d’y animer les parties tout en expliquant les règles des jeux.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>INITIATION AU JEU DE RÔLE (RPG)</p>
+              <p>
+                Une occasion pour les visiteurs (adultes et enfants) de s’immerger dans l’univers du
+                jeu de rôle.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>INITIATION À LA PEINTURE DE FIGURINES ET AUX JEUX ASSOCIÉS</p>
+              <p>
+                Des ateliers étaient proposés aux visiteurs (adultes et enfants) pour apprendre les
+                techniques de peinture de figurines utilisées dans certains jeux.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>ZONE ENFANTS</p>
+              <p>
+                Un espace dédié aux plus jeunes avec des tables de jeux, du maquillage de tribu et
+                des lectures de contes.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>ET PLEIN D'AUTRES</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Vidéos</h2>
+        <iframe
+          src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+        <div>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <section>
+        <h2>Conférences</h2>
+        <div>
+          <h3>DU LOISIR À LA PROFESSION : LES MÉTIERS LUDIQUES D’AUJOURD’HUI ET DE DEMAIN</h3>
+          <div>
+            <p>
+              Pour cette conférence nous avons rassemblé plusieurs intervenants de renom, tels que :
+            </p>
+            <ul>
+              <li><strong>Théo Rivière</strong> (Auteur)</li>
+              <li><strong>Thierry Saeys</strong> (SAJOU)</li>
+              <li><strong>Gioia et Anthony</strong> (Njoy Games)</li>
+              <li><strong>Michel Van Langendonckt</strong> (Ludo asbl)</li>
+              <li><strong>Géraldine Volders</strong> (Repos Production)</li>
+            </ul>
+          </div>
+          <p>
+            Les participants ont pu découvrir les parcours de ces experts du jeu de société et ont
+            reçu des conseils sur les opportunités de carrière dans ce domaine en constante
+            évolution.
+          </p>
+        </div>
+        <Image src={moonArea} alt="" />
+        <div>
+          <h3>LA PLACE DES FEMMES DANS LE MONDE DU JEU</h3>
+          <p>
+            Cette conférence gratuite et sans inscription, a été animée par Tatiana Dronjak, une
+            youtubeuse spécialisée dans les jeux de société (Girl dot Game). Les discussions ont
+            porté sur le rôle et la représentation des femmes dans l’univers du jeu, mettant en
+            lumière leur contribution et les défis auxquels elles sont confrontées.
+          </p>
+          <p>
+            Les participants ont pu découvrir les parcours de ces experts du jeu de société et ont
+            reçu des conseils sur les opportunités de carrière dans ce domaine en constante
+            évolution.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Partenaires</h2>
+        <p>
+          Nous avons bénéficié du soutien de nombreux partenaires professionnels belges et français,
+          ainsi que d’associations bruxelloises. Parmi nos partenaires figuraient des éditeurs, des
+          boutiques, des médias spécialisés dans les jeux de société, des ludothèques, une école,
+          des influenceurs, des auteurs,…
+        </p>
+        <p>Leur contribution a été essentielle pour la réussite de l’événement</p>
+        <p>
+          Certains n’ont pas pu venir le jour J mais nous ont envoyés des jeux qui ont été animés
+          par les bénévoles.
+        </p>
+        <div>
+          <div>
+            <Image src={gagBack} alt="" />
+            <Image src={hoplaFlorent} alt="" />
+          </div>
+          <div>
+            <Image src={gagBack} alt="" />
+            <Image src={hoplaFlorent} alt="" />
+            <Image src={kidsStoryTime} alt="" />
+            <Image src={kids} alt="" />
+            <Image src={londonPierre} alt="" />
+            <Image src={moonArea} alt="" />
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Bénévoles</h2>
+        <p>
+          Nos bénévoles ont été la véritable force motrice du festival cette année. Une trentaine de
+          bénévoles dévoués, certains habitués, d’autres nouveaux, se sont rapidement intégrés dans
+          notre «Tribu».
+        </p>
+        <p>
+          Leur dévouement a créé une ambiance conviviale et bienveillante tout au long de
+          l’événement. Certains étaient présents dès le matin, d’autres nous ont rejoints plus tard,
+          et certains ont même aidé avant et après le jour du festival. Leur contribution précieuse
+          a été essentielle pour le bon déroulement des activités et l’accueil chaleureux des
+          visiteurs.
+        </p>
+        <p>
+          Nous exprimons notre profonde gratitude envers tous nos bénévoles pour leur dévouement.
+          Leur passion et leur travail acharné ont été l’une des clés du succès de cette deuxième
+          édition.
+        </p>
+        <p>
+          Nous sommes fiers de notre équipe et des relations que nous construisons et gardons avec
+          eux.
+        </p>
+        <div class="carousel" role="region" aria-roledescription="carousel">
+          <ul class="carousel__inner">
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "J’ai été agréablement surprise par le lieu du festival, ces jardins sont
+                    vraiment très beaux et agréables. Combinés à de belles rencontres et à une
+                    grande diversité de jeux, c’est un évènement qui mérite d’être connu davantage.
+                    Venez en nombre, vous ne serez pas déçus!"
+                  </p>
+                </blockquote>
+                <figcaption>— Oriane, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Très chouette festival de jeux de société permettant de découvrir de bonnes
+                    nouveautés tout en profitant du beau temps de l’été. Et proposant aussi une
+                    bonne bourse aux jeux pour pouvoir agrandir sa ludothèque en profitant de bonnes
+                    occasions!"
+                  </p>
+                </blockquote>
+                <figcaption>— Aurélien, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "J'ai eu le plaisir de faire partie de l'équipe des bénévoles sur le festival de
+                    Juillet 2023 et j'en garde un très bon souvenir. C'était très motivant de
+                    contribuer à cet événement. Tout le monde était sympathique et l'ambiance était
+                    vraiment conviviale."
+                  </p>
+                </blockquote>
+                <figcaption>— Karine, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Super équipe! Quand je suis arrivé, je me suis retrouvé dans une famille qui
+                    m'a tout de suite mis en confiance pour mon premier festival. Un accueil génial
+                    et une ambiance joviale tout en gardant l'objectif de réussir en tête."
+                  </p>
+                </blockquote>
+                <figcaption>— Mattéo, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Merci pour la journée, votre implication et votre bonne humeur à tout moment.
+                    C'était hyper bien organisé. [...] J'ai reçu de nombreux compliments pour
+                    l'attention du moindre détail sur le festival. Bravo, félicitations pour le
+                    travail accompli."
+                  </p>
+                </blockquote>
+                <figcaption>— Leila, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Très chouette expérience malgré mon peu de connaissance dans le domaine. Équipe
+                    super sympa, très dynamique et efficace. À refaire, Bravo à toute l'équipe,
+                    belle réussite!"
+                  </p>
+                </blockquote>
+                <figcaption>— Joëlle, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>"Très chouette équipe bien réactive et disponible pour nous."</p>
+                </blockquote>
+                <figcaption>— Aurélien, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>
+                    "Très chouette expérience dans le monde du jeu de société que je ne connais pas.
+                    Un public très concerné et intéressé par cet événement. Vous êtes une très
+                    chouette équipe, et j'ai bien aimé d'en faire partie pour une journée."
+                  </p>
+                </blockquote>
+                <figcaption>— Anne, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel__item" role="group" aria-roledescription="slide">
+              <figure>
+                <blockquote>
+                  <p>"Bravo pour l'organisation de cet événement. Vous avez géré!!!"</p>
+                </blockquote>
+                <figcaption>— Oriane, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Budget & Surprises</h2>
+        <h3>Budget</h3>
+        <p>
+          Pour la première fois, l’ASBL Wanna Play a bénéficié d’une subvention de la cocof pour
+          organiser le festival.
+        </p>
+        <p>
+          Nous avons évidemment rencontré quelques surprises en cours de route. Par exemple, nous
+          avons constaté des écarts importants entre le nombre de tickets boissons reçus et le
+          nombre réel d’utilisations notées. Heureusement, nous avons pu en discuter avec l’équipe
+          du Jardin et trouver des solutions pour résoudre ce problème.
+        </p>
+        <p>
+          Nous avons sous-estimé les frais de location d’un camion avec chauffeur pour récupérer des
+          tables et des chaises gratuitement au centre de prêt de Naninne. Bien que cette option
+          semblait économique à première vue, elle s’est avérée être un coût important pour le
+          budget. Pour les prochaines éditions, nous devrons mieux prévoir ces coût ou trouver une
+          alternative pour éviter ce type de dépenses imprévues.
+        </p>
+        <p>
+          Pendant les préparatifs du festival, certaines dépenses ont été planifiées sur base de
+          devis oraux et nous avons eu quelques surprises en recevant des factures où étaient
+          ajoutées la TVA ou certains frais cachés. Cela nous a rappelé l’importance de clarifier
+          tous les détails financiers avec nos intervenants dès le départ, afin d’éviter de telles
+          surprises à l’avenir.
+        </p>
+        <p>
+          Malheureusement, le budget ne nous a pas permi de défrayer les bénévoles ou l’équipe et
+          c’est un point d’attention important si nous voulons péréniser le festival.
+        </p>
+        <p>
+          Malgré ces défis, notre gestion financière a été globalement maîtrisée, et nous avons
+          réussi à offrir un festival de qualité, gratuit pour le public, tout en respectant notre
+          budget. Nous sommes conscients des points d’amélioration pour les éditions futures et nous
+          nous efforcerons de continuer à optimiser notre budget tout en maintenant la qualité du
+          festival.
+        </p>
+        <h3>Surprises</h3>
+        <p>
+          Malgré nos efforts de planification (budget compris), nous avons été confrontés à quelques
+          mauvaises surprises…
+        </p>
+        <h4>Problème de communication</h4>
+        <p>
+          La communication avec le pôle événementiel du Jardin était parfois compliqué. Nous avons
+          plusieurs fois dû nous adapter et modifier nos plans, parfois en dernière minute. Une
+          discussion ultérieure avec les gérants du Jardin a eu lieu pour clarifier ces malentendus.
+        </p>
+        <h4>Désistement d’un vidéaste</h4>
+        <p>
+          Le vidéaste qui s’était engagé à couvrir l’événement pour toute la journée s’est désisté
+          la veille, laissant une charge de travail supplémentaire à notre équipe.
+        </p>
+        <h4>Orage</h4>
+        <p>
+          Un orage de ±15 minutes s’est produit dans l’après-midi. Bien qu’il n’ait pas découragé
+          les visiteurs et les partenaires, quelques boîtes de jeux de la boutique SAJOU ont été
+          endommagées. De plus, le roll-up de la bibliothèque d’Anderlecht n’a pas survécu à cet
+          épisode climatique. Nous avons pris note de l’importance de couvrir de manière adéquate
+          tous les partenaires pour éviter de tels problèmes à l’avenir.
+        </p>
+        <p>
+          Malgré ces imprévus, nous avons réussi à surmonter les difficultés grâce à l’implication
+          et à l’engagement de notre équipe. Ces situations nous ont également permis de tirer des
+          leçons pour améliorer l’organisation des futurs événements.
+        </p>
+      </section>
+    </main>
+  </BasicPage>
+</SkeletonPage>

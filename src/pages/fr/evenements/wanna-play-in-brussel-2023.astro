@@ -1,7 +1,7 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
-import { Image } from 'astro:assets'
+import { Image, getImage } from 'astro:assets'
 import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
 import gagBack from '../../../assets/images/photos-Festival-2022/gag_back.jpg'
 import hoplaFlorent from '../../../assets/images/photos-Festival-2022/hopla-florent.jpg'
@@ -11,124 +11,168 @@ import londonPierre from '../../../assets/images/photos-Festival-2022/london-pie
 import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
 import pressRelease2023 from '@assets/pdf/Wanna-Play-in-Brussels_communique-de-press-08-07-2023.pdf'
 import rapport2023 from '@assets/pdf/Wanna-Play-Rapport-Activité-08-juillet-2023.pdf'
+import { getOrganizations } from '../../../store/dataService.js'
 
-// VIP partners
-const vipPartners = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/partners/vip/*.{jpeg,jpg,png,gif,webp,svg}',
-  { eager: true }
-)
-const ordreListImageVip = [
-  'logo-ludeo',
-  'logo-art-of-games',
-  'logo-happy-meeple',
-  'logo-critical-',
-  'logo-hachette',
-  'logo-explor8',
-  'logo-asmo',
-  'logo-byr',
-  'logo-ludotrotter-ixelles',
+const mainPartnersData = [
+  {
+    fileName: 'logo-grand-hospice',
+    alt: 'Logo Grand Hospice',
+    link: 'https://www.grand-hospice.brussels/',
+  },
+  {
+    fileName: 'logo-jardin-noir',
+    alt: 'Logo Jardin Noir',
+    link: 'https://www.grand-hospice.brussels/jardin/',
+  },
+  {
+    fileName: 'logo-francophones-bruxelles',
+    alt: 'Logo Francophones Bruxelles',
+    link: 'https://ccf.brussels/',
+  },
 ]
-
-const imagesVipPartners = Object.entries(vipPartners)
-  .map(([path, file]) => {
-    const name = path.split('/').pop().split('.')[0]
-    return { name, img: file.default }
-  })
-  .sort((a, b) => {
-    // We compare against our list
-    const indexA = ordreListImageVip.indexOf(a.name)
-    const indexB = ordreListImageVip.indexOf(b.name)
-
-    // Unlisted items get a high value so they go to the bottom
-    const weightA = indexA === -1 ? 999 : indexA
-    const weightB = indexB === -1 ? 999 : indexB
-
-    return weightA - weightB
-  })
-
-// General partners
-const generalPartners = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/partners/general/*.{jpeg,jpg,png,gif,webp,svg}',
-  { eager: true }
-)
-const ordreListImageGeneral = [
-  'logo-sajou',
-  'logo-kaedama',
-  'logo-njoy-games',
-  'logo-ludobel-asbl',
-  'logo-repos-production',
-  'logo-girl-dot-game',
-  'logo-schmeta',
-  'logo-iello',
-  'logo-mind-cycling',
-  'logo-sit-down',
-  'logo-univers-de-thot',
-  'logo-wana-game',
-  'logo-foxtroll-games',
-  'logo-ploef',
-  'logo-auberjeux',
-  'logo-ludiris-asbl',
-  'logo-sdc',
-  'logo-le-game-au-vert',
-  'logo-ludenne',
-  'logo-ludo-ludo',
-  'quentin-lammerant',
-  'logo-des-mentiel',
-  'logo-au-fil-des-mot',
-  'logo-yapaka',
-  'logo-alpa-ludismes',
-  'logo-des-jeux-une-fois',
-]
-
-const imagesGeneralPartners = Object.entries(generalPartners)
-  .map(([path, file]) => {
-    const name = path.split('/').pop().split('.')[0]
-    return { name, img: file.default }
-  })
-  .sort((a, b) => {
-    // We compare against our list
-    const indexA = ordreListImageGeneral.indexOf(a.name)
-    const indexB = ordreListImageGeneral.indexOf(b.name)
-
-    // Unlisted items get a high value so they go to the bottom
-    const weightA = indexA === -1 ? 999 : indexA
-    const weightB = indexB === -1 ? 999 : indexB
-
-    return weightA - weightB
-  })
 
 // Conference partners
-const conferencePartners = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/partners/conference/*.{jpeg,jpg,png,gif,webp,svg}',
+const conferenceData = [
+  {
+    fileName: 'thierry-et-amaya',
+    name: 'Thierry Saeys & Amaya Louis',
+    alt: 'Portrait de Thierry Saeys & Amaya Louis',
+    link: 'https://www.sajou.be/',
+  },
+  {
+    fileName: 'theo-riviere',
+    name: 'Théo Rivière',
+    alt: 'Portrait de Théo Rivière',
+    link: 'https://www.instagram.com/theo_sacha/',
+  },
+  {
+    fileName: 'gioia-et-anthony',
+    name: 'Gioia & Anthony',
+    alt: 'Portrait de Gioia & Anthony',
+    link: 'https://www.facebook.com/Njoygamestaverne/',
+  },
+  {
+    fileName: 'michel-van-langendonckt',
+    name: 'Michel Van Langendonckt',
+    alt: 'Portrait de Michel Van Langendonckt',
+    link: 'https://ludobel.be/',
+  },
+  {
+    fileName: 'geraldine-volders',
+    name: 'Géraldine Volders',
+    alt: 'Portrait de Géraldine Volders',
+    link: '',
+  },
+  {
+    fileName: 'tatiana-dronjak',
+    name: 'Tatiana Dronjak',
+    alt: 'Portrait de Tatiana Dronjak',
+    link: 'https://www.youtube.com/channel/UCUU0uDuttbZAs-n334cYrhQ',
+  },
+]
+
+// VIP partners
+const vipData = [
+  { fileName: 'logo-ludeo', alt: 'Logo Ludeo', link: '' },
+  { fileName: 'logo-art-of-games', alt: 'Logo Art of Games', link: '' },
+  { fileName: 'logo-happy-meeple', alt: 'Logo Happy Meeple', link: '' },
+  { fileName: 'logo-critical-', alt: 'Logo Critical', link: '' },
+  {
+    fileName: 'logo-hachette-boardgames-benelux',
+    alt: 'Logo Hachette Boardgames Benelux',
+    link: '',
+  },
+  { fileName: 'logo-explor8', alt: 'Logo Explor8', link: '' },
+  { fileName: 'logo-asmo', alt: 'Logo Asmodee', link: '' },
+  { fileName: 'logo-byr', alt: 'Logo BYR', link: '' },
+  { fileName: 'logo-ludotrotter-ixelles', alt: 'Logo Ludotrotter Ixelles', link: '' },
+]
+
+// General partners
+const generalData = [
+  { fileName: 'logo-sajou', alt: 'Logo Sajou', link: '' },
+  { fileName: 'logo-kaedama', alt: 'Logo Kaedama', link: '' },
+  { fileName: 'logo-njoy-games', alt: 'Logo Njoy Games', link: '' },
+  { fileName: 'logo-ludobel-asbl', alt: 'Logo Ludobel asbl', link: '' },
+  { fileName: 'logo-repos-production', alt: 'Logo Repos Production', link: '' },
+  { fileName: 'logo-girl-dot-game', alt: 'Logo Girl dot Game', link: '' },
+  { fileName: 'logo-schmeta', alt: 'Logo Schmeta', link: '' },
+  { fileName: 'logo-iello', alt: 'Logo Iello', link: '' },
+  { fileName: 'logo-mind-cycling', alt: 'Logo Mind Cycling', link: '' },
+  { fileName: 'logo-sit-down', alt: 'Logo Sit Down', link: '' },
+  { fileName: 'logo-univers-de-thot', alt: 'Logo Univers de Thot', link: '' },
+  { fileName: 'logo-wana-game', alt: 'Logo Wana Game', link: '' },
+  { fileName: 'logo-foxtroll-games', alt: 'Logo Foxtroll Games', link: '' },
+  { fileName: 'logo-ploef', alt: 'Logo Ploef', link: '' },
+  { fileName: 'logo-auberjeux', alt: 'Logo Auberjeux', link: '' },
+  { fileName: 'logo-ludiris-asbl', alt: 'Logo Ludiris asbl', link: '' },
+  { fileName: 'logo-sdc', alt: 'Logo SDC', link: '' },
+  { fileName: 'logo-le-game-au-vert', alt: 'Logo Le Game au Vert', link: '' },
+  { fileName: 'logo-ludenne', alt: 'Logo Ludenne', link: '' },
+  { fileName: 'logo-ludo-ludo', alt: 'Logo Ludo Ludo', link: '' },
+  { fileName: 'quentin-lammerant', alt: 'Quentin Lammerant', link: '' },
+  { fileName: 'logo-des-mentiel', alt: 'Logo Des Mentiel', link: '' },
+  { fileName: 'logo-au-fil-des-mot', alt: 'Logo Au Fil des Mots', link: '' },
+  { fileName: 'logo-yapaka', alt: 'Logo Yapaka', link: '' },
+  { fileName: 'logo-alpa-ludismes', alt: 'Logo Alpa Ludismes', link: '' },
+  { fileName: 'logo-des-jeux-une-fois', alt: 'Logo Des Jeux Une Fois', link: '' },
+]
+
+const allSlugs = [...mainPartnersData, ...conferenceData, ...vipData, ...generalData].map(p =>
+  p.fileName.replace(/^logo-/, '')
+)
+
+const organizations = await getOrganizations({
+  filter: {
+    _and: [{ status: { _in: ['published', 'to_check'] } }, { slug: { _in: allSlugs } }],
+  },
+})
+
+const partners = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/partners/*.{jpeg,jpg,png,gif,webp,svg}',
   { eager: true }
 )
 
-// Define everything here: the display order, the real names, and the image file name."
-const conferenceData = [
-  { fileName: 'thierry-et-amaya', name: 'Thierry Saeys & Amaya Louis' },
-  { fileName: 'theo-riviere', name: 'Théo Rivière' },
-  { fileName: 'gioia-et-anthony', name: 'Gioia & Anthony' },
-  { fileName: 'michel-van-langendonckt', name: 'Michel Van Langendonckt' },
-  { fileName: 'geraldine-volders', name: 'Géraldine Volders' },
-  { fileName: 'tatiana-dronjak', name: 'Tatiana Dronjak' },
-]
+async function getOptimizedImages(dataArray, globImages, organizations, width = 300) {
+  const result = await Promise.all(
+    dataArray.map(async partner => {
+      const pathImage = Object.keys(globImages).find(path => path.includes(partner.fileName))
+      const originalImage = pathImage ? globImages[pathImage].default : null
+      let optimizedImage = null
+      if (originalImage) {
+        optimizedImage = await getImage({
+          src: originalImage,
+          width,
+        })
+      }
 
-// Build the display-ready list by combining your configuration and the local images
-const imagesConferencePartners = conferenceData
-  .map(confPartners => {
-    // Find the image key (the full path) that contains the file name
-    const pathImage = Object.keys(conferencePartners).find(path =>
-      path.includes(confPartners.fileName)
-    )
+      const slug = partner.fileName.replace(/^logo-/, '')
+      const org = organizations.find(o => o.slug === slug)
 
-    return {
-      img: pathImage ? conferencePartners[pathImage].default : null, // image if it exists
-      displayName: confPartners.name,
-      fileName: confPartners.fileName, // on repasse le nom de fichier pour le lien
-    }
-  })
-  // We remove from the display anything that couldn't find a local image"
-  .filter(p => p.img) // We remove from the display anything that couldn't find a local image"
+      let finalLink = null
+      if (org) {
+        finalLink = `/fr/o/${org.slug}/`
+      } else if (partner.link) {
+        finalLink = partner.link
+      }
+
+      return {
+        img: originalImage,
+        optimizedMeta: optimizedImage,
+        alt: partner.alt || partner.name,
+        displayName: partner.name || partner.alt,
+        fileName: partner.fileName,
+        finalLink,
+      }
+    })
+  )
+  return result.filter(p => p.img)
+}
+
+const imagesMainPartners = await getOptimizedImages(mainPartnersData, partners, organizations)
+const imagesConferencePartners = await getOptimizedImages(conferenceData, partners, organizations)
+const imagesVipPartners = await getOptimizedImages(vipData, partners, organizations)
+const imagesGeneralPartners = await getOptimizedImages(generalData, partners, organizations)
 
 // const { lang } = Astro.props
 const lang = { code: 'fr' }
@@ -209,6 +253,21 @@ const lang = { code: 'fr' }
               </div>
             </li>
           </ol>
+        </div>
+        <div class="partners-grid" style="margin-bottom: 2rem;">
+          {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
+          {
+            imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
+              const imgTag = <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+              return finalLink ? (
+                <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                  {imgTag}
+                </a>
+              ) : (
+                imgTag
+              )
+            })
+          }
         </div>
         <div>
           <iframe
@@ -423,12 +482,19 @@ const lang = { code: 'fr' }
             <!-- Section Conférences -->
             <div class="partners-grid">
               {
-                imagesConferencePartners.map(({ img, displayName, fileName }) => {
+                imagesConferencePartners.map(({ optimizedMeta, displayName, finalLink, alt }) => {
+                  const imgTag = (
+                    <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                  )
                   return (
                     <figure class="stack gap-down-p" style="text-align: center; margin: 0;">
-                      <a href={`/fr/o/${fileName}/`}>
-                        <Image src={img} alt={`Logo ${displayName}`} />
-                      </a>
+                      {finalLink ? (
+                        <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                          {imgTag}
+                        </a>
+                      ) : (
+                        imgTag
+                      )}
                       <figcaption>
                         <strong>{displayName}</strong>
                       </figcaption>
@@ -478,25 +544,35 @@ const lang = { code: 'fr' }
           <div class="partners-grid">
             {/* On boucle sur le tableau des images */}
             {
-              imagesVipPartners.map(({ img, name }) => (
-                <a href={`/fr/o/${name.replace(/^logo-/, '')}/`}>
-                  <Image src={img} alt={`Logo ${name}`} />
-                </a>
-              ))
+              imagesVipPartners.map(({ optimizedMeta, alt, finalLink }) => {
+                const imgTag = (
+                  <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                )
+                return finalLink ? (
+                  <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                    {imgTag}
+                  </a>
+                ) : (
+                  imgTag
+                )
+              })
             }
           </div>
-          <!-- <div class="partners-grid">
-            {/* On boucle sur le tableau des images */}
-            {imagesConferencePartners.map(({img, name}) => <Image src={img} alt={`Logo ${name}`} />)}
-          </div>-->
           <div class="partners-grid">
             {/* On boucle sur le tableau des images */}
             {
-              imagesGeneralPartners.map(({ img, name }) => (
-                <a href={`/fr/o/${name.replace(/^logo-/, '')}/`}>
-                  <Image src={img} alt={`Logo ${name}`} />
-                </a>
-              ))
+              imagesGeneralPartners.map(({ optimizedMeta, alt, finalLink }) => {
+                const imgTag = (
+                  <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                )
+                return finalLink ? (
+                  <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                    {imgTag}
+                  </a>
+                ) : (
+                  imgTag
+                )
+              })
             }
           </div>
         </div>
@@ -823,21 +899,6 @@ const lang = { code: 'fr' }
 
         <div>
           <h3>Espace Presse</h3>
-          <p>
-            Le communiqué de presse officiel détaillant les objectifs, les chiffres de l'édition
-            précédente et les informations pratiques est disponible en consultation.
-          </p>
-          <a
-            href={pressRelease2023}
-            target="_blank"
-            download="Wanna-Play-in-Brussels_communique-de-press-08-07-2023"
-          >
-            Télécharger le Communiqué de Presse (PDF)
-          </a>
-        </div>
-
-        <div>
-          <h3>Rapport d'activités</h3>
           <p>
             Le communiqué de presse officiel détaillant les objectifs, les chiffres de l'édition
             précédente et les informations pratiques est disponible en consultation.

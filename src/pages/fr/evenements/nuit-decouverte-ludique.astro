@@ -1,0 +1,257 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
+
+import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
+
+const lang = { code: 'fr' }
+
+const partners = [
+  'Act in games',
+  'Ankama',
+  'Art of Games',
+  'Asmodee',
+  'Cocktail Games',
+  'Discovery game',
+  'Dragon Dawn Productions',
+  'DTDA',
+  'Exod Games',
+  'Explor8',
+  'Flatlined Games',
+  'Game Brewer',
+  'Geek Attitude Games',
+  'Gigamic',
+  'Iello',
+  'Jeux Opla',
+  'Jumping Turtle Games',
+  'La Haute Roche',
+  'Libellud',
+  'Lui-même',
+  'Matagot',
+  'Origames - Renegade',
+  'Petard Troll',
+  'Repos Production',
+  'Scorpion Masqué',
+  'Sitdown Games',
+  'Space Cowboys',
+  'Studio Bombyx',
+]
+---
+
+<SkeletonPage {lang}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="La nuit des découvertes ludiques - BGF 2018"
+    description="Retour sur une nuit de découvertes avec plus de 50 nouveautés jouables toute la nuit au Brussels Games Festival 2018."
+    socialImage={'https://www.placeholderimage.eu/1200x630'}
+    ogVideo={false}
+    twitterCard="summary"
+  />
+
+  <BasicPage {lang}>
+    <main class="center max stack gap-down-h3" style="margin-top: 0;">
+      <!-- Header -->
+      <header class="stack gap-down-h4 center text">
+        <img src={bannerPaper.src} alt="BGF 2018 Banner" style="width: 100%; height: auto;" />
+        <h1>
+          <span class="color-primary">Brussels Games Festival 2018</span><br />
+          <span class="color-secondary">La nuit des découvertes ludiques</span>
+        </h1>
+        <p>
+          <a href="https://www.wanna-play.be/archive/brussels-games-festival" target="_blank"
+            >Lien vers l'archive originale</a
+          >
+        </p>
+      </header>
+
+      <!-- Intro -->
+      <section class="stack gap-down-h5 center text padding-x-relative-l">
+        <p class="size-h3"><strong>Une nuit de découvertes ludiques</strong></p>
+        <p>
+          Plus de 50 nouveautés 2018 étaient disponibles toute la nuit au Brussels Games Festival
+          grâce à la complicité de nos partenaires éditeurs et distributeurs.
+        </p>
+      </section>
+
+      <!-- Stats -->
+      <section
+        class="grid gap-h5 padding-h3 border-radius-m"
+        data-c-p="teal"
+        data-c-p-var="funky-contrast"
+        style="--width-column: 130px; text-align: center;"
+      >
+        <div>
+          <div class="stack gap-down-h7">
+            <p class="size-h1 stat-nb">+50</p><p>nouveautés 2018</p>
+          </div>
+          <div class="stack gap-down-h7">
+            <p class="size-h1 stat-nb">~100</p><p>parties jouées</p>
+          </div>
+          <div class="stack gap-down-h7">
+            <p class="size-h1 stat-nb">156</p><p>inscriptions</p>
+          </div>
+          <div class="stack gap-down-h7">
+            <p class="size-h1 stat-nb">642</p><p>visiteurs uniques</p>
+          </div>
+          <div class="stack gap-down-h7">
+            <p class="size-h1 stat-nb">7734</p><p>pages vues</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partenaires éditeurs -->
+      <section class="stack gap-down-h0 no-gap-down">
+        <h2>Nos Partenaires Éditeurs</h2>
+        <!-- Tags grid -->
+        <div>
+          <div>
+            {partners.map(partner => <div>{partner}</div>)}
+          </div>
+        </div>
+      </section>
+
+      <!-- App compagnon (tilted card) -->
+      <section class="app-card box no-border padding-h4 stack gap-down-h5">
+        <h3 class="color-secondary">Une app compagnon</h3>
+        <p>Une autre manière de découvrir le festival depuis ton smartphone ou ton PC.</p>
+        <div>
+          <a href="#" class="cta-button padding-x-relative-l border-radius-m">C'est par ici</a>
+        </div>
+
+        <!-- App mini-stats -->
+        <div
+          class="cluster gap-h4 justify-content-space-around padding-y-relative-s app-stats-border"
+        >
+          <div>
+            <div class="stack gap-down-h7 center text">
+              <p class="size-h2 stat-nb-secondary">1300</p>
+              <p>visiteurs uniques</p>
+            </div>
+            <div class="stack gap-down-h7 center text">
+              <p class="size-h2 stat-nb-secondary">27735</p>
+              <p>pages vues</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vidéo -->
+      <section class="stack gap-down-h4">
+        <h2 class="center text color-primary">Souvenir en vidéo</h2>
+        <div class="center max" style="text-align: center;">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/Z895F3XZ-sg?si=xk0QdQu9DTQfUMT2"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="max-width: 100%; border-radius: var(--border-radius-m);"></iframe>
+        </div>
+      </section>
+
+      <!-- Galerie Photos -->
+      <section class="stack gap-down-h4">
+        <h2 class="center text color-primary">Galerie Photos</h2>
+        <div class="grid gap-h6" style="--width-column: 250px;">
+          <div>
+            <img
+              src="https://www.placeholderimage.eu/api/400x300"
+              alt="Photo 1"
+              class="gallery-img border-radius-s"
+            />
+            <img
+              src="https://www.placeholderimage.eu/api/400x300"
+              alt="Photo 2"
+              class="gallery-img border-radius-s"
+            />
+            <img
+              src="https://www.placeholderimage.eu/api/400x300"
+              alt="Photo 3"
+              class="gallery-img border-radius-s"
+            />
+            <img
+              src="https://www.placeholderimage.eu/api/400x300"
+              alt="Photo 4"
+              class="gallery-img border-radius-s"
+            />
+            <img
+              src="https://www.placeholderimage.eu/api/400x300"
+              alt="Photo 5"
+              class="gallery-img border-radius-s"
+            />
+            <img
+              src="https://www.placeholderimage.eu/api/400x300"
+              alt="Photo 6"
+              class="gallery-img border-radius-s"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+  /* Color helpers */
+  .color-primary {
+    color: var(--color-primary);
+  }
+  .color-secondary {
+    color: var(--color-secondary);
+  }
+
+  /* Stat numbers */
+  .stat-nb {
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 0;
+  }
+  .stat-nb-secondary {
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  /* Partner tag */
+  .partner-tag {
+    background: hsl(0, 0%, 93%);
+    display: inline-block;
+  }
+
+  /* Tilted app card */
+  .app-card {
+    transform: rotate(1.5deg);
+    margin: var(--size-h3) auto;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: var(--shadow-raised-s);
+    border: 1px solid hsl(0, 0%, 90%);
+  }
+
+  /* CTA button */
+  .cta-button {
+    display: inline-block;
+    background: var(--color-primary);
+    color: var(--color-neutral);
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  /* App stats top border separator */
+  .app-stats-border {
+    border-top: 1px solid hsl(0, 0%, 90%);
+  }
+
+  /* Gallery images */
+  .gallery-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+</style>

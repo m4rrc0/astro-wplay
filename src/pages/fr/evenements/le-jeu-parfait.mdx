@@ -2,15 +2,37 @@
 layout: '@layouts/MarkdownPage.astro'
 ---
 
+import { Image } from 'astro:assets'
+import beDetective from '@assets/images/partners/logo-be-dete.png'
+import bgf from '@assets/images/partners/logo-ludiris-asbl.png'
+
 # Le jeu Parfait
 
 Webinaire réalisé en collaboration avec [Be Detectives](https://bedetectives.be/).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/l8cuK7a-elE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum
+mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis
+dolor.
+
+<div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; margin-block: 1.5rem;">
+  <Image src={beDetective} alt="Be Detectives" width={100} height={100} />
+  <Image src={bgf} alt="Brussels Games Festival" width={100} height={100} />
+</div>
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/l8cuK7a-elE"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
 
 ## Crédits
 
 **Casting :**
+
 - **Bernard Ledingue (Le Fou)** : M. Anselin
 - **Hippolyte Chevalier (La Cavalière)** : T. Borrini
 - **Jean-Philippe Latour (La Tour)** : J. Boosten
@@ -18,17 +40,18 @@ Webinaire réalisé en collaboration avec [Be Detectives](https://bedetectives.b
 - **LEX** : C. D.
 
 **Équipe :**
+
 - **Écriture :** [Be Detectives](https://bedetectives.be/)
 - **Illustrations :** [Tess h.](https://www.tess-h.be/)
 
 ## Musiques
 
-- **Opening :** *Darkest Child* - Kevin MacLeod
-- **Salle tableaux :** *New York Jazz Lounge* - Bar Jazz Classics
-- **Ascenseur :** *Local Forecast-Elevator* - Kevin MacLeod 
-- **Cirque :** *Carousel Clown* - Mike Franklyn
-- **Salle problèmes :** *Back On The Path* - Marcin Przybylowicz & Percival (The Witcher 3)
-- **Générique :** *Utopia - Finale* - Cristobal Tabia De Veer
+- **Opening :** _Darkest Child_ - Kevin MacLeod
+- **Salle tableaux :** _New York Jazz Lounge_ - Bar Jazz Classics
+- **Ascenseur :** _Local Forecast-Elevator_ - Kevin MacLeod
+- **Cirque :** _Carousel Clown_ - Mike Franklyn
+- **Salle problèmes :** _Back On The Path_ - Marcin Przybylowicz & Percival (The Witcher 3)
+- **Générique :** _Utopia - Finale_ - Cristobal Tabia De Veer
 
 ## Liens utiles
 

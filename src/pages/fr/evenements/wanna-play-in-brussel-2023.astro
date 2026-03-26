@@ -195,8 +195,8 @@ const lang = { code: 'fr' }
         <h1>Wanna Play in Brussel 2023</h1>
       </header>
 
-      <section>
-        <div>
+      <section class="stack gap-down-h1">
+        <div class="stack gap-down-h4">
           <p>
             <strong>WANNA PLAY IN BRUSSELS 2023 - 2E ÉDITION</strong>
           </p>
@@ -213,7 +213,7 @@ const lang = { code: 'fr' }
             les familles avec enfants.
           </p>
         </div>
-        <div>
+        <div class="stack gap-down-h4">
           <p>
             <strong>LE FESTIVAL AVAIT PLUSIEURS OBJECTIFS PRINCIPAUX</strong>
           </p>
@@ -254,7 +254,7 @@ const lang = { code: 'fr' }
             </li>
           </ol>
         </div>
-        <div class="partners-grid" style="margin-bottom: 2rem;">
+        <div class="partners-grid cluster" style="margin-bottom: 2rem;">
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -278,10 +278,10 @@ const lang = { code: 'fr' }
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen></iframe>
         </div>
-        <div class="carousel" role="region" aria-roledescription="carousel">
-          <ul class="carousel__inner">
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+        <div class="carousel cluster" role="region" aria-roledescription="carousel">
+          <ul class="carousel-inner reset gap-h3">
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Toute l’organisation me semblait au top, et l’endroit choisi pour la bourse aux
@@ -289,93 +289,119 @@ const lang = { code: 'fr' }
                     ce que tout se passe sans problème."
                   </p>
                 </blockquote>
-                <figcaption>— Benjamin, <cite>Vendeur bourse aux jeux</cite></figcaption>
+                <figcaption class="bold">
+                  — Benjamin, <cite>Vendeur bourse aux jeux</cite>
+                </figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Chouette festival qui permet de découvrir ou redécouvrir le monde ludique, de
                     belles personnes et plein de nouveaux jeux. À refaire !"
                   </p>
                 </blockquote>
-                <figcaption>— Céleste, <cite>Visiteur</cite></figcaption>
+                <figcaption class="bold">
+                  — Céleste, <cite>Visiteur</cite>
+                </figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     “Un évènement immanquable, beaucoup de choix de jeux et d’activités pour tous
                     les âges, dans un lieu très agréable.”
                   </p>
                 </blockquote>
-                <figcaption>— Ooki, <cite>Visiteur</cite></figcaption>
+                <figcaption class="bold">
+                  — Ooki, <cite>Visiteur</cite>
+                </figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>"Un chouette petit festival très convivial dans un endroit magique."</p>
                 </blockquote>
-                <figcaption>— Le meeple à lunettes, <cite>Visiteur</cite></figcaption>
+                <figcaption class="bold">
+                  — Le meeple à lunettes, <cite>Visiteur</cite>
+                </figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     “Super événement ! L’occasion de découvrir et tester plein de nouveaux jeux dans
                     une ambiance relax et conviviale.”
                   </p>
                 </blockquote>
-                <figcaption>— U1, <cite>Visiteur</cite></figcaption>
+                <figcaption class="bold">
+                  — U1, <cite>Visiteur</cite>
+                </figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     “Conférences pertinentes, atelier peinture et jeu de rôle qui donnent envie, et
                     des jeux bien sûr.”
                   </p>
                 </blockquote>
-                <figcaption>— Lilouch, <cite>Visiteur</cite></figcaption>
+                <figcaption class="bold">
+                  — Lilouch, <cite>Visiteur</cite>
+                </figcaption>
               </figure>
             </li>
           </ul>
         </div>
-        <div>
-          <div>
-            <p>2000</p>
-            <p>participants</p>
-          </div>
-          <div>
-            <p>200</p>
-            <p>jeux différents</p>
-          </div>
-          <div>
-            <p>+100</p>
-            <p>tables de jeux</p>
-          </div>
-          <div>
-            <p>+74</p>
-            <p>animateurs</p>
-          </div>
-          <div>
-            <p>41</p>
-            <p>partenaires</p>
-          </div>
-          <div>
-            <p>33</p>
-            <p>bénévoles</p>
-          </div>
+        <div class="grid grid-cols-2">
+          <ul class="reset">
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">2000</p>
+              <p>participants</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">200</p>
+              <p>jeux différents</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">+100</p>
+              <p>tables de jeux</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">+74</p>
+              <p>animateurs</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">41</p>
+              <p>partenaires</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">33</p>
+              <p>bénévoles</p>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -577,64 +603,70 @@ const lang = { code: 'fr' }
           </div>
         </div>
         <div class="carousel" role="region" aria-roledescription="carousel">
-          <ul class="carousel__inner">
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+          <ul class="carousel-inner reset gap-h3">
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Super organisation ! Un grand merci à toute l’équipe de Wanna Play pour ce
                     festival super sympa et bien organisé."
                   </p>
                 </blockquote>
-                <figcaption>— Ludo, <cite>Cook & run</cite></figcaption>
+                <figcaption class="bold">
+                  — Ludo, <cite>Cook & run</cite>
+                </figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Wanna Play nous offre un très bel évènement, dans un cadre incroyable et avec
                     plein de chouettes choses à découvrir."
                   </p>
                 </blockquote>
-                <figcaption>— Théo, <cite>rivière</cite></figcaption>
+                <figcaption class="bold">— Théo Rivière</figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Avec cette deuxième édition, le festival Wanna Play in Brussel a trouvé sa
                     place parmi les évènements importants du monde ludique."
                   </p>
                 </blockquote>
-                <figcaption>— Paul, <cite>ploef !</cite></figcaption>
+                <figcaption class="bold">
+                  — Paul, <cite>ploef !</cite>
+                </figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Une très belle première expérience pour nous. Que de belles rencontres et
                     découvertes de jeux."
                   </p>
                 </blockquote>
-                <figcaption>— Guillaume, <cite>le game au vent</cite></figcaption>
+                <figcaption class="bold">
+                  — Guillaume, <cite>le game au vent</cite>
+                </figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "L’expérience était enrichissante. Nous avons rencontré une équipe agréable et
                     sympathique."
                   </p>
                 </blockquote>
-                <figcaption>— Thomas, <cite>critical hut</cite></figcaption>
+                <figcaption class="bold">— Thomas, <cite>critical hut</cite></figcaption>
               </figure>
             </li>
           </ul>
@@ -665,9 +697,9 @@ const lang = { code: 'fr' }
           eux.
         </p>
         <div class="carousel" role="region" aria-roledescription="carousel">
-          <ul class="carousel__inner">
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+          <ul class="carousel-inner reset gap-h3">
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "J’ai été agréablement surprise par le lieu du festival, ces jardins sont
@@ -676,12 +708,12 @@ const lang = { code: 'fr' }
                     Venez en nombre, vous ne serez pas déçus!"
                   </p>
                 </blockquote>
-                <figcaption>— Oriane, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Oriane, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Très chouette festival de jeux de société permettant de découvrir de bonnes
@@ -690,12 +722,12 @@ const lang = { code: 'fr' }
                     occasions!"
                   </p>
                 </blockquote>
-                <figcaption>— Aurélien, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Aurélien, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "J'ai eu le plaisir de faire partie de l'équipe des bénévoles sur le festival de
@@ -704,12 +736,12 @@ const lang = { code: 'fr' }
                     vraiment conviviale."
                   </p>
                 </blockquote>
-                <figcaption>— Karine, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Karine, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Super équipe! Quand je suis arrivé, je me suis retrouvé dans une famille qui
@@ -717,12 +749,12 @@ const lang = { code: 'fr' }
                     et une ambiance joviale tout en gardant l'objectif de réussir en tête."
                   </p>
                 </blockquote>
-                <figcaption>— Mattéo, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Mattéo, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Merci pour la journée, votre implication et votre bonne humeur à tout moment.
@@ -731,12 +763,12 @@ const lang = { code: 'fr' }
                     travail accompli."
                   </p>
                 </blockquote>
-                <figcaption>— Leila, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Leila, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Très chouette expérience malgré mon peu de connaissance dans le domaine. Équipe
@@ -744,21 +776,21 @@ const lang = { code: 'fr' }
                     belle réussite!"
                   </p>
                 </blockquote>
-                <figcaption>— Joëlle, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Joëlle, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>"Très chouette équipe bien réactive et disponible pour nous."</p>
                 </blockquote>
-                <figcaption>— Aurélien, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Aurélien, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>
                     "Très chouette expérience dans le monde du jeu de société que je ne connais pas.
@@ -766,16 +798,16 @@ const lang = { code: 'fr' }
                     chouette équipe, et j'ai bien aimé d'en faire partie pour une journée."
                   </p>
                 </blockquote>
-                <figcaption>— Anne, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Anne, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
 
-            <li class="carousel__item" role="group" aria-roledescription="slide">
-              <figure>
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
                 <blockquote>
                   <p>"Bravo pour l'organisation de cet événement. Vous avez géré!!!"</p>
                 </blockquote>
-                <figcaption>— Oriane, <cite>Bénévole</cite></figcaption>
+                <figcaption class="bold">— Oriane, <cite>Bénévole</cite></figcaption>
               </figure>
             </li>
           </ul>
@@ -1035,6 +1067,38 @@ const lang = { code: 'fr' }
 </SkeletonPage>
 
 <style>
+  .carousel-inner {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+
+  .carousel-item {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 25rem;
+  }
+
+  .carousel-item figure {
+    display: flex;
+    flex-direction: column; /* Aligne le texte et l'auteur verticalement */
+    width: 100%;
+    height: 100%;
+  }
+
+  .carousel-item figcaption {
+    text-align: right;
+  }
+
+  .carousel-item blockquote {
+    margin: 0;
+    padding: 0;
+    border: none;
+    flex-grow: 1;
+  }
+
   .partners-grid {
     display: grid;
     /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */

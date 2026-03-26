@@ -1,0 +1,132 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
+
+import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
+
+const lang = { code: 'fr' }
+---
+
+<SkeletonPage {lang}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Tables ouvertes - BGF 2017"
+    description="Retour sur l'initiative des tables ouvertes lors du Brussels Games Festival 2017."
+    socialImage={'https://www.placeholderimage.eu/1200x630'}
+    ogVideo={false}
+    twitterCard="summary"
+  />
+
+  <BasicPage {lang}>
+    <main class="center max stack gap-down-h3" style="margin-top: 0;">
+      <!-- Header -->
+      <header class="stack gap-down-h4 center text">
+        <img src={bannerPaper.src} alt="BGF 2017 Banner" style="width: 100%; height: auto;" />
+        <h1>
+          <span class="color-primary">Brussels Games Festival 2017</span><br />
+          <span class="color-secondary">Tables ouvertes</span>
+        </h1>
+        <p>
+          <a href="https://www.wanna-play.be/archive/brussels-games-festival" target="_blank"
+            >Voir l'archive de l'événement</a
+          >
+        </p>
+      </header>
+
+      <!-- Intro -->
+      <section class="center text padding-x-relative-l">
+        <p class="size-h4">
+          Une semaine d'effervescence ludique pour connecter les joueurs autour des tables du
+          festival.
+        </p>
+      </section>
+
+      <section
+        class="grid gap-h5 padding-h3 border-radius-m"
+        data-c-p="teal"
+        data-c-p-var="funky-contrast"
+        style="--width-column: 130px; text-align: center;"
+      >
+        <div>
+          <div class="stack gap-down-h7">
+            <p class="size-h1 stat-nb">5099</p><p>pages vues</p>
+          </div>
+          <div class="stack gap-down-h7">
+            <p class="size-h1 stat-nb">480</p><p>visiteurs uniques</p>
+          </div>
+          <div class="stack gap-down-h7">
+            <p class="size-h1 stat-nb">71</p><p>inscriptions</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Video -->
+      <section class="stack gap-down-h4">
+        <h3 class="center text color-primary">Revivez l'événement</h3>
+        <div class="video-container center max">
+          <iframe
+            width="100%"
+            height="450"
+            src="https://www.youtube.com/embed/ObbUL0Oosaw"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          >
+          </iframe>
+        </div>
+      </section>
+
+      <!-- Le concept (Tilted box) -->
+      <section
+        class="sur-place-box box no-border padding-relative-l stack gap-down-h5"
+        data-c-p="teal"
+        data-c-p-var="funky"
+      >
+        <h3
+          class="color-secondary"
+          style="font-family: var(--font-heading-prefered), 'Permanent Marker', cursive;"
+        >
+          Le concept
+        </h3>
+        <p>
+          Les "Tables ouvertes" permettent aux festivaliers de se regrouper, de découvrir des
+          nouveautés et de partager leur passion du jeu dans une ambiance conviviale et inclusive.
+        </p>
+      </section>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+  /* Color helpers */
+  .color-primary {
+    color: var(--color-primary);
+  }
+  .color-secondary {
+    color: var(--color-secondary);
+  }
+
+  /* Stat numbers */
+  .stat-nb {
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  /* Video wrapper */
+  .video-container {
+    box-shadow: var(--shadow-raised-s);
+    border-radius: var(--border-radius-m);
+    overflow: hidden;
+  }
+
+  /* Concept Box (Tilted style) */
+  .sur-place-box {
+    transform: rotate(-1deg);
+    margin: var(--size-h3) auto;
+    max-width: 700px;
+    box-shadow: var(--shadow-raised-s);
+  }
+</style>

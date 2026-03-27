@@ -2,7 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
 import type { ImageMetadata } from 'astro'
-import { Image, getImage } from 'astro:assets'
+import { Image } from 'astro:assets'
 import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
 import gagBack from '../../../assets/images/photos-Festival-2022/gag_back.jpg'
 import hoplaFlorent from '../../../assets/images/photos-Festival-2022/hopla-florent.jpg'
@@ -12,6 +12,7 @@ import londonPierre from '../../../assets/images/photos-Festival-2022/london-pie
 import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
 import pressRelease2022 from '@assets/pdf/Wanna-Play-in-Brussels_communique-de-press-30-07-2022.pdf'
 import rapport2022 from '@assets/pdf/Wanna-Play-Rapport-Activité-30-juillet-2022.pdf'
+import getOptimizedImages from '../../../utils/getOptimizedImages.js'
 
 // const { lang } = Astro.props
 const lang = { code: 'fr' }
@@ -62,45 +63,8 @@ const organizations = await getOrganizations({
 })
 
 const partners = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/partners/*.{jpeg,jpg,png,gif,webp,svg}',
-  { eager: true }
+  '@assets/images/partners/*.{jpeg,jpg,png,gif,webp,svg}'
 )
-
-async function getOptimizedImages(dataArray, globImages, organizations, width = 300) {
-  const result = await Promise.all(
-    dataArray.map(async partner => {
-      const pathImage = Object.keys(globImages).find(path => path.includes(partner.fileName))
-      const originalImage = pathImage ? globImages[pathImage].default : null
-      let optimizedImage = null
-      if (originalImage) {
-        optimizedImage = await getImage({
-          src: originalImage,
-          width,
-        })
-      }
-
-      const slug = partner.fileName.replace(/^logo-/, '')
-      const org = organizations.find(o => o.slug === slug)
-
-      let finalLink = null
-      if (org) {
-        finalLink = `/fr/o/${org.slug}/`
-      } else if (partner.link) {
-        finalLink = partner.link
-      }
-
-      return {
-        img: originalImage,
-        optimizedMeta: optimizedImage,
-        alt: partner.alt || partner.name,
-        displayName: partner.name || partner.alt,
-        fileName: partner.fileName,
-        finalLink,
-      }
-    })
-  )
-  return result.filter(p => p.img)
-}
 
 const imagesMainPartners = await getOptimizedImages(mainPartnersData, partners, organizations)
 const imagesPartners = await getOptimizedImages(partnersData, partners, organizations)
@@ -118,12 +82,14 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
   />
   <BasicPage {lang}>
     <main class="center max" style="margin-top: 0;">
-      <header>
-        <Image src={bannerPaper} alt="" />
-        <h1>Wanna Play in Brussel 2022</h1>
+      <header style="height: 25vh; position: relative;">
+        <Image src={bannerPaper} alt="" style="height: 100%" />
+        <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+          Wanna Play in Brussel 2022
+        </h1>
       </header>
 
-      <section>
+      <section class="stack gap-down-h1">
         <div>
           <p>
             <strong>WANNA PLAY IN BRUSSELS 2022 - 1ÈRE ÉDITION</strong>
@@ -179,54 +145,81 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             })
           }
         </div>
-        <div>
+        <div class="video-container">
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/-QKaLnTcTr0?si=soq7AM3vRK7je99S"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
+            allowfullscreen
+            class="center"></iframe>
         </div>
-        <div>
-          <div>
-            <p>±2500</p>
-            <p>participants</p>
-          </div>
-          <div>
-            <p>170</p>
-            <p>jeux différents</p>
-          </div>
-          <div>
-            <p>+70</p>
-            <p>tables de jeux</p>
-          </div>
-          <div>
-            <p>36</p>
-            <p>animateurs</p>
-          </div>
-          <div>
-            <p>20</p>
-            <p>partenaires</p>
-          </div>
-          <div>
-            <p>26</p>
-            <p>bénévoles</p>
-          </div>
+        <div class="grid grid-cols-2">
+          <ul class="reset">
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">±2500</p>
+              <p>participants</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">170</p>
+              <p>jeux différents</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">+70</p>
+              <p>tables de jeux</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">36</p>
+              <p>animateurs</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">20</p>
+              <p>partenaires</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">26</p>
+              <p>bénévoles</p>
+            </li>
+          </ul>
         </div>
       </section>
 
       <section>
         <h2>Photos</h2>
-        <div>
-          <Image src={gagBack} alt="" />
-          <Image src={hoplaFlorent} alt="" />
-          <Image src={kidsStoryTime} alt="" />
-          <Image src={kids} alt="" />
-          <Image src={londonPierre} alt="" />
-          <Image src={moonArea} alt="" />
+        <div class="grid gap-h6" style="--width-column: 250px;">
+          <ul class="reset">
+            <li>
+              <Image src={gagBack} alt="" class="gallery-img" />
+            </li>
+            <li>
+              <Image src={hoplaFlorent} alt="" class="gallery-img" />
+            </li>
+            <li>
+              <Image src={kidsStoryTime} alt="" class="gallery-img" />
+            </li>
+            <li>
+              <Image src={kids} alt="" class="gallery-img" />
+            </li>
+            <li>
+              <Image src={londonPierre} alt="" class="gallery-img" />
+            </li>
+            <li>
+              <Image src={moonArea} alt="" class="gallery-img" />
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -272,10 +265,8 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
 
       <section>
         <h2>Vidéos</h2>
-        <div>
+        <div class="video-grid">
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/PMNHLvEaFm4?si=YXSK8_l-d9OEfFr1"
             title="YouTube video player"
             frameborder="0"
@@ -330,9 +321,15 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           }
         </div>
         <div>
-          <div>
-            <Image src={gagBack} alt="" />
-            <Image src={hoplaFlorent} alt="" />
+          <div class="grid gap-h6" style="--width-column: 250px;">
+            <ul class="reset">
+              <li>
+                <Image src={gagBack} alt="" />
+              </li>
+              <li>
+                <Image src={hoplaFlorent} alt="" />
+              </li>
+            </ul>
           </div>
         </div>
       </section>
@@ -435,6 +432,22 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
   </BasicPage>
 </SkeletonPage>
 <style>
+  .video-container {
+    width: 100%;
+  }
+
+  .video-container iframe,
+  .video-container img {
+    width: 66.66%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-l);
+  }
+  .video-grid iframe {
+    width: 50%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-l);
+  }
+
   .partners-grid {
     display: grid;
     /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */

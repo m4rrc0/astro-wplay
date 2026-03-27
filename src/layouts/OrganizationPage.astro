@@ -237,12 +237,11 @@ if (jsonldType === 'Library') {
         {
           logo?.src && (
             <div
-              class="center intrinsic box no-border
+              class={`center intrinsic box no-border
               color-palette-main
               width-col-6
               border-radius-s
-              badge
-              "
+              ${admin_categories?.includes('badge_default') || admin_categories?.includes('paid_partner') ? 'badge' : ''}`}
               style={`
               margin-top: calc(var(--size-h2) * -1);
               margin-bottom: var(--size-h2);

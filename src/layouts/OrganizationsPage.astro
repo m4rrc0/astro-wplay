@@ -177,8 +177,18 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           <IO ul $skipNoInner class="reset">
             {
               organizations?.map((organization, index) => {
-                const { name, path, logo, typesTranslated, location, servicesTranslated } =
-                  organization
+                const {
+                  name,
+                  path,
+                  logo,
+                  typesTranslated,
+                  location,
+                  servicesTranslated,
+                  admin_categories,
+                } = organization
+                const isPartner =
+                  admin_categories?.includes('partner') ||
+                  admin_categories?.includes('badge_default')
 
                 const nameIsLong = name.length > 30
 
@@ -187,7 +197,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                     {index === 2 && (
                       <li
                         class="box no-border border-radius-s spot-pub"
-                        style="display: flex; align-items: center; justify-content: center; background-color: red;"
+                        style="display: flex; align-items: center; justify-content: center; background-color: var(--color-teal);"
                       >
                         <h2 style="color: white; margin: 0; font-size: clamp(2rem, 4vw, 3.5rem);">
                           Spot PUB
@@ -195,16 +205,19 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                       </li>
                     )}
                     <li
-                      class="card-organization
+                      class={`card-organization
                       box no-border stack gap-down-h7
                       border-radius-s
                       breakout-clickable
-                      badge"
+                      ${isPartner ? 'badge' : ''}`}
                       style={`--badge-url: url(${badge.src});`}
                       data-area={location?.area.code_name}
                       data-types={typesTranslated?.map(t => t.code_name)}
                       data-services={servicesTranslated?.map(t => t.code_name)}
                     >
+                      {isPartner && (
+                        <div class="badge-hover" title={`${name} est partenaire de Wannaplay`} />
+                      )}
                       <div
                         class="center intrinsic"
                         style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
@@ -358,6 +371,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   .badge {
     position: relative;
     overflow: visible !important;
+    border: 4px solid var(--color-teal) !important;
   }
   .badge::after {
     content: '';
@@ -373,6 +387,14 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     pointer-events: none;
     z-index: 10;
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  }
+  .badge-hover {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 46px;
+    aspect-ratio: 1;
+    z-index: 10;
   }
 </style>
 

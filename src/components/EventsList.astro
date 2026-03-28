@@ -17,18 +17,20 @@ in10Days.setDate(in10Days.getDate() + 10)
 
 // Fetch all events (from Directus or cache); async so use await; result stored in allEvents
 const allEvents = await getEvents({
-// Filter out past events; only include events with start date from now
-  after: now, 
-// Only events within the next 10 days
-  before: in10Days, 
+  // Filter out past events; only include events with start date from now
+  after: now,
+  // Only events within the next 10 days
+  before: in10Days,
 })
 
 // Holds filtered events (by type and area); make sure MDX page always provides the props (type: festival, gameTime, gamesMarket, tournament, workshop)
 const filteredEvents = (allEvents ?? [])
-// Keep only dated event instances (next 10 days); exclude canonical master records
-  .filter(event => !event.isCanonical) 
-  .filter(event => event.typesTranslated?.some(t => t?.code_name === eventTypeFilter))
-  .filter(event => event.location?.area?.code_name === areaCode)
+  // Keep only dated event instances (next 10 days); exclude canonical master records
+  .filter(event => !event.isCanonical)
+  .filter(
+    event => !eventTypeFilter || event.typesTranslated?.some(t => t?.code_name === eventTypeFilter)
+  )
+  .filter(event => !areaCode || event.location?.area?.code_name === areaCode)
 ---
 
 <section class="events-list">

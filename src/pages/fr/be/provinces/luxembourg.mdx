@@ -1,0 +1,35 @@
+---
+layout: '@layouts/MarkdownPage.astro'
+title: "Jouer en Province de Luxembourg : Le Guide Complet"
+---
+
+import OrganizationsList from '@components/OrganizationsList.astro'
+import EventsList from '@components/EventsList.astro'
+import Map from '@components/Map.astro'
+
+# Jouer en Province de Luxembourg
+
+<Map itemType="organizations" area="luxembourg" />
+
+Bienvenue dans le poumon vert de la Belgique ! La province de Luxembourg, avec ses forêts profondes et ses vallées sinueuses, est le cadre idéal pour des week-ends de jeu en pleine nature. De son chef-lieu Arlon aux petites villes de l'Ardenne, la province cache une communauté de joueurs passionnés. Ce guide est ta carte au trésor pour la découvrir.
+
+## Arlon, aux frontières du jeu
+
+Chef-lieu de la province, Arlon est une ville au carrefour de trois pays (Belgique, France, Grand-Duché de Luxembourg). Cette position unique enrichit sa scène ludique, avec des joueurs venant de tous horizons.
+
+*   **[Le guide complet pour jouer à Arlon](/fr/be/arlon)**
+
+## Les lieux pour jouer en Province de Luxembourg
+
+### Bars à jeux
+<OrganizationsList type="bar" areaCode="luxembourg" />
+
+### Clubs de jeux
+<OrganizationsList type="club" areaCode="luxembourg" />
+
+### Magasins spécialisés
+<OrganizationsList type="shop" areaCode="luxembourg" />
+
+## Les prochains événements dans la province
+
+<EventsList areaCode="luxembourg" />

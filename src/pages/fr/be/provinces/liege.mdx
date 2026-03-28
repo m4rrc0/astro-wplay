@@ -1,0 +1,56 @@
+---
+layout: '@layouts/MarkdownPage.astro'
+title: "Jouer en Province de Liège : Le Guide Complet"
+---
+
+import OrganizationsList from '@components/OrganizationsList.astro'
+import EventsList from '@components/EventsList.astro'
+import Map from '@components/Map.astro'
+
+# Jouer en Province de Liège
+
+<Map itemType="organizations" area="liege" />
+
+Bienvenue en province de Liège, un territoire de jeu vibrant qui s'étend de la Hesbaye aux Hautes Fagnes. Entre l'effervescence de la Cité Ardente et le calme des villes d'eau, la province offre un paysage ludique riche et varié pour tous les types de joueurs.
+
+## Le cœur du jeu : la ville de Liège
+
+La ville de Liège est sans conteste l'épicentre ludique de la province. Elle concentre une grande densité de bars à jeux, de boutiques spécialisées et d'événements. Pour une exploration détaillée de la Cité Ardente, consultez notre guide dédié :
+
+*   **[Le guide complet pour jouer à Liège (ville)](/fr/be/liege)**
+
+## Au-delà de la ville : jouer à Verviers, Huy, et ailleurs
+
+La passion du jeu ne s'arrête pas aux portes de la ville. D'autres pôles importants animent la province. Que ce soit les clubs dynamiques de **Verviers**, les initiatives ludiques à **Huy** ou les événements dans la région germanophone autour d'**Eupen**, il y a toujours une table de jeu qui vous attend.
+
+## Les lieux pour jouer en Province de Liège
+
+### Bars à jeux
+Découvres les meilleurs endroits pour allier jeu et convivialité autour d'un verre.
+<OrganizationsList type="bar" areaCode="liege" />
+
+### Clubs de jeux
+Rejoins une communauté de passionnés pour des soirées jeux régulières.
+<OrganizationsList type="club" areaCode="liege" />
+
+### Magasins spécialisés
+Trouve la perle rare et bénéficié des conseils d'experts.
+<OrganizationsList type="shop" areaCode="liege" />
+
+### Ludothèques
+Emprunte des jeux pour toute la famille et découvre des nouveautés sans te ruiner.
+<OrganizationsList type="toy_library" areaCode="liege" />
+
+### Escape Rooms
+Releve des défis en équipe dans des scénarios immersifs.
+<OrganizationsList type="escape_room" areaCode="liege" />
+
+## Les prochains événements dans la province
+
+### Festivals et grands rendez-vous
+Ne manque pas les événements majeurs du paysage ludique liégeois.
+<EventsList eventTypeFilter="festival" areaCode="liege" />
+
+### Soirées jeux et animations
+Trouve une soirée jeu près de chez toi cette semaine.
+<EventsList eventTypeFilter="gameTime" areaCode="liege" />

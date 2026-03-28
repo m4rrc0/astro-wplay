@@ -1,6 +1,9 @@
 ---
-const { lang, areas } = Astro.props
+import { areas as areasData } from '../store/transforms/utils.js'
 
+const { lang, areas: propsAreas } = Astro.props
+
+const areas = propsAreas || areasData
 // const areas = [
 //   {
 //     href: '/luxembourg/',

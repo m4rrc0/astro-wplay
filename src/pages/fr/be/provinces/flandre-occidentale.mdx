@@ -1,0 +1,35 @@
+---
+layout: '@layouts/MarkdownPage.astro'
+title: "Jouer en Flandre-Occidentale : Le Guide Complet"
+---
+
+import OrganizationsList from '@components/OrganizationsList.astro'
+import EventsList from '@components/EventsList.astro'
+import Map from '@components/Map.astro'
+
+# Jouer en Flandre-Occidentale (West-Vlaanderen)
+
+<Map itemType="organizations" area="west-flanders" />
+
+Bienvenue en Flandre-Occidentale, la province de la Mer du Nord, des polders et des cités historiques. De la Venise du Nord, Bruges, à la côte animée, la province offre un cadre unique pour le jeu de société. Ce guide est ta boussole pour explorer ce territoire riche en découvertes ludiques.
+
+## Bruges, joyau ludique
+
+Capitale de la province, Bruges (Brugge) est mondialement connue pour ses canaux et son architecture médiévale. C'est aussi une ville où le jeu de société a toute sa place, avec des boutiques de charme et des lieux de rencontre uniques.
+
+*   **[Le guide complet pour jouer à Bruges (Brugge)](/fr/be/bruges)**
+
+## Les lieux pour jouer en Flandre-Occidentale
+
+### Bars à jeux
+<OrganizationsList type="bar" areaCode="west-flanders" />
+
+### Clubs de jeux
+<OrganizationsList type="club" areaCode="west-flanders" />
+
+### Magasins spécialisés
+<OrganizationsList type="shop" areaCode="west-flanders" />
+
+## Les prochains événements dans la province
+
+<EventsList areaCode="west-flanders" />

@@ -11,8 +11,8 @@ import {
   HomePage,
   OrganizationPage,
   OrganizationsPage,
-  ServicesPage,
-  ServicePage,
+  // ServicesPage,
+  // ServicePage,
 } from '@layouts'
 import { createPath, slugify } from '@utils'
 import { areas as areasData } from '../store/transforms/utils.js'
@@ -46,6 +46,16 @@ export async function getStaticPaths() {
   const today = new Date()
   // const oneDayAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1, today.getHours(), today.getMinutes(), today.getSeconds())
   // const inSixMonths = new Date(today.getFullYear(), today.getMonth() + 6, today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds())
+
+  // TODO: Fetch past festivals as well to be able to list big events even in the past
+  // const festivals = await getEvents({
+  //   flatten: false,
+  //   filter: {
+  //     status: { _eq: 'published' },
+  //     event_types: { type: { code_name: { _contains: 'festival' } } },
+  //   },
+  // })
+  // console.log({ festivals })
 
   const events = await getEvents({
     flatten: true,
@@ -214,7 +224,7 @@ const {
   {PAGE_ADMIN && path === PAGE_ADMIN && <AdminHidden {lang} {events} />}
   {path === createPath({ type: 'home' }) && <HomePage {areas} {articles} {lang} {events} />}
   {path === createPath({ type: 'articles' }) && <ArticlesPage {articles} {lang} />}
-  {path === createPath({ type: 'areas' }) && <AreasPage {areas} {lang} />}
+  {/* path === createPath({ type: 'areas' }) && <AreasPage {areas} {lang} /> */}
   {path === createPath({ type: 'events' }) && <EventsPage {events} {lang} {dictionary} />}
   {
     path === createPath({ type: 'organizations' }) && (
@@ -222,9 +232,11 @@ const {
     )
   }
   {
+    /*
     path === createPath({ type: 'services' }) && (
       <ServicesPage {organizations} {lang} {areas} {services} {dictionary} />
     )
+  */
   }
   <!-- ITEMS PAGES -->
   {organization && <OrganizationPage {organization} {lang} />}

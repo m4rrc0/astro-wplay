@@ -108,6 +108,40 @@ export const areasBe = [
   // zipMin: typeof a.zipMin === 'string' ? [a.zipMin] : a.zipMin,
   // zipMax: typeof a.zipMax === 'string' ? [a.zipMax] : a.zipMax,
   countryCode: 'be',
+  urlPath: `be/provinces/${a.code_name}`,
+  // svgElem: typeof window === 'undefined' ? null : a.svgElem,
+}))
+
+export const citiesBe = [
+  {
+    code_name: 'brussels-city',
+    zipMin: '1000',
+    zipMax: '1299',
+    // svgElem: (
+    //   <path d="M412.64,262c-2.25-2.25-24.73-20.24-24.73-20.24l29.23-38.23,27,29.23-6.74,22.49Z" />
+    // ),
+  },
+  {
+    code_name: 'liege-city',
+    zipMin: '4000',
+    zipMax: '4999',
+    // svgElem: (
+    //   <polygon points="709.48 241.74 848.9 309.2 830.91 340.68 875.88 376.66 884.88 417.14 824.16 484.6 794.93 466.61 790.43 419.39 758.95 410.39 752.2 444.12 720.72 439.63 722.97 405.9 653.26 385.66 648.76 399.15 624.02 405.9 556.56 309.2 565.56 282.22 657.75 277.72 709.48 241.74" />
+    // ),
+  },
+  {
+    code_name: 'namur-city',
+    zipMin: '5000',
+    zipMax: '5999',
+    // svgElem: (
+    //   <polygon points="491.35 538.57 435.13 558.81 421.64 459.87 399.15 453.12 408.14 435.13 468.86 419.39 462.11 347.43 556.56 309.2 624.02 405.9 648.76 399.15 648.76 432.88 612.78 459.87 626.27 491.35 581.3 504.84 565.56 545.32 588.04 565.56 556.56 610.53 527.33 617.28 531.83 563.31 516.08 543.07 531.83 484.6 513.84 484.6 491.35 511.59 491.35 538.57" />
+    // ),
+  },
+].map(a => ({
+  ...a,
+  // zipMin: typeof a.zipMin === 'string' ? [a.zipMin] : a.zipMin,
+  // zipMax: typeof a.zipMax === 'string' ? [a.zipMax] : a.zipMax,
+  countryCode: 'be',
   urlPath: `be/${a.code_name}`,
   // svgElem: typeof window === 'undefined' ? null : a.svgElem,
 }))

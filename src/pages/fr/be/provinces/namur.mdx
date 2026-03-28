@@ -1,0 +1,38 @@
+---
+layout: '@layouts/MarkdownPage.astro'
+title: "Jouer en Province de Namur : Le Guide Complet"
+---
+
+import OrganizationsList from '@components/OrganizationsList.astro'
+import EventsList from '@components/EventsList.astro'
+import Map from '@components/Map.astro'
+
+# Jouer en Province de Namur
+
+<Map itemType="organizations" area="namur" />
+
+Bienvenue dans la province de Namur, un territoire où le jeu de société s'épanouit entre la vallée de la Meuse et les portes de l'Ardenne. De la capitale wallonne aux petites communes rurales, la province de Namur offre un tissu ludique dense et convivial. Ce guide est ton allié pour découvrir où jouer.
+
+## Namur, capitale du jeu
+
+La ville de Namur, avec sa célèbre Citadelle, est aussi une forteresse du jeu de société. Elle concentre de nombreux lieux et événements qui animent la vie ludique de la région.
+
+*   **[Le guide complet pour jouer à Namur (ville)](/fr/be/namur)**
+
+## Les lieux pour jouer en Province de Namur
+
+### Bars à jeux
+<OrganizationsList type="bar" areaCode="namur" />
+
+### Clubs de jeux
+<OrganizationsList type="club" areaCode="namur" />
+
+### Magasins spécialisés
+<OrganizationsList type="shop" areaCode="namur" />
+
+### Ludothèques
+<OrganizationsList type="toy_library" areaCode="namur" />
+
+## Les prochains événements dans la province
+
+<EventsList areaCode="namur" />

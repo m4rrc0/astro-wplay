@@ -1,0 +1,42 @@
+---
+layout: '@layouts/MarkdownPage.astro'
+title: "Jouer en Hainaut : Le Guide Complet"
+---
+
+import OrganizationsList from '@components/OrganizationsList.astro'
+import EventsList from '@components/EventsList.astro'
+import Map from '@components/Map.astro'
+
+# Jouer en Province de Hainaut
+
+<Map itemType="organizations" area="hainaut" />
+
+Bienvenue en Hainaut, une province aux multiples visages ludiques ! Des cités industrielles de Charleroi et Mons aux paysages bucoliques du Pays des Collines, le Hainaut regorge de clubs dynamiques, de festivals réputés et de lieux de jeu chaleureux. Ce guide est ton point de départ pour explorer cette riche province.
+
+## Les pôles ludiques : Charleroi et Mons
+
+Le Hainaut s'articule autour de deux grands pôles urbains. Chacun possède une scène ludique bien développée avec ses propres spécificités.
+
+*   **[Le guide complet pour jouer à Charleroi](/fr/be/charleroi)**
+
+## Les lieux pour jouer en Province de Hainaut
+
+### Bars à jeux
+Découvre les meilleurs endroits pour allier jeu et convivialité autour d'un verre.
+<OrganizationsList type="bar" areaCode="hainaut" />
+
+### Clubs de jeux
+Rejoins une communauté de passionnés pour des soirées jeux régulières.
+<OrganizationsList type="club" areaCode="hainaut" />
+
+### Magasins spécialisés
+Trouve la perle rare et bénéficie des conseils d'experts.
+<OrganizationsList type="shop" areaCode="hainaut" />
+
+### Ludothèques
+Emprunte des jeux pour toute la famille et découvre des nouveautés sans te ruiner.
+<OrganizationsList type="toy_library" areaCode="hainaut" />
+
+## Les prochains événements dans la province
+
+<EventsList areaCode="hainaut" />

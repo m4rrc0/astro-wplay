@@ -1,0 +1,43 @@
+---
+layout: '@layouts/MarkdownPage.astro'
+title: "Jouer en Belgique : guide par province"
+lang: { code: 'fr' }
+---
+import { BelgiumMap } from '@partials'
+import { areas } from '@store/transforms/utils.js'
+
+# Le jeu de société, province par province
+
+La Belgique est un territoire de jeu incroyablement dense. Chaque province a ses propres spécificités, ses clubs dynamiques et ses événements incontournables. Explorez notre guide pour découvrir le paysage ludique de chaque région.
+
+<div class="with-sidebar" style="--side-width: 30rem"><div>
+<div>
+
+## Wallonie
+
+*   **[Brabant wallon](/fr/be/provinces/brabant-wallon/)**
+*   **[Hainaut](/fr/be/provinces/hainaut/)**
+*   **[Liège](/fr/be/provinces/liege/)**
+*   **[Luxembourg](/fr/be/provinces/luxembourg/)**
+*   **[Namur](/fr/be/provinces/namur/)**
+
+## Flandre
+
+*   **[Anvers (Antwerpen)](/fr/be/provinces/anvers/)**
+*   **[Brabant flamand (Vlaams-Brabant)](/fr/be/provinces/brabant-flamand/)**
+*   **[Flandre-Occidentale (West-Vlaanderen)](/fr/be/provinces/flandre-occidentale/)**
+*   **[Flandre-Orientale (Oost-Vlaanderen)](/fr/be/provinces/flandre-orientale/)**
+*   **[Limbourg (Limburg)](/fr/be/provinces/limbourg/)**
+
+## Région de Bruxelles-Capitale
+
+Pour la région de Bruxelles, qui n'est pas une province mais a un statut à part, nous avons un guide dédié :
+
+*   **[Jouer à Bruxelles](/fr/be/provinces/bruxelles/)**
+
+</div>
+
+<div>
+	<BelgiumMap lang={frontmatter.lang} areas={areas} />
+</div>
+</div></div>

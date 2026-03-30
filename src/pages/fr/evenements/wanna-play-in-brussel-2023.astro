@@ -9,8 +9,6 @@ import kidsStoryTime from '../../../assets/images/photos-Festival-2022/kids-stor
 import kids from '../../../assets/images/photos-Festival-2022/kids.jpg'
 import londonPierre from '../../../assets/images/photos-Festival-2022/london-pierre.jpg'
 import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
-import pressRelease2023 from '@assets/pdf/Wanna-Play-in-Brussels_communique-de-press-08-07-2023.pdf'
-import rapport2023 from '@assets/pdf/Wanna-Play-Rapport-Activité-08-juillet-2023.pdf'
 import { getOrganizations } from '../../../store/dataService.js'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
 import GalleryFull from '@partials/GalleryFull.astro'
@@ -915,7 +913,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             précédente et les informations pratiques est disponible en consultation.
           </p>
           <a
-            href={pressRelease2023}
+            href="/assets/files/Wanna-Play-in-Brussels_communique-de-press-08-07-2023.pdf"
             target="_blank"
             download="Wanna-Play-in-Brussels_communique-de-press-08-07-2023"
           >
@@ -963,7 +961,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         <ul>
           <li>
             <a
-              href={rapport2023}
+              href="/assets/files/Wanna-Play-Rapport-Activité-08-juillet-2023.pdf"
               target="_blank"
               download="Wanna-Play-Rapport-Activité-08-juillet-2023"
             >

@@ -1,11 +1,10 @@
 ---
 import path from 'node:path'
-import { getImage } from 'astro:assets'
 import { Markdown } from '@components'
 import { Icon } from 'astro-icon/components'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, IO, ImgDirectus } from '@components'
-import { imageDirectusSrc } from '@utils'
+import { imageDirectusSrc, getImage } from '@utils'
 import badge from '@assets/images/badge.png'
 
 const {

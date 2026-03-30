@@ -5,7 +5,7 @@ import { getOrganizations } from '../store/dataService.js'
 import { start as startDirectus } from '../services/directus.js'
 
 // Props passed from the MDX page
-const { organizationTypeFilter, areaCode, lang = { code: 'fr' } } = Astro.props
+const { type, areaCode, lang = { code: 'fr' } } = Astro.props
 
 // // Start Directus (login/refresh) before using data
 await startDirectus()
@@ -15,15 +15,16 @@ const allOrganizations = await getOrganizations()
 
 // Holds filtered organizations (by type and area); make sure MDX page always provides the props. (type: association, bar, escape_room, festival, ...)
 const filteredOrganizations = (allOrganizations ?? [])
-  .filter(org => org.typesTranslated?.some(t => t?.code_name === organizationTypeFilter))
-  .filter(org => org.location?.area?.code_name === areaCode)
+  .filter(org => org.boardgame_related)
+  .filter(org => !type || org.typesTranslated?.some(t => t?.code_name === type))
+  .filter(org => !areaCode || org.location?.area?.code_name === areaCode)
 
-/* Holds filtered organizations (by type and area); Needed for reusability: allow no type filter with `if (!organizationTypeFilter) return true`
+/* Holds filtered organizations (by type and area); Needed for reusability: allow no type filter with `if (!type) return true`
 const filteredOrganizations =
   (allOrganizations ?? []).filter(org => {
-    if (!organizationTypeFilter) return true
+    if (!type) return true
     return org.typesTranslated?.some(
-      t => t?.code_name === organizationTypeFilter
+      t => t?.code_name === type
     )
   }).filter(org => {
     if (!areaCode) return true

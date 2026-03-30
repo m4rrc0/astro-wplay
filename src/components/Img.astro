@@ -23,6 +23,7 @@ const {
 // }).filter(e => e).join('&')
 // // console.log({querryParams, querryString})
 // const src = `${srcRaw}${querryString ? '?' + querryString : ''}`
+const formatInferred = image?.type?.replace('image/', '').replace(/\+xml$/, '')
 ---
 
 {
@@ -44,10 +45,10 @@ const {
 <Image
   {...props}
   {src}
-  {format}
+  format={format || formatInferred === 'svg' ? 'svg' : 'webp'}
   {quality}
-  {width}
-  {height}
+  width={width || 2000}
+  height={height || 2000}
   {fit}
   {/* default is 'center' */}
   position="center"

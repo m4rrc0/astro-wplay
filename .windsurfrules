@@ -1,5 +1,12 @@
 - AstroJS v5
 - Fully static export (no SSR)
-- Prefer portable web components for lightwaight progressive enhancement
+- Prefer vanilla JS or portable web components for lightweight progressive enhancement
 - Data fetched from Directus backend at build time
 - Pagefind for search (static site generation)
+
+## Content
+
+- Currently only in French
+- Always 'tutoyer' (informal 'you')
+- Friendly and fun tone
+- hard-coded internal links always have a trailing slash

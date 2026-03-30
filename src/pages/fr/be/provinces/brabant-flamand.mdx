@@ -1,0 +1,35 @@
+---
+layout: '@layouts/MarkdownPage.astro'
+title: "Jouer en Brabant flamand : Le Guide Complet"
+---
+
+import OrganizationsList from '@components/OrganizationsList.astro'
+import EventsList from '@components/EventsList.astro'
+import Map from '@components/Map.astro'
+
+# Jouer en Brabant flamand (Vlaams-Brabant)
+
+<Map itemType="organizations" area="flemish-brabant" />
+
+Bienvenue dans le Brabant flamand, la province qui entoure Bruxelles. De la ville universitaire de Louvain à la ceinture verte de la capitale, la province offre une scène ludique riche, à la croisée des chemins entre la Flandre, Bruxelles et la Wallonie. Ce guide est ton passeport pour l'explorer.
+
+## Louvain, cité du savoir et du jeu
+
+Capitale de la province, Louvain (Leuven) est l'une des plus anciennes et des plus prestigieuses villes universitaires d'Europe. Cette jeunesse et ce dynamisme se reflètent dans une scène ludique particulièrement active.
+
+*   **[Le guide complet pour jouer à Louvain (Leuven)](/fr/be/louvain)**
+
+## Les lieux pour jouer en Brabant flamand
+
+### Bars à jeux
+<OrganizationsList type="bar" areaCode="flemish-brabant" />
+
+### Clubs de jeux
+<OrganizationsList type="club" areaCode="flemish-brabant" />
+
+### Magasins spécialisés
+<OrganizationsList type="shop" areaCode="flemish-brabant" />
+
+## Les prochains événements dans la province
+
+<EventsList areaCode="flemish-brabant" />

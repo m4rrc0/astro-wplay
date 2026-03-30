@@ -1,6 +1,9 @@
 ---
-const { lang, areas } = Astro.props
+import { areas as areasData } from '../store/transforms/utils.js'
 
+const { lang, areas: propsAreas } = Astro.props
+
+const areas = propsAreas || areasData
 // const areas = [
 //   {
 //     href: '/luxembourg/',
@@ -68,7 +71,7 @@ const areaElems = {
   {
     areas.map(({ code_name, name, slug, path }) => {
       const aElem = areaElems[code_name]
-      return (
+      return !aElem?.shape ? null : (
         <a href={`/${path[lang.code]}/`} class={`area-${code_name} reset`}>
           <Fragment set:html={aElem.shape} />
           <switch>

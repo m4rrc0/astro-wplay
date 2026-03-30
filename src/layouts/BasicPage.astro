@@ -4,7 +4,12 @@ import { CalendarIcon, OrgIcon, BxlIcon } from '@partials/icons'
 import { MtObf } from '@components'
 import { Icon } from 'astro-icon/components'
 
-const { lang, class: className } = Astro.props
+const { lang: propLang, class: className } = Astro.props
+
+let langFromPathname = Astro.url.pathname.split('/')[1]
+langFromPathname = /fr|en|nl/.test(langFromPathname) ? langFromPathname : null
+let lang = propLang || (langFromPathname ? { code: langFromPathname } : null)
+lang = lang.code ? lang : { code: lang || 'fr' }
 
 const email = import.meta.env.CONTACT_EMAIL
 
@@ -44,71 +49,28 @@ const ariaCurrentAttr = currentHref => {
               <span>Wanna Play</span>
             </a>
           </li>
-          {/* <li><a href={`/${lang.code}/be`}>Où jouer?</a></li> */}
-          {
-            /* <li>
-            <a href={`/${lang.code}/`} aria-current={ariaCurrentAttr(`/${lang.code}/`)}
-              >Pour les joueurs</a
-            >
-          </li> */
-          }
-          <li>
-            <a href={`/${lang.code}/pro/`} aria-current={ariaCurrentAttr(`/${lang.code}/pro/`)}
-              >Ressources pro</a
-            >
-          </li>
-          <!-- <li>
-            <a href={`/${lang.code}/e/`} aria-current={ariaCurrentAttr(`/${lang.code}/e/`)}
-              >Agenda</a
-            >
-          </li> -->
-          <!-- <li>
-            <a href={`/${lang.code}/o/`} aria-current={ariaCurrentAttr(`/${lang.code}/o/`)}
-              >Annuaire</a
-            >
-          </li> -->
-          <li>
-            <a href={`/${lang.code}/s/`} aria-current={ariaCurrentAttr(`/${lang.code}/s/`)}
-              >Services</a
-            >
-          </li>
-          <!-- <li>
-						<input
-							type="button"
-							popovertarget="ressources"
-							value="Ressources"
-							id="ressourcesBtn"
-						/>
-						<div
-							popover
-							id="ressources"
-							class="padding-h3 border-radius-m breakout-clickable"
-						>
-							<div class="stack">
-								<a
-									href={`/${lang.code}/a/`}
-									aria-current={ariaCurrentAttr(`/${lang.code}/a/`)}>Articles</a
-								>
-								<a
-									class="color-palette-teal"
-									href="https://talk.wanna-play.be/"
-									target="_blank"
-								>
-									Wanna Talk?
-								</a>
-							</div>
-						</div>
-					</li> -->
           <li>
             <a
-              href={`/${lang.code}/projet/`}
-              aria-current={ariaCurrentAttr(`/${lang.code}/projet/`)}>Projet</a
+              href={`/${lang.code}/guides-pro/`}
+              aria-current={ariaCurrentAttr(`/${lang.code}/guides-pro/`)}>Le jeu au travail</a
             >
           </li>
           <li>
             <a
-              href={`/${lang.code}/equipe/`}
-              aria-current={ariaCurrentAttr(`/${lang.code}/equipe/`)}>Équipe</a
+              href={`/${lang.code}/metiers-du-jeu/`}
+              aria-current={ariaCurrentAttr(`/${lang.code}/metiers-du-jeu/`)}>Devenir pro</a
+            >
+          </li>
+          <li>
+            <a
+              href={`/${lang.code}/services/`}
+              aria-current={ariaCurrentAttr(`/${lang.code}/services/`)}>Nos services</a
+            >
+          </li>
+          <li>
+            <a
+              href={`/${lang.code}/a-propos/`}
+              aria-current={ariaCurrentAttr(`/${lang.code}/a-propos/`)}>À propos</a
             >
           </li>
           <li>
@@ -140,6 +102,17 @@ const ariaCurrentAttr = currentHref => {
         <div class="center width-max">
           <nav class="box no-border cluster overflow gap-h6-down">
             <ul class="reset reset-down-a size-h3">
+              <li>
+                <a href={`/${lang.code}/be/`} aria-current={ariaCurrentAttr(`/${lang.code}/be/`)}>
+                  <Icon
+                    name="simple-line-icons:control-play"
+                    title="magie"
+                    role="img"
+                    style="height:2.5em;"
+                  />
+                  <span>Jouer !</span>
+                </a>
+              </li>
               <li>
                 <a href={`/${lang.code}/e/`} aria-current={ariaCurrentAttr(`/${lang.code}/e/`)}>
                   <CalendarIcon style="height:2.5em;" />

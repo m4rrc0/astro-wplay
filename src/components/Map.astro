@@ -38,6 +38,7 @@ time slider, clusters, locate the user -->
     organizationsFiltersStore,
   } from '@src/stores/organizations-filters'
   import { getInitialState as eventsInit, eventsFiltersStore } from '@src/stores/events-filters'
+  import { citiesBe } from '@src/utils/areas/be.js'
 
   const bounds: [[number, number], [number, number]] = [
     [1.9, 49.4], // West, South
@@ -143,7 +144,24 @@ time slider, clusters, locate the user -->
     geojson = await response.json()
 
     if (filterArea) {
-      geojson.features = geojson.features.filter((f: any) => f.properties.area === filterArea)
+      // Check if the filterArea corresponds to a city in citiesBe
+      const city = citiesBe.find(c => c.code_name === filterArea)
+
+      if (city) {
+        // TODO: not working !!!
+        // It's a city, so filter by ZIP code range
+        geojson.features = geojson.features.filter((f: any) => {
+          const zip = parseInt(f.properties.zip, 10)
+          // Handle cities with multiple ZIP ranges
+          const cityRanges = citiesBe.filter(c => c.code_name === filterArea)
+          return cityRanges.some(
+            range => zip >= parseInt(range.zipMin, 10) && zip <= parseInt(range.zipMax, 10)
+          )
+        })
+      } else {
+        // It's not a province (or not found), so filter by exact area match (e.g., a specific city)
+        geojson.features = geojson.features.filter((f: any) => f.properties.area === filterArea)
+      }
     }
 
     if (filterDate && itemType === 'events') {

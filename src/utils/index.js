@@ -1,3 +1,5 @@
+import { getImage as getImageAstro } from 'astro:assets'
+
 export * from './areas/be.js'
 
 export function slugify(string) {
@@ -27,8 +29,8 @@ export function createPath({ locale = 'fr', type, slug = undefined }) {
   if (type === 'service') return `${locale}/s/${slug}`
   if (type === 'articles') return `${locale}/a`
   if (type === 'article') return `${locale}/a/${slug}`
-  if (type === 'areas') return `${locale}/be`
-  if (type === 'area') return `${locale}/be/${slugify(slug)}`
+  if (type === 'areas') return `${locale}/be/provinces`
+  if (type === 'area') return `${locale}/be/provinces/${slugify(slug)}`
 
   return null
 }
@@ -88,6 +90,18 @@ export function imageDirectusSrc({
   const src = `${srcRaw}${querryString ? '?' + querryString : ''}`
 
   return src
+}
+
+export async function getImage({ ...imgProps }) {
+  const format = imgProps.type?.replace('image/', '').replace(/\+xml$/, '')
+  console.log({ format })
+  const props = {
+    ...imgProps,
+    width: imgProps.width || 2000,
+    height: imgProps.height || 2000,
+    ...(format === 'svg' ? { format: 'svg' } : {}),
+  }
+  return await getImageAstro({ ...props })
 }
 
 export function destructureEmail(str) {

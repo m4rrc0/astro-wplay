@@ -1,0 +1,62 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
+import { Image } from 'astro:assets'
+
+// const { lang } = Astro.props
+const lang = { code: 'fr' }
+---
+
+<SkeletonPage {lang}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Nos événements"
+    description="Découvrez les événements passés et à venir de Wanna Play in Brussels."
+    socialImage={'/assets/images/LOGO-1024px.png'}
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage {lang}>
+    <main class="center max" style="margin-top: 0;">
+      <header>
+        <h1>Nos événements</h1>
+      </header>
+
+      <section>
+        <p>
+          Wanna Play, c’est aussi réunir les joueurs autour de tables et de concepts différents.
+          Retrouve ici tous nos événements…
+        </p>
+      </section>
+
+      <section>
+        <h2>Organisé par l’équipe ‘Wanna Play’</h2>
+        <div>
+          <div>
+            <a href="/fr/evenements/wanna-play-in-brussel-2023"
+              >Wanna Play in Brussel 2023 - 2ème édition</a
+            >
+            <a href="/fr/evenements/wanna-play-in-brussel-2022"
+              >Wanna Play in Brussel 2022 - 1ère édition</a
+            >
+            <a href="/fr/evenements/inauguration">Inauguration et soirée jeux</a>
+          </div>
+          <div></div>
+        </div>
+      </section>
+      <section>
+        <h2>En partenariat</h2>
+        <div>
+          <div>
+            <a href="/fr/evenements/le-jeu-parfait">Le Jeu Parfait</a>
+            <a href="/fr/evenements/nuit-decouverte-ludique">La nuit des découvertes ludiques</a>
+            <a href="/fr/evenements/tables-ouvertes">Tables ouvertes</a>
+          </div>
+          <div></div>
+        </div>
+      </section>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+---

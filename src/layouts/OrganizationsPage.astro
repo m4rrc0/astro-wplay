@@ -5,6 +5,7 @@ import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png
 import { BasicPage, SkeletonPage } from '@layouts'
 import { Icon } from 'astro-icon/components'
 import Map from '@components/Map.astro'
+import badge from '@assets/images/badge.png'
 
 const { lang, organizations, areas, dictionary } = Astro.props
 const organizationTypes = dictionary.filter(d => d.tag_categories.includes('organization_type'))
@@ -175,77 +176,103 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
           <IO ul $skipNoInner class="reset">
             {
-              organizations?.map(organization => {
-                const { name, path, logo, typesTranslated, location, servicesTranslated } =
-                  organization
+              organizations?.map((organization, index) => {
+                const {
+                  name,
+                  path,
+                  logo,
+                  typesTranslated,
+                  location,
+                  servicesTranslated,
+                  admin_categories,
+                } = organization
+                const isPartner =
+                  admin_categories?.includes('partner') ||
+                  admin_categories?.includes('badge_default')
 
                 const nameIsLong = name.length > 30
 
                 return (
-                  <li
-                    class="card-organization
+                  <>
+                    {index === 2 && (
+                      <li
+                        class="box no-border border-radius-s spot-pub"
+                        style="display: flex; align-items: center; justify-content: center; background-color: var(--color-teal);"
+                      >
+                        <h2 style="color: white; margin: 0; font-size: clamp(2rem, 4vw, 3.5rem);">
+                          Spot PUB
+                        </h2>
+                      </li>
+                    )}
+                    <li
+                      class={`card-organization
                       box no-border stack gap-down-h7
                       border-radius-s
-                      breakout-clickable"
-                    style=""
-                    data-area={location?.area.code_name}
-                    data-types={typesTranslated?.map(t => t.code_name)}
-                    data-services={servicesTranslated?.map(t => t.code_name)}
-                  >
-                    <div
-                      class="center intrinsic"
-                      style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
+                      breakout-clickable
+                      ${isPartner ? 'badge' : ''}`}
+                      style={`--badge-url: url(${badge.src});`}
+                      data-area={location?.area.code_name}
+                      data-types={typesTranslated?.map(t => t.code_name)}
+                      data-services={servicesTranslated?.map(t => t.code_name)}
                     >
-                      {logo?.src ? (
-                        <ImgDirectus
-                          image={logo}
-                          src={logo?.src}
-                          alt={name}
-                          loading="lazy"
-                          class=""
-                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
-                          width="120"
-                          height="120"
-                          fit="inside"
-                          quality="99"
-                        />
-                      ) : (
-                        <Img
-                          src={placeholderWPlayCircleBlue}
-                          alt="logo"
-                          loading="lazy"
-                          class=""
-                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
-                          width="120"
-                          height="120"
-                        />
+                      {isPartner && (
+                        <div class="badge-hover" title={`${name} est partenaire de Wannaplay`} />
                       )}
-                    </div>
-                    <h3>
-                      <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
-                        {name}
-                      </a>
-                    </h3>
-                    <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
-                      <ul class="reset">
-                        {typesTranslated?.map(type => {
-                          const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
-                          return (
-                            <li
-                              class={`box no-border padding-x-h8 padding-y-h9
+                      <div
+                        class="center intrinsic"
+                        style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
+                      >
+                        {logo?.src ? (
+                          <ImgDirectus
+                            image={logo}
+                            src={logo?.src}
+                            alt={name}
+                            loading="lazy"
+                            class=""
+                            style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                            width="120"
+                            height="120"
+                            fit="inside"
+                            quality="99"
+                          />
+                        ) : (
+                          <Img
+                            src={placeholderWPlayCircleBlue}
+                            alt="logo"
+                            loading="lazy"
+                            class=""
+                            style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                            width="120"
+                            height="120"
+                          />
+                        )}
+                      </div>
+                      <h3>
+                        <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
+                          {name}
+                        </a>
+                      </h3>
+                      <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
+                        <ul class="reset">
+                          {typesTranslated?.map(type => {
+                            const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
+                            return (
+                              <li
+                                class={`box no-border padding-x-h8 padding-y-h9
                                                             ${currentPalette} color-palette-variation-contrast
                                                             border-radius-s`}
-                            >
-                              {
-                                type.translations.find(t => t.language_code === lang.code)
-                                  .default_label
-                              }
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </IO>
-                  </li>
+                              >
+                                {
+                                  type.translations.find(t => t.language_code === lang.code)
+                                    .default_label
+                                }
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </IO>
+                    </li>
+                  </>
                 )
               })
             }
@@ -295,6 +322,79 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         position-area: bottom span-left;
       }
     }
+  }
+
+  /* 5 colonnes → col 3 à 5 (3 col de large) */
+  .spot-pub {
+    grid-column: 3 / -1;
+  }
+
+  /* 4 colonnes → col 3 à 4 (2 col de large) ✅ */
+  /* @media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+} */
+
+  /* 3 colonnes → on recule le départ à col 2, pub en 2ème position via order */
+  @media (max-width: 890px) {
+    /* Tous les cards passent après (order:2) */
+    .card-organization {
+      order: 2;
+    }
+    /* Sauf le 1er card qui reste en tête (order:0) */
+    .card-organization:nth-child(1) {
+      order: 0;
+    }
+    /* Le spot-pub se glisse entre card[0] et les autres */
+    .spot-pub {
+      order: 1;
+      grid-column: 2 / -1;
+    }
+  }
+
+  /* 2 colonnes → full width, retour en 3ème position (reset des order) */
+  @media (max-width: 671px) {
+    .card-organization,
+    .card-organization:nth-child(1) {
+      order: 0;
+    }
+    .spot-pub {
+      order: 0;
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* 1 colonne */
+  @media (max-width: 360px) {
+    /* .grid { grid-template-columns: 1fr; } */
+  }
+
+  .badge {
+    position: relative;
+    overflow: visible !important;
+    border: 4px solid var(--color-teal) !important;
+  }
+  .badge::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 46px;
+    aspect-ratio: 1;
+    background-image: var(--badge-url);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 10;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  }
+  .badge-hover {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 46px;
+    aspect-ratio: 1;
+    z-index: 10;
   }
 </style>
 

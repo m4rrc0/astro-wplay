@@ -1,0 +1,1133 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
+import { Image } from 'astro:assets'
+import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
+import gagBack from '../../../assets/images/photos-Festival-2022/gag_back.jpg'
+import hoplaFlorent from '../../../assets/images/photos-Festival-2022/hopla-florent.jpg'
+import kidsStoryTime from '../../../assets/images/photos-Festival-2022/kids-story-time.jpg'
+import kids from '../../../assets/images/photos-Festival-2022/kids.jpg'
+import londonPierre from '../../../assets/images/photos-Festival-2022/london-pierre.jpg'
+import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
+import pressRelease2023 from '@assets/pdf/Wanna-Play-in-Brussels_communique-de-press-08-07-2023.pdf'
+import rapport2023 from '@assets/pdf/Wanna-Play-Rapport-Activité-08-juillet-2023.pdf'
+import { getOrganizations } from '../../../store/dataService.js'
+import getOptimizedImages from '../../../utils/getOptimizedImages.js'
+import GalleryFull from '@partials/GalleryFull.astro'
+
+const mainPartnersData = [
+  {
+    fileName: 'logo-grand-hospice',
+    alt: 'Logo Grand Hospice',
+    link: 'https://www.grand-hospice.brussels/',
+  },
+  {
+    fileName: 'logo-jardin-noir',
+    alt: 'Logo Jardin Noir',
+    link: 'https://www.grand-hospice.brussels/jardin/',
+  },
+  {
+    fileName: 'logo-francophones-bruxelles',
+    alt: 'Logo Francophones Bruxelles',
+    link: 'https://ccf.brussels/',
+  },
+]
+
+// Conference partners
+const conferenceData = [
+  {
+    fileName: 'thierry-et-amaya',
+    name: 'Thierry Saeys',
+    role: 'SAJOU',
+    alt: 'Portrait de Thierry Saeys',
+    link: 'https://www.sajou.be/',
+  },
+  {
+    fileName: 'theo-riviere',
+    name: 'Théo Rivière',
+    role: 'Auteur',
+    alt: 'Portrait de Théo Rivière',
+    link: 'https://www.instagram.com/theo_sacha/',
+  },
+  {
+    fileName: 'gioia-et-anthony',
+    name: 'Gioia & Anthony',
+    role: 'Njoy Games',
+    alt: 'Portrait de Gioia & Anthony',
+    link: 'https://www.facebook.com/Njoygamestaverne/',
+  },
+  {
+    fileName: 'michel-van-langendonckt',
+    name: 'Michel Van Langendonckt',
+    role: 'Ludo asbl',
+    alt: 'Portrait de Michel Van Langendonckt',
+    link: 'https://ludobel.be/',
+  },
+  {
+    fileName: 'geraldine-volders',
+    name: 'Géraldine Volders',
+    role: 'Repos Production',
+    alt: 'Portrait de Géraldine Volders',
+    link: '',
+  },
+  {
+    fileName: 'tatiana-dronjak',
+    name: 'Tatiana Dronjak',
+    role: 'Girl dot Game',
+    alt: 'Portrait de Tatiana Dronjak',
+    link: 'https://www.youtube.com/channel/UCUU0uDuttbZAs-n334cYrhQ',
+  },
+]
+
+// VIP partners
+const vipData = [
+  { fileName: 'logo-ludeo', alt: 'Logo Ludeo', link: '' },
+  { fileName: 'logo-art-of-games', alt: 'Logo Art of Games', link: '' },
+  { fileName: 'logo-happy-meeple', alt: 'Logo Happy Meeple', link: '' },
+  { fileName: 'logo-critical-', alt: 'Logo Critical', link: '' },
+  {
+    fileName: 'logo-hachette-boardgames-benelux',
+    alt: 'Logo Hachette Boardgames Benelux',
+    link: '',
+  },
+  { fileName: 'logo-explor8', alt: 'Logo Explor8', link: '' },
+  { fileName: 'logo-asmo', alt: 'Logo Asmodee', link: '' },
+  { fileName: 'logo-byr', alt: 'Logo BYR', link: '' },
+  { fileName: 'logo-ludotrotter-ixelles', alt: 'Logo Ludotrotter Ixelles', link: '' },
+]
+
+// General partners
+const generalData = [
+  { fileName: 'logo-sajou', alt: 'Logo Sajou', link: '' },
+  { fileName: 'logo-kaedama', alt: 'Logo Kaedama', link: '' },
+  { fileName: 'logo-njoy-games', alt: 'Logo Njoy Games', link: '' },
+  { fileName: 'logo-ludobel-asbl', alt: 'Logo Ludobel asbl', link: '' },
+  { fileName: 'logo-repos-production', alt: 'Logo Repos Production', link: '' },
+  { fileName: 'logo-girl-dot-game', alt: 'Logo Girl dot Game', link: '' },
+  { fileName: 'logo-schmeta', alt: 'Logo Schmeta', link: '' },
+  { fileName: 'logo-iello', alt: 'Logo Iello', link: '' },
+  { fileName: 'logo-mind-cycling', alt: 'Logo Mind Cycling', link: '' },
+  { fileName: 'logo-sit-down', alt: 'Logo Sit Down', link: '' },
+  { fileName: 'logo-univers-de-thot', alt: 'Logo Univers de Thot', link: '' },
+  { fileName: 'logo-wana-game', alt: 'Logo Wana Game', link: '' },
+  { fileName: 'logo-foxtroll-games', alt: 'Logo Foxtroll Games', link: '' },
+  { fileName: 'logo-ploef', alt: 'Logo Ploef', link: '' },
+  { fileName: 'logo-auberjeux', alt: 'Logo Auberjeux', link: '' },
+  { fileName: 'logo-ludiris-asbl', alt: 'Logo Ludiris asbl', link: '' },
+  { fileName: 'logo-sdc', alt: 'Logo SDC', link: '' },
+  { fileName: 'logo-le-game-au-vert', alt: 'Logo Le Game au Vert', link: '' },
+  { fileName: 'logo-ludenne', alt: 'Logo Ludenne', link: '' },
+  { fileName: 'logo-ludo-ludo', alt: 'Logo Ludo Ludo', link: '' },
+  { fileName: 'quentin-lammerant', alt: 'Quentin Lammerant', link: '' },
+  { fileName: 'logo-des-mentiel', alt: 'Logo Des Mentiel', link: '' },
+  { fileName: 'logo-au-fil-des-mot', alt: 'Logo Au Fil des Mots', link: '' },
+  { fileName: 'logo-yapaka', alt: 'Logo Yapaka', link: '' },
+  { fileName: 'logo-alpa-ludismes', alt: 'Logo Alpa Ludismes', link: '' },
+  { fileName: 'logo-des-jeux-une-fois', alt: 'Logo Des Jeux Une Fois', link: '' },
+]
+
+const allSlugs = [...mainPartnersData, ...conferenceData, ...vipData, ...generalData].map(p =>
+  p.fileName.replace(/^logo-/, '')
+)
+
+const organizations = await getOrganizations({
+  filter: {
+    _and: [{ status: { _in: ['published', 'to_check'] } }, { slug: { _in: allSlugs } }],
+  },
+})
+
+const partners = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/partners/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+
+const imagesMainPartners = await getOptimizedImages(mainPartnersData, partners, organizations)
+const imagesConferencePartners = await getOptimizedImages(conferenceData, partners, organizations)
+const imagesVipPartners = await getOptimizedImages(vipData, partners, organizations)
+const imagesGeneralPartners = await getOptimizedImages(generalData, partners, organizations)
+
+// const { lang } = Astro.props
+const lang = { code: 'fr' }
+
+const imagesOriane = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/oriane-delavallee/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+const imagesPaulo = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/paulo-ribeiro/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+const imagesSylwia = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/sylwia-malachowska/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/tess/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+---
+
+<SkeletonPage {lang}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Wanna Play in Brussel 2023"
+    description="Un festival gratuit d’une journée consacré aux jeux de société"
+    socialImage={'/assets/images/LOGO-1024px.png'}
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage {lang}>
+    <main class="center max" style="margin-top: 0;">
+      <header style="height: 25vh; position: relative;">
+        <Image src={bannerPaper} alt="" style="height: 100%" />
+        <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+          Wanna Play in Brussel 2023
+        </h1>
+      </header>
+
+      <section class="stack gap-down-h1">
+        <div class="stack gap-down-h4">
+          <p>
+            <strong>WANNA PLAY IN BRUSSELS 2023 - 2E ÉDITION</strong>
+          </p>
+          <p>
+            Le festival «Wanna Play in Brussels» a connu sa deuxième édition cette année. Après le
+            succès fulgurant de la première édition. Cet événement ludique a été une véritable
+            surprise dans le monde du jeu de société en Belgique, et nous avons décidé de redoubler
+            d’efforts pour offrir une expérience encore plus incroyable cette année-ci.
+          </p>
+          <p>
+            Le festival s’est déroulé le samedi 08.07.2023 au Jardin du Grand Hospice Pacheco dans
+            le centre de Bruxelles, cette année avec le soutien de la COCOF et autres partenaires.
+            L’événement était gratuit pour les visiteurs et visait un public adulte varié, ainsi que
+            les familles avec enfants.
+          </p>
+        </div>
+        <div class="stack gap-down-h4">
+          <p>
+            <strong>LE FESTIVAL AVAIT PLUSIEURS OBJECTIFS PRINCIPAUX</strong>
+          </p>
+          <ol>
+            <li>
+              <div>
+                <p><strong>Faire découvrir les jeux de société modernes</strong></p>
+                <p>
+                  Nous avons souhaité offrir aux participants l’opportunité de découvrir et
+                  d’explorer les jeux de société contemporains, en mettant en avant des créateurs,
+                  auteurs, éditeurs et distributeurs de jeux.
+                </p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <p><strong>Présence des acteurs ludiques belges</strong></p>
+                <p>
+                  Une grande diversité d’acteurs ludiques belges étaient présents, tels que des
+                  associations, des clubs, des éditeurs, des distributeurs, des créateurs de
+                  contenu, une école et des ludothèques. Le festival permet de favoriser les
+                  échanges et les rencontres.
+                </p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <p><strong>Ateliers, conférences et animations</strong></p>
+                <p>
+                  Le programme était varié comprenant des activités pour les familles et le grand
+                  public tout au long de la journée. Nous avions également des activités plus
+                  ciblées pour les curieux ou les joueurs plus avertis, tels que des conférences
+                  inspirantes, des ateliers de découverte sur différents sujets, des sessions de
+                  speed-gaming pour favoriser les rencontres, ainsi qu’un tournois et des
+                  initiations.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div class="partners-grid cluster center">
+          {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
+          {
+            imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
+              const imgTag = <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+              return finalLink ? (
+                <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                  {imgTag}
+                </a>
+              ) : (
+                imgTag
+              )
+            })
+          }
+        </div>
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            class="center"></iframe>
+        </div>
+        <div class="carousel cluster" role="region" aria-roledescription="carousel">
+          <ul class="carousel-inner reset gap-h3">
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Toute l’organisation me semblait au top, et l’endroit choisi pour la bourse aux
+                    jeux était une bonne idée. Des bénévoles et un transpalette ont beaucoup aidé à
+                    ce que tout se passe sans problème."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">
+                  — Benjamin, <cite>Vendeur bourse aux jeux</cite>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Chouette festival qui permet de découvrir ou redécouvrir le monde ludique, de
+                    belles personnes et plein de nouveaux jeux. À refaire !"
+                  </p>
+                </blockquote>
+                <figcaption class="bold">
+                  — Céleste, <cite>Visiteur</cite>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    “Un évènement immanquable, beaucoup de choix de jeux et d’activités pour tous
+                    les âges, dans un lieu très agréable.”
+                  </p>
+                </blockquote>
+                <figcaption class="bold">
+                  — Ooki, <cite>Visiteur</cite>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>"Un chouette petit festival très convivial dans un endroit magique."</p>
+                </blockquote>
+                <figcaption class="bold">
+                  — Le meeple à lunettes, <cite>Visiteur</cite>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    “Super événement ! L’occasion de découvrir et tester plein de nouveaux jeux dans
+                    une ambiance relax et conviviale.”
+                  </p>
+                </blockquote>
+                <figcaption class="bold">
+                  — U1, <cite>Visiteur</cite>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    “Conférences pertinentes, atelier peinture et jeu de rôle qui donnent envie, et
+                    des jeux bien sûr.”
+                  </p>
+                </blockquote>
+                <figcaption class="bold">
+                  — Lilouch, <cite>Visiteur</cite>
+                </figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
+        <div class="grid grid-cols-2">
+          <ul class="reset">
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">2000</p>
+              <p>participants</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">200</p>
+              <p>jeux différents</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">+100</p>
+              <p>tables de jeux</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">+74</p>
+              <p>animateurs</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">41</p>
+              <p>partenaires</p>
+            </li>
+            <li
+              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            >
+              <p class="h1">33</p>
+              <p>bénévoles</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Activités</h2>
+        <ul>
+          <li>
+            <div>
+              <p>TABLES DE JEUX</p>
+              <p>
+                Des espaces étaient dédiés aux jeux de société où les visiteurs pouvaient jouer et
+                découvrir de nouveaux titres, chaque table était tenue par un partenaire ou un
+                bénévole, afin d’y animer les parties tout en expliquant les règles des jeux.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>INITIATION AU JEU DE RÔLE (RPG)</p>
+              <p>
+                Une occasion pour les visiteurs (adultes et enfants) de s’immerger dans l’univers du
+                jeu de rôle.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>INITIATION À LA PEINTURE DE FIGURINES ET AUX JEUX ASSOCIÉS</p>
+              <p>
+                Des ateliers étaient proposés aux visiteurs (adultes et enfants) pour apprendre les
+                techniques de peinture de figurines utilisées dans certains jeux.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>ZONE ENFANTS</p>
+              <p>
+                Un espace dédié aux plus jeunes avec des tables de jeux, du maquillage de tribu et
+                des lectures de contes.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>ET PLEIN D'AUTRES</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- <section>
+        <h2>Vidéos</h2>
+        <div>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+      </section> -->
+
+      <section>
+        <h2>Conférences</h2>
+        <div>
+          <h3>DU LOISIR À LA PROFESSION : LES MÉTIERS LUDIQUES D’AUJOURD’HUI ET DE DEMAIN</h3>
+          <div>
+            <p>
+              Pour cette conférence nous avons rassemblé plusieurs intervenants de renom, tels que :
+            </p>
+            <ul>
+              <li><strong>Thierry Saeys</strong> (SAJOU)</li>
+              <li><strong>Théo Rivière</strong> (Auteur)</li>
+              <li><strong>Gioia et Anthony</strong> (Njoy Games)</li>
+              <li><strong>Michel Van Langendonckt</strong> (Ludo asbl)</li>
+              <li><strong>Géraldine Volders</strong> (Repos Production)</li>
+              <li><strong>Tatiana Dronjak</strong> (Girl dot Game)</li>
+            </ul>
+            <!-- Section Conférences -->
+            <div class="partners-grid conference-partners">
+              {
+                imagesConferencePartners.map(
+                  ({ optimizedMeta, displayName, role, finalLink, alt }) => {
+                    const imgTag = (
+                      <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                    )
+                    return (
+                      <figure class="stack gap-down-p" style="text-align: center; margin: 0;">
+                        {finalLink ? (
+                          <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                            {imgTag}
+                          </a>
+                        ) : (
+                          imgTag
+                        )}
+                        <figcaption class="stack gap-down-p">
+                          <strong>{displayName}</strong> {role}
+                        </figcaption>
+                      </figure>
+                    )
+                  }
+                )
+              }
+            </div>
+          </div>
+          <p>
+            Les participants ont pu découvrir les parcours de ces experts du jeu de société et ont
+            reçu des conseils sur les opportunités de carrière dans ce domaine en constante
+            évolution.
+          </p>
+        </div>
+        <div class="video-container">
+          <Image src={moonArea} alt="" class="center" />
+        </div>
+        <div>
+          <h3>LA PLACE DES FEMMES DANS LE MONDE DU JEU</h3>
+          <p>
+            Cette conférence gratuite et sans inscription, a été animée par Tatiana Dronjak, une
+            youtubeuse spécialisée dans les jeux de société (Girl dot Game). Les discussions ont
+            porté sur le rôle et la représentation des femmes dans l’univers du jeu, mettant en
+            lumière leur contribution et les défis auxquels elles sont confrontées.
+          </p>
+          <p>
+            Les participants ont pu découvrir les parcours de ces experts du jeu de société et ont
+            reçu des conseils sur les opportunités de carrière dans ce domaine en constante
+            évolution.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Partenaires</h2>
+        <p>
+          Nous avons bénéficié du soutien de nombreux partenaires professionnels belges et français,
+          ainsi que d’associations bruxelloises. Parmi nos partenaires figuraient des éditeurs, des
+          boutiques, des médias spécialisés dans les jeux de société, des ludothèques, une école,
+          des influenceurs, des auteurs,…
+        </p>
+        <p>Leur contribution a été essentielle pour la réussite de l’événement</p>
+        <p>
+          Certains n’ont pas pu venir le jour J mais nous ont envoyés des jeux qui ont été animés
+          par les bénévoles.
+        </p>
+        <div class="stack gap-down-h4">
+          <div class="partners-grid">
+            {/* On boucle sur le tableau des images */}
+            {
+              imagesVipPartners.map(({ optimizedMeta, alt, finalLink }) => {
+                const imgTag = (
+                  <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                )
+                return finalLink ? (
+                  <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                    {imgTag}
+                  </a>
+                ) : (
+                  imgTag
+                )
+              })
+            }
+          </div>
+          <div class="partners-grid">
+            {/* On boucle sur le tableau des images */}
+            {
+              imagesGeneralPartners.map(({ optimizedMeta, alt, finalLink }) => {
+                const imgTag = (
+                  <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                )
+                return finalLink ? (
+                  <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                    {imgTag}
+                  </a>
+                ) : (
+                  imgTag
+                )
+              })
+            }
+          </div>
+        </div>
+        <div class="carousel cluster" role="region" aria-roledescription="carousel">
+          <ul class="carousel-inner reset gap-h3">
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Super organisation ! Un grand merci à toute l’équipe de Wanna Play pour ce
+                    festival super sympa et bien organisé."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">
+                  — Ludo, <cite>Cook & run</cite>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Wanna Play nous offre un très bel évènement, dans un cadre incroyable et avec
+                    plein de chouettes choses à découvrir."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Théo Rivière</figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Avec cette deuxième édition, le festival Wanna Play in Brussel a trouvé sa
+                    place parmi les évènements importants du monde ludique."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">
+                  — Paul, <cite>ploef !</cite>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Une très belle première expérience pour nous. Que de belles rencontres et
+                    découvertes de jeux."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">
+                  — Guillaume, <cite>le game au vent</cite>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "L’expérience était enrichissante. Nous avons rencontré une équipe agréable et
+                    sympathique."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Thomas, <cite>critical hut</cite></figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Bénévoles</h2>
+        <p>
+          Nos bénévoles ont été la véritable force motrice du festival cette année. Une trentaine de
+          bénévoles dévoués, certains habitués, d’autres nouveaux, se sont rapidement intégrés dans
+          notre «Tribu».
+        </p>
+        <p>
+          Leur dévouement a créé une ambiance conviviale et bienveillante tout au long de
+          l’événement. Certains étaient présents dès le matin, d’autres nous ont rejoints plus tard,
+          et certains ont même aidé avant et après le jour du festival. Leur contribution précieuse
+          a été essentielle pour le bon déroulement des activités et l’accueil chaleureux des
+          visiteurs.
+        </p>
+        <p>
+          Nous exprimons notre profonde gratitude envers tous nos bénévoles pour leur dévouement.
+          Leur passion et leur travail acharné ont été l’une des clés du succès de cette deuxième
+          édition.
+        </p>
+        <p>
+          Nous sommes fiers de notre équipe et des relations que nous construisons et gardons avec
+          eux.
+        </p>
+        <div class="carousel cluster" role="region" aria-roledescription="carousel">
+          <ul class="carousel-inner reset gap-h3">
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "J’ai été agréablement surprise par le lieu du festival, ces jardins sont
+                    vraiment très beaux et agréables. Combinés à de belles rencontres et à une
+                    grande diversité de jeux, c’est un évènement qui mérite d’être connu davantage.
+                    Venez en nombre, vous ne serez pas déçus!"
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Oriane, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Très chouette festival de jeux de société permettant de découvrir de bonnes
+                    nouveautés tout en profitant du beau temps de l’été. Et proposant aussi une
+                    bonne bourse aux jeux pour pouvoir agrandir sa ludothèque en profitant de bonnes
+                    occasions!"
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Aurélien, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "J'ai eu le plaisir de faire partie de l'équipe des bénévoles sur le festival de
+                    Juillet 2023 et j'en garde un très bon souvenir. C'était très motivant de
+                    contribuer à cet événement. Tout le monde était sympathique et l'ambiance était
+                    vraiment conviviale."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Karine, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Super équipe! Quand je suis arrivé, je me suis retrouvé dans une famille qui
+                    m'a tout de suite mis en confiance pour mon premier festival. Un accueil génial
+                    et une ambiance joviale tout en gardant l'objectif de réussir en tête."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Mattéo, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Merci pour la journée, votre implication et votre bonne humeur à tout moment.
+                    C'était hyper bien organisé. [...] J'ai reçu de nombreux compliments pour
+                    l'attention du moindre détail sur le festival. Bravo, félicitations pour le
+                    travail accompli."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Leila, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Très chouette expérience malgré mon peu de connaissance dans le domaine. Équipe
+                    super sympa, très dynamique et efficace. À refaire, Bravo à toute l'équipe,
+                    belle réussite!"
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Joëlle, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>"Très chouette équipe bien réactive et disponible pour nous."</p>
+                </blockquote>
+                <figcaption class="bold">— Aurélien, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>
+                    "Très chouette expérience dans le monde du jeu de société que je ne connais pas.
+                    Un public très concerné et intéressé par cet événement. Vous êtes une très
+                    chouette équipe, et j'ai bien aimé d'en faire partie pour une journée."
+                  </p>
+                </blockquote>
+                <figcaption class="bold">— Anne, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+
+            <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
+              <figure class="stack gap-down-h7">
+                <blockquote>
+                  <p>"Bravo pour l'organisation de cet événement. Vous avez géré!!!"</p>
+                </blockquote>
+                <figcaption class="bold">— Oriane, <cite>Bénévole</cite></figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Visibilité</h2>
+
+        <div>
+          <h3>PROMOTION À TRAVERS DIVERS MÉDIAS</h3>
+
+          <div>
+            <h4>Presse</h4>
+            <p>
+              Articles qui ont présenté les objectifs de l’ASBL et du festival, sur les sites web de
+              :
+            </p>
+            <ul>
+              <li>
+                <a href="https://ludeo.be/wanna-play-connecte-les-joueurs/" target="_blank"
+                  >Ludeo - Wanna Play connecte les joueurs</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://desjeuxunefois.be/index.php/2023/07/05/festival-wanna-play-encore-une-fois/"
+                  target="_blank">Des Jeux Une Fois - Festival Wanna Play encore une fois !</a
+                >
+              </li>
+            </ul>
+
+            <p>Plusieurs mentions du festival et de la bourse aux jeux :</p>
+            <ul>
+              <li>
+                <a href="https://bruxelles.article27.be/Activites-gratuites" target="_blank"
+                  >Article 27 - Activités gratuites</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://happeningnext.com/event/bourse-aux-jeux-wanna-play-in-brussels-eid3a0a8vcq5m"
+                  target="_blank">Happening Next - Bourse aux jeux</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://bruxelles-city-news.be/jeux-wanna-play-festival-un-estival-ludique-dans-le-grand-hospice-de-bruxelles/"
+                  target="_blank">Bruxelles City News</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://allevents.in/ixelles/wanna-play-in-brussels/200024299947255?ref=past-event-page"
+                  target="_blank">All Events - WPiB 2023</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.uitinvlaanderen.be/agenda/e/wanna-play-in-brussels-2023-gratis-bordspelfestival/8f07f424-d549-4dee-b4bc-802d520d1d9b"
+                  target="_blank">UiT in Vlaanderen</a
+                >
+              </li>
+              <li>
+                <a href="https://ludeo.be/evenement/wanna-play-in-brussels/" target="_blank"
+                  >Ludeo - Événement</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.out.be/fr/evenements/126570_wpib-wanna-play-in-brussels-2023-festival-de-jeu-de-societe.html"
+                  target="_blank">Out.be</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.visit.brussels/fr/visiteurs/agenda/event-detail.Wanna-Play-in-Brussels-2023-Festival-de-jeu-de-societe-gratuit.557559"
+                  target="_blank">Visit.brussels</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://subverti.com/fr/maps/festivals/wanna-play-in-brussels/"
+                  target="_blank">Subverti - Map</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://iello.fr/evenements/festival-wanna-play-in-brussels/"
+                  target="_blank">Iello - Événements</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://drive.google.com/file/d/15NhUBpEMAhJUXc9k_lEptAgFSIhAQJVL/view?usp=sharing"
+                  target="_blank">Femmes d’aujourd’hui n°26 (PDF)</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Interviews</h4>
+            <ul>
+              <li>
+                <strong>Hunivers Boardgames :</strong> Interview filmée et publiée sur Instagram quelques
+                semaines avant le festival.
+                <a href="https://www.instagram.com/p/CtW__EOgMkt/" target="_blank">Lien Instagram</a
+                >
+              </li>
+              <li>
+                <strong>RTBF :</strong> Passage radio le jour même du festival.
+                <a
+                  href="https://www.rtbf.be/article/wanna-play-festival-un-festival-bruxellois-dedie-aux-jeux-de-societe-11225443"
+                  target="_blank">Lien RTBF</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <h3>Espace Presse</h3>
+          <p>
+            Le communiqué de presse officiel détaillant les objectifs, les chiffres de l'édition
+            précédente et les informations pratiques est disponible en consultation.
+          </p>
+          <a
+            href={pressRelease2023}
+            target="_blank"
+            download="Wanna-Play-in-Brussels_communique-de-press-08-07-2023"
+          >
+            Télécharger le Communiqué de Presse (PDF)
+          </a>
+        </div>
+
+        <div>
+          <h3>Supports de communication</h3>
+
+          <div>
+            <h4>Graphisme</h4>
+            <p>
+              Affiches et flyers réalisés pour promouvoir l’événement avant et pendant le festival.
+            </p>
+          </div>
+
+          <div>
+            <h4>Signalétique améliorée</h4>
+            <p>
+              Des flèches réutilisables reprenant les couleurs de la charte graphique ont été créées
+              par un membre pour guider les visiteurs sur place.
+            </p>
+          </div>
+
+          <div>
+            <h4>Autres supports</h4>
+            <ul>
+              <li>
+                Des affiches A3 plastifiées afin de délimiter les différentes zones sur place.
+              </li>
+              <li>Des fiches avec les logos des partenaires pour indiquer leurs emplacements.</li>
+              <li>
+                Des petits «kits» de bienvenue avec sticker, flyer, plan, programme et étiquettes
+                nominatives pour chaque partenaire et bénévole, permettant de les identifier et leur
+                donnant notamment accès à l’eau gratuite au bar.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Documents à télécharger</h2>
+        <ul>
+          <li>
+            <a
+              href={rapport2023}
+              target="_blank"
+              download="Wanna-Play-Rapport-Activité-08-juillet-2023"
+            >
+              <strong>Rapport d'Activité 2023</strong> (PDF)
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Budget & Surprises</h2>
+        <h3>Budget</h3>
+        <p>
+          Pour la première fois, l’ASBL Wanna Play a bénéficié d’une subvention de la cocof pour
+          organiser le festival.
+        </p>
+        <p>
+          Nous avons évidemment rencontré quelques surprises en cours de route. Par exemple, nous
+          avons constaté des écarts importants entre le nombre de tickets boissons reçus et le
+          nombre réel d’utilisations notées. Heureusement, nous avons pu en discuter avec l’équipe
+          du Jardin et trouver des solutions pour résoudre ce problème.
+        </p>
+        <p>
+          Nous avons sous-estimé les frais de location d’un camion avec chauffeur pour récupérer des
+          tables et des chaises gratuitement au centre de prêt de Naninne. Bien que cette option
+          semblait économique à première vue, elle s’est avérée être un coût important pour le
+          budget. Pour les prochaines éditions, nous devrons mieux prévoir ces coût ou trouver une
+          alternative pour éviter ce type de dépenses imprévues.
+        </p>
+        <p>
+          Pendant les préparatifs du festival, certaines dépenses ont été planifiées sur base de
+          devis oraux et nous avons eu quelques surprises en recevant des factures où étaient
+          ajoutées la TVA ou certains frais cachés. Cela nous a rappelé l’importance de clarifier
+          tous les détails financiers avec nos intervenants dès le départ, afin d’éviter de telles
+          surprises à l’avenir.
+        </p>
+        <p>
+          Malheureusement, le budget ne nous a pas permi de défrayer les bénévoles ou l’équipe et
+          c’est un point d’attention important si nous voulons péréniser le festival.
+        </p>
+        <p>
+          Malgré ces défis, notre gestion financière a été globalement maîtrisée, et nous avons
+          réussi à offrir un festival de qualité, gratuit pour le public, tout en respectant notre
+          budget. Nous sommes conscients des points d’amélioration pour les éditions futures et nous
+          nous efforcerons de continuer à optimiser notre budget tout en maintenant la qualité du
+          festival.
+        </p>
+        <h3>Surprises</h3>
+        <p>
+          Malgré nos efforts de planification (budget compris), nous avons été confrontés à quelques
+          mauvaises surprises…
+        </p>
+        <h4>Problème de communication</h4>
+        <p>
+          La communication avec le pôle événementiel du Jardin était parfois compliqué. Nous avons
+          plusieurs fois dû nous adapter et modifier nos plans, parfois en dernière minute. Une
+          discussion ultérieure avec les gérants du Jardin a eu lieu pour clarifier ces malentendus.
+        </p>
+        <h4>Désistement d’un vidéaste</h4>
+        <p>
+          Le vidéaste qui s’était engagé à couvrir l’événement pour toute la journée s’est désisté
+          la veille, laissant une charge de travail supplémentaire à notre équipe.
+        </p>
+        <h4>Orage</h4>
+        <p>
+          Un orage de ±15 minutes s’est produit dans l’après-midi. Bien qu’il n’ait pas découragé
+          les visiteurs et les partenaires, quelques boîtes de jeux de la boutique SAJOU ont été
+          endommagées. De plus, le roll-up de la bibliothèque d’Anderlecht n’a pas survécu à cet
+          épisode climatique. Nous avons pris note de l’importance de couvrir de manière adéquate
+          tous les partenaires pour éviter de tels problèmes à l’avenir.
+        </p>
+        <p>
+          Malgré ces imprévus, nous avons réussi à surmonter les difficultés grâce à l’implication
+          et à l’engagement de notre équipe. Ces situations nous ont également permis de tirer des
+          leçons pour améliorer l’organisation des futurs événements.
+        </p>
+      </section>
+      <section>
+        <h2>Photos</h2>
+        <h3>Oriane Delavallee</h3>
+        <GalleryFull images={imagesOriane} />
+        <h3>Paulo Ribeiro</h3>
+        <GalleryFull images={imagesPaulo} />
+        <h3>Sylwia Malachowska</h3>
+        <GalleryFull images={imagesSylwia} />
+        <h3>Tess</h3>
+        <GalleryFull images={imagesTess} />
+      </section>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+  .video-container {
+    width: 100%;
+  }
+
+  .video-container iframe,
+  .video-container img {
+    width: 66.66%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-l);
+  }
+  .carousel-inner {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+
+  .carousel-item {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 25rem;
+  }
+
+  .carousel-item figure {
+    display: flex;
+    flex-direction: column; /* Aligne le texte et l'auteur verticalement */
+    width: 100%;
+    height: 100%;
+  }
+
+  .carousel-item figcaption {
+    text-align: right;
+  }
+
+  .carousel-item blockquote {
+    margin: 0;
+    padding: 0;
+    border: none;
+    flex-grow: 1;
+  }
+
+  .partners-grid {
+    display: grid;
+    /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 3rem 2rem;
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 2rem;
+  }
+  .partners-grid img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 100px;
+  }
+
+  .gallery-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    aspect-ratio: 4/3;
+    border-radius: var(--border-radius-s);
+  }
+
+  /* Pour s'assurer que les logos sur une grille complète ne dépassent pas */
+  @media (min-width: 1024px) {
+    .partners-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+</style>

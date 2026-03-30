@@ -1,0 +1,342 @@
+---
+import { getImage } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+  images: Record<string, () => Promise<{ default: ImageMetadata }>>
+}
+
+const { images } = Astro.props
+
+// Génération d'un ID unique pour cette instance de galerie
+const galleryId = `gallery-${Math.random().toString(36).substring(2, 9)}`
+
+const processedImages = images
+  ? await Promise.all(
+      Object.entries(images).map(async ([, loader], i) => {
+        const mod = await loader()
+        const src = mod.default
+        const idx = i + 1
+
+        const scrollMarkerThumb = await getImage({ src, width: 30 })
+        const gridThumb = await getImage({ src, width: 300 })
+        const full = await getImage({ src })
+
+        return {
+          idx,
+          uniqueSlideId: `${galleryId}-slide-${idx}`,
+          scrollMarkerThumbSrc: scrollMarkerThumb.src,
+          gridThumb,
+          full,
+          alt: `Image ${idx}`,
+        }
+      })
+    )
+  : []
+---
+
+<dialog id={galleryId} class="gallery-modal" role="region" aria-label="Image gallery carousel">
+  <div class="carousel reel" aria-live="polite">
+    {
+      processedImages.map(({ idx, uniqueSlideId, scrollMarkerThumbSrc, full, alt }) => (
+        <div
+          class="carousel__slide"
+          data-label={`Image ${idx}`}
+          id={uniqueSlideId}
+          style={`--thumbnail-url: url(${scrollMarkerThumbSrc})`}
+        >
+          <img src={full.src} {...full.attributes} alt={alt} loading="lazy" />
+        </div>
+      ))
+    }
+  </div>
+
+  <button class="scroll-button left" aria-label="Scroll Left"></button>
+  <button class="scroll-button right" aria-label="Scroll Right"></button>
+
+  <form method="dialog" class="form-close">
+    <button aria-label="Close"></button>
+  </form>
+</dialog>
+
+<ul role="list" class="gallery-full-masonry">
+  {
+    processedImages.map(({ uniqueSlideId, gridThumb, alt }) => (
+      <li>
+        <button
+          type="button"
+          class="preview-img-button"
+          data-gallery-id={galleryId}
+          data-target-id={uniqueSlideId}
+          aria-label="Ouvrir l'image"
+        >
+          <img src={gridThumb.src} {...gridThumb.attributes} alt={alt} loading="lazy" />
+        </button>
+      </li>
+    ))
+  }
+</ul>
+
+<script>
+  function initGalleries() {
+    const buttons = document.querySelectorAll('.preview-img-button')
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const galleryId = btn.getAttribute('data-gallery-id')
+        const targetId = btn.getAttribute('data-target-id')
+        if (!galleryId || !targetId) return
+
+        const modal = document.getElementById(galleryId) as HTMLDialogElement
+        const slide = document.getElementById(targetId)
+
+        if (modal && slide) {
+          modal.showModal()
+
+          requestAnimationFrame(() => {
+            slide.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' })
+          })
+        }
+      })
+    })
+
+    const modals = document.querySelectorAll('.gallery-modal') as NodeListOf<HTMLDialogElement>
+    modals.forEach(modal => {
+      modal.addEventListener('click', e => {
+        if (e.target === modal) modal.close()
+      })
+
+      const carousel = modal.querySelector('.carousel')
+      const btnLeft = modal.querySelector('.scroll-button.left')
+      const btnRight = modal.querySelector('.scroll-button.right')
+
+      if (carousel && btnLeft && btnRight) {
+        btnLeft.addEventListener('click', () => {
+          carousel.scrollBy({ left: -carousel.clientWidth * 0.8, behavior: 'smooth' })
+        })
+        btnRight.addEventListener('click', () => {
+          carousel.scrollBy({ left: carousel.clientWidth * 0.8, behavior: 'smooth' })
+        })
+      }
+    })
+  }
+
+  initGalleries()
+  document.addEventListener('astro:after-swap', initGalleries)
+</script>
+
+<style>
+  /* ── Configuration du Dialog (Modal) ──────────────── */
+  .gallery-modal {
+    --dialog-padding: var(--step--2, 0.75rem);
+    --marker-group-height: var(--step-2, 2rem);
+    --marker-group-margin-block: var(--step-1, 1.5rem);
+    --scroll-btn-proportions: var(--step-3, 2.5rem);
+    --bg-clr: rgba(255, 255, 255, 0.95);
+    --carousel-btn-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    position: fixed;
+    inset: var(--step--2, 0.75rem);
+    z-index: 10000;
+    padding: 0;
+    margin: auto;
+    border: none;
+    background: white;
+    max-inline-size: min(var(--width-max, 75rem), calc(100% - var(--dialog-padding) * 2));
+    max-block-size: calc(100vh - 4rem);
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .gallery-modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── Carrousel container ───────────────────────── */
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    block-size: 70vh;
+    min-block-size: 300px;
+  }
+
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── Slides ─────────────────────────────────────────── */
+  .carousel__slide {
+    flex: 0 0 100%;
+    width: 100%;
+    scroll-snap-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--dialog-padding);
+  }
+
+  .carousel__slide img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    user-select: none;
+  }
+
+  /* ── Navigation with "Scroll Markers" ── */
+  .carousel {
+    scroll-marker-group: after;
+  }
+
+  .carousel::scroll-marker-group {
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-block: 1rem;
+  }
+
+  .carousel__slide::scroll-marker {
+    content: '';
+    width: var(--marker-group-height);
+    height: var(--marker-group-height);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), var(--thumbnail-url);
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease;
+  }
+
+  .carousel__slide::scroll-marker:target-current {
+    background-image: var(--thumbnail-url);
+    border-color: var(--color-primary, #000);
+    transform: scale(1.1);
+  }
+
+  /* ── Navigation buttons ───── */
+  .gallery-modal .scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--scroll-btn-proportions);
+    height: var(--scroll-btn-proportions);
+    background-color: var(--bg-clr);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+    border: none;
+    border-radius: 50%;
+    box-shadow: var(--carousel-btn-shadow);
+    cursor: pointer;
+    z-index: 10;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-modal .scroll-button:hover {
+    background-color: white;
+  }
+
+  .gallery-modal .scroll-button.left {
+    left: var(--dialog-padding);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15 6l-6 6 6 6' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  .gallery-modal .scroll-button.right {
+    right: var(--dialog-padding);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6l6 6-6 6' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  @supports (scroll-marker-group: after) {
+    .gallery-modal .scroll-button {
+    }
+  }
+
+  /* ── Close button ────────────────────────────── */
+  .form-close > button {
+    position: absolute;
+    top: var(--dialog-padding);
+    right: var(--dialog-padding);
+    width: var(--scroll-btn-proportions);
+    height: var(--scroll-btn-proportions);
+    border: none;
+    border-radius: 50%;
+    background-color: var(--bg-clr);
+    box-shadow: var(--carousel-btn-shadow);
+    cursor: pointer;
+    z-index: 20;
+  }
+
+  .form-close > button::before,
+  .form-close > button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 2px;
+    background: #333;
+  }
+
+  .form-close > button::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  .form-close > button::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  /* ── Masonry grid ───────────────────────── */
+  .gallery-full-masonry {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    columns: 6 150px;
+    column-gap: 0.75rem;
+  }
+
+  .gallery-full-masonry li {
+    break-inside: avoid;
+    margin-bottom: 0.75rem;
+  }
+
+  .preview-img-button {
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: zoom-in;
+    overflow: hidden;
+    border-radius: 4px;
+    display: block;
+  }
+
+  .preview-img-button img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .preview-img-button:hover img {
+    transform: scale(1.03);
+  }
+
+  /* Responsive mobile */
+  @media (max-width: 600px) {
+    .gallery-full-masonry {
+      columns: 2 150px;
+    }
+
+    .gallery-modal {
+      inset: 0;
+      max-inline-size: 100%;
+      max-block-size: 100%;
+    }
+  }
+</style>

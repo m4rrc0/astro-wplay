@@ -5,6 +5,7 @@ import { Icon } from 'astro-icon/components'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, IO, ImgDirectus } from '@components'
 import { imageDirectusSrc, getImage } from '@utils'
+import badge from '@assets/images/badge.png'
 
 const {
   lang,
@@ -235,18 +236,19 @@ if (jsonldType === 'Library') {
         {
           logo?.src && (
             <div
-              class="center intrinsic box no-border
+              class={`center intrinsic box no-border
               color-palette-main
               width-col-6
               border-radius-s
-              "
-              style="
+              ${admin_categories?.includes('badge_default') || admin_categories?.includes('paid_partner') ? 'badge' : ''}`}
+              style={`
               margin-top: calc(var(--size-h2) * -1);
               margin-bottom: var(--size-h2);
               box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
               max-height: var(--width-col-6);
               overflow: hidden;
-              "
+              --badge-url: url(${badge.src});
+              `}
             >
               <ImgDirectus
                 image={logo}
@@ -472,3 +474,24 @@ if (jsonldType === 'Library') {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </BasicPage>
 </SkeletonPage>
+<style>
+  .badge {
+    position: relative;
+    overflow: visible !important;
+  }
+  .badge::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 52px;
+    aspect-ratio: 1;
+    background-image: var(--badge-url);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 10;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  }
+</style>

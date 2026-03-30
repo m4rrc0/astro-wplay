@@ -4,10 +4,12 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 export interface Props {
   itemType?: 'organizations' | 'events'
   area?: string
+  city?: string
   date?: number
+  orgType?: string
 }
 
-const { itemType = 'organizations', area, date } = Astro.props
+const { itemType = 'organizations', area, city, date, orgType } = Astro.props
 ---
 
 <div>
@@ -15,7 +17,9 @@ const { itemType = 'organizations', area, date } = Astro.props
     id="map"
     data-item-type={itemType}
     data-area={area}
+    data-city={city}
     data-date={date}
+    data-org-type={orgType}
     style="width: 100%; height: 700px; height: min(700px, 80vh)"
   >
   </div>
@@ -38,18 +42,50 @@ time slider, clusters, locate the user -->
     organizationsFiltersStore,
   } from '@src/stores/organizations-filters'
   import { getInitialState as eventsInit, eventsFiltersStore } from '@src/stores/events-filters'
-  import { citiesBe } from '@src/utils/areas/be.js'
+  import { areasBe, citiesBe } from '@src/utils/areas/be.js'
+  import citiesJson from '@src/utils/areas/cities.json'
 
   const bounds: [[number, number], [number, number]] = [
     [1.9, 49.4], // West, South
     [7.1, 51.55], // East, North
   ]
 
+  // // changer "province" en "area"
+  // const areaFullViewConfig: Record<string, { center: [number, number]; zoom: number }> = {
+  //   antwerp: { center: [4.55, 51.21], zoom: 9.2 },
+  //   'flemish-brabant': { center: [4.58, 50.85], zoom: 9.6 },
+  //   'walloon-brabant': { center: [4.55, 50.67], zoom: 10.2 },
+  //   brussels: { center: [4.3517, 50.8439], zoom: 11.5 },
+  //   'west-flanders': { center: [3.15, 51.05], zoom: 9.0 },
+  //   'east-flanders': { center: [3.75, 51.03], zoom: 9.4 },
+  //   hainaut: { center: [3.8486, 50.4445], zoom: 9.0 },
+  //   liege: { center: [5.5973, 50.5042], zoom: 9.0 },
+  //   limburg: { center: [5.3974, 50.9891], zoom: 9.15 },
+  //   luxembourg: { center: [5.3565, 49.9428], zoom: 8.56 },
+  //   namur: { center: [4.85, 50.35], zoom: 9.2 },
+  // }
+
+  // // changer "capital" en "city"
+  // const capitalsConfig: Record<string, { center: [number, number]; zoom: number }> = {
+  //   antwerp: { center: [4.4025, 51.2194], zoom: 13 }, // Anvers
+  //   'flemish-brabant': { center: [4.7009, 50.8798], zoom: 13 }, // Louvain
+  //   'walloon-brabant': { center: [4.6144, 50.6683], zoom: 13 }, // Wavre
+  //   brussels: { center: [4.3517, 50.8503], zoom: 12 },
+  //   'west-flanders': { center: [3.2247, 51.2093], zoom: 13 }, // Bruges
+  //   'east-flanders': { center: [3.7174, 51.0543], zoom: 13 }, // Gand
+  //   hainaut: { center: [4.4447, 50.4108], zoom: 12.5 }, // Charleroi
+  //   liege: { center: [5.5797, 50.6326], zoom: 13 }, // Liège
+  //   limburg: { center: [5.3325, 50.9307], zoom: 13 }, // Hasselt
+  //   luxembourg: { center: [5.8131, 49.6833], zoom: 13 }, // Arlon
+  //   namur: { center: [4.8675, 50.4669], zoom: 13 }, // Namur
+  // }
+
   const mapContainer = document.getElementById('map')
   const itemType = mapContainer?.getAttribute('data-item-type') || 'organizations'
   const filterArea = mapContainer?.getAttribute('data-area')
   const dateAttr = mapContainer?.getAttribute('data-date')
   const filterDate = dateAttr ? parseInt(dateAttr) : 10
+  const filterOrgType = mapContainer?.getAttribute('data-org-type')
 
   // Function to calculate distance (in km) between two geographical points (latitude/longitude)
   // Used for the "Nearby" filter to show or hide events based on a defined radius
@@ -127,6 +163,29 @@ time slider, clusters, locate the user -->
     cooperativeGestures: true,
   })
 
+  // // Get bounds of the map
+  // map.on('moveend', () => {
+  //   const bounds = map.getBounds()
+  //   const sw = bounds.getSouthWest()
+  //   const ne = bounds.getNorthEast()
+
+  //   console.log('--- Nouveaux Bounds ---')
+  //   console.log(
+  //     `[[${sw.lng.toFixed(4)}, ${sw.lat.toFixed(4)}], [${ne.lng.toFixed(4)}, ${ne.lat.toFixed(4)}]]`
+  //   )
+  // })
+
+  // // Get center and zoom of the map
+  // map.on('moveend', () => {
+  //   const center = map.getCenter()
+  //   const zoom = map.getZoom()
+
+  //   console.log('--- Nouvelle Config Capitale ---')
+  //   console.log(
+  //     `center: [${center.lng.toFixed(4)}, ${center.lat.toFixed(4)}], zoom: ${zoom.toFixed(2)}`
+  //   )
+  // })
+
   map.addControl(
     new maplibregl.AttributionControl({
       compact: true,
@@ -143,25 +202,34 @@ time slider, clusters, locate the user -->
     const response = await fetch(endpoint)
     geojson = await response.json()
 
-    if (filterArea) {
-      // Check if the filterArea corresponds to a city in citiesBe
-      const city = citiesBe.find(c => c.code_name === filterArea)
+    // if (filterArea) {
+    //   // Check if the filterArea corresponds to a city in citiesBe
+    //   const city = citiesBe.find(c => c.code_name === filterArea)
 
-      if (city) {
-        // TODO: not working !!!
-        // It's a city, so filter by ZIP code range
-        geojson.features = geojson.features.filter((f: any) => {
-          const zip = parseInt(f.properties.zip, 10)
-          // Handle cities with multiple ZIP ranges
-          const cityRanges = citiesBe.filter(c => c.code_name === filterArea)
-          return cityRanges.some(
-            range => zip >= parseInt(range.zipMin, 10) && zip <= parseInt(range.zipMax, 10)
-          )
+    //   if (city) {
+    //     // TODO: not working !!!
+    //     // It's a city, so filter by ZIP code range
+    //     geojson.features = geojson.features.filter((f: any) => {
+    //       const zip = parseInt(f.properties.zip, 10)
+    //       // Handle cities with multiple ZIP ranges
+    //       const cityRanges = citiesBe.filter(c => c.code_name === filterArea)
+    //       return cityRanges.some(
+    //         range => zip >= parseInt(range.zipMin, 10) && zip <= parseInt(range.zipMax, 10)
+    //       )
+    //     })
+    //   } else {
+    //     // It's not a province (or not found), so filter by exact area match (e.g., a specific city)
+    //     geojson.features = geojson.features.filter((f: any) => f.properties.area === filterArea)
+    //   }
+    // }
+
+    if (filterOrgType) {
+      geojson.features = geojson.features.filter((f: any) =>
+        f.properties.types?.some((t: any) => {
+          const code = typeof t === 'object' ? t.code : t
+          return code === filterOrgType
         })
-      } else {
-        // It's not a province (or not found), so filter by exact area match (e.g., a specific city)
-        geojson.features = geojson.features.filter((f: any) => f.properties.area === filterArea)
-      }
+      )
     }
 
     if (filterDate && itemType === 'events') {
@@ -273,10 +341,37 @@ time slider, clusters, locate the user -->
   })
 
   map.on('load', () => {
-    map.fitBounds(bounds, {
-      padding: 20,
-      animate: false,
-    })
+    // Check if bounds exist for the province
+    const areaValue = mapContainer?.getAttribute('data-area')
+    const cityValue = mapContainer?.getAttribute('data-city')
+
+    if (cityValue) {
+      const config = citiesJson.find((c: any) => c.code_name === cityValue)
+      if (config) {
+        map.flyTo({
+          center: [parseFloat(config.lng), parseFloat(config.lat)],
+          zoom: 13,
+          speed: 1.2,
+          essential: true,
+        })
+      }
+    } else if (areasBe.find(a => a.code_name === areaValue)) {
+      const config = areasBe.find(a => a.code_name === areaValue)
+      if (config) {
+        map.flyTo({
+          center: config.center as [number, number],
+          zoom: config.zoom,
+          padding: 50,
+          speed: 1.2,
+          essential: true,
+        })
+      }
+    } else {
+      map.fitBounds(bounds, {
+        padding: 20,
+        animate: false,
+      })
+    }
 
     // Apply initial state filters from URL before adding source to avoid flash
     let initialData = geojson
@@ -300,6 +395,17 @@ time slider, clusters, locate the user -->
     })
 
     map.addLayer({
+      id: 'clusters-hidden',
+      type: 'circle',
+      source: 'items-source',
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-radius': 0, // Invisible layer needed to use queryRenderedFeatures
+        'circle-opacity': 0,
+      },
+    })
+
+    map.addLayer({
       id: 'unclustered-point',
       type: 'circle',
       source: 'items-source',
@@ -318,7 +424,9 @@ time slider, clusters, locate the user -->
 
     function updateMarkers() {
       const newMarkers: Record<string, maplibregl.Marker> = {}
-      const features = map.querySourceFeatures('items-source')
+
+      // We use queryRenderedFeatures instead of querySourceFeatures to avoid ghost clusters from stale tiles during zoom animations
+      const features = map.queryRenderedFeatures({ layers: ['clusters-hidden'] })
 
       // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
       // and add it to the map if it's not there already
@@ -352,6 +460,9 @@ time slider, clusters, locate the user -->
           marker = markers[cacheKey] = new maplibregl.Marker({
             element: el,
           }).setLngLat(coords)
+        } else {
+          // Keep coordinates in sync if the cluster center shifted slightly
+          marker.setLngLat(coords)
         }
         newMarkers[cacheKey] = marker
 
@@ -359,18 +470,24 @@ time slider, clusters, locate the user -->
       }
       // for every marker we've added previously, remove those that are no longer visible
       for (const key in markersOnScreen) {
-        if (!newMarkers[key]) markersOnScreen[key].remove()
+        if (!newMarkers[key]) {
+          markersOnScreen[key].remove()
+          delete markers[key] // Prevent memory leak by removing it from cache too
+        }
       }
       markersOnScreen = newMarkers
     }
 
-    // after the GeoJSON data is loaded, update markers on the screen and do so on every map move/moveend
-    map.on('data', e => {
-      if (e.sourceId !== 'items-source' || !e.isSourceLoaded) return
-      map.on('move', updateMarkers)
-      map.on('moveend', updateMarkers)
-      updateMarkers()
+    // We use the render event to perfectly sync the HTML markers with the rendered tiles,
+    // avoiding the ghost cluster bug where old source tiles linger during zoom animations.
+    map.on('render', () => {
+      if (map.getSource('items-source')) {
+        updateMarkers()
+      }
     })
+
+    // Initial call
+    updateMarkers()
 
     // code for creating an SVG donut chart from feature properties
     function createDonutChart(props: any, counts: number[]) {

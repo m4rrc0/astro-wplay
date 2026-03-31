@@ -20,7 +20,12 @@ const {
 // const titleComposed = title + siteName ? ` | ${siteName}` : ''
 const titleComposed = title ? `${title}${siteName ? ` | ${siteName}` : ''}` : siteName
 
-const srcRaw = socialImageRaw?.src || socialImageRaw
+// getImage() requires an imported image object, not a string path.
+// To support string paths (e.g. from MDX frontmatter where imports are not possible),
+// we dynamically import local paths (/src/... or @..) so getImage() can process them.
+const isInternalImage = /^\/src|^\@/.test(socialImageRaw)
+const socialImagePath = isInternalImage ? await import(socialImageRaw) : socialImageRaw
+const srcRaw = socialImagePath?.default || socialImagePath
 const socialImage = srcRaw ? await getImage({ src: srcRaw, alt: title, width: 1200, height: 630 }) : null
 
 ---

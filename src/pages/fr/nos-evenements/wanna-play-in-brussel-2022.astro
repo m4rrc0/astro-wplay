@@ -87,8 +87,8 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         <h1>Wanna Play in Brussel 2022</h1>
       </header>
 
-      <section class="flow gap-h4 padding-y-h1">
-        <div class="flow gap-h4">
+      <section class="flow">
+        <div class="flow">
           <p>
             <strong>WANNA PLAY IN BRUSSELS 2022 - 1ÈRE ÉDITION</strong>
           </p>
@@ -109,7 +109,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             de personnes.
           </p>
         </div>
-        <div class="flow gap-h4">
+        <div class="flow">
           <p>
             <strong>LE FESTIVAL AVAIT PLUSIEURS OBJECTIFS PRINCIPAUX</strong>
           </p>
@@ -128,13 +128,20 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             </li>
           </ol>
         </div>
-        <div class="partners-grid" style="margin-bottom: 2rem;">
+        <div
+          class="grid-fluid center align-items-center justify-between"
+          style="--width-column-min: var(--width-col-4);"
+        >
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
               const imgTag = <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
               return finalLink ? (
-                <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                <a
+                  href={finalLink}
+                  target={finalLink.startsWith('http') ? '_blank' : ''}
+                  class="content-center"
+                >
                   {imgTag}
                 </a>
               ) : (
@@ -150,42 +157,41 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            class="center"></iframe>
+            allowfullscreen></iframe>
         </div>
         <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h1">±2500</p>
             <p>participants</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h1">170</p>
             <p>jeux différents</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h1">+70</p>
             <p>tables de jeux</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h1">36</p>
             <p>animateurs</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h1">20</p>
             <p>partenaires</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h1">26</p>
             <p>bénévoles</p>
@@ -193,7 +199,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </ul>
       </section>
 
-      <!-- <section class="flow gap-h4 padding-y-h1">
+      <!-- <section class="flow  ">
         <h2>Photos</h2>
         <div class="grid gap-h6" style="--width-column: 250px;">
           <ul class="reset">
@@ -219,9 +225,9 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </div>
       </section> -->
 
-      <section class="flow gap-h4 padding-y-h1">
+      <section class="flow">
         <h2>Activités</h2>
-        <ul class="flow gap-h4">
+        <ul class="flow">
           <li>
             <p>TABLES DE JEUX</p>
             <p>
@@ -250,7 +256,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </ul>
       </section>
 
-      <section class="flow gap-h4 padding-y-h1">
+      <section class="flow">
         <h2>Vidéos</h2>
         <div class="video-grid">
           <iframe
@@ -263,7 +269,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </div>
       </section>
 
-      <section class="flow gap-h4 padding-y-h1">
+      <section class="flow">
         <h2>Partenaires</h2>
         <p>
           Nous avons également reçu le soutien de nombreux acteurs ludiques Bruxellois et Belges
@@ -319,7 +325,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </div> -->
       </section>
 
-      <section class="flow gap-h4 padding-y-h1">
+      <section class="flow">
         <h2>Bénévoles</h2>
         <p>
           Nos bénévoles ont été la véritable force motrice du festival cette année. Une équipe de 14
@@ -331,7 +337,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </p>
       </section>
 
-      <section class="flow gap-h4 padding-y-h1">
+      <section class="flow">
         <h2>Budget & Surprises</h2>
         <h3>BUDGET</h3>
         <p>
@@ -352,9 +358,9 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </p>
       </section>
 
-      <section class="flow gap-h4 padding-y-h1">
+      <section class="flow">
         <h2>Visibilité</h2>
-        <div class="flow gap-h4">
+        <div class="flow">
           <h3>Promotion à travers divers média</h3>
           <ul>
             <li>Spot radio le matin même du festival sur la première</li>
@@ -373,7 +379,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           </ul>
         </div>
 
-        <div class="flow gap-h4">
+        <div class="flow">
           <h3>Espace Presse</h3>
           <p>
             Le communiqué de presse officiel détaillant les objectifs, les chiffres de l'édition
@@ -388,7 +394,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           </a>
         </div>
 
-        <div class="flow gap-h4">
+        <div class="flow">
           <h3>Production audio-visuelles</h3>
 
           <p>
@@ -398,9 +404,9 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           </p>
         </div>
 
-        <section class="flow gap-h4 padding-y-h1">
+        <section class="flow">
           <h2>Documents à télécharger</h2>
-          <ul class="flow gap-h4">
+          <ul class="flow">
             <li>
               <a
                 href="/assets/files/Wanna-Play-Rapport-Activité-30-juillet-2022.pdf"
@@ -419,6 +425,8 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
 <style>
   .video-container {
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .video-container iframe,
@@ -455,5 +463,21 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     height: auto;
     object-fit: contain;
     max-height: 100px;
+  }
+
+  section {
+    padding-block: var(--size-h1);
+  }
+
+  div.flow > * {
+    --flow-space: var(--gap-h2);
+  }
+
+  .stat {
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 </style>

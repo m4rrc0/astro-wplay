@@ -37,8 +37,21 @@ const {
     {ogVideo}
   />
   <BasicPage {lang}>
-    <main class="center max padding-h1">
+    <main class="center max padding-h1 flow v--flow-space:1em">
       <slot />
     </main>
+
+    <style>
+      /* Astro scoped styles do NOT apply to slotted content by default */
+      :global(.img-banner img) {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        display: block;
+      }
+      :global(.card.flow > *) {
+        --flow-space: 0.25em;
+      }
+    </style>
   </BasicPage>
 </SkeletonPage>

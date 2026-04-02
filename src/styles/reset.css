@@ -18,6 +18,7 @@ ol.reset {
   list-style: none;
 }
 /* Remove default margin */
+:where(
 body,
 h1,
 h2,
@@ -36,7 +37,7 @@ figcaption,
 blockquote,
 dl,
 dd,
-pre {
+pre) {
   margin: 0;
 }
 /* Set core body defaults */

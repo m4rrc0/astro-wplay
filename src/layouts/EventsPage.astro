@@ -64,7 +64,7 @@ const cssRulesDisplayByType =
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center width-max padding-h1">
+    <main class="center width-max">
       <div id="events-list-container" class="box no-border flow gap-h3">
         <IO h1 $skip={!events?.[0]?.name} class="center text"
           >Événements et soirées jeux de Belgique</IO
@@ -279,7 +279,7 @@ const cssRulesDisplayByType =
                       </h2>
                     </div>
                   </div>
-                  <div class="card-event-footer box no-border padding-h8 flow horizontal">
+                  <div class="card-event-footer box no-border padding-h8 flow horizontal justify-between">
                     {/* TODO: repair geting location from organization */}
                     <IO
                       p
@@ -292,7 +292,7 @@ const cssRulesDisplayByType =
                     >
                       {location.addressLocality}
                     </IO>
-                    <ul class="reset flow horizontal">
+                    <ul class="reset flow horizontal ">
                       {organizers?.map(({ name, logo }) => (
                         <li>
                           {logo?.src ? (

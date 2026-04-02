@@ -29,7 +29,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center width-max padding-h1">
+    <main class="center width-max">
       <div id="organizations-list-container" class="box no-border flow gap-h3">
         <IO h1 $skip={!organizations?.[0]} class="center text"> Le jeu de société en Belgique </IO>
         {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
@@ -351,7 +351,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   }
 
   /* 2 colonnes → full width, retour en 3ème position (reset des order) */
-  @media (max-width: 671px) {
+  @media (max-width: 734px) {
     .card-organization,
     .card-organization:nth-child(1) {
       order: 0;
@@ -370,13 +370,13 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   .badge {
     position: relative;
     overflow: visible !important;
-    border: 4px solid var(--color-teal) !important;
+    border: 3px solid var(--color-blue) !important;
   }
   .badge::after {
     content: '';
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -12px;
+    right: -16px;
     width: 46px;
     aspect-ratio: 1;
     background-image: var(--badge-url);
@@ -389,8 +389,8 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   }
   .badge-hover {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -12px;
+    right: -16px;
     width: 46px;
     aspect-ratio: 1;
     z-index: 10;

@@ -28,8 +28,10 @@
   overflow-x: hidden;
 }
 
-.layout-page>main {
+.layout-page > main {
   flex-grow: 1;
+  padding: 0;
+  margin-top: var(--gap);
 }
 
 a {
@@ -152,4 +154,9 @@ blockquote {
   position: fixed;
   max-height: 90vh;
   overflow-y: auto;
+}
+
+main.center,
+nav.center {
+  box-sizing: border-box;
 }

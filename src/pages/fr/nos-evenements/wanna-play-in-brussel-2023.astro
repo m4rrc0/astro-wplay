@@ -146,18 +146,18 @@ const imagesGeneralPartners = await getOptimizedImages(generalData, partners, or
 // const { lang } = Astro.props
 const lang = { code: 'fr' }
 
-const imagesOriane = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/festival-2023/oriane-delavallee/*.{jpeg,jpg,png,gif,webp,svg}'
-)
-const imagesPaulo = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/festival-2023/paulo-ribeiro/*.{jpeg,jpg,png,gif,webp,svg}'
-)
-const imagesSylwia = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/festival-2023/sylwia-malachowska/*.{jpeg,jpg,png,gif,webp,svg}'
-)
-const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/festival-2023/tess/*.{jpeg,jpg,png,gif,webp,svg}'
-)
+// const imagesOriane = import.meta.glob<{ default: ImageMetadata }>(
+//   '@assets/images/festival-2023/oriane-delavallee/*.{jpeg,jpg,png,gif,webp,svg}'
+// )
+// const imagesPaulo = import.meta.glob<{ default: ImageMetadata }>(
+//   '@assets/images/festival-2023/paulo-ribeiro/*.{jpeg,jpg,png,gif,webp,svg}'
+// )
+// const imagesSylwia = import.meta.glob<{ default: ImageMetadata }>(
+//   '@assets/images/festival-2023/sylwia-malachowska/*.{jpeg,jpg,png,gif,webp,svg}'
+// )
+// const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
+//   '@assets/images/festival-2023/tess/*.{jpeg,jpg,png,gif,webp,svg}'
+// )
 ---
 
 <SkeletonPage {lang}>
@@ -172,15 +172,15 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
   />
   <BasicPage {lang}>
     <main class="center max" style="margin-top: 0;">
-      <header style="height: 25vh; position: relative;">
-        <Image src={bannerPaper} alt="" style="height: 100%" />
-        <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-          Wanna Play in Brussel 2023
-        </h1>
+      <header
+        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+      >
+        <h1>Wanna Play in Brussel 2023</h1>
       </header>
 
-      <section class="stack gap-down-h1">
-        <div class="stack gap-down-h4">
+      <section class="flow gap-h4 padding-y-h1">
+        <div class="flow gap-h4">
           <p>
             <strong>WANNA PLAY IN BRUSSELS 2023 - 2E ÉDITION</strong>
           </p>
@@ -197,48 +197,41 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             les familles avec enfants.
           </p>
         </div>
-        <div class="stack gap-down-h4">
+        <div class="flow gap-h4">
           <p>
             <strong>LE FESTIVAL AVAIT PLUSIEURS OBJECTIFS PRINCIPAUX</strong>
           </p>
-          <ol>
+          <ol class="flow gap-h4">
             <li>
-              <div>
-                <p><strong>Faire découvrir les jeux de société modernes</strong></p>
-                <p>
-                  Nous avons souhaité offrir aux participants l’opportunité de découvrir et
-                  d’explorer les jeux de société contemporains, en mettant en avant des créateurs,
-                  auteurs, éditeurs et distributeurs de jeux.
-                </p>
-              </div>
+              <p><strong>Faire découvrir les jeux de société modernes</strong></p>
+              <p>
+                Nous avons souhaité offrir aux participants l’opportunité de découvrir et d’explorer
+                les jeux de société contemporains, en mettant en avant des créateurs, auteurs,
+                éditeurs et distributeurs de jeux.
+              </p>
             </li>
             <li>
-              <div>
-                <p><strong>Présence des acteurs ludiques belges</strong></p>
-                <p>
-                  Une grande diversité d’acteurs ludiques belges étaient présents, tels que des
-                  associations, des clubs, des éditeurs, des distributeurs, des créateurs de
-                  contenu, une école et des ludothèques. Le festival permet de favoriser les
-                  échanges et les rencontres.
-                </p>
-              </div>
+              <p><strong>Présence des acteurs ludiques belges</strong></p>
+              <p>
+                Une grande diversité d’acteurs ludiques belges étaient présents, tels que des
+                associations, des clubs, des éditeurs, des distributeurs, des créateurs de contenu,
+                une école et des ludothèques. Le festival permet de favoriser les échanges et les
+                rencontres.
+              </p>
             </li>
             <li>
-              <div>
-                <p><strong>Ateliers, conférences et animations</strong></p>
-                <p>
-                  Le programme était varié comprenant des activités pour les familles et le grand
-                  public tout au long de la journée. Nous avions également des activités plus
-                  ciblées pour les curieux ou les joueurs plus avertis, tels que des conférences
-                  inspirantes, des ateliers de découverte sur différents sujets, des sessions de
-                  speed-gaming pour favoriser les rencontres, ainsi qu’un tournois et des
-                  initiations.
-                </p>
-              </div>
+              <p><strong>Ateliers, conférences et animations</strong></p>
+              <p>
+                Le programme était varié comprenant des activités pour les familles et le grand
+                public tout au long de la journée. Nous avions également des activités plus ciblées
+                pour les curieux ou les joueurs plus avertis, tels que des conférences inspirantes,
+                des ateliers de découverte sur différents sujets, des sessions de speed-gaming pour
+                favoriser les rencontres, ainsi qu’un tournois et des initiations.
+              </p>
             </li>
           </ol>
         </div>
-        <div class="partners-grid cluster center">
+        <div class="grid-fluid center" style="--width-column-min: var(--width-col-4);">
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -266,7 +259,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         <div class="carousel cluster" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset gap-h3">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Toute l’organisation me semblait au top, et l’endroit choisi pour la bourse aux
@@ -281,7 +274,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Chouette festival qui permet de découvrir ou redécouvrir le monde ludique, de
@@ -295,7 +288,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     “Un évènement immanquable, beaucoup de choix de jeux et d’activités pour tous
@@ -309,7 +302,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>"Un chouette petit festival très convivial dans un endroit magique."</p>
                 </blockquote>
@@ -320,7 +313,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     “Super événement ! L’occasion de découvrir et tester plein de nouveaux jeux dans
@@ -334,7 +327,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     “Conférences pertinentes, atelier peinture et jeu de rôle qui donnent envie, et
@@ -348,92 +341,80 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
           </ul>
         </div>
-        <div class="grid grid-cols-2">
-          <ul class="reset">
-            <li
-              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
-            >
-              <p class="h1">2000</p>
-              <p>participants</p>
-            </li>
-            <li
-              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
-            >
-              <p class="h1">200</p>
-              <p>jeux différents</p>
-            </li>
-            <li
-              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
-            >
-              <p class="h1">+100</p>
-              <p>tables de jeux</p>
-            </li>
-            <li
-              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
-            >
-              <p class="h1">+74</p>
-              <p>animateurs</p>
-            </li>
-            <li
-              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
-            >
-              <p class="h1">41</p>
-              <p>partenaires</p>
-            </li>
-            <li
-              class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
-            >
-              <p class="h1">33</p>
-              <p>bénévoles</p>
-            </li>
-          </ul>
-        </div>
+        <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">2000</p>
+            <p>participants</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">200</p>
+            <p>jeux différents</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">+100</p>
+            <p>tables de jeux</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">+74</p>
+            <p>animateurs</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">41</p>
+            <p>partenaires</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">33</p>
+            <p>bénévoles</p>
+          </li>
+        </ul>
       </section>
 
-      <section>
+      <section class="flow gap-h4 padding-y-h1">
         <h2>Activités</h2>
-        <ul>
+        <ul class="flow gap-h4">
           <li>
-            <div>
-              <p>TABLES DE JEUX</p>
-              <p>
-                Des espaces étaient dédiés aux jeux de société où les visiteurs pouvaient jouer et
-                découvrir de nouveaux titres, chaque table était tenue par un partenaire ou un
-                bénévole, afin d’y animer les parties tout en expliquant les règles des jeux.
-              </p>
-            </div>
+            <p>TABLES DE JEUX</p>
+            <p>
+              Des espaces étaient dédiés aux jeux de société où les visiteurs pouvaient jouer et
+              découvrir de nouveaux titres, chaque table était tenue par un partenaire ou un
+              bénévole, afin d’y animer les parties tout en expliquant les règles des jeux.
+            </p>
           </li>
           <li>
-            <div>
-              <p>INITIATION AU JEU DE RÔLE (RPG)</p>
-              <p>
-                Une occasion pour les visiteurs (adultes et enfants) de s’immerger dans l’univers du
-                jeu de rôle.
-              </p>
-            </div>
+            <p>INITIATION AU JEU DE RÔLE (RPG)</p>
+            <p>
+              Une occasion pour les visiteurs (adultes et enfants) de s’immerger dans l’univers du
+              jeu de rôle.
+            </p>
           </li>
           <li>
-            <div>
-              <p>INITIATION À LA PEINTURE DE FIGURINES ET AUX JEUX ASSOCIÉS</p>
-              <p>
-                Des ateliers étaient proposés aux visiteurs (adultes et enfants) pour apprendre les
-                techniques de peinture de figurines utilisées dans certains jeux.
-              </p>
-            </div>
+            <p>INITIATION À LA PEINTURE DE FIGURINES ET AUX JEUX ASSOCIÉS</p>
+            <p>
+              Des ateliers étaient proposés aux visiteurs (adultes et enfants) pour apprendre les
+              techniques de peinture de figurines utilisées dans certains jeux.
+            </p>
           </li>
           <li>
-            <div>
-              <p>ZONE ENFANTS</p>
-              <p>
-                Un espace dédié aux plus jeunes avec des tables de jeux, du maquillage de tribu et
-                des lectures de contes.
-              </p>
-            </div>
+            <p>ZONE ENFANTS</p>
+            <p>
+              Un espace dédié aux plus jeunes avec des tables de jeux, du maquillage de tribu et des
+              lectures de contes.
+            </p>
           </li>
           <li>
-            <div>
-              <p>ET PLEIN D'AUTRES</p>
-            </div>
+            <p>ET PLEIN D'AUTRES</p>
           </li>
         </ul>
       </section>
@@ -462,22 +443,22 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
       </section> -->
 
-      <section>
+      <section class="flow gap-h4 padding-y-h1">
         <h2>Conférences</h2>
-        <div>
+        <div class="flow gap-h4">
           <h3>DU LOISIR À LA PROFESSION : LES MÉTIERS LUDIQUES D’AUJOURD’HUI ET DE DEMAIN</h3>
           <div>
             <p>
               Pour cette conférence nous avons rassemblé plusieurs intervenants de renom, tels que :
             </p>
-            <ul>
+            <!-- <ul>
               <li><strong>Thierry Saeys</strong> (SAJOU)</li>
               <li><strong>Théo Rivière</strong> (Auteur)</li>
               <li><strong>Gioia et Anthony</strong> (Njoy Games)</li>
               <li><strong>Michel Van Langendonckt</strong> (Ludo asbl)</li>
               <li><strong>Géraldine Volders</strong> (Repos Production)</li>
               <li><strong>Tatiana Dronjak</strong> (Girl dot Game)</li>
-            </ul>
+            </ul> -->
             <!-- Section Conférences -->
             <div class="partners-grid conference-partners">
               {
@@ -487,7 +468,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
                       <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
                     )
                     return (
-                      <figure class="stack gap-down-p" style="text-align: center; margin: 0;">
+                      <figure class="flow gap-down-p" style="text-align: center; margin: 0;">
                         {finalLink ? (
                           <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
                             {imgTag}
@@ -495,7 +476,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
                         ) : (
                           imgTag
                         )}
-                        <figcaption class="stack gap-down-p">
+                        <figcaption class="flow gap-down-p">
                           <strong>{displayName}</strong> {role}
                         </figcaption>
                       </figure>
@@ -514,7 +495,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         <div class="video-container">
           <Image src={moonArea} alt="" class="center" />
         </div>
-        <div>
+        <div class="flow gap-h4">
           <h3>LA PLACE DES FEMMES DANS LE MONDE DU JEU</h3>
           <p>
             Cette conférence gratuite et sans inscription, a été animée par Tatiana Dronjak, une
@@ -530,7 +511,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
       </section>
 
-      <section>
+      <section class="flow gap-h4 padding-y-h1">
         <h2>Partenaires</h2>
         <p>
           Nous avons bénéficié du soutien de nombreux partenaires professionnels belges et français,
@@ -543,7 +524,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           Certains n’ont pas pu venir le jour J mais nous ont envoyés des jeux qui ont été animés
           par les bénévoles.
         </p>
-        <div class="stack gap-down-h4">
+        <div class="flow gap-down-h4">
           <div class="partners-grid">
             {/* On boucle sur le tableau des images */}
             {
@@ -582,7 +563,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         <div class="carousel cluster" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset gap-h3">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Super organisation ! Un grand merci à toute l’équipe de Wanna Play pour ce
@@ -596,7 +577,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Wanna Play nous offre un très bel évènement, dans un cadre incroyable et avec
@@ -608,7 +589,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Avec cette deuxième édition, le festival Wanna Play in Brussel a trouvé sa
@@ -622,7 +603,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Une très belle première expérience pour nous. Que de belles rencontres et
@@ -636,7 +617,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "L’expérience était enrichissante. Nous avons rencontré une équipe agréable et
@@ -650,7 +631,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
       </section>
 
-      <section>
+      <section class="flow gap-h4 padding-y-h1">
         <h2>Bénévoles</h2>
         <p>
           Nos bénévoles ont été la véritable force motrice du festival cette année. Une trentaine de
@@ -676,7 +657,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         <div class="carousel cluster" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset gap-h3">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "J’ai été agréablement surprise par le lieu du festival, ces jardins sont
@@ -690,7 +671,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Très chouette festival de jeux de société permettant de découvrir de bonnes
@@ -704,7 +685,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "J'ai eu le plaisir de faire partie de l'équipe des bénévoles sur le festival de
@@ -718,7 +699,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Super équipe! Quand je suis arrivé, je me suis retrouvé dans une famille qui
@@ -731,7 +712,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Merci pour la journée, votre implication et votre bonne humeur à tout moment.
@@ -745,7 +726,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Très chouette expérience malgré mon peu de connaissance dans le domaine. Équipe
@@ -758,7 +739,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>"Très chouette équipe bien réactive et disponible pour nous."</p>
                 </blockquote>
@@ -767,7 +748,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>
                     "Très chouette expérience dans le monde du jeu de société que je ne connais pas.
@@ -780,7 +761,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
 
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
-              <figure class="stack gap-down-h7">
+              <figure class="flow gap-down-h7">
                 <blockquote>
                   <p>"Bravo pour l'organisation de cet événement. Vous avez géré!!!"</p>
                 </blockquote>
@@ -791,13 +772,13 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
       </section>
 
-      <section>
+      <section class="flow gap-h4 padding-y-h1">
         <h2>Visibilité</h2>
 
-        <div>
+        <div class="flow gap-h4">
           <h3>PROMOTION À TRAVERS DIVERS MÉDIAS</h3>
 
-          <div>
+          <div class="flow gap-h4">
             <h4>Presse</h4>
             <p>
               Articles qui ont présenté les objectifs de l’ASBL et du festival, sur les sites web de
@@ -886,7 +867,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </ul>
           </div>
 
-          <div>
+          <div class="flow gap-h4">
             <h4>Interviews</h4>
             <ul>
               <li>
@@ -906,7 +887,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           </div>
         </div>
 
-        <div>
+        <div class="flow gap-h4">
           <h3>Espace Presse</h3>
           <p>
             Le communiqué de presse officiel détaillant les objectifs, les chiffres de l'édition
@@ -921,17 +902,17 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           </a>
         </div>
 
-        <div>
+        <div class="flow gap-h4">
           <h3>Supports de communication</h3>
 
-          <div>
+          <div class="flow gap-h4">
             <h4>Graphisme</h4>
             <p>
               Affiches et flyers réalisés pour promouvoir l’événement avant et pendant le festival.
             </p>
           </div>
 
-          <div>
+          <div class="flow gap-h4">
             <h4>Signalétique améliorée</h4>
             <p>
               Des flèches réutilisables reprenant les couleurs de la charte graphique ont été créées
@@ -939,7 +920,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </p>
           </div>
 
-          <div>
+          <div class="flow gap-h4">
             <h4>Autres supports</h4>
             <ul>
               <li>
@@ -956,7 +937,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
       </section>
 
-      <section>
+      <section class="flow gap-h4 padding-y-h1">
         <h2>Documents à télécharger</h2>
         <ul>
           <li>
@@ -971,7 +952,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </ul>
       </section>
 
-      <section>
+      <section class="flow gap-h4 padding-y-h1">
         <h2>Budget & Surprises</h2>
         <h3>Budget</h3>
         <p>
@@ -1039,7 +1020,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           leçons pour améliorer l’organisation des futurs événements.
         </p>
       </section>
-      <section>
+      <!-- <section>
         <h2>Photos</h2>
         <h3>Oriane Delavallee</h3>
         <GalleryFull images={imagesOriane} />
@@ -1049,7 +1030,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         <GalleryFull images={imagesSylwia} />
         <h3>Tess</h3>
         <GalleryFull images={imagesTess} />
-      </section>
+      </section> -->
     </main>
   </BasicPage>
 </SkeletonPage>
@@ -1077,6 +1058,8 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     width: 100%;
     flex: 0 0 100%;
     max-width: 25rem;
+    border: 4px solid var(--color-blue);
+    border-radius: var(--border-radius-l);
   }
 
   .carousel-item figure {
@@ -1095,6 +1078,15 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     padding: 0;
     border: none;
     flex-grow: 1;
+  }
+
+  @media (max-width: 45rem) {
+    .carousel-inner {
+      padding-inline: 0;
+    }
+    .carousel-item {
+      flex-basis: 92%;
+    }
   }
 
   .partners-grid {

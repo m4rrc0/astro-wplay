@@ -9,6 +9,7 @@ import icon from 'astro-icon'
 import mdx from '@astrojs/mdx' // import MDX files
 import { PAGE_ADMIN } from './src/utils/env'
 // import Biome from '@playform/format'
+import UnoCSS from 'unocss/astro'
 
 // @type-check enabled!
 // VSCode and other TypeScript-enabled text editors will provide auto-completion,
@@ -61,5 +62,6 @@ export default defineConfig({
     //   exclude: [file => file.startsWith('./dist/fr/e')],
     // }),
     icon(),
+    UnoCSS(),
   ],
 })

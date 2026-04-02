@@ -1,0 +1,119 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
+const lang = { code: 'fr' }
+const pageUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
+---
+
+<SkeletonPage {lang}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Nos événements"
+    description="Découvrez les événements passés et à venir de Wanna Play in Brussels."
+    {canonicalUrl}
+    socialImage={'/assets/images/LOGO-1024px.png'}
+    ogVideo={false}
+    twitterCard="summary"
+  />
+  <BasicPage {lang}>
+    <main class="center width-max flow gap-h1">
+      <header
+        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+      >
+        <h1>Nos événements</h1>
+        <p class="h3 max-width-measure center text">
+          Wanna Play, c’est aussi réunir les joueurs autour de tables et de concepts différents.
+        </p>
+      </header>
+
+      <section class="box no-border center max-width-measure-h4 text flow gap-h7">
+        <p class="h4">Retrouve ici tous nos événements passés et à venir.</p>
+      </section>
+
+      <section class="box no-border flow gap-h4">
+        <h2 class="center text">Organisé par l’équipe Wanna Play</h2>
+        <ul class="grid-fluid gap-h4 list reset" style="--width-column-min: var(--width-col-4);">
+          <li
+            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-contrast"
+          >
+            <a href="/fr/nos-evenements/wanna-play-in-brussel-2023" class="reset block">
+              <h3 class="h4">Wanna Play in Brussel 2023 - 2ème édition</h3>
+            </a>
+          </li>
+          <li
+            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-contrast"
+          >
+            <a href="/fr/nos-evenements/wanna-play-in-brussel-2022" class="reset block">
+              <h3 class="h4">Wanna Play in Brussel 2022 - 1ère édition</h3>
+            </a>
+          </li>
+          <li
+            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-contrast"
+          >
+            <a href="/fr/nos-evenements/inauguration" class="reset block">
+              <h3 class="h4">Inauguration et soirée jeux</h3>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="box no-border flow gap-h4">
+        <h2 class="center text">En partenariat</h2>
+        <ul class="grid-fluid gap-h4 list reset" style="--width-column-min: var(--width-col-4);">
+          <li
+            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-funky-contrast"
+          >
+            <a href="/fr/nos-evenements/le-jeu-parfait" class="reset block">
+              <h3 class="h4">Le Jeu Parfait</h3>
+            </a>
+          </li>
+          <li
+            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-funky-contrast"
+          >
+            <a href="/fr/nos-evenements/nuit-decouverte-ludique" class="reset block">
+              <h3 class="h4">La nuit des découvertes ludiques</h3>
+            </a>
+          </li>
+          <li
+            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-funky-contrast"
+          >
+            <a href="/fr/nos-evenements/tables-ouvertes" class="reset block">
+              <h3 class="h4">Tables ouvertes</h3>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section
+        class="flex center text flow gap-h6 padding-h1"
+        style="--flow-space: var(--size-h8);"
+      >
+        <p>Tu veux proposer un partenariat ou monter un événement ludique avec nous?</p>
+        <p>
+          <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">Contacte-nous</a>
+        </p>
+      </section>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+  .event-card {
+    min-height: var(--width-col-9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .event-card a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--size-h3);
+  }
+</style>

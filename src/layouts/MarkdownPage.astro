@@ -21,7 +21,6 @@ const {
   twitterCard, // "summary", "summary_large_image", "app", or "player".
   ogVideo, // og:video - A URL to a video file that complements this object.
 } = frontmatter
-
 ---
 
 <SkeletonPage lang={lang.code}>
@@ -38,7 +37,7 @@ const {
     {ogVideo}
   />
   <BasicPage {lang}>
-    <main class="center max">
+    <main class="center max padding-h1">
       <slot />
     </main>
   </BasicPage>

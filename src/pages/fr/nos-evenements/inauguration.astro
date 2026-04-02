@@ -1,0 +1,312 @@
+---
+import { SkeletonPage, BasicPage } from '@layouts'
+import { SEO } from '@components'
+import { Image } from 'astro:assets'
+
+const lang = { code: 'fr' }
+---
+
+<SkeletonPage {lang}>
+  <SEO
+    slot="head"
+    ogType="website"
+    title="Inauguration Wanna Play - 10 juin 2018"
+    description="Retour sur l'événement fondateur de Wanna Play : l'invocation de Ruego."
+    socialImage={'/archive/images/mailChimp_header-invitation-2.png'}
+    ogVideo={false}
+    twitterCard="summary"
+  />
+
+  <BasicPage {lang}>
+    <main class="center max" style="margin-top: 0;">
+      <header class="flow gap-h4 center text">
+        <Image
+          src="/archive/images/mailChimp_header-invitation-2.png"
+          alt="Inauguration"
+          width={600}
+          height={200}
+          style="width: 100%; height: auto; border-radius: var(--border-radius-m);"
+        />
+        <h1>Inauguration et soirée jeux</h1>
+        <p><strong>Dimanche 10 juin 2018 à 16h</strong></p>
+      </header>
+
+      <section class="flow gap-h4 padding-y-h1">
+        <p>
+          Il y a de ça un an maintenant, nous sommes partis en quête pour libérer les joueurs de
+          leurs entraves. Aujourd'hui, plus que jamais, le mal nous menace mais la rébellion est en
+          marche et l'espoir grandit tous les jours dans le cœur des vaillants résistants !
+        </p>
+
+        <div class="flow gap-h4 center text">
+          <h3>Inscris-toi !</h3>
+          <p class="color-red">C'est obligatoire mais gratuit</p>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="flow gap-h4 padding-y-h1">
+        <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">+110</p>
+            <p>joueurs</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">11</p>
+            <p>partenaires</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">+70</p>
+            <p>jeux proposés</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">40</p>
+            <p>tables créées</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">16</p>
+            <p>interviews</p>
+          </li>
+          <li
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">8</p>
+            <p>jeux offerts (Asmodee)</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Règles du jeu -->
+      <section class="flow gap-h4 padding-y-h1">
+        <h2>Règles du jeu</h2>
+
+        <div class="cluster gap-h1 center text" style="--width-column: 130px;">
+          <div class="flow gap-down-h6">
+            <img
+              src="/archive/images/icone-invit-mailing-02.png"
+              alt=""
+              style="width: 120px; margin: auto;"
+            />
+            <p><strong>16h &gt; 22h</strong></p>
+          </div>
+          <div class="flow gap-down-h6">
+            <img
+              src="/archive/images/icone-invit-mailing-03.png"
+              alt=""
+              style="width: 120px; margin: auto;"
+            />
+            <p><strong>3 &gt; 99 ans</strong></p>
+          </div>
+          <div class="flow gap-down-h6">
+            <img
+              src="/archive/images/icone-invit-mailing-04.png"
+              alt=""
+              style="width: 120px; margin: auto;"
+            />
+            <p><strong>Coopératif</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- But du jeu -->
+      <section class="flow gap-h4 padding-y-h1">
+        <h3>But du jeu</h3>
+        <p>
+          Le temps d'une soirée, nous célébrons <strong>Ruego, le jinn du jeu</strong>. Enchaîne les
+          parties de tes jeux préférés pour attirer ses faveurs !
+        </p>
+
+        <h3>Déroulement de la "party"</h3>
+        <p>
+          <strong>Accueil des joueurs</strong> • <strong>Explication des règles</strong> •
+          <strong>Organisation de tables</strong> • <strong>Et autres surprises…</strong>
+        </p>
+      </section>
+
+      <!-- Phases de jeu -->
+      <section class="flow gap-h4 padding-y-h1">
+        <h3>Phases de jeu</h3>
+        <div class="cluster gap-h1 center text">
+          <div class="flow gap-h6">
+            <img src="/archive/images/WP-MailChimp-invit-02.png" alt="" />
+            <p>Un verre au bar</p>
+          </div>
+          <div class="flow gap-h6">
+            <img src="/archive/images/WP-MailChimp-invit-03.png" alt="" />
+            <p>Grignotages</p>
+          </div>
+          <div class="flow gap-h6">
+            <img src="/archive/images/WP-MailChimp-invit-04.png" alt="" />
+            <p>Rencontres</p>
+          </div>
+          <div class="flow gap-h6">
+            <img src="/archive/images/WP-MailChimp-invit-05.png" alt="" />
+            <p>Jeux</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mise en place -->
+      <section class="flow gap-h4 padding-y-h1">
+        <h3>Mise en place</h3>
+        <div class="flex flow horizontal gap-h1 center text">
+          <div class="flow gap-h6">
+            <img
+              src="/archive/images/icone-invit-mailing-08.png"
+              alt=""
+              style="width: 100px; margin: auto;"
+            />
+            <p>Dimanche <strong>10 juin</strong> 2018<br /><strong>16h</strong></p>
+          </div>
+          <div class="flow gap-h6">
+            <img
+              src="/archive/images/icone-invit-mailing-09.png"
+              alt=""
+              style="width: 100px; margin: auto;"
+            />
+            <p><strong>Espace Maurice Carême</strong><br />rue du Chapelain 1-7, Anderlecht</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sur place (tilted card) -->
+      <section class="flow gap-h4 padding-y-h1">
+        <div class="flow gap-h5">
+          <h3>Sur place</h3>
+          <div class="flex flow horizontal justify-around gap-h4">
+            <div class="flow gap-h8">
+              <img
+                src="/archive/images/icone-invit-mailing-10.png"
+                alt=""
+                style="width: 100px; margin: auto;"
+              />
+              <p>Garderie</p>
+            </div>
+            <div class="flow gap-h8">
+              <img
+                src="/archive/images/icone-invit-mailing-12.png"
+                alt=""
+                style="width: 100px; margin: auto;"
+              />
+              <p>Accessibilité</p>
+            </div>
+            <div class="flow gap-h8">
+              <img
+                src="/archive/images/icone-invit-mailing-11.png"
+                alt=""
+                style="width: 100px; margin: auto;"
+              />
+              <p>Terrasse</p>
+            </div>
+            <div class="flow gap-h8">
+              <img
+                src="/archive/images/icone-invit-mailing-13.png"
+                alt=""
+                style="width: 100px; margin: auto;"
+              />
+              <p>WC</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partenaires -->
+      <section class="flow gap-h4 padding-y-h1">
+        <div class="center">
+          <img src="/archive/images/mailChimp_header-partenaires.png" alt="Partenaires" />
+        </div>
+
+        <!-- Partenaires principaux -->
+        <div class="flow gap-h4">
+          <div>
+            <img src="/archive/images/ASMODEE.png" alt="Asmodee" />
+            <img src="/archive/images/espace-careme.jpg" alt="Espace Carême" />
+          </div>
+        </div>
+
+        <!-- Autres partenaires -->
+        <div class="flow gap-h4">
+          <div>
+            <img src="/archive/images/Ludivine.png" alt="Ludivine" class="partner-logo" />
+            <img src="/archive/images/casse-noisettes.png" alt="Casse-Noisettes" />
+            <img src="/archive/images/lets-play-together.png" alt="Let's Play Together" />
+            <img src="/archive/images/the-cookie-tree.jpg" alt="The Cookie Tree" />
+            <img src="/archive/images/jeux-spellen-1082.png" alt="Jeux Spellen" />
+            <img src="/archive/images/Geek-Attitude-Games-01.png" alt="GAG" class="partner-logo" />
+            <img src="/archive/images/jeuxsticiers.png" alt="Jeuxsticiers" class="partner-logo" />
+            <img src="/archive/images/ace_workshops.png" alt="Ace Workshops" class="partner-logo" />
+            <img
+              src="/archive/images/ReposProduction.png"
+              alt="Repos Production"
+              class="partner-logo"
+            />
+            <img src="/archive/images/de-joueur.png" alt="De Joueur" class="partner-logo" />
+            <img src="/archive/images/govinda-box.png" alt="Govinda" class="partner-logo" />
+            <img
+              src="/archive/images/Des-jeux-une-fois.png"
+              alt="Des jeux une fois"
+              class="partner-logo"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Vidéo -->
+      <section class="flow gap-h4 padding-y-h1">
+        <h3>Souvenirs en vidéo</h3>
+        <iframe
+          width="100%"
+          height="315"
+          src="https://www.youtube.com/embed/laySniWhIU4"
+          frameborder="0"
+          allowfullscreen></iframe>
+      </section>
+    </main>
+  </BasicPage>
+</SkeletonPage>
+
+<style>
+  /* Tilted "sur place" card */
+  .sur-place-box {
+    transform: rotate(-3deg);
+    margin: var(--size-h3) auto;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: var(--shadow-raised-s);
+  }
+
+  /* Stat numbers — use color-primary from palette */
+  .stat-nb {
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  /* Color helpers not in the global system */
+  .color-primary {
+    color: var(--color-primary);
+  }
+  .color-secondary {
+    color: var(--color-secondary);
+  }
+  .color-red {
+    color: var(--color-red);
+  }
+
+  /* Partner logos */
+  .partner-logo {
+    height: 70px;
+    width: 70px;
+    object-fit: contain;
+  }
+</style>

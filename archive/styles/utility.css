@@ -1,0 +1,116 @@
+.hidden {
+  display: none;
+}
+/* Can overlay a background image */
+.background-overlay {
+  box-shadow: inset 0 0 0 9999px var(--color-bg);
+}
+
+/* Breakout clickable element. */
+/* As seen here: https://piccalil.li/tutorial/create-a-semantic-break-out-button-to-make-an-entire-element-clickable/ */
+.breakout-clickable {
+  position: relative;
+  /* cursor: pointer; */
+  /* transition: transform 300ms ease-in-out, box-shadow 400ms ease, background 100ms ease; */
+  --shadow-breakout-clickable: var(--shadow-raised-s);
+  --shadow-breakout-clickable-hover: var(--shadow-raised-m);
+  box-shadow: var(--shadow-breakout-clickable);
+}
+.breakout-clickable .clickable::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.breakout-clickable:hover,
+.breakout-clickable:focus-within {
+  /* box-shadow: 0 0.5rem 0.5rem var(--color-shadow); */
+  /* box-shadow: 0 30px 60px -20px rgb(0 0 0 / 20%), 0 50px 100px -10px rgb(23 41 64 / 10%); */
+  box-shadow: var(--shadow-breakout-clickable-hover);
+  transform: translateY(-0.2rem);
+}
+.breakout-clickable .clickable:focus {
+  outline: none;
+}
+.breakout-clickable .clickable:focus::after {
+  outline: 1px solid;
+  outline-offset: calc(var(--gap) / 2 * -1);
+}
+
+/* Full Bleed: break out of a reduced width */
+/* As seen here: https://piccalil.li/tutorial/creating-a-full-bleed-css-utility/ */
+.full-bleed,
+.full-bleed-before::before,
+.full-bleed-after::after {
+  /* --full-bleed-max-width: 2000px; */
+  width: 100vw;
+  width: min(100vw, var(--full-bleed-max-width, 100vw));
+  margin-left: calc(50% - 50vw);
+  margin-left: calc(50% - min(100vw, var(--full-bleed-max-width, 100vw)) / 2);
+}
+.full-bleed-before,
+.full-bleed-after {
+  position: relative;
+  /* isolation: isolate; */
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+    display: block;
+    background: inherit;
+    inset: 0;
+    z-index: -1;
+  }
+}
+
+/* Skew border */
+.skew-border-after,
+.skew-border-before {
+  position: relative;
+  z-index: 0;
+}
+.skew-border-after:after,
+.skew-border-before::before {
+  background: inherit;
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: -1;
+}
+.skew-border-before::before {
+  transform: skewY(var(--skew-before, -1deg));
+  transform-origin: var(--skew-before-origin, top left);
+}
+.skew-border-after:after {
+  transform: skewY(var(--skew-after, 1deg));
+  transform-origin: var(--skew-after-origin, bottom left);
+}
+
+.block {
+  display: block;
+}
+
+.pagefind-ui__drawer {
+  position: absolute;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius-s);
+  padding: 0 20px 20px;
+  overflow: auto;
+  max-height: 80vh;
+  width: 100%;
+}
+
+.text-overflow-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -360,19 +360,19 @@ button, .button { border-width: var(--size-border-button) }
 .size-border-m { --size-border: var(--size-border-m); } /* prettier-ignore */
 .size-border-l { --size-border: var(--size-border-l); } /* prettier-ignore */
 /* --- GAP Sub-contexts --- */ /* prettier-ignore */
-.gap-0, .gap-0-down > *, .gap-down-0 > *, .no-gap, .no-gap-down > *, .no-down-gap > * { --gap: 0; } /* prettier-ignore */
-.gap-h-1, .gap-h-1-down > *, .gap-down-h-1 > * { --gap: var(--size-h-1); } /* prettier-ignore */
-.gap-h0, .gap-h0-down > *, .gap-down-h0 > * { --gap: var(--size-h0); } /* prettier-ignore */
-.gap-h1, .gap-h1-down > *, .gap-down-h1 > * { --gap: var(--size-h1); } /* prettier-ignore */
-.gap-h2, .gap-h2-down > *, .gap-down-h2 > * { --gap: var(--size-h2); } /* prettier-ignore */
-.gap-h3, .gap-h3-down > *, .gap-down-h3 > * { --gap: var(--size-h3); } /* prettier-ignore */
-.gap-p, .gap-p-down > *, .gap-down-p > * { --gap: var(--size-p); } /* prettier-ignore */
-.gap-h4, .gap-h4-down > *, .gap-down-h4 > * { --gap: var(--size-h4); } /* prettier-ignore */
-.gap-h5, .gap-h5-down > *, .gap-down-h5 > * { --gap: var(--size-h5); } /* prettier-ignore */
-.gap-h6, .gap-h6-down > *, .gap-down-h6 > * { --gap: var(--size-h6); } /* prettier-ignore */
-.gap-h7, .gap-h7-down > *, .gap-down-h7 > * { --gap: var(--size-h7); } /* prettier-ignore */
-.gap-h8, .gap-h8-down > *, .gap-down-h8 > * { --gap: var(--size-h8); } /* prettier-ignore */
-.gap-h9, .gap-h9-down > *, .gap-down-h9 > * { --gap: var(--size-h9); }
+.gap-0, .gap-0-down > *, .gap-down-0 > *, .no-gap, .no-gap-down > *, .no-down-gap > * { --gap: 0; gap: var(--gap); } /* prettier-ignore */
+.gap-h-1, .gap-h-1-down > *, .gap-down-h-1 > * { --gap: var(--size-h-1); gap: var(--gap); } /* prettier-ignore */
+.gap-h0, .gap-h0-down > *, .gap-down-h0 > * { --gap: var(--size-h0); gap: var(--gap); } /* prettier-ignore */
+.gap-h1, .gap-h1-down > *, .gap-down-h1 > * { --gap: var(--size-h1); gap: var(--gap); } /* prettier-ignore */
+.gap-h2, .gap-h2-down > *, .gap-down-h2 > * { --gap: var(--size-h2); gap: var(--gap); } /* prettier-ignore */
+.gap-h3, .gap-h3-down > *, .gap-down-h3 > * { --gap: var(--size-h3); gap: var(--gap); } /* prettier-ignore */
+.gap-p, .gap-p-down > *, .gap-down-p > * { --gap: var(--size-p); gap: var(--gap); } /* prettier-ignore */
+.gap-h4, .gap-h4-down > *, .gap-down-h4 > * { --gap: var(--size-h4); gap: var(--gap); } /* prettier-ignore */
+.gap-h5, .gap-h5-down > *, .gap-down-h5 > * { --gap: var(--size-h5); gap: var(--gap); } /* prettier-ignore */
+.gap-h6, .gap-h6-down > *, .gap-down-h6 > * { --gap: var(--size-h6); gap: var(--gap); } /* prettier-ignore */
+.gap-h7, .gap-h7-down > *, .gap-down-h7 > * { --gap: var(--size-h7); gap: var(--gap); } /* prettier-ignore */
+.gap-h8, .gap-h8-down > *, .gap-down-h8 > * { --gap: var(--size-h8); gap: var(--gap); } /* prettier-ignore */
+.gap-h9, .gap-h9-down > *, .gap-down-h9 > * { --gap: var(--size-h9); gap: var(--gap); }
 /* useful if the gap on the current element is conflicting with a gap it should receive from a parent */ /* prettier-ignore */
 .gap-down > * { --gap: var(--gap-down); } /* prettier-ignore */
 /* Utility classes */ /* prettier-ignore */

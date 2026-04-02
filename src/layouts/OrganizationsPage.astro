@@ -29,254 +29,253 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center width-max">
-      <div id="organizations-list-container" class="box no-border stack gap-down-h1">
+    <main class="center width-max padding-h1">
+      <div id="organizations-list-container" class="box no-border flow gap-h3">
         <IO h1 $skip={!organizations?.[0]} class="center text"> Le jeu de société en Belgique </IO>
         {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
-        <div id="organization-form-filter-wrapper" class="center">
-          <form
-            id="organizationsForm"
-            class="stack horizontal justify-content-center gap-0"
-            style="flex-wrap: wrap; gap: var(--size-h1)"
-          >
-            <div class="popover-filter-wrapper">
-              <button
-                disabled
-                data-remove-disabled
-                popovertarget="area"
-                id="areaBtn"
-                class="max-width-col-5 stack horizontal align-items-center gap-h8"
-                type="button"
-              >
-                <span class="text-overflow-ellipsis">Provinces</span>
-                <Icon
-                  name="gridicons:chevron-down"
-                  title="open provinces menu"
-                  role="img"
-                  style="flex-shrink: 0;"
-                />
-              </button>
-              <div popover id="area" class="padding-h3 border-radius-m align-items-start">
-                <ul class="reset stack gap-h3" style="white-space: nowrap">
-                  {
-                    areas.map(area => {
-                      return (
-                        <li class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={area.code_name}
-                            value={area.code_name}
-                            name="areas"
-                            data-code={area.code_name}
-                            data-label={area.name[lang.code]}
-                          />
-                          <label for={area.code_name}>{area.name[lang.code]}</label>
-                        </li>
-                      )
-                    })
-                  }
-                </ul>
-              </div>
+        <form
+          id="organizationsForm"
+          class="flow horizontal justify-center"
+          style="flex-wrap: wrap; gap: var(--size-h4)"
+        >
+          <div class="popover-filter-wrapper">
+            <button
+              disabled
+              data-remove-disabled
+              popovertarget="area"
+              id="areaBtn"
+              class="max-width-col-5 flow horizontal align-items-center"
+              style="--flow-space: var(--size-h8);"
+              type="button"
+            >
+              <span class="text-overflow-ellipsis">Provinces</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open provinces menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div popover id="area" class="padding-h3 border-radius-m align-items-start">
+              <ul class="reset flow gap-h3" style="white-space: nowrap">
+                {
+                  areas.map(area => {
+                    return (
+                      <li class="flow horizontal align-items-center">
+                        <input
+                          type="checkbox"
+                          id={area.code_name}
+                          value={area.code_name}
+                          name="areas"
+                          data-code={area.code_name}
+                          data-label={area.name[lang.code]}
+                        />
+                        <label for={area.code_name}>{area.name[lang.code]}</label>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
             </div>
-            <div class="popover-filter-wrapper">
-              <button
-                disabled
-                data-remove-disabled
-                popovertarget="organizationType"
-                id="organizationTypeBtn"
-                class="max-width-col-5 stack horizontal align-items-center gap-h8"
-                type="button"
-              >
-                <span class="text-overflow-ellipsis">Types</span>
-                <Icon
-                  name="gridicons:chevron-down"
-                  title="open types menu"
-                  role="img"
-                  style="flex-shrink: 0;"
-                />
-              </button>
-              <div
-                popover
-                id="organizationType"
-                class="padding-h3 border-radius-m align-items-start"
-              >
-                <ul class="reset stack gap-h3" style="white-space: nowrap">
-                  {
-                    organizationTypes.map(d => {
-                      const label = d.translations.find(
-                        t => t.language_code === lang.code
-                      ).default_label
-                      return (
-                        <li class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={d.code_name}
-                            value={d.code_name}
-                            name="types"
-                            data-code={d.code_name}
-                            data-label={label}
-                          />
-                          <label for={d.code_name}>{label}</label>
-                        </li>
-                      )
-                    })
-                  }
-                </ul>
-              </div>
+          </div>
+          <div class="popover-filter-wrapper">
+            <button
+              disabled
+              data-remove-disabled
+              popovertarget="organizationType"
+              id="organizationTypeBtn"
+              class="max-width-col-5 flow horizontal align-items-center"
+              style="--flow-space: var(--size-h8);"
+              type="button"
+            >
+              <span class="text-overflow-ellipsis">Types</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open types menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div popover id="organizationType" class="padding-h3 border-radius-m align-items-start">
+              <ul class="reset flow gap-h3" style="white-space: nowrap">
+                {
+                  organizationTypes.map(d => {
+                    const label = d.translations.find(
+                      t => t.language_code === lang.code
+                    ).default_label
+                    return (
+                      <li class="flow horizontal align-items-center">
+                        <input
+                          type="checkbox"
+                          id={d.code_name}
+                          value={d.code_name}
+                          name="types"
+                          data-code={d.code_name}
+                          data-label={label}
+                        />
+                        <label for={d.code_name}>{label}</label>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
             </div>
-            <div class="popover-filter-wrapper">
-              <button
-                disabled
-                data-remove-disabled
-                popovertarget="service"
-                id="serviceBtn"
-                class="max-width-col-5 stack horizontal align-items-center gap-h8"
-                type="button"
-              >
-                <span class="text-overflow-ellipsis">Services</span>
-                <Icon
-                  name="gridicons:chevron-down"
-                  title="open services menu"
-                  role="img"
-                  style="flex-shrink: 0;"
-                />
-              </button>
-              <div popover id="service" class="padding-h3 border-radius-m align-items-start">
-                <ul class="reset stack gap-h3" style="white-space: nowrap">
-                  {
-                    gamesRelatedServices.map(d => {
-                      const label = d.translations.find(
-                        t => t.language_code === lang.code
-                      ).default_label
+          </div>
 
-                      return (
-                        <li class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={d.code_name}
-                            value={d.code_name}
-                            name="services"
-                            data-code={d.code_name}
-                            data-label={label}
-                          />
-                          <label for={d.code_name}>{label}</label>
-                        </li>
-                      )
-                    })
-                  }
-                </ul>
-              </div>
+          <div class="popover-filter-wrapper">
+            <button
+              disabled
+              data-remove-disabled
+              popovertarget="service"
+              id="serviceBtn"
+              class="max-width-col-5 flow horizontal align-items-center"
+              style="--flow-space: var(--size-h8);"
+              type="button"
+            >
+              <span class="text-overflow-ellipsis">Services</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open services menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div popover id="service" class="padding-h3 border-radius-m align-items-start">
+              <ul class="reset flow gap-h3" style="white-space: nowrap">
+                {
+                  gamesRelatedServices.map(d => {
+                    const label = d.translations.find(
+                      t => t.language_code === lang.code
+                    ).default_label
+
+                    return (
+                      <li class="flow horizontal align-items-center">
+                        <input
+                          type="checkbox"
+                          id={d.code_name}
+                          value={d.code_name}
+                          name="services"
+                          data-code={d.code_name}
+                          data-label={label}
+                        />
+                        <label for={d.code_name}>{label}</label>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
             </div>
-            <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
-          </form>
-        </div>
+          </div>
+
+          <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
+        </form>
 
         <Map itemType="organizations" />
 
-        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
-          <IO ul $skipNoInner class="reset">
-            {
-              organizations?.map((organization, index) => {
-                const {
-                  name,
-                  path,
-                  logo,
-                  typesTranslated,
-                  location,
-                  servicesTranslated,
-                  admin_categories,
-                } = organization
-                const isPartner =
-                  admin_categories?.includes('partner') ||
-                  admin_categories?.includes('badge_default')
+        <IO
+          ul
+          $skipNoInner
+          class="grid-fluid gap-down-h7 reset"
+          style="--width-column-min: var(--width-col-6); --gap-grid: var(--size-h4);"
+        >
+          {
+            organizations?.map((organization, index) => {
+              const {
+                name,
+                path,
+                logo,
+                typesTranslated,
+                location,
+                servicesTranslated,
+                admin_categories,
+              } = organization
+              const isPartner =
+                admin_categories?.includes('partner') || admin_categories?.includes('badge_default')
 
-                const nameIsLong = name.length > 30
+              const nameIsLong = name.length > 30
 
-                return (
-                  <>
-                    {index === 2 && (
-                      <li
-                        class="box no-border border-radius-s spot-pub"
-                        style="display: flex; align-items: center; justify-content: center; background-color: var(--color-teal);"
-                      >
-                        <h2 style="color: white; margin: 0; font-size: clamp(2rem, 4vw, 3.5rem);">
-                          Spot PUB
-                        </h2>
-                      </li>
-                    )}
+              return (
+                <>
+                  {index === 2 && (
                     <li
-                      class={`card-organization
-                      box no-border stack gap-down-h7
+                      class="box no-border border-radius-s spot-pub"
+                      style="display: flex; align-items: center; justify-content: center; background-color: var(--color-teal);"
+                    >
+                      <h2 style="color: white; margin: 0; font-size: clamp(2rem, 4vw, 3.5rem);">
+                        Spot PUB
+                      </h2>
+                    </li>
+                  )}
+                  <li
+                    class={`card-organization
+                      box no-border flow gap-h7
                       border-radius-s
                       breakout-clickable
                       ${isPartner ? 'badge' : ''}`}
-                      style={`--badge-url: url(${badge.src});`}
-                      data-area={location?.area.code_name}
-                      data-types={typesTranslated?.map(t => t.code_name)}
-                      data-services={servicesTranslated?.map(t => t.code_name)}
+                    style={`--badge-url: url(${badge.src});`}
+                    data-area={location?.area.code_name}
+                    data-types={typesTranslated?.map(t => t.code_name)}
+                    data-services={servicesTranslated?.map(t => t.code_name)}
+                  >
+                    {isPartner && (
+                      <div class="badge-hover" title={`${name} est partenaire de Wannaplay`} />
+                    )}
+                    <div
+                      class="center intrinsic"
+                      style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
                     >
-                      {isPartner && (
-                        <div class="badge-hover" title={`${name} est partenaire de Wannaplay`} />
+                      {logo?.src ? (
+                        <ImgDirectus
+                          image={logo}
+                          src={logo?.src}
+                          alt={name}
+                          loading="lazy"
+                          class=""
+                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                          width="120"
+                          height="120"
+                          fit="inside"
+                          quality="99"
+                        />
+                      ) : (
+                        <Img
+                          src={placeholderWPlayCircleBlue}
+                          alt="logo"
+                          loading="lazy"
+                          class=""
+                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                          width="120"
+                          height="120"
+                        />
                       )}
-                      <div
-                        class="center intrinsic"
-                        style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
-                      >
-                        {logo?.src ? (
-                          <ImgDirectus
-                            image={logo}
-                            src={logo?.src}
-                            alt={name}
-                            loading="lazy"
-                            class=""
-                            style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
-                            width="120"
-                            height="120"
-                            fit="inside"
-                            quality="99"
-                          />
-                        ) : (
-                          <Img
-                            src={placeholderWPlayCircleBlue}
-                            alt="logo"
-                            loading="lazy"
-                            class=""
-                            style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
-                            width="120"
-                            height="120"
-                          />
-                        )}
-                      </div>
-                      <h3>
-                        <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
-                          {name}
-                        </a>
-                      </h3>
-                      <IO div $skip={!typesTranslated?.[0]} class="cluster gap-down-h8">
-                        <ul class="reset">
-                          {typesTranslated?.map(type => {
-                            const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
-                            return (
-                              <li
-                                class={`box no-border padding-x-h8 padding-y-h9
+                    </div>
+                    <h3>
+                      <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
+                        {name}
+                      </a>
+                    </h3>
+                    <ul class="cluster gap-h8 reset">
+                      {typesTranslated?.map(type => {
+                        const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
+                        return (
+                          <li
+                            class={`box no-border padding-x-h8 padding-y-h9
                                                             ${currentPalette} color-palette-variation-contrast
                                                             border-radius-s`}
-                              >
-                                {
-                                  type.translations.find(t => t.language_code === lang.code)
-                                    .default_label
-                                }
-                              </li>
-                            )
-                          })}
-                        </ul>
-                      </IO>
-                    </li>
-                  </>
-                )
-              })
-            }
-          </IO>
+                          >
+                            {
+                              type.translations.find(t => t.language_code === lang.code)
+                                .default_label
+                            }
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </li>
+                </>
+              )
+            })
+          }
         </IO>
       </div>
     </main>

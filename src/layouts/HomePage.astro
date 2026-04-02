@@ -86,439 +86,407 @@ const jsonLd = {
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center max">
-      <div class="stack gap-down-h0 box no-border">
-        <hgroup class="max-width-measure-h2 stack center intrinsic gap-down-h-1">
-          <h1>
-            <!-- <img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" id="logo-main" width="4265" height="1834" loading="lazy" /> -->
-            <!-- <Img
+    <main class="flex center max padding-h1 flow gap-h0 box no-border">
+      <hgroup class="max-width-measure-h2 flow center intrinsic gap-h-1">
+        <h1>
+          <!-- <img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" id="logo-main" width="4265" height="1834" loading="lazy" /> -->
+          <!-- <Img
                 src="/src/assets/images/LOGO-1024px.png"
                 alt="Wanna Play - Connecte les joueurs"
                 id="logo-main"
                 width="4265"
                 height="1834"
                 loading="lazy" /> -->
-            <img
-              src="/assets/images/Wanna-Play_ASBL-Animation-1x.gif"
-              alt="Wanna Play - Connecte les joueurs"
-              id="logo-main"
-              width="400"
-              height="190.5"
-              loading="lazy"
-            />
-          </h1>
-          <p class="h1 color-palette-variation-funky">Connecte les joueurs</p>
-        </hgroup>
+          <img
+            src="/assets/images/Wanna-Play_ASBL-Animation-1x.gif"
+            alt="Wanna Play - Connecte les joueurs"
+            id="logo-main"
+            width="400"
+            height="190.5"
+            loading="lazy"
+          />
+        </h1>
+        <p class="h1 color-palette-variation-funky">Connecte les joueurs</p>
+      </hgroup>
 
-        <div class="max-width-measure-h2 center text">
-          <p>
-            Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un
-            club, ...?
-          </p>
-          <p>Retrouve toute l'info liée au monde du jeu de société sur Wanna Play!</p>
-        </div>
+      <div class="max-width-measure-h2 center text">
+        <p>
+          Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un
+          club, ...?
+        </p>
+        <p>Retrouve toute l'info liée au monde du jeu de société sur Wanna Play!</p>
+      </div>
 
-        <!-- Picture Map -->
-        <div class="center">
-          <Img src={paperMapBlue} alt="" loading="eager" class="" style="" width="800" />
-        </div>
+      <!-- Picture Map -->
+      <Img src={paperMapBlue} alt="" loading="eager" class="center" style="" width="800" />
 
-        <!-- SECTION: looking where to play? -->
-        <section
-          class="where-to-play center max text stack gap-down-h1 padding-y-h-1
+      <!-- SECTION: looking where to play? -->
+      <section
+        class="where-to-play max flow gap-down-h1 padding-y-h-1
             full-bleed-before full-bleed-after skew-border-before skew-border-after
             color-palette-variation-contrast"
-        >
-          <div class="stack gap-down-h7">
-            <h2>Tu veux jouer?</h2>
-            <p class="max-width-measure center">
-              Retrouve ici tous les lieux et événements jeu de société en Belgique.
-            </p>
-          </div>
-          <div class="grid" style="--width-column: 12rem;">
-            <div class="">
-              <div class="center text intrinsic stack gap-down-h8 breakout-clickable">
-                <CalendarIcon style="height:120px;" />
-                <a href={'/' + createPath({ type: 'events' }) + '/'} class="h3 clickable"
-                  >Événements jeux</a
-                >
-                <p>(Aprem, soirée jeu, festival,…)</p>
-              </div>
-
-              <div class="center text intrinsic stack gap-down-h8 breakout-clickable">
-                <OrgIcon style="height:120px;" />
-                <a href={'/' + createPath({ type: 'organizations' }) + '/'} class="h3 clickable"
-                  >Organisations ludiques</a
-                >
-                <p>(Boutique, ludothèque, bar à jeux,…)</p>
-              </div>
-              <div class="center text intrinsic stack gap-down-h8 breakout-clickable">
-                <BxlIcon style="height:120px;" />
-                <a href={'/' + createPath({ type: 'areas' }) + '/'} class="h3 clickable"
-                  >Par province</a
-                >
-                <p>(Bruxelles, Namur, Anvers, Liège,…)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- SECTION: Festivals in Belgium -->
-        <section class="next-festivals center max text stack gap-down-h1 padding-y-h-1">
-          <h2>Les prochains festivals de jeu en Belgique</h2>
-          <div class="grid gap-down-h4" style="--width-column: var(--width-col-4);">
-            <ul class="grid-events list reset">
-              {
-                festivals?.map(festival => {
-                  const {
-                    name,
-                    typesTranslated,
-                    location,
-                    cover_image,
-                    organizers,
-                    time_start,
-                    time_end,
-                    isSameDay,
-                  } = festival
-
-                  const srcCover = imageDirectusSrc({
-                    src: cover_image?.src,
-                    width: '1000',
-                    fit: 'cover',
-                    quality: '50',
-                  })
-
-                  return (
-                    <li
-                      class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                      style=""
-                      data-types={typesTranslated?.map(t => t.code_name)}
-                    >
-                      <div
-                        class="card-event-main box no-border padding-h4 with-sidebar gap-h4
-                                          color-palette-trans
-                                          background-overlay
-                                          "
-                        style={
-                          (srcCover
-                            ? `background-image: url("${srcCover}"); `
-                            : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
-                          `--content-min: 80%;`
-                        }
-                      >
-                        <div>
-                          <time
-                            datetime={time_start.dateTimeRaw}
-                            class="timestart stack gap-down-h8 center intrinsic"
-                            style="line-height: 1;"
-                          >
-                            <span class="size-h1">{time_start?.fr?.day}</span>
-                            <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                            <span class="size-h2">{time_start?.fr?.year}</span>
-                          </time>
-                          <div>
-                            <div class="cover no-gap" style="--min-height: 100%;">
-                              <h2 class="h3 centered">
-                                <a
-                                  href={`/${festival.path}/`}
-                                  class="name reset clickable"
-                                  set:html={name}
-                                />
-                              </h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
-                        <p
-                          class="zip city h5"
-                          data-zip={location.postalCode}
-                          data-city={location.addressLocality}
-                          data-latitude={location.geo?.coordinates[1]}
-                          data-longitude={location.geo?.coordinates[0]}
-                        >
-                          {location.addressLocality}
-                        </p>
-                        <ul class="reset stack horizontal">
-                          {organizers?.map(({ name, logo }) => (
-                            <li>
-                              {logo?.src ? (
-                                <ImgDirectus
-                                  image={logo}
-                                  src={logo?.src}
-                                  alt={name}
-                                  loading="lazy"
-                                  class=""
-                                  style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                  width="32"
-                                  height="32"
-                                  fit="inside"
-                                  quality="99"
-                                />
-                              ) : (
-                                <Img
-                                  src={placeholderWPlayCircleBlue}
-                                  alt="logo"
-                                  loading="lazy"
-                                  class=""
-                                  style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                  width="32"
-                                  height="32"
-                                />
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </li>
-                  )
-                })
-              }
-            </ul>
-          </div>
-        </section>
-
-        <!-- SECTION: Meeple on map image -->
-        <div class="cover-map-section full-bleed">
-          <Img src={paperMapTeal} alt="" loading="lazy" class="" style="" width="2000" />
+      >
+        <div class="flow gap-h7 center text">
+          <h2>Tu veux jouer?</h2>
+          <p class="max-width-measure center">
+            Retrouve ici tous les lieux et événements jeu de société en Belgique.
+          </p>
         </div>
+        <div class="grid-fluid" style="--width-column-min: 12rem;">
+          <div class="center text intrinsic flow gap-h8 breakout-clickable">
+            <CalendarIcon style="height:120px;" />
+            <a href={'/' + createPath({ type: 'events' }) + '/'} class="h3 clickable"
+              >Événements jeux</a
+            >
+            <p>(Aprem, soirée jeu, festival,…)</p>
+          </div>
 
-        <!-- SECTION: Festivals in Belgium -->
-        <section class="wplay-events center max text stack gap-down-h1 padding-y-h-1">
-          <h2>Viens rencontrer Wanna Play!</h2>
+          <div class="center text intrinsic flow gap-h8 breakout-clickable">
+            <OrgIcon style="height:120px;" />
+            <a href={'/' + createPath({ type: 'organizations' }) + '/'} class="h3 clickable"
+              >Organisations ludiques</a
+            >
+            <p>(Boutique, ludothèque, bar à jeux,…)</p>
+          </div>
+          <div class="center text intrinsic flow gap-h8 breakout-clickable">
+            <BxlIcon style="height:120px;" />
+            <a href={'/' + createPath({ type: 'areas' }) + '/'} class="h3 clickable">Par province</a
+            >
+            <p>(Bruxelles, Namur, Anvers, Liège,…)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: Festivals in Belgium -->
+      <section class="next-festivals max text flow gap-h1 padding-y-h-1">
+        <h2 class="center text">Les prochains festivals de jeu en Belgique</h2>
+        <ul class="grid-fluid gap-h4 grid-events list reset" style="--width-column-min: 12rem;">
           {
-            wPlayEvents && wPlayEvents.length > 0 ? (
-              <div class="grid gap-down-h4" style="--width-column: var(--width-col-4);">
-                <ul class="grid-events list reset">
-                  {wPlayEvents?.map(event => {
-                    const {
-                      name,
-                      typesTranslated,
-                      location,
-                      cover_image,
-                      organizers,
-                      time_start,
-                      time_end,
-                      isSameDay,
-                    } = event
+            festivals?.map(festival => {
+              const {
+                name,
+                typesTranslated,
+                location,
+                cover_image,
+                organizers,
+                time_start,
+                time_end,
+                isSameDay,
+              } = festival
 
-                    const srcCover = imageDirectusSrc({
-                      src: cover_image?.src,
-                      width: '1000',
-                      fit: 'cover',
-                      quality: '50',
-                    })
+              const srcCover = imageDirectusSrc({
+                src: cover_image?.src,
+                width: '1000',
+                fit: 'cover',
+                quality: '50',
+              })
 
-                    return (
-                      <li
-                        class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                        style=""
-                        data-types={typesTranslated?.map(t => t.code_name)}
-                      >
-                        <div
-                          class="card-event-main box no-border padding-h4 with-sidebar gap-h4
-                                              color-palette-trans
-                                              background-overlay
-                                              "
-                          style={
-                            (srcCover
-                              ? `background-image: url("${srcCover}"); `
-                              : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
-                            `--content-min: 80%;`
-                          }
-                        >
-                          <div>
-                            <time
-                              datetime={time_start.dateTimeRaw}
-                              class="timestart stack gap-down-h8 center intrinsic"
-                              style="line-height: 1;"
-                            >
-                              <span class="size-h1">{time_start?.fr?.day}</span>
-                              <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                              <span class="size-h2">{time_start?.fr?.year}</span>
-                            </time>
-                            <div>
-                              <div class="cover no-gap" style="--min-height: 100%;">
-                                <h2 class="h3 centered">
-                                  <a
-                                    href={`/${event.path}/`}
-                                    class="name reset clickable"
-                                    set:html={name}
-                                  />
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
-                          <p
-                            class="zip city h5"
-                            data-zip={location.postalCode}
-                            data-city={location.addressLocality}
-                            data-latitude={location.geo?.coordinates[1]}
-                            data-longitude={location.geo?.coordinates[0]}
-                          >
-                            {location.addressLocality}
-                          </p>
-                          <ul class="reset stack horizontal">
-                            {organizers?.map(({ name, logo }) => (
-                              <li>
-                                {logo?.src ? (
-                                  <ImgDirectus
-                                    image={logo}
-                                    src={logo?.src}
-                                    alt={name}
-                                    loading="lazy"
-                                    class=""
-                                    style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                    width="32"
-                                    height="32"
-                                    fit="inside"
-                                    quality="99"
-                                  />
-                                ) : (
-                                  <Img
-                                    src={placeholderWPlayCircleBlue}
-                                    alt="logo"
-                                    loading="lazy"
-                                    class=""
-                                    style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                    width="32"
-                                    height="32"
-                                  />
-                                )}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            ) : (
-              <>
-                <p>
-                  Nous n'avons pas d'événement prévu pour l'instant.
-                  <br />
-                  N'hésite pas à nous contacter.
-                </p>
-                <p>
-                  <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">
-                    Nous contacter
-                  </a>
-                </p>
-              </>
-            )
+              return (
+                <li
+                  class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                  style=""
+                  data-types={typesTranslated?.map(t => t.code_name)}
+                >
+                  <div
+                    class="card-event-main box no-border padding-h4 flow gap-h4 color-palette-trans background-overlay "
+                    style={
+                      srcCover
+                        ? `background-image: url("${srcCover}"); `
+                        : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`
+                    }
+                  >
+                    <time
+                      datetime={time_start.dateTimeRaw}
+                      class="timestart flow center intrinsic"
+                      style="line-height: 1; --flow-space: var(--size-h8);"
+                    >
+                      <span class="size-h1">{time_start?.fr?.day}</span>
+                      <span class="size-h2">{time_start?.fr?.monthShort}</span>
+                      <span class="size-h2">{time_start?.fr?.year}</span>
+                    </time>
+                    <div class="flow justify-center no-gap">
+                      <h2 class="h3 centered">
+                        <a
+                          href={`/${festival.path}/`}
+                          class="name reset clickable"
+                          set:html={name}
+                        />
+                      </h2>
+                    </div>
+                  </div>
+                  <div class="card-event-footer box no-border padding-h8 flow horizontal justify-between">
+                    <p
+                      class="zip city h5"
+                      data-zip={location.postalCode}
+                      data-city={location.addressLocality}
+                      data-latitude={location.geo?.coordinates[1]}
+                      data-longitude={location.geo?.coordinates[0]}
+                    >
+                      {location.addressLocality}
+                    </p>
+                    <ul class="reset flow horizontal">
+                      {organizers?.map(({ name, logo }) => (
+                        <li>
+                          {logo?.src ? (
+                            <ImgDirectus
+                              image={logo}
+                              src={logo?.src}
+                              alt={name}
+                              loading="lazy"
+                              class=""
+                              style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                              width="32"
+                              height="32"
+                              fit="inside"
+                              quality="99"
+                            />
+                          ) : (
+                            <Img
+                              src={placeholderWPlayCircleBlue}
+                              alt="logo"
+                              loading="lazy"
+                              class=""
+                              style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                              width="32"
+                              height="32"
+                            />
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              )
+            })
           }
-        </section>
+        </ul>
+      </section>
 
-        <!-- SECTION: Animation services -->
-        <section
-          class="animation-services stack gap-down-h1 color-palette-variation-funky-contrast full-bleed-before padding-y-h-1"
-        >
-          <div class="center max stack gap-down-h1">
-            <div class="max-width-measure center text stack gap-down-h7">
-              <h2>Services d'animation</h2>
-              <p>Envie d'apporter une dimension ludique à ton événement?</p>
-              <p>
-                Que tu sois une organisation publique, une entreprise ou une association, nous
-                transformons tes événements en véritables expériences immersives. Grâce aux jeux de
-                société, aux techniques d'escape game ou aux jeux de piste par exemple, nous créons
-                des moments de convivialité et de collaboration, adaptés à tes objectifs et à ton
-                public.
+      <!-- SECTION: Meeple on map image -->
+      <div class="cover-map-section full-bleed">
+        <Img src={paperMapTeal} alt="" loading="lazy" class="" style="" width="2000" />
+      </div>
+
+      <!-- SECTION: Festivals in Belgium -->
+      <section class="wplay-events max flow gap-h1 padding-y-h-1">
+        <h2 class="center text">Viens rencontrer Wanna Play!</h2>
+        {
+          wPlayEvents && wPlayEvents.length > 0 ? (
+            <ul class="grid-fluid gap-h4 grid-events list reset" style="--width-column-min: 12rem;">
+              {wPlayEvents?.map(event => {
+                const {
+                  name,
+                  typesTranslated,
+                  location,
+                  cover_image,
+                  organizers,
+                  time_start,
+                  time_end,
+                  isSameDay,
+                } = event
+
+                const srcCover = imageDirectusSrc({
+                  src: cover_image?.src,
+                  width: '1000',
+                  fit: 'cover',
+                  quality: '50',
+                })
+
+                return (
+                  <li
+                    class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                    style=""
+                    data-types={typesTranslated?.map(t => t.code_name)}
+                  >
+                    <div
+                      class="card-event-main box no-border padding-h4 flow gap-h4 color-palette-trans background-overlay "
+                      style={
+                        srcCover
+                          ? `background-image: url("${srcCover}"); `
+                          : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`
+                      }
+                    >
+                      <time
+                        datetime={time_start.dateTimeRaw}
+                        class="timestart flow center intrinsic"
+                        style="line-height: 1; --flow-space: var(--size-h8);"
+                      >
+                        <span class="size-h1">{time_start?.fr?.day}</span>
+                        <span class="size-h2">{time_start?.fr?.monthShort}</span>
+                        <span class="size-h2">{time_start?.fr?.year}</span>
+                      </time>
+                      <div class="flow justify-center no-gap">
+                        <h2 class="h3 centered">
+                          <a
+                            href={`/${event.path}/`}
+                            class="name reset clickable"
+                            set:html={name}
+                          />
+                        </h2>
+                      </div>
+                    </div>
+                    <div class="card-event-footer box no-border padding-h8 flow horizontal justify-between">
+                      <p
+                        class="zip city h5"
+                        data-zip={location.postalCode}
+                        data-city={location.addressLocality}
+                        data-latitude={location.geo?.coordinates[1]}
+                        data-longitude={location.geo?.coordinates[0]}
+                      >
+                        {location.addressLocality}
+                      </p>
+                      <ul class="reset flow horizontal">
+                        {organizers?.map(({ name, logo }) => (
+                          <li>
+                            {logo?.src ? (
+                              <ImgDirectus
+                                image={logo}
+                                src={logo?.src}
+                                alt={name}
+                                loading="lazy"
+                                class=""
+                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                width="32"
+                                height="32"
+                                fit="inside"
+                                quality="99"
+                              />
+                            ) : (
+                              <Img
+                                src={placeholderWPlayCircleBlue}
+                                alt="logo"
+                                loading="lazy"
+                                class=""
+                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                width="32"
+                                height="32"
+                              />
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+          ) : (
+            <>
+              <p class="center text">
+                Nous n'avons pas d'événement prévu pour l'instant.
+                <br />
+                N'hésite pas à nous contacter.
               </p>
-            </div>
-          </div>
-          <div class="coordination">
-            <div class="img-container">
-              <Img src={animationCoord} alt="" loading="lazy" class="" style="" width="500" />
-            </div>
-            <div>
-              <h3>Coordination d'animations</h3>
-              <p>Des expériences ludiques et immersives pour tous.</p>
-              <p>
-                Que ce soit pour renforcer la cohésion d'équipe, dynamiser tes formations ou
-                simplement offrir un moment de détente, nos animations ludiques s'adaptent à tes
-                besoins. Avec une approche personnalisée, nous proposons des activités variées:
+              <p class="center text">
+                <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">
+                  Nous contacter
+                </a>
               </p>
-              <ul>
-                <li>
-                  Jeux de société modernes: des classiques aux nouveautés, notre catalogue répond à
-                  tous les goûts.
-                </li>
-                <li>
-                  Jeux géants et jeux d'habilité: bonne ambiance garantie autour d'un jeu d'habilité
-                  en solo ou par équipes.
-                </li>
-                <li>
-                  Escape games et jeux de piste: enquêtes, énigmes et défis, parfaits pour des
-                  expériences engageantes en équipe.
-                </li>
-                <li>
-                  Animations sur mesure: nous concevons des activités adaptées à ton thème ou
-                  événement particulier.
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="network">
-            <div class="img-container">
-              <Img src={animationNetwork} alt="" loading="lazy" class="" style="" width="500" />
-            </div>
-            <div class="reversible">
-              <h3>Réseau d'animateurs ludiques</h3>
-              <p>Un Réseau d'animateurs passionnés dans toute la Belgique.</p>
-              <p>
-                Chez Wanna Play, nous collaborons avec des animateurs expérimentés partout en
-                Belgique pour garantir des prestations de qualité.
-              </p>
-              <p>
-                Nos animateurs partagent la passion du jeu et apportent leur expertise pour assurer
-                des animations professionnelles et divertissantes, où que tu sois.
-              </p>
-            </div>
+            </>
+          )
+        }
+      </section>
+
+      <!-- SECTION: Animation services -->
+      <section
+        class="animation-services flow gap-h1 color-palette-variation-funky-contrast full-bleed-before padding-y-h-1"
+      >
+        <div class="flex max-width-measure center max text flow gap-h7">
+          <h2>Services d'animation</h2>
+          <p>Envie d'apporter une dimension ludique à ton événement?</p>
+          <p>
+            Que tu sois une organisation publique, une entreprise ou une association, nous
+            transformons tes événements en véritables expériences immersives. Grâce aux jeux de
+            société, aux techniques d'escape game ou aux jeux de piste par exemple, nous créons des
+            moments de convivialité et de collaboration, adaptés à tes objectifs et à ton public.
+          </p>
+        </div>
+        <div class="coordination">
+          <div class="img-container">
+            <Img src={animationCoord} alt="" loading="lazy" class="" style="" width="500" />
           </div>
           <div>
-            <div class="center max text stack gap-down-h1">
-              <p>
-                <strong
-                  >Envie d'en savoir plus sur nos sevices ou de rejoindre notre réseau d'animateurs?</strong
-                >
-              </p>
-              <p>
-                <strong
-                  ><a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7"
-                    >Contacte-nous</a
-                  ></strong
-                >
-              </p>
-            </div>
+            <h3>Coordination d'animations</h3>
+            <p>Des expériences ludiques et immersives pour tous.</p>
+            <p>
+              Que ce soit pour renforcer la cohésion d'équipe, dynamiser tes formations ou
+              simplement offrir un moment de détente, nos animations ludiques s'adaptent à tes
+              besoins. Avec une approche personnalisée, nous proposons des activités variées:
+            </p>
+            <ul>
+              <li>
+                Jeux de société modernes: des classiques aux nouveautés, notre catalogue répond à
+                tous les goûts.
+              </li>
+              <li>
+                Jeux géants et jeux d'habilité: bonne ambiance garantie autour d'un jeu d'habilité
+                en solo ou par équipes.
+              </li>
+              <li>
+                Escape games et jeux de piste: enquêtes, énigmes et défis, parfaits pour des
+                expériences engageantes en équipe.
+              </li>
+              <li>
+                Animations sur mesure: nous concevons des activités adaptées à ton thème ou
+                événement particulier.
+              </li>
+            </ul>
           </div>
-        </section>
-        <!-- SECTION: Volunteers image -->
-        <div class="cover-volunteers-section full-bleed">
-          <Img src={volunteersFestival} alt="" loading="lazy" class="" style="" width="2000" />
         </div>
-
-        <!-- SECTION: ASBL -->
-        <section class="home-asbl center text stack gap-down-h1">
-          <h2>L'ASBL</h2>
+        <div class="network">
+          <div class="img-container">
+            <Img src={animationNetwork} alt="" loading="lazy" class="" style="" width="500" />
+          </div>
+          <div class="reversible">
+            <h3>Réseau d'animateurs ludiques</h3>
+            <p>Un Réseau d'animateurs passionnés dans toute la Belgique.</p>
+            <p>
+              Chez Wanna Play, nous collaborons avec des animateurs expérimentés partout en Belgique
+              pour garantir des prestations de qualité.
+            </p>
+            <p>
+              Nos animateurs partagent la passion du jeu et apportent leur expertise pour assurer
+              des animations professionnelles et divertissantes, où que tu sois.
+            </p>
+          </div>
+        </div>
+        <div class="flex center max text flow gap-h1">
           <p>
-            Wanna Play est <a href="/fr/projet/">une ASBL</a> qui vise depuis 2017 à connecter les joueurs
-            et les différents acteurs du monde du jeu, tant particuliers que professionnels. Notre mission
-            est de renforcer le réseau ludique belge, de créer plus de lien entre ses différents acteurs
-            et de créer des opportunités pour le développer d'avantage. Si tu veux en savoir plus, on
-            a une page dédiée à <a href="/fr/projet/">l'historique du projet</a> et une autre pour présenter
-            <a href="/fr/equipe/">l'équipe</a>. Si tu es curieux, n'hésite pas à nous contacter!
-          </p>
-          <p>
-            <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7"
-              >Je suis curieux⋅se</a
+            <strong
+              >Envie d'en savoir plus sur nos sevices ou de rejoindre notre réseau d'animateurs?</strong
             >
           </p>
-        </section>
+          <p>
+            <strong
+              ><a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7"
+                >Contacte-nous</a
+              ></strong
+            >
+          </p>
+        </div>
+      </section>
+      <!-- SECTION: Volunteers image -->
+      <div class="cover-volunteers-section full-bleed">
+        <Img src={volunteersFestival} alt="" loading="lazy" class="" style="" width="2000" />
       </div>
+
+      <!-- SECTION: ASBL -->
+      <section class="home-asbl center text flex flow gap-h1">
+        <h2>L'ASBL</h2>
+        <p>
+          Wanna Play est <a href="/fr/projet/">une ASBL</a> qui vise depuis 2017 à connecter les joueurs
+          et les différents acteurs du monde du jeu, tant particuliers que professionnels. Notre mission
+          est de renforcer le réseau ludique belge, de créer plus de lien entre ses différents acteurs
+          et de créer des opportunités pour le développer d'avantage. Si tu veux en savoir plus, on a
+          une page dédiée à <a href="/fr/projet/">l'historique du projet</a> et une autre pour présenter
+          <a href="/fr/equipe/">l'équipe</a>. Si tu es curieux, n'hésite pas à nous contacter!
+        </p>
+        <p>
+          <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7"
+            >Je suis curieux⋅se</a
+          >
+        </p>
+      </section>
 
       {
         /* <section

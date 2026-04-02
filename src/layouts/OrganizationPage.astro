@@ -213,7 +213,7 @@ if (jsonldType === 'Library') {
     <main class="center max" style="margin-top: 0;">
       <header>
         <div
-          class="center text box no-border stack gap-down-h7
+          class="flex center text box no-border flow gap-h7
             color-palette-trans
             h1 padding-y-relative-xl
             background-overlay"
@@ -270,7 +270,7 @@ if (jsonldType === 'Library') {
       {
         (servicesTranslated?.[0] || amenities_translated?.[0]) && (
           <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
-            <ul class="reset">
+            <ul class="reset flow horizontal">
               <>
                 {servicesTranslated?.map(service => (
                   <li
@@ -309,10 +309,10 @@ if (jsonldType === 'Library') {
         color-palette-variation-funky-contrast
       "
           >
-            <div class="center max-width-measure-h4 stack gap-down-h7 recursive">
+            <div class="center max-width-measure-h4 flow gap-down-h7 recursive">
               <h2>Horaires</h2>
               {opening_hours_strings?.[0] && (
-                <div class="stack gap-down-h9">
+                <div class="flow gap-h9">
                   {opening_hours_strings.map(str => (
                     <p set:html={str} />
                   ))}
@@ -339,13 +339,12 @@ if (jsonldType === 'Library') {
       {
         (rich_text_content && (
           <div
-            class="
+            class="flex
         rich-text-content
         box no-border center
         max-width-measure-h4
-        stack
+        flow gap-h7
       "
-            style="--gap:1em"
             set:html={rich_text_content}
           />
         )) ||
@@ -355,11 +354,11 @@ if (jsonldType === 'Library') {
         description
         box no-border center
         max-width-measure-h4
-        stack gap-down-h7
+        flow gap-h7
       "
             >
               <h2>Description</h2>
-              <Markdown content={description} class="stack" style="--gap:1em" />
+              <Markdown content={description} class="flow gap-h7" />
             </div>
           ))
       }
@@ -367,7 +366,7 @@ if (jsonldType === 'Library') {
       {
         links?.[0] && (
           <div class="box no-border cluster center max-width-measure-h4">
-            <ul class="reset justify-content-space-around">
+            <ul class="reset justify-around flow horizontal">
               {links.map(({ name, url, iconName }) => {
                 const followPolicy = name?.code_name === 'website' ? 'dofollow' : 'nofollow'
                 return (
@@ -377,7 +376,7 @@ if (jsonldType === 'Library') {
                       target="_blank"
                       rel={`noopener noreferrer ${followPolicy}`}
                       class="
-                  box no-border stack center intrinsic gap-down-h8
+                  box no-border flow center intrinsic gap-h8
                 "
                     >
                       <Icon name={iconName} size="1em" class="size-h1" />
@@ -392,12 +391,12 @@ if (jsonldType === 'Library') {
       }
       {
         events?.[0] && (
-          <div class="box no-border stack gap-down-h4">
+          <div class="box no-border flow gap-down-h4">
             <h2>Prochains événements</h2>
             <IO
               div
               $skipNoInner
-              class="grid gap-down-h4"
+              class="grid-fluid gap-down-h4"
               style="--width-column: var(--width-col-3);"
             >
               <IO ul $skip={!events?.[0]?.name} class="list reset">
@@ -431,7 +430,7 @@ if (jsonldType === 'Library') {
                         <div>
                           <time
                             datetime={time_start.dateTimeRaw}
-                            class="timestart stack gap-down-h8 center intrinsic"
+                            class="timestart flow gap-down-h8 center intrinsic"
                             style="line-height: 1;"
                           >
                             <span class="size-h1">{time_start?.fr?.day}</span>
@@ -451,7 +450,7 @@ if (jsonldType === 'Library') {
                           </div>
                         </div>
                       </div>
-                      <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                      <div class="card-event-footer box no-border padding-h8 flow horizontal split-after-1">
                         <IO
                           p
                           $skipNoInner

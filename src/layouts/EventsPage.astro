@@ -64,133 +64,134 @@ const cssRulesDisplayByType =
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center width-max">
-      <div id="events-list-container" class="box no-border stack gap-down-h1">
+    <main class="center width-max padding-h1">
+      <div id="events-list-container" class="box no-border flow gap-h3">
         <IO h1 $skip={!events?.[0]?.name} class="center text"
           >Événements et soirées jeux de Belgique</IO
         >
-        <div id="event-form-filter-wrapper" class="center">
-          <form
-            id="eventsForm"
-            class="stack horizontal justify-content-center gap-0"
-            style="flex-wrap: wrap; gap: var(--size-h1)"
-          >
-            <div class="popover-filter-wrapper">
-              <button
-                disabled
-                data-remove-disabled
-                popovertarget="proximity"
-                id="proximityBtn"
-                type="button"
-                class="stack horizontal align-items-center gap-h8"
-              >
-                <span>A proximité de</span>
-                <Icon
-                  name="gridicons:chevron-down"
-                  title="open ressources menu"
-                  role="img"
-                  style="flex-shrink: 0;"
-                />
-              </button>
-              <div popover id="proximity" class="padding-h3 border-radius-m">
-                <div class="stack gap-h3">
-                  <div class="stack horizontal">
-                    <Icon name="gridicons:location" title="location" role="img" />
+        <form
+          id="eventsForm"
+          class="flow horizontal justify-center gap-0"
+          style="flex-wrap: wrap; gap: var(--size-h1)"
+        >
+          <div class="popover-filter-wrapper">
+            <button
+              disabled
+              data-remove-disabled
+              popovertarget="proximity"
+              id="proximityBtn"
+              type="button"
+              class="flow horizontal align-items-center"
+              style="--flow-space: var(--size-h8);"
+            >
+              <span>A proximité de</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open ressources menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div popover id="proximity" class="padding-h3 border-radius-m">
+              <div class="flow gap-h3">
+                <div class="flow horizontal">
+                  <Icon name="gridicons:location" title="location" role="img" />
+                  <input
+                    type="text"
+                    name="position"
+                    list="cityList"
+                    placeholder="Rechercher une ville..."
+                    autocomplete="off"
+                  />
+                  <datalist id="cityList">
+                    <option value="Ma position" data-latitude="" data-longitude=""></option>
+                    {
+                      cities?.map(city => (
+                        <option
+                          value={
+                            city.translations.find(t => t.lang === lang.code)?.value ||
+                            city.translations?.[0]?.value ||
+                            city.code_name
+                          }
+                          data-latitude={city.lat}
+                          data-longitude={city.lng}
+                        />
+                      ))
+                    }
+                  </datalist>
+                </div>
+                <div class="distance flow justify-space-between">
+                  <label for="distance">Distance (km)</label>
+                  <div class="flow gap-0">
                     <input
-                      type="text"
-                      name="position"
-                      list="cityList"
-                      placeholder="Rechercher une ville..."
-                      autocomplete="off"
+                      type="range"
+                      id="distance"
+                      name="distance"
+                      min="1"
+                      max="99"
+                      value="10"
+                      list="distances"
                     />
-                    <datalist id="cityList">
-                      <option value="Ma position" data-latitude="" data-longitude=""></option>
-                      {
-                        cities?.map(city => (
-                          <option
-                            value={
-                              city.translations.find(t => t.lang === lang.code)?.value ||
-                              city.translations?.[0]?.value ||
-                              city.code_name
-                            }
-                            data-latitude={city.lat}
-                            data-longitude={city.lng}
-                          />
-                        ))
-                      }
+                    <datalist
+                      id="distances"
+                      class="flow horizontal justify-space-between align-items-center h7 padding-x-h9"
+                    >
+                      <option value="1" label="01"></option>
+                      <option value="25" label="25"></option>
+                      <option value="50" label="50"></option>
+                      <option value="75" label="75"></option>
+                      <option value="99" label="99"></option>
                     </datalist>
-                  </div>
-                  <div class="distance stack justify-space-between">
-                    <label for="distance">Distance (km)</label>
-                    <div class="stack gap-0">
-                      <input
-                        type="range"
-                        id="distance"
-                        name="distance"
-                        min="1"
-                        max="99"
-                        value="10"
-                        list="distances"
-                      />
-                      <datalist
-                        id="distances"
-                        class="stack horizontal justify-space-between align-items-center h7 padding-x-h9"
-                      >
-                        <option value="1" label="01"></option>
-                        <option value="25" label="25"></option>
-                        <option value="50" label="50"></option>
-                        <option value="75" label="75"></option>
-                        <option value="99" label="99"></option>
-                      </datalist>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="popover-filter-wrapper">
-              <button
-                data-remove-disabled
-                popovertarget="eventType"
-                id="eventTypeBtn"
-                class="max-width-col-5 stack horizontal align-items-center gap-h8"
-                type="button"
-              >
-                <span class="text-overflow-ellipsis">Types</span>
-                <Icon
-                  name="gridicons:chevron-down"
-                  title="open ressources menu"
-                  role="img"
-                  style="flex-shrink: 0;"
-                />
-              </button>
-              <div popover id="eventType" class="padding-h3 border-radius-m align-items-start">
-                <ul class="reset stack gap-h3" style="white-space: nowrap">
-                  {
-                    eventTypes?.map(d => {
-                      return (
-                        <li class="stack horizontal align-items-center">
-                          <input
-                            type="checkbox"
-                            id={d.code_name}
-                            value={d.code_name}
-                            name="types"
-                            data-code={d.code_name}
-                            data-label={
-                              d.translations.find(t => t.language_code === lang.code).default_label
-                            }
-                          />
-                          <label for={d.code_name}>
-                            {d.translations.find(t => t.language_code === lang.code).default_label}
-                          </label>
-                        </li>
-                      )
-                    })
-                  }
-                </ul>
-              </div>
+          </div>
+          <div class="popover-filter-wrapper">
+            <button
+              data-remove-disabled
+              popovertarget="eventType"
+              id="eventTypeBtn"
+              class="max-width-col-5 flow horizontal align-items-center"
+              style="--flow-space: var(--size-h8);"
+              type="button"
+            >
+              <span class="text-overflow-ellipsis">Types</span>
+              <Icon
+                name="gridicons:chevron-down"
+                title="open ressources menu"
+                role="img"
+                style="flex-shrink: 0;"
+              />
+            </button>
+            <div popover id="eventType" class="padding-h3 border-radius-m align-items-start">
+              <ul class="reset flow gap-h3" style="white-space: nowrap">
+                {
+                  eventTypes?.map(d => {
+                    return (
+                      <li class="flow horizontal align-items-center">
+                        <input
+                          type="checkbox"
+                          id={d.code_name}
+                          value={d.code_name}
+                          name="types"
+                          data-code={d.code_name}
+                          data-label={
+                            d.translations.find(t => t.language_code === lang.code).default_label
+                          }
+                        />
+                        <label for={d.code_name}>
+                          {d.translations.find(t => t.language_code === lang.code).default_label}
+                        </label>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
             </div>
-            {
-              /* <p>Trier par...</p>
+          </div>
+          {
+            /* <p>Trier par...</p>
             <div class="cluster" style="--gap: var(--size-h7);">
               <div>
                 <button
@@ -202,138 +203,130 @@ const cssRulesDisplayByType =
                 <button class="sort" data-sort="zip">Code postal</button>
               </div>
             </div> */
-            }
-            <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
-          </form>
-        </div>
+          }
+          <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
+        </form>
+        <!-- </div> -->
 
         <IO p $skip={!events?.[0]?.name} id="eventsPhrase" class="center text">{eventsPhrase}</IO>
 
         <Map itemType="events" date="10" />
 
-        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
-          <IO ul $skip={!events?.[0]?.name} class="list reset">
-            {
-              events?.map(event => {
-                const {
-                  name,
-                  typesTranslated,
-                  location,
-                  cover_image,
-                  organizers,
-                  time_start,
-                  time_end,
-                  isSameDay,
-                } = event
+        <IO
+          ul
+          $skip={!events?.[0]?.name}
+          class="grid-fluid gap-h4 list reset"
+          style="--width-column-min: var(--width-col-3);"
+        >
+          {
+            events?.map(event => {
+              const {
+                name,
+                typesTranslated,
+                location,
+                cover_image,
+                organizers,
+                time_start,
+                time_end,
+                isSameDay,
+              } = event
 
-                const srcCover = imageDirectusSrc({
-                  src: cover_image?.src,
-                  width: '1000',
-                  fit: 'cover',
-                  quality: '50',
-                })
-
-                const currentTypes = typesTranslated?.map(t => t.code_name)
-                const typeAttributes = currentTypes?.reduce(
-                  (acc, type) => ({ ...acc, [`data-type-${type}`]: true }),
-                  {}
-                )
-
-                const [lng, lat] = location?.geo?.coordinates || []
-
-                return (
-                  <li
-                    class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                    style=""
-                    data-types={currentTypes}
-                    {...typeAttributes}
-                    data-latitude={lat}
-                    data-longitude={lng}
-                  >
-                    <div
-                      class="box no-border padding-h4 with-sidebar gap-h4
-                                        color-palette-trans
-                                        background-overlay
-                                        "
-                      style={
-                        (srcCover
-                          ? `background-image: url("${srcCover}"); `
-                          : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
-                        `--content-min: 80%;`
-                      }
-                    >
-                      <div>
-                        <time
-                          datetime={time_start.dateTimeRaw}
-                          class="timestart stack gap-down-h8 center intrinsic"
-                          style="line-height: 1;"
-                        >
-                          <span class="size-h1">{time_start?.fr?.day}</span>
-                          <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                          <span class="size-h2">{time_start?.fr?.year}</span>
-                        </time>
-                        <div>
-                          <div class="cover no-gap" style="--min-height: 100%;">
-                            <h2 class="h3 centered">
-                              <a
-                                href={`/${event.path}/`}
-                                class="name reset clickable"
-                                set:html={name}
-                              />
-                            </h2>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
-                      {/* TODO: repair geting location from organization */}
-                      <IO
-                        p
-                        $skipNoInner
-                        class="zip city h5"
-                        data-zip={location.postalCode}
-                        data-city={location.addressLocality}
-                        data-latitude={location.geo?.coordinates[1]}
-                        data-longitude={location.geo?.coordinates[0]}
-                      >
-                        {location.addressLocality}
-                      </IO>
-                      <ul class="reset stack horizontal">
-                        {organizers?.map(({ name, logo }) => (
-                          <li>
-                            {logo?.src ? (
-                              <ImgDirectus
-                                image={logo}
-                                src={logo?.src}
-                                alt={name}
-                                loading="lazy"
-                                class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                width="32"
-                                height="32"
-                                fit="inside"
-                                quality="99"
-                              />
-                            ) : (
-                              <Img
-                                src={placeholderWPlayCircleBlue}
-                                alt="logo"
-                                loading="lazy"
-                                class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
-                                width="32"
-                                height="32"
-                              />
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </li>
-                )
+              const srcCover = imageDirectusSrc({
+                src: cover_image?.src,
+                width: '1000',
+                fit: 'cover',
+                quality: '50',
               })
-            }
-          </IO>
+
+              const currentTypes = typesTranslated?.map(t => t.code_name)
+              const typeAttributes = currentTypes?.reduce(
+                (acc, type) => ({ ...acc, [`data-type-${type}`]: true }),
+                {}
+              )
+
+              const [lng, lat] = location?.geo?.coordinates || []
+
+              return (
+                <li
+                  class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                  style=""
+                  data-types={currentTypes}
+                  {...typeAttributes}
+                  data-latitude={lat}
+                  data-longitude={lng}
+                >
+                  <div
+                    class="box no-border padding-h4 with-sidebar gap-h4 color-palette-trans background-overlay "
+                    style={
+                      (srcCover
+                        ? `background-image: url("${srcCover}"); `
+                        : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                      ``
+                    }
+                  >
+                    <time
+                      datetime={time_start.dateTimeRaw}
+                      class="timestart flow gap-h8 center intrinsic"
+                      style="line-height: 1; --flow-space: var(--size-h8);"
+                    >
+                      <span class="size-h1">{time_start?.fr?.day}</span>
+                      <span class="size-h2">{time_start?.fr?.monthShort}</span>
+                      <span class="size-h2">{time_start?.fr?.year}</span>
+                    </time>
+                    <div class="flow justify-center align-items-center no-gap">
+                      <h2 class="h3 centered">
+                        <a href={`/${event.path}/`} class="name reset clickable" set:html={name} />
+                      </h2>
+                    </div>
+                  </div>
+                  <div class="card-event-footer box no-border padding-h8 flow horizontal">
+                    {/* TODO: repair geting location from organization */}
+                    <IO
+                      p
+                      $skipNoInner
+                      class="zip city h5"
+                      data-zip={location.postalCode}
+                      data-city={location.addressLocality}
+                      data-latitude={location.geo?.coordinates[1]}
+                      data-longitude={location.geo?.coordinates[0]}
+                    >
+                      {location.addressLocality}
+                    </IO>
+                    <ul class="reset flow horizontal">
+                      {organizers?.map(({ name, logo }) => (
+                        <li>
+                          {logo?.src ? (
+                            <ImgDirectus
+                              image={logo}
+                              src={logo?.src}
+                              alt={name}
+                              loading="lazy"
+                              class=""
+                              style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                              width="32"
+                              height="32"
+                              fit="inside"
+                              quality="99"
+                            />
+                          ) : (
+                            <Img
+                              src={placeholderWPlayCircleBlue}
+                              alt="logo"
+                              loading="lazy"
+                              class=""
+                              style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                              width="32"
+                              height="32"
+                            />
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              )
+            })
+          }
         </IO>
       </div>
     </main>

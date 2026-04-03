@@ -1,6 +1,6 @@
 ---
 import path from 'node:path'
-import { IO, Img, ImgDirectus, SEO } from '@components'
+import { IO, Img, ImgDirectus, SEO, PubOrgaList } from '@components'
 import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
 import { BasicPage, SkeletonPage } from '@layouts'
 import { Icon } from 'astro-icon/components'
@@ -170,14 +170,19 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           <input type="reset" id="resetBtn" class="button color-palette-teal" value="Reset" />
         </form>
 
+        <h2>Carte des organisations liées au jeu de société en Belgique</h2>
+
         <Map itemType="organizations" />
+
+        <h2>Liste complète des organisations liées au jeu de société en Belgique</h2>
 
         <IO
           ul
           $skipNoInner
-          class="grid-fluid gap-down-h7 reset"
+          class="organizations-list grid-fluid gap-down-h7 reset"
           style="--width-column-min: var(--width-col-6); --gap-grid: var(--size-h4);"
         >
+          <PubOrgaList />
           {
             organizations?.map((organization, index) => {
               const {
@@ -195,84 +200,69 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               const nameIsLong = name.length > 30
 
               return (
-                <>
-                  {index === 2 && (
-                    <li
-                      class="box no-border border-radius-s spot-pub"
-                      style="display: flex; align-items: center; justify-content: center; background-color: var(--color-teal);"
-                    >
-                      <h2 style="color: white; margin: 0; font-size: clamp(2rem, 4vw, 3.5rem);">
-                        Spot PUB
-                      </h2>
-                    </li>
-                  )}
-                  <li
-                    class={`card-organization
+                <li
+                  class={`card-organization
                       box no-border flow gap-h7
                       border-radius-s
                       breakout-clickable
                       ${isPartner ? 'badge' : ''}`}
-                    style={`--badge-url: url(${badge.src});`}
-                    data-area={location?.area.code_name}
-                    data-types={typesTranslated?.map(t => t.code_name)}
-                    data-services={servicesTranslated?.map(t => t.code_name)}
+                  style={`--badge-url: url(${badge.src});`}
+                  data-area={location?.area.code_name}
+                  data-types={typesTranslated?.map(t => t.code_name)}
+                  data-services={servicesTranslated?.map(t => t.code_name)}
+                >
+                  {isPartner && (
+                    <div class="badge-hover" title={`${name} est partenaire de Wannaplay`} />
+                  )}
+                  <div
+                    class="center intrinsic"
+                    style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
                   >
-                    {isPartner && (
-                      <div class="badge-hover" title={`${name} est partenaire de Wannaplay`} />
+                    {logo?.src ? (
+                      <ImgDirectus
+                        image={logo}
+                        src={logo?.src}
+                        alt={name}
+                        loading="lazy"
+                        class=""
+                        style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                        width="120"
+                        height="120"
+                        fit="inside"
+                        quality="99"
+                      />
+                    ) : (
+                      <Img
+                        src={placeholderWPlayCircleBlue}
+                        alt="logo"
+                        loading="lazy"
+                        class=""
+                        style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
+                        width="120"
+                        height="120"
+                      />
                     )}
-                    <div
-                      class="center intrinsic"
-                      style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
-                    >
-                      {logo?.src ? (
-                        <ImgDirectus
-                          image={logo}
-                          src={logo?.src}
-                          alt={name}
-                          loading="lazy"
-                          class=""
-                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
-                          width="120"
-                          height="120"
-                          fit="inside"
-                          quality="99"
-                        />
-                      ) : (
-                        <Img
-                          src={placeholderWPlayCircleBlue}
-                          alt="logo"
-                          loading="lazy"
-                          class=""
-                          style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;"
-                          width="120"
-                          height="120"
-                        />
-                      )}
-                    </div>
-                    <h3>
-                      <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
-                        {name}
-                      </a>
-                    </h3>
-                    <ul class="cluster gap-h8 reset">
-                      {typesTranslated?.map(type => {
-                        const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
-                        return (
-                          <li
-                            class={`box no-border padding-x-h8 padding-y-h9
+                  </div>
+                  <h3>
+                    <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
+                      {name}
+                    </a>
+                  </h3>
+                  <ul class="cluster gap-h8 reset">
+                    {typesTranslated?.map(type => {
+                      const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
+                      return (
+                        <li
+                          class={`box no-border padding-x-h8 padding-y-h9
                                                             ${currentPalette} color-palette-variation-contrast
                                                             border-radius-s`}
-                          >
-                            {
-                              type.translations.find(t => t.language_code === lang.code)
-                                .default_label
-                            }
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </li>
-                </>
+                        >
+                          {type.translations.find(t => t.language_code === lang.code).default_label}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </li>
               )
             })
           }
@@ -321,50 +311,6 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         position-area: bottom span-left;
       }
     }
-  }
-
-  /* 5 colonnes → col 3 à 5 (3 col de large) */
-  .spot-pub {
-    grid-column: 3 / -1;
-  }
-
-  /* 4 colonnes → col 3 à 4 (2 col de large) ✅ */
-  /* @media (max-width: 1024px) {
-  .grid { grid-template-columns: repeat(4, 1fr); }
-} */
-
-  /* 3 colonnes → on recule le départ à col 2, pub en 2ème position via order */
-  @media (max-width: 890px) {
-    /* Tous les cards passent après (order:2) */
-    .card-organization {
-      order: 2;
-    }
-    /* Sauf le 1er card qui reste en tête (order:0) */
-    .card-organization:nth-child(1) {
-      order: 0;
-    }
-    /* Le spot-pub se glisse entre card[0] et les autres */
-    .spot-pub {
-      order: 1;
-      grid-column: 2 / -1;
-    }
-  }
-
-  /* 2 colonnes → full width, retour en 3ème position (reset des order) */
-  @media (max-width: 734px) {
-    .card-organization,
-    .card-organization:nth-child(1) {
-      order: 0;
-    }
-    .spot-pub {
-      order: 0;
-      grid-column: 1 / -1;
-    }
-  }
-
-  /* 1 colonne */
-  @media (max-width: 360px) {
-    /* .grid { grid-template-columns: 1fr; } */
   }
 
   .badge {

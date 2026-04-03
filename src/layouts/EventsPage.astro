@@ -44,10 +44,10 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site)
 const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 
 const cssRulesDisplayByType =
-  `#event-form-filter-wrapper:has(input:checked) ~ div .card-event{display:none;}` +
+  `#eventsForm:has(input:checked) ~ ul .card-event{display:none;}` +
   (eventTypes || [])
     .map(({ code_name }) => {
-      return `#event-form-filter-wrapper:has(input[data-code='${code_name}']:checked) ~ div .card-event[data-type-${code_name}='true']:not(.hidden) { display: block; }`
+      return `#eventsForm:has(input[data-code='${code_name}']:checked) ~ ul .card-event[data-type-${code_name}='true']:not(.hidden) { display: block; }`
     })
     .join('\n')
 ---
@@ -208,9 +208,13 @@ const cssRulesDisplayByType =
         </form>
         <!-- </div> -->
 
-        <IO p $skip={!events?.[0]?.name} id="eventsPhrase" class="center text">{eventsPhrase}</IO>
+        <h2>Carte des événements de la semaine</h2>
 
         <Map itemType="events" date="10" />
+
+        <h2>Liste complète des événements annoncés en Belgique</h2>
+
+        <IO p $skip={!events?.[0]?.name} id="eventsPhrase" class="">{eventsPhrase}</IO>
 
         <IO
           ul

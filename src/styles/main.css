@@ -51,6 +51,10 @@ a.reset *,
   text-decoration: inherit;
 }
 
+a:--button {
+  display: inline-block;
+}
+
 input:not([type='submit']):not([type='button']):not([type='reset']),
 textarea {
   border-width: 1px;

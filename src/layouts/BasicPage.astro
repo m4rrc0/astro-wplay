@@ -1,6 +1,6 @@
 ---
 import { createPath } from '@utils'
-import { CalendarIcon, OrgIcon, BxlIcon } from '@partials/icons'
+import { PlayIcon, CalendarIcon, OrgIcon, BxlIcon } from '@partials/icons'
 import { MtObf } from '@components'
 import { Icon } from 'astro-icon/components'
 
@@ -31,7 +31,7 @@ const ariaCurrentAttr = currentHref => {
 >
   <div id="menu-main" class="color-palette-main">
     <nav class="center width-max box no-border">
-      <ul class="cluster overflow reset reset-down-a size-h3 gap-h6 justify-end">
+      <ul class="cluster overflow reset reset-down-a size-p gap-h6 justify-end">
         <li>
           <a
             href={`/${lang.code}/`}
@@ -47,11 +47,6 @@ const ariaCurrentAttr = currentHref => {
             />
             <span>Wanna Play</span>
           </a>
-        </li>
-        <li>
-          <a href={`/${lang.code}/be/`} aria-current={ariaCurrentAttr(`/${lang.code}/be/`)}
-            >Jouer !</a
-          >
         </li>
         <li>
           <a
@@ -103,16 +98,22 @@ const ariaCurrentAttr = currentHref => {
     !isPro && (
       <div id="menu-secondary" class="color-palette-variation-funky-contrast">
         <nav class="center width-max box no-border">
-          <ul class="cluster overflow reset reset-down-a size-h3 justify-end gap-h6">
+          <ul class="cluster overflow reset reset-down-a size-p justify-end gap-h6">
+            <li>
+              <a href={`/${lang.code}/be/`} aria-current={ariaCurrentAttr(`/${lang.code}/be/`)}>
+                <PlayIcon style="height:1.5em;" />
+                <span>Jouer en Belgique</span>
+              </a>
+            </li>
             <li>
               <a href={`/${lang.code}/e/`} aria-current={ariaCurrentAttr(`/${lang.code}/e/`)}>
-                <CalendarIcon style="height:2.5em;" />
+                <CalendarIcon style="height:1.5em;" />
                 <span>Agenda</span>
               </a>
             </li>
             <li>
               <a href={`/${lang.code}/o/`} aria-current={ariaCurrentAttr(`/${lang.code}/o/`)}>
-                <OrgIcon style="height:2.5em;" />
+                <OrgIcon style="height:1.5em;" />
                 <span>Annuaire</span>
               </a>
             </li>
@@ -121,8 +122,8 @@ const ariaCurrentAttr = currentHref => {
                 href={'/' + createPath({ type: 'areas' }) + '/'}
                 aria-current={ariaCurrentAttr('/' + createPath({ type: 'areas' }) + '/')}
               >
-                <BxlIcon style="height:2.5em;" />
-                <span>Ma province</span>
+                <BxlIcon style="height:1.5em;" />
+                <span>Par province</span>
               </a>
             </li>
           </ul>
@@ -173,7 +174,7 @@ const ariaCurrentAttr = currentHref => {
     color-palette-main color-palette-variation-contrast"
   >
     <div class="box no-border center intrinsic text flow">
-      <div class="cluster justify-center size-h3 gap-h7">
+      <div class="cluster justify-center size-p gap-h7">
         <a href="https://www.facebook.com/WannaPlayBE/" target="_blank" rel="noopener noreferrer"
           >Facebook
         </a><a
@@ -253,7 +254,8 @@ const ariaCurrentAttr = currentHref => {
     /* margin: var(--gap) 0; */
     --justify-content: flex-end;
   }
-  #menu-main nav > ul > li:first-child {
+  #menu-main nav > ul > li:first-child,
+  #menu-secondary nav > ul > li:first-child {
     --justify-content: flex-start;
     flex-grow: 1;
   }
@@ -281,7 +283,7 @@ const ariaCurrentAttr = currentHref => {
   #menu-secondary li > a {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.2rem;
   }
   #footer-main {
     margin-top: 4vw;

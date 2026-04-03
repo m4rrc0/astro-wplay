@@ -94,7 +94,6 @@ export function imageDirectusSrc({
 
 export async function getImage({ ...imgProps }) {
   const format = imgProps.type?.replace('image/', '').replace(/\+xml$/, '')
-  console.log({ format })
   const props = {
     ...imgProps,
     width: imgProps.width || 2000,

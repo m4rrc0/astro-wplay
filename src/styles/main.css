@@ -124,6 +124,10 @@ blockquote {
 
 .card-organization {
   max-width: 25rem;
+  --padding: var(--size-relative-s);
+}
+.card-organization h3 {
+  flex-grow: 1;
 }
 
 /* div[popover],

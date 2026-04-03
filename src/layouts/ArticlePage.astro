@@ -65,7 +65,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       {
         headerLayout === 'sideImage' ? (
           <header class="size-context-narrow width-max center">
-            <IO div $skipNoInner class="with-sidebar box no-border gap-down-h4" style="--side-width: 22rem; --content-min: 50%;">
+            <IO div $skipNoInner class="with-sidebar box no-border gap-down-p" style="--side-width: 22rem; --content-min: 50%;">
               <IO div $skipNoInner>
                 <IO div $skipNoInner>
                   <ImgDirectus
@@ -86,7 +86,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                   <IO div $skipNoInner class="cluster">
                     <IO ul $skipNoInner class="reset">
                       {authors?.map(author => (
-                        <IO li $skipNoInner class="stack horizontal gap-down-h7">
+                        <IO li $skipNoInner class="flow horizontal gap-down-h7">
                           <IO div $skip={!author?.avatar?.src} class="box no-padding border-radius-circle border-width-1">
                             <!-- <IO img $skip={author?.avatar?.src} src={author?.avatar?.src}
                               class="border-radius-circle" style="max-height: 2em;" /> -->
@@ -112,7 +112,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               </IO>
             </IO>
 
-            <IO div $skipNoInner class={`box no-border center | h3
+            <IO div $skipNoInner class={`box no-border center | h4
             `}>
               <Md $skipNoInner content={headerT?.text} />
             </IO>
@@ -126,7 +126,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 <IO div $skipNoInner class="cluster">
                   <IO ul $skipNoInner class="reset">
                     {authors.map(author => (
-                      <IO li $skipNoInner class="stack horizontal gap-down-h7">
+                      <IO li $skipNoInner class="flow horizontal gap-down-h7">
                         <IO div $skip={!author?.avatar?.src} class="box no-padding border-radius-circle border-width-1">
                           <ImgDirectus
                             $skip={!author?.avatar?.src}
@@ -163,7 +163,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 quality="99" />
             </IO>
 
-            <IO div $skipNoInner class="box no-border center | h3">
+            <IO div $skipNoInner class="box no-border center | h4">
                 <strong><Md $skipNoInner content={headerT?.text} /></strong>
             </IO>
           </header>

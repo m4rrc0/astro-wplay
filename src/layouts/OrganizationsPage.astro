@@ -30,13 +30,13 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   />
   <BasicPage {lang}>
     <main class="center width-max">
-      <div id="organizations-list-container" class="box no-border flow gap-h3">
+      <div id="organizations-list-container" class="box no-border flow gap-h4">
         <IO h1 $skip={!organizations?.[0]} class="center text"> Le jeu de société en Belgique </IO>
         {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
         <form
           id="organizationsForm"
           class="flow horizontal justify-center"
-          style="flex-wrap: wrap; gap: var(--size-h4)"
+          style="flex-wrap: wrap; gap: var(--size-p)"
         >
           <div class="popover-filter-wrapper">
             <button
@@ -56,8 +56,8 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 style="flex-shrink: 0;"
               />
             </button>
-            <div popover id="area" class="padding-h3 border-radius-m align-items-start">
-              <ul class="reset flow gap-h3" style="white-space: nowrap">
+            <div popover id="area" class="padding-h4 border-radius-m align-items-start">
+              <ul class="reset flow gap-h4" style="white-space: nowrap">
                 {
                   areas.map(area => {
                     return (
@@ -96,8 +96,8 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 style="flex-shrink: 0;"
               />
             </button>
-            <div popover id="organizationType" class="padding-h3 border-radius-m align-items-start">
-              <ul class="reset flow gap-h3" style="white-space: nowrap">
+            <div popover id="organizationType" class="padding-h4 border-radius-m align-items-start">
+              <ul class="reset flow gap-h4" style="white-space: nowrap">
                 {
                   organizationTypes.map(d => {
                     const label = d.translations.find(
@@ -140,8 +140,8 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 style="flex-shrink: 0;"
               />
             </button>
-            <div popover id="service" class="padding-h3 border-radius-m align-items-start">
-              <ul class="reset flow gap-h3" style="white-space: nowrap">
+            <div popover id="service" class="padding-h4 border-radius-m align-items-start">
+              <ul class="reset flow gap-h4" style="white-space: nowrap">
                 {
                   gamesRelatedServices.map(d => {
                     const label = d.translations.find(
@@ -180,7 +180,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           ul
           $skipNoInner
           class="organizations-list grid-fluid gap-down-h7 reset"
-          style="--width-column-min: var(--width-col-6); --gap-grid: var(--size-h4);"
+          style="--width-column-min: var(--width-col-6); --gap-grid: var(--size-p);"
         >
           <PubOrgaList />
           {
@@ -243,8 +243,8 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                       />
                     )}
                   </div>
-                  <h3>
-                    <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
+                  <h3 class={`${nameIsLong ? ' p' : ' h4'}`}>
+                    <a href={`/${path}/`} class={`reset clickable`}>
                       {name}
                     </a>
                   </h3>

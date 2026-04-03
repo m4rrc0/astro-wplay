@@ -26,7 +26,7 @@ const srcBadge =
           <summary><h2>Build Hooks</h2></summary>
           {
             PUBLIC_HOOK_PROD ? (
-              <div class="stack gap-down-h4 center box no-border">
+              <div class="stack gap-down-p center box no-border">
                 {[
                   {
                     branch: 'Prod',
@@ -69,8 +69,8 @@ const srcBadge =
                 ))}
               </div>
             ) : (
-              <div class="max-width-measure-h2 center stack gap-down-h1 box no-border">
-                <p class="h3">PUBLIC_HOOK_PROD est indéfini.</p>
+              <div class="max-width-measure-h3 center stack gap-down-h1 box no-border">
+                <p class="h4">PUBLIC_HOOK_PROD est indéfini.</p>
               </div>
             )
           }
@@ -112,7 +112,7 @@ const srcBadge =
           </div>
         </div> -->
 
-        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
+        <IO div $skipNoInner class="grid gap-down-p" style="--width-column: var(--width-col-3);">
           <IO ul $skip={!events?.[0]?.name} class="list reset">
             {
               events?.map(event => {
@@ -132,7 +132,7 @@ const srcBadge =
                     style=""
                   >
                     <div
-                      class="box no-border padding-h4 with-sidebar gap-h4
+                      class="box no-border padding-p with-sidebar gap-p
                                         color-palette-trans
                                         background-overlay
                                         "
@@ -149,13 +149,13 @@ const srcBadge =
                           class="timestart stack gap-down-h8 center intrinsic"
                           style="line-height: 1;"
                         >
-                          <span class="size-h1">{time_start?.fr?.day}</span>
-                          <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                          <span class="size-h2">{time_start?.fr?.year}</span>
+                          <span class="size-h2">{time_start?.fr?.day}</span>
+                          <span class="size-h3">{time_start?.fr?.monthShort}</span>
+                          <span class="size-h3">{time_start?.fr?.year}</span>
                         </time>
                         <div>
                           <div class="cover no-gap" style="--min-height: 100%;">
-                            <h2 class="h3 centered">
+                            <h2 class="h4 centered">
                               <a
                                 href={`/${event.path}/`}
                                 class="name reset clickable"
@@ -166,7 +166,7 @@ const srcBadge =
                         </div>
                       </div>
                     </div>
-                    <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                    <div class="card-event-footer box no-border padding-h8 flow horizontal split-after-1">
                       <IO
                         p
                         $skipNoInner
@@ -176,7 +176,7 @@ const srcBadge =
                       >
                         {location?.string}
                       </IO>
-                      <ul class="reset stack horizontal">
+                      <ul class="reset flow horizontal">
                         {organizers?.map(({ name, logo }) => (
                           <li>
                             {logo?.src ? (
@@ -186,7 +186,7 @@ const srcBadge =
                                 alt={name}
                                 loading="lazy"
                                 class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                style="width: 2rem; height: 2rem; object-fit:contain;"
                                 width="32"
                                 height="32"
                                 fit="inside"
@@ -198,7 +198,7 @@ const srcBadge =
                                 alt="logo"
                                 loading="lazy"
                                 class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                style="width: 2rem; height: 2rem; object-fit:contain;"
                                 width="32"
                                 height="32"
                               />

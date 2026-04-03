@@ -76,12 +76,12 @@ const areaElems = {
           <Fragment set:html={aElem.shape} />
           <switch>
             <foreignObject x="50" y="550" width="250" height="200">
-              <p xmlns="http://www.w3.org/1999/xhtml" class="text size-h1 color-palette-main">
+              <p xmlns="http://www.w3.org/1999/xhtml" class="text size-h2 color-palette-main">
                 {name[lang.code]}
               </p>
             </foreignObject>
 
-            <text x="10" y="700" class="text size-h1 color-palette-main">
+            <text x="10" y="700" class="text size-h2 color-palette-main">
               {name[lang.code]}
             </text>
           </switch>
@@ -93,7 +93,7 @@ const areaElems = {
 
 <style is:global>
   .map-svg {
-    width: var(--width-measure-h4);
+    width: var(--width-measure-p);
     max-width: 100%;
   }
   .map-svg polygon,

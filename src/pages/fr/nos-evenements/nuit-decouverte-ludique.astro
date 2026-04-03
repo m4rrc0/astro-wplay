@@ -203,7 +203,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
       <!-- Intro -->
       <section class="flow padding-x-relative-l">
-        <p class="size-h3"><strong>Une nuit de découvertes ludiques</strong></p>
+        <p class="size-h4"><strong>Une nuit de découvertes ludiques</strong></p>
         <p>
           Plus de 50 nouveautés 2018 étaient disponibles toute la nuit au Brussels Games Festival
           grâce à la complicité de nos partenaires éditeurs et distributeurs.
@@ -224,40 +224,40 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       <section>
         <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">+50</p>
+            <p class="h2">+50</p>
             <p>nouveautés 2018</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">~100</p>
+            <p class="h2">~100</p>
             <p>parties jouées</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">156</p>
+            <p class="h2">156</p>
             <p>inscriptions</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">642</p>
+            <p class="h2">642</p>
             <p>visiteurs uniques</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">7734</p>
+            <p class="h2">7734</p>
             <p>pages vues</p>
           </li>
         </ul>
       </section>
 
       <!-- Partenaires éditeurs -->
-      <section class="stack gap-down-h4">
+      <section class="stack gap-down-p">
         <h2>Partenaires</h2>
 
         <div class="partners-grid">
@@ -278,7 +278,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       </section>
 
       <!-- App compagnon (tilted card) -->
-      <section class="app-card box no-border padding-h4 flow border-radius-s">
+      <section class="app-card box no-border padding-p flow border-radius-s">
         <h3 class="color-secondary">Une app compagnon</h3>
         <p>Une autre manière de découvrir le festival depuis ton smartphone ou ton PC.</p>
         <div>
@@ -290,11 +290,11 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
           class="flow horizontal justify-content-space-around padding-y-relative-s app-stats-border"
         >
           <div class="flow center text">
-            <p class="size-h2 stat-nb-secondary">1300</p>
+            <p class="size-h3 stat-nb-secondary">1300</p>
             <p>visiteurs uniques</p>
           </div>
           <div class="flow center text">
-            <p class="size-h2 stat-nb-secondary">27735</p>
+            <p class="size-h3 stat-nb-secondary">27735</p>
             <p>pages vues</p>
           </div>
         </div>
@@ -313,7 +313,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   /* Tilted app card */
   .app-card {
     transform: rotate(1.5deg);
-    margin: var(--size-h3) auto;
+    margin: var(--size-h4) auto;
     width: 90%;
     max-width: 500px;
     box-shadow: var(--shadow-raised-s);
@@ -346,10 +346,10 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   .partners-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--size-h2);
+    gap: var(--size-h3);
     align-items: center;
     justify-items: center;
-    margin-bottom: var(--size-h2);
+    margin-bottom: var(--size-h3);
   }
   .partners-grid img {
     max-width: 100%;
@@ -364,15 +364,15 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   }
 
   section {
-    padding-block: var(--size-h1);
+    padding-block: var(--size-h2);
   }
 
   div.flow > * {
-    --flow-space: var(--gap-h2);
+    --flow-space: var(--gap-h3);
   }
 
   .stat {
-    padding-block: var(--size-h1);
+    padding-block: var(--size-h2);
   }
 
   .video-container {

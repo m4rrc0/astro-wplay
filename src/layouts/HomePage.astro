@@ -87,7 +87,7 @@ const jsonLd = {
   />
   <BasicPage {lang}>
     <main class="flex center max flow gap-h0 box no-border">
-      <hgroup class="max-width-measure-h2 flow center intrinsic gap-h-1">
+      <hgroup class="max-width-measure-h3 flow center intrinsic gap-h-1">
         <h1>
           <!-- <img src="/assets/images/LOGO-1024px.png" alt="Wanna Play - Connecte les joueurs" id="logo-main" width="4265" height="1834" loading="lazy" /> -->
           <!-- <Img
@@ -106,10 +106,10 @@ const jsonLd = {
             loading="lazy"
           />
         </h1>
-        <p class="h1 color-palette-variation-funky">Connecte les joueurs</p>
+        <p class="h2 color-palette-variation-funky">Connecte les joueurs</p>
       </hgroup>
 
-      <div class="max-width-measure-h2 center text">
+      <div class="max-width-measure-h3 center text">
         <p>
           Tu cherches une soirée jeux, un événement, un magasin, une ludothèque, un bar à jeux, un
           club, ...?
@@ -135,7 +135,7 @@ const jsonLd = {
         <div class="grid-fluid" style="--width-column-min: 12rem;">
           <div class="center text intrinsic flow gap-h8 breakout-clickable">
             <CalendarIcon style="height:120px;" />
-            <a href={'/' + createPath({ type: 'events' }) + '/'} class="h3 clickable"
+            <a href={'/' + createPath({ type: 'events' }) + '/'} class="h4 clickable"
               >Événements jeux</a
             >
             <p>(Aprem, soirée jeu, festival,…)</p>
@@ -143,14 +143,14 @@ const jsonLd = {
 
           <div class="center text intrinsic flow gap-h8 breakout-clickable">
             <OrgIcon style="height:120px;" />
-            <a href={'/' + createPath({ type: 'organizations' }) + '/'} class="h3 clickable"
+            <a href={'/' + createPath({ type: 'organizations' }) + '/'} class="h4 clickable"
               >Organisations ludiques</a
             >
             <p>(Boutique, ludothèque, bar à jeux,…)</p>
           </div>
           <div class="center text intrinsic flow gap-h8 breakout-clickable">
             <BxlIcon style="height:120px;" />
-            <a href={'/' + createPath({ type: 'areas' }) + '/'} class="h3 clickable">Par province</a
+            <a href={'/' + createPath({ type: 'areas' }) + '/'} class="h4 clickable">Par province</a
             >
             <p>(Bruxelles, Namur, Anvers, Liège,…)</p>
           </div>
@@ -158,9 +158,9 @@ const jsonLd = {
       </section>
 
       <!-- SECTION: Festivals in Belgium -->
-      <section class="next-festivals max text flow gap-h1 padding-y-h-1">
+      <section class="next-festivals max text flow gap-h2 padding-y-h-1">
         <h2 class="center text">Les prochains festivals de jeu en Belgique</h2>
-        <ul class="grid-fluid gap-h4 grid-events list reset" style="--width-column-min: 12rem;">
+        <ul class="grid-fluid gap-p grid-events list reset" style="--width-column-min: 12rem;">
           {
             festivals?.map(festival => {
               const {
@@ -188,7 +188,7 @@ const jsonLd = {
                   data-types={typesTranslated?.map(t => t.code_name)}
                 >
                   <div
-                    class="card-event-main box no-border padding-h4 flow gap-h4 color-palette-trans background-overlay "
+                    class="card-event-main box no-border padding-p flow gap-p color-palette-trans background-overlay "
                     style={
                       srcCover
                         ? `background-image: url("${srcCover}"); `
@@ -200,12 +200,12 @@ const jsonLd = {
                       class="timestart flow center intrinsic"
                       style="line-height: 1; --flow-space: var(--size-h8);"
                     >
-                      <span class="size-h1">{time_start?.fr?.day}</span>
-                      <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                      <span class="size-h2">{time_start?.fr?.year}</span>
+                      <span class="size-h2">{time_start?.fr?.day}</span>
+                      <span class="size-h3">{time_start?.fr?.monthShort}</span>
+                      <span class="size-h3">{time_start?.fr?.year}</span>
                     </time>
                     <div class="flow justify-center no-gap">
-                      <h2 class="h3 centered">
+                      <h2 class="h4 centered">
                         <a
                           href={`/${festival.path}/`}
                           class="name reset clickable"
@@ -234,7 +234,7 @@ const jsonLd = {
                               alt={name}
                               loading="lazy"
                               class=""
-                              style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                              style="width: 2rem; height: 2rem; object-fit:contain;"
                               width="32"
                               height="32"
                               fit="inside"
@@ -246,7 +246,7 @@ const jsonLd = {
                               alt="logo"
                               loading="lazy"
                               class=""
-                              style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                              style="width: 2rem; height: 2rem; object-fit:contain;"
                               width="32"
                               height="32"
                             />
@@ -268,11 +268,11 @@ const jsonLd = {
       </div>
 
       <!-- SECTION: Festivals in Belgium -->
-      <section class="wplay-events max flow gap-h1 padding-y-h-1">
+      <section class="wplay-events max flow gap-h2 padding-y-h-1">
         <h2 class="center text">Viens rencontrer Wanna Play!</h2>
         {
           wPlayEvents && wPlayEvents.length > 0 ? (
-            <ul class="grid-fluid gap-h4 grid-events list reset" style="--width-column-min: 12rem;">
+            <ul class="grid-fluid gap-p grid-events list reset" style="--width-column-min: 12rem;">
               {wPlayEvents?.map(event => {
                 const {
                   name,
@@ -299,7 +299,7 @@ const jsonLd = {
                     data-types={typesTranslated?.map(t => t.code_name)}
                   >
                     <div
-                      class="card-event-main box no-border padding-h4 flow gap-h4 color-palette-trans background-overlay "
+                      class="card-event-main box no-border padding-p flow gap-p color-palette-trans background-overlay "
                       style={
                         srcCover
                           ? `background-image: url("${srcCover}"); `
@@ -311,12 +311,12 @@ const jsonLd = {
                         class="timestart flow center intrinsic"
                         style="line-height: 1; --flow-space: var(--size-h8);"
                       >
-                        <span class="size-h1">{time_start?.fr?.day}</span>
-                        <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                        <span class="size-h2">{time_start?.fr?.year}</span>
+                        <span class="size-h2">{time_start?.fr?.day}</span>
+                        <span class="size-h3">{time_start?.fr?.monthShort}</span>
+                        <span class="size-h3">{time_start?.fr?.year}</span>
                       </time>
                       <div class="flow justify-center no-gap">
-                        <h2 class="h3 centered">
+                        <h2 class="h4 centered">
                           <a
                             href={`/${event.path}/`}
                             class="name reset clickable"
@@ -345,7 +345,7 @@ const jsonLd = {
                                 alt={name}
                                 loading="lazy"
                                 class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                style="width: 2rem; height: 2rem; object-fit:contain;"
                                 width="32"
                                 height="32"
                                 fit="inside"
@@ -357,7 +357,7 @@ const jsonLd = {
                                 alt="logo"
                                 loading="lazy"
                                 class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                style="width: 2rem; height: 2rem; object-fit:contain;"
                                 width="32"
                                 height="32"
                               />
@@ -389,7 +389,7 @@ const jsonLd = {
 
       <!-- SECTION: Animation services -->
       <section
-        class="animation-services flow gap-h1 color-palette-variation-funky-contrast full-bleed-before padding-y-h-1"
+        class="animation-services flow gap-h2 color-palette-variation-funky-contrast full-bleed-before padding-y-h-1"
       >
         <div class="flex max-width-measure center max text flow gap-h7">
           <h2>Services d'animation</h2>
@@ -450,7 +450,7 @@ const jsonLd = {
             </p>
           </div>
         </div>
-        <div class="flex center max text flow gap-h1">
+        <div class="flex center max text flow gap-h2">
           <p>
             <strong
               >Envie d'en savoir plus sur nos sevices ou de rejoindre notre réseau d'animateurs?</strong
@@ -471,7 +471,7 @@ const jsonLd = {
       </div>
 
       <!-- SECTION: ASBL -->
-      <section class="home-asbl center text flex flow gap-h1">
+      <section class="home-asbl center text flex flow gap-h2">
         <h2>L'ASBL</h2>
         <p>
           Wanna Play est <a href="/fr/projet/">une ASBL</a> qui vise depuis 2017 à connecter les joueurs
@@ -494,9 +494,9 @@ const jsonLd = {
         >
           <div class="center text stack gap-down-h3">
             <p>
-              <span class="h3">Festival</span><br />
+              <span class="h4">Festival</span><br />
               <a
-                class="h2"
+                class="h3"
                 href="/fr/e/wanna-play-in-brussels-free-board-game-festival-2023-07-08/"
                 >Wanna Play in Brussels 2023
               </a><br />
@@ -518,13 +518,13 @@ const jsonLd = {
                 })}
               </div>
             </div>
-            <p id="countdown" class="h1">-J -H -m -s</p>
+            <p id="countdown" class="h2">-J -H -m -s</p>
           </div>
         </section> */
       }
 
       {
-        /* <div class="center intrinsic max-width-measure-h3 stack gap-down-h1">
+        /* <div class="center intrinsic max-width-measure-h4 stack gap-down-h1">
           <h2 class="center text">Où veux-tu jouer?</h2>
           <div class="cluster gap-down-h6" style="--justify-content: center;">
             <ul class="reset">
@@ -557,7 +557,7 @@ const jsonLd = {
         >
           <h2>Derniers articles</h2>
           <div
-            class="grid gap-down-h4"
+            class="grid gap-down-p"
             style="--width-column: var(--width-col-4);"
           >
             <div>
@@ -586,7 +586,7 @@ const jsonLd = {
                         quality="99"
                       />
                     </IO>
-                    <h3 class="h4">
+                    <h3 class="p">
                       <a href={`/${a.path}/`} class="reset clickable">
                         {headerT?.title}
                       </a>
@@ -598,7 +598,7 @@ const jsonLd = {
                             <IO
                               li
                               $skipNoInner
-                              class="stack horizontal gap-down-h7"
+                              class="flow horizontal gap-down-h7"
                             >
                               <IO
                                 div
@@ -635,7 +635,7 @@ const jsonLd = {
               })}
             </div>
           </div>
-          <p><a href={`/${lang.code}/a`} class="h3">Tous les articles</a></p>
+          <p><a href={`/${lang.code}/a`} class="h4">Tous les articles</a></p>
         </section> */
       }
     </main>
@@ -729,7 +729,7 @@ const jsonLd = {
   .network {
     display: flex;
     flex-direction: column;
-    gap: var(--size-h4);
+    gap: var(--size-p);
 
     & .img-container {
       flex-shrink: 0;

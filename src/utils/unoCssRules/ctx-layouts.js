@@ -158,11 +158,11 @@ export default [
     (match, { symbols }) => {
       return [
         {
-          [symbols.selector]: () => `:where(.flow:not(.horizontal).recursive.stop) * + *`,
+          [symbols.selector]: () => `:where(.flow:not(.horizontal).recursive .flow.stop) * + *`,
           'margin-block-start': '0',
         },
         {
-          [symbols.selector]: () => `:where(.flow.horizontal.recursive.stop) * + *`,
+          [symbols.selector]: () => `:where(.flow.horizontal.recursive .flow.stop) * + *`,
           'margin-inline-start': '0',
         },
       ]

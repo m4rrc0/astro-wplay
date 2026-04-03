@@ -52,6 +52,23 @@ const {
       :global(.card.flow > *) {
         --flow-space: 0.25em;
       }
+      :global(.card-team) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      :global(.video-container iframe) {
+        width: 66.66%;
+        aspect-ratio: 16 / 9;
+        border-radius: var(--border-radius-l);
+      }
+
+      :global(.video-grid iframe) {
+        width: 50%;
+        aspect-ratio: 16 / 9;
+        border-radius: var(--border-radius-l);
+      }
     </style>
   </BasicPage>
 </SkeletonPage>

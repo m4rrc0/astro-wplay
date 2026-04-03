@@ -46,7 +46,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 
       <p class="center text h4">Retrouve ici quelques exemples d'événements passés et à venir.</p>
 
-      <section class="box no-border flow gap-h4">
+      <section class="flow">
         <h2 class="center text">Organisé par l’équipe Wanna Play</h2>
         <ul class="grid-fluid gap-h4 list reset" style="--width-column-min: var(--width-col-4);">
           <li
@@ -73,7 +73,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         </ul>
       </section>
 
-      <section class="box no-border flow gap-h4">
+      <section class="flow">
         <h2 class="center text">En partenariat</h2>
         <ul class="grid-fluid gap-h4 list reset" style="--width-column-min: var(--width-col-4);">
           <li
@@ -100,10 +100,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         </ul>
       </section>
 
-      <section
-        class="flex center text flow gap-h6 padding-h1"
-        style="--flow-space: var(--size-h8);"
-      >
+      <section class="center text flow">
         <p>Tu veux proposer un partenariat ou monter un événement ludique avec nous?</p>
         <p>
           <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">Contacte-nous</a>
@@ -128,5 +125,13 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     align-items: center;
     justify-content: center;
     padding: var(--size-h3);
+  }
+
+  section {
+    padding-block: var(--size-h1);
+  }
+
+  div.flow > * {
+    --flow-space: var(--gap-h2);
   }
 </style>

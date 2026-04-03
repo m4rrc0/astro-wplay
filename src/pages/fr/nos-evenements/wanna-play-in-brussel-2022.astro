@@ -4,13 +4,13 @@ import { SEO } from '@components'
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
-import gagBack from '../../../assets/images/photos-Festival-2022/gag_back.jpg'
-import hoplaFlorent from '../../../assets/images/photos-Festival-2022/hopla-florent.jpg'
-import kidsStoryTime from '../../../assets/images/photos-Festival-2022/kids-story-time.jpg'
-import kids from '../../../assets/images/photos-Festival-2022/kids.jpg'
-import londonPierre from '../../../assets/images/photos-Festival-2022/london-pierre.jpg'
-import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
+import imgVisibilite1 from '@assets/images/photos-Festival-2022/visibilite/IMG_6022.JPG'
+import imgVisibilite2 from '@assets/images/photos-Festival-2022/visibilite/IMG_6023.JPG'
+import imgVisibilite3 from '@assets/images/photos-Festival-2022/visibilite/IMG_6271.JPG'
+import imgVisibilite4 from '@assets/images/photos-Festival-2022/visibilite/IMG_6272.JPG'
+import imgVisibilite5 from '@assets/images/photos-Festival-2022/visibilite/IMG_6273.JPG'
+import imgVisibilite6 from '@assets/images/photos-Festival-2022/visibilite/IMG_6274.JPG'
 
 // const { lang } = Astro.props
 const lang = { code: 'fr' }
@@ -81,7 +81,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
   <BasicPage {lang}>
     <main class="center max" style="margin-top: 0;">
       <header
-        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl"
+        class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
         style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
       >
         <h1>Wanna Play in Brussel 2022</h1>
@@ -128,10 +128,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             </li>
           </ol>
         </div>
-        <div
-          class="grid-fluid center align-items-center justify-between"
-          style="--width-column-min: var(--width-col-4);"
-        >
+        <div class="main-partners grid-fluid" style="--column-width-min: var(--size-h1)">
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -377,6 +374,14 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             <li>Publications sur les réseaux sociaux</li>
             <li>Newsletter</li>
           </ul>
+          <div class="imgGrid grid-fluid gap-h4">
+            <Image src={imgVisibilite1} alt="Interview" />
+            <!-- <Image src={imgVisibilite2} alt="Interview" /> -->
+            <Image src={imgVisibilite3} alt="Interview" />
+            <Image src={imgVisibilite4} alt="Interview" />
+            <Image src={imgVisibilite5} alt="Interview" />
+            <Image src={imgVisibilite6} alt="Interview" />
+          </div>
         </div>
 
         <div class="flow">
@@ -429,12 +434,12 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     justify-content: center;
   }
 
-  .video-container iframe,
-  .video-container img {
+  .video-container iframe {
     width: 66.66%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
   }
+
   .video-grid iframe {
     width: 50%;
     aspect-ratio: 16 / 9;
@@ -445,16 +450,16 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     display: grid;
     /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 3rem 2rem;
+    gap: var(--size-h2);
     align-items: center;
     justify-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: var(--size-h2);
   }
 
   /* Pour s'assurer que les logos sur une grille complète ne dépassent pas */
   @media (min-width: 1024px) {
     .partners-grid {
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(8, 1fr);
     }
   }
 
@@ -474,10 +479,23 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
   }
 
   .stat {
-    aspect-ratio: 1/1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-block: var(--size-h1);
+  }
+
+  .main-partners img,
+  .main-partners a {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .imgGrid img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-s);
   }
 </style>

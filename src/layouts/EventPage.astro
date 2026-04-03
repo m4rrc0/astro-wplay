@@ -211,16 +211,13 @@ if (jsonldType === 'EventSeries') {
     <main class="center max" style="margin-top: 0;">
       <header>
         <div
-          class="center intrinsic text box no-border gap-h4
-            color-palette-trans
-            padding-y-h-1
-            background-overlay"
+          class="center flow intrinsic text box no-border color-palette-trans padding-y-h-1 background-overlay"
           style={srcCover
             ? `background-image: url("${srcCover}");`
             : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}
         >
           <h1 class="" set:html={name} />
-          <div class="flow gap-h8">
+          <div class="flow">
             {presentation && <p class="h3">{presentation}</p>}
             {
               location?.string && (
@@ -333,7 +330,7 @@ if (jsonldType === 'EventSeries') {
       </div>} -->
       {
         (servicesTranslated?.[0] || amenities_translated?.[0]) && (
-          <ul class="box no-border center max-width-measure-h4 cluster padding-h6 gap-h6">
+          <ul class="box no-border center max-width-measure-h4 cluster padding-h6 gap-h4">
             <>
               {servicesTranslated?.map(service => (
                 <li
@@ -373,18 +370,18 @@ if (jsonldType === 'EventSeries') {
       {
         (rich_text_content && (
           <div
-            class="flex box no-border center max-width-measure-h4 flow gap-h4"
+            class="box no-border center max-width-measure-h4 flow gap-h4"
             set:html={rich_text_content}
           />
         )) || [
           highlighted_details && (
-            <div class="flex box no-border center max-width-measure-h4 flow gap-h4">
+            <div class="box no-border center max-width-measure-h4 flow gap-h4">
               <h2>Infos importantes</h2>
               <Markdown content={highlighted_details} class="flow" style="--gap:1em" />
             </div>
           ),
           description && (
-            <div class="flex box no-border center max-width-measure-h4 flow gap-h4">
+            <div class="box no-border center max-width-measure-h4 flow gap-h4">
               <h2>Description</h2>
               <Markdown content={description} class="flow" style="--gap:1em" />
             </div>
@@ -422,7 +419,7 @@ if (jsonldType === 'EventSeries') {
 
       {
         occurrences && (
-          <div class="box no-border center max-width-measure-h4 flex flex-col gap-h4">
+          <div class=" center max-width-measure-h4 flow">
             <h2 class="center text">Toutes les dates</h2>
             <ul
               class="grid-fluid gap-h4 list reset"
@@ -461,3 +458,13 @@ if (jsonldType === 'EventSeries') {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </BasicPage>
 </SkeletonPage>
+
+<style>
+  section {
+    padding-block: var(--size-h1);
+  }
+
+  div.flow > * {
+    --flow-space: var(--gap-h2);
+  }
+</style>

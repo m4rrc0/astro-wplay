@@ -191,56 +191,75 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   <BasicPage {lang}>
     <main class="center max stack gap-down-h3" style="margin-top: 0;">
       <!-- Header -->
-      <header class="stack gap-down-h4 center text">
-        <img src={bannerPaper.src} alt="BGF 2018 Banner" style="width: 100%; height: auto;" />
+      <header
+        class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+      >
         <h1>
-          <span class="color-primary">Brussels Games Festival 2018</span><br />
-          <span class="color-secondary">La nuit des découvertes ludiques</span>
+          Brussels Games Festival 2018<br />
+          La nuit des découvertes ludiques
         </h1>
-        <p>
-          <a href="https://www.wanna-play.be/archive/brussels-games-festival" target="_blank"
-            >Lien vers l'archive originale</a
-          >
-        </p>
       </header>
 
       <!-- Intro -->
-      <section class="stack gap-down-h5 center text padding-x-relative-l">
+      <section class="flow padding-x-relative-l">
         <p class="size-h3"><strong>Une nuit de découvertes ludiques</strong></p>
         <p>
           Plus de 50 nouveautés 2018 étaient disponibles toute la nuit au Brussels Games Festival
           grâce à la complicité de nos partenaires éditeurs et distributeurs.
         </p>
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/Z895F3XZ-sg?si=xk0QdQu9DTQfUMT2"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="max-width: 100%; border-radius: var(--border-radius-m);"></iframe>
+        </div>
       </section>
 
       <!-- Stats -->
-      <section
-        class="grid gap-h5 padding-h3 border-radius-m"
-        data-c-p="teal"
-        data-c-p-var="funky-contrast"
-        style="--width-column: 130px; text-align: center;"
-      >
-        <div>
-          <div class="stack gap-down-h7">
-            <p class="size-h1 stat-nb">+50</p><p>nouveautés 2018</p>
-          </div>
-          <div class="stack gap-down-h7">
-            <p class="size-h1 stat-nb">~100</p><p>parties jouées</p>
-          </div>
-          <div class="stack gap-down-h7">
-            <p class="size-h1 stat-nb">156</p><p>inscriptions</p>
-          </div>
-          <div class="stack gap-down-h7">
-            <p class="size-h1 stat-nb">642</p><p>visiteurs uniques</p>
-          </div>
-          <div class="stack gap-down-h7">
-            <p class="size-h1 stat-nb">7734</p><p>pages vues</p>
-          </div>
-        </div>
+      <section>
+        <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
+          <li
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">+50</p>
+            <p>nouveautés 2018</p>
+          </li>
+          <li
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">~100</p>
+            <p>parties jouées</p>
+          </li>
+          <li
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">156</p>
+            <p>inscriptions</p>
+          </li>
+          <li
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">642</p>
+            <p>visiteurs uniques</p>
+          </li>
+          <li
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">7734</p>
+            <p>pages vues</p>
+          </li>
+        </ul>
       </section>
 
       <!-- Partenaires éditeurs -->
       <section class="stack gap-down-h4">
+        <h2>Partenaires</h2>
+
         <div class="partners-grid">
           {/* On boucle sur le tableau des images */}
           {
@@ -259,7 +278,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       </section>
 
       <!-- App compagnon (tilted card) -->
-      <section class="app-card box no-border padding-h4 stack gap-down-h5">
+      <section class="app-card box no-border padding-h4 flow border-radius-s">
         <h3 class="color-secondary">Une app compagnon</h3>
         <p>Une autre manière de découvrir le festival depuis ton smartphone ou ton PC.</p>
         <div>
@@ -268,44 +287,23 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
         <!-- App mini-stats -->
         <div
-          class="cluster gap-h4 justify-content-space-around padding-y-relative-s app-stats-border"
+          class="flow horizontal justify-content-space-around padding-y-relative-s app-stats-border"
         >
-          <div>
-            <div class="stack gap-down-h7 center text">
-              <p class="size-h2 stat-nb-secondary">1300</p>
-              <p>visiteurs uniques</p>
-            </div>
-            <div class="stack gap-down-h7 center text">
-              <p class="size-h2 stat-nb-secondary">27735</p>
-              <p>pages vues</p>
-            </div>
+          <div class="flow center text">
+            <p class="size-h2 stat-nb-secondary">1300</p>
+            <p>visiteurs uniques</p>
+          </div>
+          <div class="flow center text">
+            <p class="size-h2 stat-nb-secondary">27735</p>
+            <p>pages vues</p>
           </div>
         </div>
       </section>
 
-      <!-- Vidéo -->
-      <section class="stack gap-down-h4">
-        <h2 class="center text color-primary">Souvenir en vidéo</h2>
-        <div class="center max" style="text-align: center;">
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/Z895F3XZ-sg?si=xk0QdQu9DTQfUMT2"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            style="max-width: 100%; border-radius: var(--border-radius-m);"></iframe>
-        </div>
-      </section>
-
       <!-- Galerie Photos -->
-      <section class="stack gap-down-h4">
-        <h2 class="center text color-primary">Galerie Photos</h2>
-        <div>
-          <GalleryFull {images} />
-        </div>
+      <section class="flow">
+        <h2>Galerie Photos</h2>
+        <GalleryFull {images} columns={5} />
       </section>
     </main>
   </BasicPage>
@@ -348,10 +346,10 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   .partners-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 3rem 2rem;
+    gap: var(--size-h2);
     align-items: center;
     justify-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: var(--size-h2);
   }
   .partners-grid img {
     max-width: 100%;
@@ -361,7 +359,31 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   }
   @media (min-width: 1024px) {
     .partners-grid {
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(8, 1fr);
     }
+  }
+
+  section {
+    padding-block: var(--size-h1);
+  }
+
+  div.flow > * {
+    --flow-space: var(--gap-h2);
+  }
+
+  .stat {
+    padding-block: var(--size-h1);
+  }
+
+  .video-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .video-container iframe {
+    width: 66.66%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-l);
   }
 </style>

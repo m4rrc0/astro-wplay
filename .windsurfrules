@@ -10,3 +10,4 @@
 - Always 'tutoyer' (informal 'you')
 - Friendly and fun tone
 - hard-coded internal links always have a trailing slash
+- Do not put spaces before punctuation characters even if it goes against traditional typography rules (to avoid orphan characters on new lines)

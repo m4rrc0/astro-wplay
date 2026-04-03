@@ -277,10 +277,9 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
         </div>
       </section>
 
-      <!-- App compagnon (tilted card) -->
-      <section class="app-card box no-border padding-h4 flow border-radius-s">
-        <h3 class="color-secondary">Une app compagnon</h3>
-        <p>Une autre manière de découvrir le festival depuis ton smartphone ou ton PC.</p>
+      <section class="">
+        <h3 class="color-secondary">[Une app compagnon](https://bgf.wanna-play.be/animations/)</h3>
+        <p>On développe en parallèle de l'organisation de la nocturne une progressive web app. Une autre manière de découvrir le festival depuis ton smartphone ou ton PC.</p>
         <div>
           <a href="#" class="cta-button padding-x-relative-l border-radius-m">C'est par ici</a>
         </div>
@@ -302,7 +301,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
       <!-- Galerie Photos -->
       <section class="flow">
-        <h2>Galerie Photos</h2>
+        <h2>Photos © Iris Senden</h2>
         <GalleryFull {images} columns={5} />
       </section>
     </main>
@@ -310,16 +309,6 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 </SkeletonPage>
 
 <style>
-  /* Tilted app card */
-  .app-card {
-    transform: rotate(1.5deg);
-    margin: var(--size-h3) auto;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: var(--shadow-raised-s);
-    border: 1px solid hsl(0, 0%, 90%);
-  }
-
   /* CTA button */
   .cta-button {
     display: inline-block;

@@ -50,6 +50,11 @@ const ariaCurrentAttr = currentHref => {
             </a>
           </li>
           <li>
+            <a href={`/${lang.code}/be/`} aria-current={ariaCurrentAttr(`/${lang.code}/be/`)}
+              >Jouer !</a
+            >
+          </li>
+          <li>
             <a
               href={`/${lang.code}/guides-pro/`}
               aria-current={ariaCurrentAttr(`/${lang.code}/guides-pro/`)}>Le jeu au travail</a
@@ -102,17 +107,6 @@ const ariaCurrentAttr = currentHref => {
         <div class="center width-max">
           <nav class="box no-border cluster overflow gap-h6-down">
             <ul class="reset reset-down-a size-h3">
-              <li>
-                <a href={`/${lang.code}/be/`} aria-current={ariaCurrentAttr(`/${lang.code}/be/`)}>
-                  <Icon
-                    name="simple-line-icons:control-play"
-                    title="magie"
-                    role="img"
-                    style="height:2.5em;"
-                  />
-                  <span>Jouer !</span>
-                </a>
-              </li>
               <li>
                 <a href={`/${lang.code}/e/`} aria-current={ariaCurrentAttr(`/${lang.code}/e/`)}>
                   <CalendarIcon style="height:2.5em;" />

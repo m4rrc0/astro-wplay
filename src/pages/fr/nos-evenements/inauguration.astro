@@ -2,8 +2,61 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
 import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import getOptimizedImages from '../../../utils/getOptimizedImages.js'
+import GalleryFull from '@partials/GalleryFull.astro'
 
 const lang = { code: 'fr' }
+
+const partnersData = [
+  { fileName: 'logo-asmo', alt: 'Logo Asmodee' },
+  { fileName: 'logo-espace-careme', alt: 'Logo Bibliothèque Anderlecht (Espace Carême)' },
+  { fileName: 'logo-ludivine', alt: 'Logo Ludivine devenu Ludothèque Au Coin Des Jeux' },
+  { fileName: 'logo-casse-noisettes', alt: 'Logo Casse-Noisettes' },
+  { fileName: 'logo-lets-play-together', alt: "Logo Let's Play Together" },
+  { fileName: 'logo-the-cookie-tree', alt: 'Logo The Cookie Tree' },
+  { fileName: 'logo-jeux-spellen', alt: 'Logo Jeux Spellen' },
+  { fileName: 'logo-g-a-g', alt: 'Logo Geek Attitude Games' },
+  { fileName: 'logo-jeuxsticiers', alt: 'Logo Jeuxsticiers' },
+  { fileName: 'logo-ace-workshops', alt: 'Logo Ace Workshops' },
+  { fileName: 'logo-repos-production', alt: 'Logo Repos Production' },
+  { fileName: 'logo-de-joueur', alt: 'Logo De Joueur' },
+  { fileName: 'logo-govinda', alt: 'Logo Govinda' },
+  { fileName: 'logo-des-jeux-une-fois', alt: 'Logo Des Jeux une fois' },
+]
+
+const allSlugs = [...partnersData.map(p => p.fileName.replace(/^logo-/, ''))]
+
+import { getOrganizations } from '../../../store/dataService.js'
+
+const organizations = await getOrganizations({
+  filter: {
+    _and: [{ status: { _in: ['published', 'to_check'] } }, { slug: { _in: allSlugs } }],
+  },
+})
+
+const partners = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/partners/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+
+const imagesPartners = await getOptimizedImages(partnersData, partners, organizations)
+
+const inaugurationPhotos = Object.values(
+  import.meta.glob<{ default: ImageMetadata }>('../../../assets/images/inauguration-2018/*.webp', {
+    eager: true,
+  })
+)
+
+const imagesIris = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/inauguration-2018/iris-senden/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+const imagesVeronique = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/inauguration-2018/veronique-bosschaert/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+
+const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/inauguration-2018/india-teo-tess/*.{jpeg,jpg,png,gif,webp,svg}'
+)
 ---
 
 <SkeletonPage {lang}>
@@ -19,15 +72,11 @@ const lang = { code: 'fr' }
 
   <BasicPage {lang}>
     <main class="center max" style="margin-top: 0;">
-      <header class="flow gap-h4 center text">
-        <Image
-          src="/archive/images/mailChimp_header-invitation-2.png"
-          alt="Inauguration"
-          width={600}
-          height={200}
-          style="width: 100%; height: auto; border-radius: var(--border-radius-m);"
-        />
-        <h1>Inauguration et soirée jeux</h1>
+      <header
+        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+      >
+        <h1>Inauguration</h1>
         <p><strong>Dimanche 10 juin 2018 à 16h</strong></p>
       </header>
 
@@ -36,49 +85,50 @@ const lang = { code: 'fr' }
           Il y a de ça un an maintenant, nous sommes partis en quête pour libérer les joueurs de
           leurs entraves. Aujourd'hui, plus que jamais, le mal nous menace mais la rébellion est en
           marche et l'espoir grandit tous les jours dans le cœur des vaillants résistants !
+          <br />
+          Le temps d'une soirée, nous célébrons <strong>Ruego, le jinn du jeu</strong>. Enchaîne les
+          parties de tes jeux préférés pour attirer ses faveurs !
+          <br />
+          <strong>Accueil des joueurs</strong> • <strong>Explication des règles</strong> •
+          <strong>Organisation de tables</strong> • <strong>Et autres surprises…</strong>
         </p>
-
-        <div class="flow gap-h4 center text">
-          <h3>Inscris-toi !</h3>
-          <p class="color-red">C'est obligatoire mais gratuit</p>
-        </div>
       </section>
 
       <!-- Stats -->
       <section class="flow gap-h4 padding-y-h1">
         <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center stat"
           >
             <p class="h1">+110</p>
             <p>joueurs</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center stat"
           >
             <p class="h1">11</p>
             <p>partenaires</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center stat"
           >
             <p class="h1">+70</p>
             <p>jeux proposés</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center stat"
           >
             <p class="h1">40</p>
             <p>tables créées</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center stat"
           >
             <p class="h1">16</p>
             <p>interviews</p>
           </li>
           <li
-            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="box no-border padding-h4 gap-h4 color-palette-trans background-overlay border-radius-s text-center stat"
           >
             <p class="h1">8</p>
             <p>jeux offerts (Asmodee)</p>
@@ -86,191 +136,151 @@ const lang = { code: 'fr' }
         </ul>
       </section>
 
-      <!-- Règles du jeu -->
-      <section class="flow gap-h4 padding-y-h1">
-        <h2>Règles du jeu</h2>
-
-        <div class="cluster gap-h1 center text" style="--width-column: 130px;">
-          <div class="flow gap-down-h6">
-            <img
-              src="/archive/images/icone-invit-mailing-02.png"
-              alt=""
-              style="width: 120px; margin: auto;"
-            />
-            <p><strong>16h &gt; 22h</strong></p>
-          </div>
-          <div class="flow gap-down-h6">
-            <img
-              src="/archive/images/icone-invit-mailing-03.png"
-              alt=""
-              style="width: 120px; margin: auto;"
-            />
-            <p><strong>3 &gt; 99 ans</strong></p>
-          </div>
-          <div class="flow gap-down-h6">
-            <img
-              src="/archive/images/icone-invit-mailing-04.png"
-              alt=""
-              style="width: 120px; margin: auto;"
-            />
-            <p><strong>Coopératif</strong></p>
-          </div>
-        </div>
-      </section>
-
-      <!-- But du jeu -->
-      <section class="flow gap-h4 padding-y-h1">
-        <h3>But du jeu</h3>
-        <p>
-          Le temps d'une soirée, nous célébrons <strong>Ruego, le jinn du jeu</strong>. Enchaîne les
-          parties de tes jeux préférés pour attirer ses faveurs !
-        </p>
-
-        <h3>Déroulement de la "party"</h3>
-        <p>
-          <strong>Accueil des joueurs</strong> • <strong>Explication des règles</strong> •
-          <strong>Organisation de tables</strong> • <strong>Et autres surprises…</strong>
-        </p>
-      </section>
-
-      <!-- Phases de jeu -->
-      <section class="flow gap-h4 padding-y-h1">
-        <h3>Phases de jeu</h3>
-        <div class="cluster gap-h1 center text">
-          <div class="flow gap-h6">
-            <img src="/archive/images/WP-MailChimp-invit-02.png" alt="" />
-            <p>Un verre au bar</p>
-          </div>
-          <div class="flow gap-h6">
-            <img src="/archive/images/WP-MailChimp-invit-03.png" alt="" />
-            <p>Grignotages</p>
-          </div>
-          <div class="flow gap-h6">
-            <img src="/archive/images/WP-MailChimp-invit-04.png" alt="" />
-            <p>Rencontres</p>
-          </div>
-          <div class="flow gap-h6">
-            <img src="/archive/images/WP-MailChimp-invit-05.png" alt="" />
-            <p>Jeux</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Mise en place -->
-      <section class="flow gap-h4 padding-y-h1">
-        <h3>Mise en place</h3>
-        <div class="flex flow horizontal gap-h1 center text">
-          <div class="flow gap-h6">
-            <img
-              src="/archive/images/icone-invit-mailing-08.png"
-              alt=""
-              style="width: 100px; margin: auto;"
-            />
-            <p>Dimanche <strong>10 juin</strong> 2018<br /><strong>16h</strong></p>
-          </div>
-          <div class="flow gap-h6">
-            <img
-              src="/archive/images/icone-invit-mailing-09.png"
-              alt=""
-              style="width: 100px; margin: auto;"
-            />
-            <p><strong>Espace Maurice Carême</strong><br />rue du Chapelain 1-7, Anderlecht</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sur place (tilted card) -->
-      <section class="flow gap-h4 padding-y-h1">
-        <div class="flow gap-h5">
-          <h3>Sur place</h3>
-          <div class="flex flow horizontal justify-around gap-h4">
-            <div class="flow gap-h8">
-              <img
-                src="/archive/images/icone-invit-mailing-10.png"
-                alt=""
-                style="width: 100px; margin: auto;"
-              />
-              <p>Garderie</p>
-            </div>
-            <div class="flow gap-h8">
-              <img
-                src="/archive/images/icone-invit-mailing-12.png"
-                alt=""
-                style="width: 100px; margin: auto;"
-              />
-              <p>Accessibilité</p>
-            </div>
-            <div class="flow gap-h8">
-              <img
-                src="/archive/images/icone-invit-mailing-11.png"
-                alt=""
-                style="width: 100px; margin: auto;"
-              />
-              <p>Terrasse</p>
-            </div>
-            <div class="flow gap-h8">
-              <img
-                src="/archive/images/icone-invit-mailing-13.png"
-                alt=""
-                style="width: 100px; margin: auto;"
-              />
-              <p>WC</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- Partenaires -->
       <section class="flow gap-h4 padding-y-h1">
-        <div class="center">
-          <img src="/archive/images/mailChimp_header-partenaires.png" alt="Partenaires" />
-        </div>
-
-        <!-- Partenaires principaux -->
-        <div class="flow gap-h4">
-          <div>
-            <img src="/archive/images/ASMODEE.png" alt="Asmodee" />
-            <img src="/archive/images/espace-careme.jpg" alt="Espace Carême" />
-          </div>
-        </div>
-
-        <!-- Autres partenaires -->
-        <div class="flow gap-h4">
-          <div>
-            <img src="/archive/images/Ludivine.png" alt="Ludivine" class="partner-logo" />
-            <img src="/archive/images/casse-noisettes.png" alt="Casse-Noisettes" />
-            <img src="/archive/images/lets-play-together.png" alt="Let's Play Together" />
-            <img src="/archive/images/the-cookie-tree.jpg" alt="The Cookie Tree" />
-            <img src="/archive/images/jeux-spellen-1082.png" alt="Jeux Spellen" />
-            <img src="/archive/images/Geek-Attitude-Games-01.png" alt="GAG" class="partner-logo" />
-            <img src="/archive/images/jeuxsticiers.png" alt="Jeuxsticiers" class="partner-logo" />
-            <img src="/archive/images/ace_workshops.png" alt="Ace Workshops" class="partner-logo" />
-            <img
-              src="/archive/images/ReposProduction.png"
-              alt="Repos Production"
-              class="partner-logo"
-            />
-            <img src="/archive/images/de-joueur.png" alt="De Joueur" class="partner-logo" />
-            <img src="/archive/images/govinda-box.png" alt="Govinda" class="partner-logo" />
-            <img
-              src="/archive/images/Des-jeux-une-fois.png"
-              alt="Des jeux une fois"
-              class="partner-logo"
-            />
-          </div>
+          <h2>Partenaires</h2>
+        <div class="partners-grid">
+          {/* On boucle sur le tableau des images */}
+          {
+            imagesPartners.map(({ optimizedMeta, alt, finalLink }) => {
+              const imgTag = <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+              return finalLink ? (
+                <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
+                  {imgTag}
+                </a>
+              ) : (
+                imgTag
+              )
+            })
+          }
         </div>
       </section>
+
+      <!-- Visibilité -->
+      <section class="flow gap-h4 padding-y-h1">
+        <h2>Visibilité</h2>
+        <ul class="flow">
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <div class="photos-grid grid-fluid gap-h4" style="--columns: 3;">
+          {inaugurationPhotos.map(mod => (
+            <Image src={mod.default} alt="" />
+          ))}
+        </div>
+      </section>
+
 
       <!-- Vidéo -->
       <section class="flow gap-h4 padding-y-h1">
-        <h3>Souvenirs en vidéo</h3>
-        <iframe
-          width="100%"
-          height="315"
-          src="https://www.youtube.com/embed/laySniWhIU4"
-          frameborder="0"
-          allowfullscreen></iframe>
+        <h2>Souvenirs en vidéo</h2>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/laySniWhIU4" frameborder="0" allowfullscreen>
+          </iframe>
+        </div>
       </section>
+      <!-- Autres vidéos -->
+      <section class="flow gap-h4 padding-y-h1">
+        <div class="more-videos grid-fluid gap-h4" style="--columns: 2;">
+          <iframe
+
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/EN-lcEHG0Hs?si=mRSzhD0Lyv6eYS6W"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          >
+          </iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/mm7Ns9f2HOo?si=3w84Q5h4ptOvL89v"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          >
+          </iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/xuprLDbqVBo?si=olP5sj9AJUI8Nmhj"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          >
+          </iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/6ETJeapT3RU?si=3IiKbZUpJFNisz-W"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/QXAKaPxA7Ws?si=2hVHoR6MiJP4k_Av"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/rvrQFy85oX4?si=jBQGXj6c5Z0-SErm"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/d1-UE918_QA?si=Ukwl8H2lG4VdS7kT"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/xj5RawWEDzc?si=UU7dwfOMsGUAa6Tt"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </section>
+
+      <!-- Gallerie photos -->
+        <section>
+        <h2>Photos</h2>
+        <h3>Iris Senden</h3>
+        <GalleryFull images={imagesIris} />
+        <h3>Véronique Bosschaert</h3>
+        <GalleryFull images={imagesVeronique} />
+        <h3>India, Téo, Tess</h3>
+        <GalleryFull images={imagesIndiaTeoTess} />
+      </section>
+
     </main>
   </BasicPage>
 </SkeletonPage>
@@ -291,22 +301,67 @@ const lang = { code: 'fr' }
     color: var(--color-primary);
     margin: 0;
   }
-
-  /* Color helpers not in the global system */
-  .color-primary {
-    color: var(--color-primary);
-  }
-  .color-secondary {
-    color: var(--color-secondary);
-  }
-  .color-red {
-    color: var(--color-red);
-  }
-
   /* Partner logos */
   .partner-logo {
     height: 70px;
     width: 70px;
     object-fit: contain;
+  }
+  .partners-grid {
+    display: grid;
+    /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--size-h2);
+    align-items: center;
+    justify-items: center;
+    margin-bottom: var(--size-h2);
+  }
+
+  @media (min-width: 1024px) {
+    .partners-grid {
+      grid-template-columns: repeat(8, 1fr);
+    }
+  }
+  .partners-grid img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 100px;
+  }
+
+  .photos-grid img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .video-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .video-container iframe {
+    width: 66.66%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-l);
+  }
+
+  .more-videos iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-l);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: var(--size-h1);
+  }
+  section {
+    padding-block: var(--size-h1);
+  }
+  div.flow > * {
+    --flow-space: var(--gap-h2);
   }
 </style>

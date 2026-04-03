@@ -21,67 +21,27 @@ const lang = { code: 'fr' }
   <BasicPage {lang}>
     <main class="center max stack gap-down-h3" style="margin-top: 0;">
       <!-- Header -->
-      <header class="stack gap-down-h4 center text">
-        <img src={bannerPaper.src} alt="BGF 2017 Banner" style="width: 100%; height: auto;" />
+      <header
+        class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+      >
         <h1>
-          <span>Brussels Games Festival 2017</span><br />
-          <span>Tables ouvertes</span>
+          Brussels Games Festival 2017<br />
+          Tables ouvertes
         </h1>
-        <p>
-          <a href="https://www.wanna-play.be/archive/brussels-games-festival" target="_blank"
-            >Voir l'archive de l'événement</a
-          >
-        </p>
       </header>
 
       <!-- Intro -->
-      <section class="center text padding-x-relative-l">
-        <p class="size-h4">
+      <section class="flow padding-x-relative-l">
+        <p class="size-h3">
           Une semaine d'effervescence ludique pour connecter les joueurs autour des tables du
           festival.
         </p>
       </section>
 
-      <section
-        class="grid gap-h5 padding-h3 border-radius-m"
-        data-c-p="teal"
-        data-c-p-var="funky-contrast"
-        style="--width-column: 130px; text-align: center;"
-      >
-        <div>
-          <div class="stack gap-down-h7">
-            <p class="size-h1 bold">5099</p><p>pages vues</p>
-          </div>
-          <div class="stack gap-down-h7">
-            <p class="size-h1 bold">480</p><p>visiteurs uniques</p>
-          </div>
-          <div class="stack gap-down-h7">
-            <p class="size-h1 bold">71</p><p>inscriptions</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Video -->
-      <section class="stack gap-down-h4">
-        <h3 class="center text">Revivez l'événement</h3>
-        <div class="video-container">
-          <iframe
-            width="100%"
-            height="450"
-            src="https://www.youtube.com/embed/ObbUL0Oosaw"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            class="center"
-          >
-          </iframe>
-        </div>
-      </section>
-
       <!-- Le concept (Tilted box) -->
       <section
-        class="sur-place-box box no-border padding-relative-l stack gap-down-h5"
+        class="sur-place-box padding-relative-l flow border-radius-s"
         data-c-p="teal"
         data-c-p-var="funky"
       >
@@ -90,6 +50,45 @@ const lang = { code: 'fr' }
           Les "Tables ouvertes" permettent aux festivaliers de se regrouper, de découvrir des
           nouveautés et de partager leur passion du jeu dans une ambiance conviviale et inclusive.
         </p>
+      </section>
+
+      <!-- Video -->
+      <section class="flow">
+        <h2>Revivez l'événement</h2>
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/ObbUL0Oosaw"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          >
+          </iframe>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section>
+        <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
+          <li
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">5099</p>
+            <p>pages vues</p>
+          </li>
+          <li
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">480</p>
+            <p>visiteurs uniques</p>
+          </li>
+          <li
+            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+          >
+            <p class="h1">71</p>
+            <p>inscriptions</p>
+          </li>
+        </ul>
       </section>
     </main>
   </BasicPage>
@@ -100,8 +99,7 @@ const lang = { code: 'fr' }
     width: 100%;
   }
 
-  .video-container iframe,
-  .video-container img {
+  .video-container iframe {
     width: 66.66%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
@@ -113,5 +111,23 @@ const lang = { code: 'fr' }
     margin: var(--size-h3) auto;
     max-width: 700px;
     box-shadow: var(--shadow-raised-s);
+  }
+
+  section {
+    padding-block: var(--size-h1);
+  }
+
+  div.flow > * {
+    --flow-space: var(--gap-h2);
+  }
+
+  .stat {
+    padding-block: var(--size-h1);
+  }
+
+  .video-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 </style>

@@ -245,7 +245,6 @@ if (jsonldType === 'Library') {
               margin-top: calc(var(--size-h2) * -1);
               margin-bottom: var(--size-h2);
               box-shadow: 0 0px 6px rgb(0 0 0 / 30%);
-              max-height: var(--width-col-6);
               overflow: hidden;
               --badge-url: url(${badge.src});
               `}
@@ -269,35 +268,33 @@ if (jsonldType === 'Library') {
 
       {
         (servicesTranslated?.[0] || amenities_translated?.[0]) && (
-          <div class="box no-border cluster padding-h6 gap-down-h6 center max-width-measure-h4">
-            <ul class="reset flow horizontal">
-              <>
-                {servicesTranslated?.map(service => (
-                  <li
-                    class="
+          <ul class="box no-border center max-width-measure-h4 cluster padding-h6 gap-h4">
+            <>
+              {servicesTranslated?.map(service => (
+                <li
+                  class="
                     box no-border padding-x-h7 padding-y-h8
                     color-palette-variation-contrast
                     border-radius-s
                   "
-                  >
-                    {service.translations.find(t => t.language_code === lang.code).default_label}
-                  </li>
-                ))}
+                >
+                  {service.translations.find(t => t.language_code === lang.code).default_label}
+                </li>
+              ))}
 
-                {amenities_translated?.map(({ [lang.code]: code }) => (
-                  <li
-                    class="
+              {amenities_translated?.map(({ [lang.code]: code }) => (
+                <li
+                  class="
                   box no-border padding-x-h7 padding-y-h8
                   color-palette-variation-funky-contrast
                   border-radius-s
                 "
-                  >
-                    {code}
-                  </li>
-                ))}
-              </>
-            </ul>
-          </div>
+                >
+                  {code}
+                </li>
+              ))}
+            </>
+          </ul>
         )
       }
 
@@ -309,7 +306,7 @@ if (jsonldType === 'Library') {
         color-palette-variation-funky-contrast
       "
           >
-            <div class="center max-width-measure-h4 flow gap-down-h7 recursive">
+            <div class="center max-width-measure-h4 flow gap-h7 recursive">
               <h2>Horaires</h2>
               {opening_hours_strings?.[0] && (
                 <div class="flow gap-h9">
@@ -339,11 +336,11 @@ if (jsonldType === 'Library') {
       {
         (rich_text_content && (
           <div
-            class="flex
+            class="
         rich-text-content
         box no-border center
         max-width-measure-h4
-        flow gap-h7
+        flow
       "
             set:html={rich_text_content}
           />
@@ -354,11 +351,11 @@ if (jsonldType === 'Library') {
         description
         box no-border center
         max-width-measure-h4
-        flow gap-h7
+        flow
       "
             >
               <h2>Description</h2>
-              <Markdown content={description} class="flow gap-h7" />
+              <Markdown content={description} class="flow" />
             </div>
           ))
       }
@@ -376,7 +373,7 @@ if (jsonldType === 'Library') {
                       target="_blank"
                       rel={`noopener noreferrer ${followPolicy}`}
                       class="
-                  box no-border flow center intrinsic gap-h8
+                  box no-border flow center intrinsic
                 "
                     >
                       <Icon name={iconName} size="1em" class="size-h1" />
@@ -391,15 +388,9 @@ if (jsonldType === 'Library') {
       }
       {
         events?.[0] && (
-          <div class="box no-border flow gap-down-h4">
+          <div class="box no-border flow">
             <h2>Prochains événements</h2>
-            <IO
-              div
-              $skipNoInner
-              class="grid-fluid gap-down-h4"
-              style="--width-column: var(--width-col-3);"
-            >
-              <IO ul $skip={!events?.[0]?.name} class="list reset">
+              <IO ul $skip={!events?.[0]?.name} class="grid-fluid gap-h4 list reset" style="--width-column-min: var(--width-col-3);">
                 {events?.map(event => {
                   const { name, location, cover_image, time_start } = event
 
@@ -416,41 +407,33 @@ if (jsonldType === 'Library') {
                       style=""
                     >
                       <div
-                        class="box no-border padding-h4 with-sidebar gap-h4
-                                          color-palette-trans
-                                          background-overlay
-                                          "
+                    class="box no-border padding-h4 with-sidebar gap-h4 color-palette-trans background-overlay"
                         style={
                           (srcCover
                             ? `background-image: url("${srcCover}"); `
-                            : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
-                          `--content-min: 80%;`
+                            : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`)
                         }
                       >
-                        <div>
-                          <time
-                            datetime={time_start.dateTimeRaw}
-                            class="timestart flow gap-down-h8 center intrinsic"
-                            style="line-height: 1;"
-                          >
-                            <span class="size-h1">{time_start?.fr?.day}</span>
-                            <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                            <span class="size-h2">{time_start?.fr?.year}</span>
-                          </time>
-                          <div>
-                            <div class="cover no-gap" style="--min-height: 100%;">
-                              <h2 class="h3 centered">
-                                <a
-                                  href={`/${event.path}/`}
-                                  class="name reset clickable"
-                                  set:html={name}
-                                />
-                              </h2>
-                            </div>
-                          </div>
+                        <time
+                          datetime={time_start.dateTimeRaw}
+                          class="timestart flow gap-h8 center intrinsic"
+                          style="line-height: 1;"
+                        >
+                          <span class="size-h1">{time_start?.fr?.day}</span>
+                          <span class="size-h2">{time_start?.fr?.monthShort}</span>
+                          <span class="size-h2">{time_start?.fr?.year}</span>
+                        </time>
+                        <div class="flow justify-center align-items-center no-gap">
+                          <h2 class="h3 centered">
+                            <a
+                              href={`/${event.path}/`}
+                              class="name reset clickable"
+                              set:html={name}
+                            />
+                          </h2>
                         </div>
                       </div>
-                      <div class="card-event-footer box no-border padding-h8 flow horizontal split-after-1">
+                      <div class="card-event-footer box no-border padding-h8 flow horizontal justify-between">
                         <IO
                           p
                           $skipNoInner
@@ -474,6 +457,14 @@ if (jsonldType === 'Library') {
   </BasicPage>
 </SkeletonPage>
 <style>
+  section {
+    padding-block: var(--size-h1);
+  }
+
+  div.flow > * {
+    --flow-space: var(--gap-h2);
+  }
+
   .badge {
     position: relative;
     overflow: visible !important;

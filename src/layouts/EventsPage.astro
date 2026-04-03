@@ -256,7 +256,7 @@ const cssRulesDisplayByType =
                   data-longitude={lng}
                 >
                   <div
-                    class="box no-border padding-h4 with-sidebar gap-h4 color-palette-trans background-overlay "
+                    class="box no-border padding-h4 with-sidebar gap-h4 color-palette-trans background-overlay"
                     style={
                       (srcCover
                         ? `background-image: url("${srcCover}"); `
@@ -390,6 +390,14 @@ const cssRulesDisplayByType =
     .card-event[data-type-gameTime='true'] {
     display: block !important;
   } */
+
+  section {
+    padding-block: var(--size-h1);
+  }
+
+  div.flow > * {
+    --flow-space: var(--gap-h2);
+  }
 </style>
 
 <style type="text/css" set:html={cssRulesDisplayByType}></style>

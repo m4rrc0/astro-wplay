@@ -6,6 +6,15 @@ import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
 import { getOrganizations } from '../../../store/dataService.js'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
 import GalleryFull from '@partials/GalleryFull.astro'
+import affiche from '@assets/images/festival-2023/visibilite/festival-2023-affiche.png'
+import imgEntree from '@assets/images/festival-2023/visibilite/festival-2023-entree.jpg'
+import imgMap from '@assets/images/festival-2023/visibilite/festival-2023-map.jpg'
+import imgPanneaux from '@assets/images/festival-2023/visibilite/festival-2023-panneaux.jpg'
+import imgSignaletique from '@assets/images/festival-2023/visibilite/festival-2023-signaletique.jpeg'
+import imgVideo from '@assets/images/festival-2023/visibilite/festival-2023-video.png'
+import imgVideoJo from '@assets/images/festival-2023/visibilite/festival-2023-video-jo.png'
+import imgVideoMarc from '@assets/images/festival-2023/visibilite/festival-2023-video-marc.png'
+import imgVideoTess from '@assets/images/festival-2023/visibilite/festival-2023-video-tess.png'
 
 const mainPartnersData = [
   {
@@ -140,18 +149,18 @@ const imagesGeneralPartners = await getOptimizedImages(generalData, partners, or
 // const { lang } = Astro.props
 const lang = { code: 'fr' }
 
-// const imagesOriane = import.meta.glob<{ default: ImageMetadata }>(
-//   '@assets/images/festival-2023/oriane-delavallee/*.{jpeg,jpg,png,gif,webp,svg}'
-// )
-// const imagesPaulo = import.meta.glob<{ default: ImageMetadata }>(
-//   '@assets/images/festival-2023/paulo-ribeiro/*.{jpeg,jpg,png,gif,webp,svg}'
-// )
-// const imagesSylwia = import.meta.glob<{ default: ImageMetadata }>(
-//   '@assets/images/festival-2023/sylwia-malachowska/*.{jpeg,jpg,png,gif,webp,svg}'
-// )
-// const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
-//   '@assets/images/festival-2023/tess/*.{jpeg,jpg,png,gif,webp,svg}'
-// )
+const imagesOriane = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/oriane-delavallee/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+const imagesPaulo = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/paulo-ribeiro/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+const imagesSylwia = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/sylwia-malachowska/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/tess/*.{jpeg,jpg,png,gif,webp,svg}'
+)
 ---
 
 <SkeletonPage {lang}>
@@ -167,7 +176,7 @@ const lang = { code: 'fr' }
   <BasicPage {lang}>
     <main class="center max" style="margin-top: 0;">
       <header
-        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl"
+        class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
         style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
       >
         <h1>Wanna Play in Brussel 2023</h1>
@@ -225,10 +234,7 @@ const lang = { code: 'fr' }
             </li>
           </ol>
         </div>
-        <div
-          class="grid-fluid center align-items-center justify-between"
-          style="--width-column-min: var(--width-col-4);"
-        >
+        <div class="main-partners grid-fluid" style="--column-width-min: var(--size-h1)">
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -254,8 +260,7 @@ const lang = { code: 'fr' }
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            class="center"></iframe>
+            allowfullscreen></iframe>
         </div>
         <div class="carousel cluster" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset">
@@ -448,7 +453,7 @@ const lang = { code: 'fr' }
         <h2>Conférences</h2>
         <div class="flow">
           <h3>DU LOISIR À LA PROFESSION : LES MÉTIERS LUDIQUES D’AUJOURD’HUI ET DE DEMAIN</h3>
-          <div>
+          <div class="flow">
             <p>
               Pour cette conférence nous avons rassemblé plusieurs intervenants de renom, tels que :
             </p>
@@ -462,7 +467,7 @@ const lang = { code: 'fr' }
             </ul> -->
             <!-- Section Conférences -->
             <div
-              class="conference-partners grid-fluid"
+              class="conference-partners grid-fluid padding-x-relative-xl"
               style="--width-column-min: var(--width-col-8);"
             >
               {
@@ -886,6 +891,12 @@ const lang = { code: 'fr' }
               </li>
             </ul>
           </div>
+          <div class="imgGrid grid-fluid gap-h4">
+            <Image src={imgVideo} alt="Interview" />
+            <Image src={imgVideoMarc} alt="Interview" />
+            <Image src={imgVideoTess} alt="Interview" />
+            <Image src={imgVideoJo} alt="Interview" />
+          </div>
         </div>
 
         <div class="flow">
@@ -935,6 +946,12 @@ const lang = { code: 'fr' }
               </li>
             </ul>
           </div>
+          <div class="imgGrid grid-fluid gap-h4">
+            <Image src={imgSignaletique} alt="Signaletique" />
+            <Image src={affiche} alt="Affiche" />
+            <Image src={imgEntree} alt="Entree" />
+            <Image src={imgPanneaux} alt="Panneaux" />
+          </div>
         </div>
       </section>
 
@@ -948,6 +965,11 @@ const lang = { code: 'fr' }
               download="Wanna-Play-Rapport-Activité-08-juillet-2023"
             >
               <strong>Rapport d'Activité 2023</strong> (PDF)
+            </a>
+          </li>
+          <li>
+            <a href={affiche.src} target="_blank" download="affiche_festival_2023">
+              <strong>Affiche 2023</strong> (PNG)
             </a>
           </li>
         </ul>
@@ -1021,7 +1043,7 @@ const lang = { code: 'fr' }
           leçons pour améliorer l’organisation des futurs événements.
         </p>
       </section>
-      <!-- <section>
+      <section>
         <h2>Photos</h2>
         <h3>Oriane Delavallee</h3>
         <GalleryFull images={imagesOriane} />
@@ -1031,7 +1053,7 @@ const lang = { code: 'fr' }
         <GalleryFull images={imagesSylwia} />
         <h3>Tess</h3>
         <GalleryFull images={imagesTess} />
-      </section> -->
+      </section>
     </main>
   </BasicPage>
 </SkeletonPage>
@@ -1039,10 +1061,11 @@ const lang = { code: 'fr' }
 <style>
   .video-container {
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
-  .video-container iframe,
-  .video-container img {
+  .video-container iframe {
     width: 66.66%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
@@ -1095,10 +1118,10 @@ const lang = { code: 'fr' }
     display: grid;
     /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 3rem 2rem;
+    gap: var(--size-h2);
     align-items: center;
     justify-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: var(--size-h2);
   }
   .partners-grid img {
     max-width: 100%;
@@ -1111,6 +1134,7 @@ const lang = { code: 'fr' }
     max-width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
+    border-radius: var(--border-radius-m);
   }
 
   .gallery-img {
@@ -1125,7 +1149,7 @@ const lang = { code: 'fr' }
   /* Pour s'assurer que les logos sur une grille complète ne dépassent pas */
   @media (min-width: 1024px) {
     .partners-grid {
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(8, 1fr);
     }
   }
 
@@ -1138,10 +1162,21 @@ const lang = { code: 'fr' }
   }
 
   .stat {
-    aspect-ratio: 1/1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-block: var(--size-h1);
+  }
+
+  .main-partners img,
+  .main-partners a {
+    object-fit: contain;
+  }
+
+  .imgGrid img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-s);
   }
 </style>

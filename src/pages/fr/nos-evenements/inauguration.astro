@@ -82,17 +82,27 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
 
       <section class="flow gap-h4 padding-y-h1">
         <p>
-         En juin 2018, Wanna Play organise son tout premier événement: l’inauguration officielle du projet.
-Un moment important pour l’équipe… mais surtout une première rencontre avec la communauté.
+          En juin 2018, Wanna Play organise son tout premier événement: l’inauguration officielle du
+          projet. Un moment important pour l’équipe… mais surtout une première rencontre avec la
+          communauté.
+        </p>
 
-Pour cette première soirée, joueurs curieux, passionnés, partenaires et animateurs répondent présents. On présente le concept d'inscription à une table de jeu, grâce à notre application web. Les règles s’expliquent, les parties s’enchaînent… et l’ambiance s’installe naturellement.
+        <p>
+          Pour cette première soirée, joueurs curieux, passionnés, partenaires et animateurs
+          répondent présents. On présente le concept d'inscription à une table de jeu, grâce à notre
+          application web. Les règles s’expliquent, les parties s’enchaînent… et l’ambiance
+          s’installe naturellement.
+        </p>
 
-Cette inauguration à permis de faire connaître le projet, d'organiser un concours, de rencontrer des joueurs et des partenaires. Cela marque le début des événements Wanna Play et confirme l’envie de créer des moments de rencontre autour du jeu.
+        <p>
+          Cette inauguration à permis de faire connaître le projet, d'organiser un concours, de
+          rencontrer des joueurs et des partenaires. Cela marque le début des événements Wanna Play
+          et confirme l’envie de créer des moments de rencontre autour du jeu.
         </p>
       </section>
 
       <h2>Objectifs de l’événement</h2>
-      
+
       <ul>
         <li>Présenter le projet Wanna Play au public</li>
         <li>Faire découvrir les jeux de société modernes</li>
@@ -142,18 +152,24 @@ Cette inauguration à permis de faire connaître le projet, d'organiser un conco
         </ul>
       </section>
 
-      Activités
-<h3>Tables de jeux</h3>
+      <h2>Activités</h2>
+      <h3>Tables de jeux</h3>
 
-Des tables animées par les partenaires et l’équipe Wanna Play ont permis aux visiteurs de découvrir de nombreux jeux de société modernes.
+      <p>
+        Des tables animées par les partenaires et l’équipe Wanna Play ont permis aux visiteurs de
+        découvrir de nombreux jeux de société modernes.
+      </p>
 
-<h3>Découverte et rencontres</h3>
+      <h3>Découverte et rencontres</h3>
 
-L’événement a permis aux joueurs de rencontrer d’autres passionnés, découvrir de nouveaux jeux et échanger avec les acteurs du monde ludique.
+      <p>
+        L’événement a permis aux joueurs de rencontrer d’autres passionnés, découvrir de nouveaux
+        jeux et échanger avec les acteurs du monde ludique.
+      </p>
 
       <!-- Partenaires -->
       <section class="flow gap-h4 padding-y-h1">
-          <h2>Partenaires</h2>
+        <h2>Partenaires</h2>
         <div class="partners-grid">
           {/* On boucle sur le tableau des images */}
           {
@@ -181,16 +197,11 @@ L’événement a permis aux joueurs de rencontrer d’autres passionnés, déco
           <li>newsletter</li>
           <li>post réseaux sociaux</li>
           <li>musique et effet sonore</li>
-
-
         </ul>
         <div class="photos-grid grid-fluid gap-h4" style="--columns: 3;">
-          {inaugurationPhotos.map(mod => (
-            <Image src={mod.default} alt="" />
-          ))}
+          {inaugurationPhotos.map(mod => <Image src={mod.default} alt="" />)}
         </div>
       </section>
-
 
       <!-- Vidéo -->
       <section class="flow gap-h4 padding-y-h1">
@@ -204,7 +215,6 @@ L’événement a permis aux joueurs de rencontrer d’autres passionnés, déco
       <section class="flow gap-h4 padding-y-h1">
         <div class="more-videos grid-fluid gap-h4" style="--columns: 2;">
           <iframe
-
             width="560"
             height="315"
             src="https://www.youtube.com/embed/EN-lcEHG0Hs?si=mRSzhD0Lyv6eYS6W"
@@ -245,7 +255,8 @@ L’événement a permis aux joueurs de rencontrer d’autres passionnés, déco
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
+            allowfullscreen
+          >
           </iframe>
           <iframe
             width="560"
@@ -255,7 +266,8 @@ L’événement a permis aux joueurs de rencontrer d’autres passionnés, déco
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
+            allowfullscreen
+          >
           </iframe>
           <iframe
             width="560"
@@ -265,7 +277,8 @@ L’événement a permis aux joueurs de rencontrer d’autres passionnés, déco
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
+            allowfullscreen
+          >
           </iframe>
           <iframe
             width="560"
@@ -275,7 +288,8 @@ L’événement a permis aux joueurs de rencontrer d’autres passionnés, déco
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
+            allowfullscreen
+          >
           </iframe>
           <iframe
             width="560"
@@ -285,22 +299,22 @@ L’événement a permis aux joueurs de rencontrer d’autres passionnés, déco
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
+            allowfullscreen
+          >
           </iframe>
         </div>
       </section>
 
       <!-- Gallerie photos -->
-        <section>
+      <section>
         <h2>Photos</h2>
         <h3>Photos © Iris Senden</h3>
         <GalleryFull images={imagesIris} />
         <h3>Photos © Véronique Bosschaert</h3>
         <GalleryFull images={imagesVeronique} />
-        <h3>Photos © India Hadri, Teodora Rusu & [Tess h.](https://www.tess-h.be)</h3>
+        <h3>Photos © India Hadri, Teodora Rusu & <a href="https://www.tess-h.be">Tess h.</a></h3>
         <GalleryFull images={imagesIndiaTeoTess} />
       </section>
-
     </main>
   </BasicPage>
 </SkeletonPage>

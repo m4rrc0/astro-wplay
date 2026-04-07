@@ -46,11 +46,11 @@ export default defineConfig({
         },
       ],
     }),
-    (await import('@playform/inline')).default({
-      Logger: isProd ? 0 : 2, // default is 2
-      Fonts: true, // Not sure this is still working or needed...
-      Exclude: [file => /dist\/fr\/e/.test(file)],
-    }),
+    // (await import('@playform/inline')).default({
+    //   Logger: isProd ? 0 : 2, // default is 2
+    //   Fonts: true, // Not sure this is still working or needed...
+    //   Exclude: [file => /dist\/fr\/e/.test(file)],
+    // }),
     // (await import('astro-critters')).default({
     //   logger: 1, // default is 2
     //   fonts: true,

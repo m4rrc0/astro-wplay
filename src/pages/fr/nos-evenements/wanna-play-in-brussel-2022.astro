@@ -90,7 +90,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
       <section class="flow">
         <div class="flow">
           <p>
-            <strong>WANNA PLAY IN BRUSSELS 2022 - 1ÈRE ÉDITION</strong>
+            <strong>Wanna Play in Brussels 2022 - 1ère édition</strong>
           </p>
           <p>
             Un festival gratuit d’une journée consacré aux jeux de société dans un lieu historique
@@ -111,7 +111,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </div>
         <div class="flow">
           <p>
-            <strong>LE FESTIVAL AVAIT PLUSIEURS OBJECTIFS PRINCIPAUX</strong>
+            <strong>Le festival avait plusieurs objectifs principaux</strong>
           </p>
           <ol>
             <li>
@@ -128,7 +128,10 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             </li>
           </ol>
         </div>
-        <div class="main-partners grid-fluid" style="--column-width-min: var(--size-h2)">
+        <div
+          class="main-partners grid-fluid padding-x-relative-xl"
+          style="--column-width-min: var(--size-h4); --column-width-max: var(--size-h4);"
+        >
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -156,7 +159,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen></iframe>
         </div>
-        <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
+        <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
             class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
@@ -226,7 +229,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         <h2>Activités</h2>
         <ul class="flow">
           <li>
-            <p>TABLES DE JEUX</p>
+            <p>Tables de jeux</p>
             <p>
               Des espaces étaient dédiés aux jeux de société où les visiteurs pouvaient jouer et
               découvrir de nouveaux titres, chaque table était tenue par un partenaire ou un
@@ -234,18 +237,18 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             </p>
           </li>
           <li>
-            <p>JEUX GÉANTS ET D'EXTÉRIEUR</p>
+            <p>Jeux géants et d'extérieur</p>
             <p>
               Plusieurs jeux de grande taille étaient disponibles en extérieur pour le plaisir des
               petits et des grands.
             </p>
           </li>
           <li>
-            <p>BOURSE AUX JEUX</p>
+            <p>Bourse aux jeux</p>
             <p>Une opportunité d'acheter et de vendre des jeux d'occasion.</p>
           </li>
           <li>
-            <p>ZONE PROTOTYPES</p>
+            <p>Zone prototypes</p>
             <p>
               Un espace dédié aux auteurs pour présenter leurs créations en cours de développement.
             </p>
@@ -270,12 +273,12 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         <h2>Partenaires</h2>
         <p>
           Nous avons également reçu le soutien de nombreux acteurs ludiques Bruxellois et Belges
-          dont :
+          dont:
         </p>
         <ul>
           <li>
             Thierry Saeys (propriétaire du magasin Sajou, ex-organisateur du Jette’s Gaming Tour,
-            chroniqueur RTBF, papa du jeu ‘Assosiation 10 dés’) qui nous a beaucoup conseillé lors
+            chroniqueur RTBF, papa du jeu 'Assosiation 10 dés') qui nous a beaucoup conseillé lors
             de la préparation de l’événement et pour la diffusion sur les réseaux sociaux.
           </li>
           <li>
@@ -284,7 +287,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           </li>
           <li>La ludothèque de l’espace Carême</li>
           <li>
-            Etienne Espreman : auteur de jeux (dont Bruxelles 1893) et copropriétaire de la maison
+            Etienne Espreman: auteur de jeux (dont Bruxelles 1893) et copropriétaire de la maison
             d’édition Geek Attitude Games
           </li>
           <li>Asmodée Belgique</li>
@@ -336,12 +339,12 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
 
       <section class="flow">
         <h2>Budget & Surprises</h2>
-        <h3>BUDGET</h3>
+        <h3>Budget</h3>
         <p>
           L'édition 2022 a été auto-financée par l'ASBL Wanna Play, avec le soutien logistique de
           nos partenaires. Nous avons dû composer avec un budget limité pour cette première année.
         </p>
-        <h3>SURPRISES</h3>
+        <h3>Surprises</h3>
         <p>Malgré une planification rigoureuse, nous avons été confrontés à quelques imprévus.</p>
         <h4>Affluence</h4>
         <p>
@@ -361,8 +364,8 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           <h3>Promotion à travers divers média</h3>
           <ul>
             <li>Spot radio le matin même du festival sur la première</li>
-            <li>Communiqué de presse envoyé à 22 médias.</li>
-            <li>Une douzaine d’articles publiés par divers médias en ligne.</li>
+            <li>Communiqué de presse envoyé à 22 médias</li>
+            <li>Une douzaine d’articles publiés par divers médias en ligne</li>
             <li>
               Affichage à l’hospice Pacheco et dans quelques lieux clé dont des magasins de jeux et
               ludothèques
@@ -474,6 +477,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     padding-block: var(--size-h2);
   }
 
+  section.flow,
   div.flow > * {
     --flow-space: var(--gap-h3);
   }
@@ -486,11 +490,13 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     padding-block: var(--size-h2);
   }
 
-  .main-partners img,
   .main-partners a {
-    width: 150px;
-    height: auto;
+    display: flex;
+    justify-content: center;
+  }
+  .main-partners img {
     object-fit: contain;
+    width: 33%;
   }
 
   .imgGrid img {

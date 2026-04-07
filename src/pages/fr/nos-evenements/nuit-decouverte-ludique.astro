@@ -224,7 +224,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
       <!-- Stats -->
       <section>
-        <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
+        <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
             class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
@@ -378,6 +378,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     padding-block: var(--size-h2);
   }
 
+  section.flow,
   div.flow > * {
     --flow-space: var(--gap-h3);
   }

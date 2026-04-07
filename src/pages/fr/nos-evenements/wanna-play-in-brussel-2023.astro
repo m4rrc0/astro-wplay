@@ -15,6 +15,7 @@ import imgVideo from '@assets/images/festival-2023/visibilite/festival-2023-vide
 import imgVideoJo from '@assets/images/festival-2023/visibilite/festival-2023-video-jo.png'
 import imgVideoMarc from '@assets/images/festival-2023/visibilite/festival-2023-video-marc.png'
 import imgVideoTess from '@assets/images/festival-2023/visibilite/festival-2023-video-tess.png'
+import tatianaDronjak from '@assets/images/partners/tatiana-dronjak.jpg'
 
 const mainPartnersData = [
   {
@@ -71,13 +72,13 @@ const conferenceData = [
     alt: 'Portrait de Géraldine Volders',
     link: '',
   },
-  {
-    fileName: 'tatiana-dronjak',
-    name: 'Tatiana Dronjak',
-    role: 'Girl dot Game',
-    alt: 'Portrait de Tatiana Dronjak',
-    link: 'https://www.youtube.com/channel/UCUU0uDuttbZAs-n334cYrhQ',
-  },
+  // {
+  //   fileName: 'tatiana-dronjak',
+  //   name: 'Tatiana Dronjak',
+  //   role: 'Girl dot Game',
+  //   alt: 'Portrait de Tatiana Dronjak',
+  //   link: 'https://www.youtube.com/channel/UCUU0uDuttbZAs-n334cYrhQ',
+  // },
 ]
 
 // VIP partners
@@ -185,7 +186,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
       <section class="flow">
         <div class="flow">
           <p>
-            <strong>WANNA PLAY IN BRUSSELS 2023 - 2E ÉDITION</strong>
+            <strong>Wanna Play in Brussels 2023 - 2e édition</strong>
           </p>
           <p>
             Le festival «Wanna Play in Brussels» a connu sa deuxième édition cette année. Après le
@@ -202,7 +203,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
         <div class="flow">
           <p>
-            <strong>LE FESTIVAL AVAIT PLUSIEURS OBJECTIFS PRINCIPAUX</strong>
+            <strong>Le festival avait plusieurs objectifs principaux</strong>
           </p>
           <ol class="flow">
             <li>
@@ -234,7 +235,10 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
           </ol>
         </div>
-        <div class="main-partners grid-fluid" style="--column-width-min: var(--size-h2)">
+        <div
+          class="main-partners grid-fluid padding-x-relative-xl"
+          style="--column-width-min: var(--size-h4); --column-width-max: var(--size-h4);"
+        >
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -284,7 +288,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
                 <blockquote>
                   <p>
                     "Chouette festival qui permet de découvrir ou redécouvrir le monde ludique, de
-                    belles personnes et plein de nouveaux jeux. À refaire !"
+                    belles personnes et plein de nouveaux jeux. À refaire!"
                   </p>
                 </blockquote>
                 <figcaption class="bold">
@@ -322,7 +326,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
               <figure class="flow">
                 <blockquote>
                   <p>
-                    “Super événement ! L’occasion de découvrir et tester plein de nouveaux jeux dans
+                    “Super événement! L’occasion de découvrir et tester plein de nouveaux jeux dans
                     une ambiance relax et conviviale.”
                   </p>
                 </blockquote>
@@ -347,7 +351,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
           </ul>
         </div>
-        <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
+        <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
             class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
@@ -391,7 +395,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         <h2>Activités</h2>
         <ul class="flow">
           <li>
-            <p>TABLES DE JEUX</p>
+            <p>Tables de jeux</p>
             <p>
               Des espaces étaient dédiés aux jeux de société où les visiteurs pouvaient jouer et
               découvrir de nouveaux titres, chaque table était tenue par un partenaire ou un
@@ -399,28 +403,28 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </p>
           </li>
           <li>
-            <p>INITIATION AU JEU DE RÔLE (RPG)</p>
+            <p>Initiation au jeu de rôle (RPG)</p>
             <p>
               Une occasion pour les visiteurs (adultes et enfants) de s’immerger dans l’univers du
               jeu de rôle.
             </p>
           </li>
           <li>
-            <p>INITIATION À LA PEINTURE DE FIGURINES ET AUX JEUX ASSOCIÉS</p>
+            <p>Initiation à la peinture de figurines et aux jeux associés</p>
             <p>
               Des ateliers étaient proposés aux visiteurs (adultes et enfants) pour apprendre les
               techniques de peinture de figurines utilisées dans certains jeux.
             </p>
           </li>
           <li>
-            <p>ZONE ENFANTS</p>
+            <p>Zone enfants</p>
             <p>
               Un espace dédié aux plus jeunes avec des tables de jeux, du maquillage de tribu et des
               lectures de contes.
             </p>
           </li>
           <li>
-            <p>ET PLEIN D'AUTRES</p>
+            <p>Et plein d'autres</p>
           </li>
         </ul>
       </section>
@@ -452,10 +456,10 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
       <section class="flow">
         <h2>Conférences</h2>
         <div class="flow">
-          <h3>DU LOISIR À LA PROFESSION : LES MÉTIERS LUDIQUES D’AUJOURD’HUI ET DE DEMAIN</h3>
+          <h3>Du loisir à la profession: les métiers ludiques d’aujourd’hui et de demain</h3>
           <div class="flow">
             <p>
-              Pour cette conférence nous avons rassemblé plusieurs intervenants de renom, tels que :
+              Pour cette conférence nous avons rassemblé plusieurs intervenants de renom, tels que:
             </p>
             <!-- <ul>
               <li><strong>Thierry Saeys</strong> (SAJOU)</li>
@@ -495,20 +499,28 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
               }
             </div>
           </div>
-          <p>
-            Les participants ont pu découvrir les parcours de ces experts du jeu de société et ont
-            reçu des conseils sur les opportunités de carrière dans ce domaine en constante
-            évolution.
-          </p>
         </div>
         <div class="flow">
-          <h3>LA PLACE DES FEMMES DANS LE MONDE DU JEU</h3>
+          <h3>La place des femmes dans le monde du jeu</h3>
           <p>
             Cette conférence gratuite et sans inscription, a été animée par Tatiana Dronjak, une
             youtubeuse spécialisée dans les jeux de société (Girl dot Game). Les discussions ont
             porté sur le rôle et la représentation des femmes dans l’univers du jeu, mettant en
             lumière leur contribution et les défis auxquels elles sont confrontées.
           </p>
+          <div
+            class="conference-partners grid-fluid padding-x-relative-xl"
+            style="--width-column-max: var(--width-col-8);"
+          >
+            <figure class="flow gap-p" style="text-align: center; margin: 0;">
+              <a href="https://www.youtube.com/channel/UCUU0uDuttbZAs-n334cYrhQ">
+                <img src={tatianaDronjak.src} alt="Portrait de Tatiana Dronjak" />
+              </a>
+              <figcaption class="flow gap-p">
+                <strong>Tatiana Dronjak</strong> Girl dot Game
+              </figcaption>
+            </figure>
+          </div>
           <p>
             Les participants ont pu découvrir les parcours de ces experts du jeu de société et ont
             reçu des conseils sur les opportunités de carrière dans ce domaine en constante
@@ -531,6 +543,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           par les bénévoles.
         </p>
         <div class="flow gap-down-p">
+          <h3>Partenaires VIP</h3>
           <div class="partners-grid">
             {/* On boucle sur le tableau des images */}
             {
@@ -548,6 +561,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
               })
             }
           </div>
+          <h3>Autre partenaires</h3>
           <div class="partners-grid">
             {/* On boucle sur le tableau des images */}
             {
@@ -572,7 +586,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
               <figure class="flow">
                 <blockquote>
                   <p>
-                    "Super organisation ! Un grand merci à toute l’équipe de Wanna Play pour ce
+                    "Super organisation! Un grand merci à toute l’équipe de Wanna Play pour ce
                     festival super sympa et bien organisé."
                   </p>
                 </blockquote>
@@ -603,7 +617,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
                   </p>
                 </blockquote>
                 <figcaption class="bold">
-                  — Paul, <cite>ploef !</cite>
+                  — Paul, <cite>ploef!</cite>
                 </figcaption>
               </figure>
             </li>
@@ -782,13 +796,13 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         <h2>Visibilité</h2>
 
         <div class="flow">
-          <h3>PROMOTION À TRAVERS DIVERS MÉDIAS</h3>
+          <h3>Promotion à travers divers médias</h3>
 
           <div class="flow">
             <h4>Presse</h4>
             <p>
-              Articles qui ont présenté les objectifs de l’ASBL et du festival, sur les sites web de
-              :
+              Articles qui ont présenté les objectifs de l’ASBL et du festival, sur les sites web
+              de:
             </p>
             <ul>
               <li>
@@ -799,12 +813,12 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
               <li>
                 <a
                   href="https://desjeuxunefois.be/index.php/2023/07/05/festival-wanna-play-encore-une-fois/"
-                  target="_blank">Des Jeux Une Fois - Festival Wanna Play encore une fois !</a
+                  target="_blank">Des Jeux Une Fois - Festival Wanna Play encore une fois!</a
                 >
               </li>
             </ul>
 
-            <p>Plusieurs mentions du festival et de la bourse aux jeux :</p>
+            <p>Plusieurs mentions du festival et de la bourse aux jeux:</p>
             <ul>
               <li>
                 <a href="https://bruxelles.article27.be/Activites-gratuites" target="_blank"
@@ -877,13 +891,13 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             <h4>Interviews</h4>
             <ul>
               <li>
-                <strong>Hunivers Boardgames :</strong> Interview filmée et publiée sur Instagram quelques
+                <strong>Hunivers Boardgames:</strong> Interview filmée et publiée sur Instagram quelques
                 semaines avant le festival.
                 <a href="https://www.instagram.com/p/CtW__EOgMkt/" target="_blank">Lien Instagram</a
                 >
               </li>
               <li>
-                <strong>RTBF :</strong> Passage radio le jour même du festival.
+                <strong>RTBF:</strong> Passage radio le jour même du festival.
                 <a
                   href="https://www.rtbf.be/article/wanna-play-festival-un-festival-bruxellois-dedie-aux-jeux-de-societe-11225443"
                   target="_blank">Lien RTBF</a
@@ -1044,15 +1058,18 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </p>
       </section>
       <section>
-        <h2>Photos</h2>
-        <h3>Photos © [O]riane Delavallee]()</h3>
+        <h2>Photos © Oriane Delavallee</h2>
         <GalleryFull images={imagesOriane} />
-        <h3>Photos © [Paulo Ribeiro](https://www.instagram.com/paulosmok/)</h3>
+        <h2>Photos © <a href="https://www.instagram.com/paulosmok/">Paulo Ribeiro</a></h2>
         <GalleryFull images={imagesPaulo} />
-        <h3>Photos © [Sylwia Malachowska](https://www.instagram.com/p/CwKn0JLrlII/?img_index=1)</h3>
+        <h2>
+          Photos © <a href="https://www.instagram.com/p/CwKn0JLrlII/?img_index=1"
+            >Sylwia Malachowska</a
+          >
+        </h2>
         <GalleryFull images={imagesSylwia} />
-        <h3>Photos © [Tess h.](https://www.tess-h.be)</h3>
-        <GalleryFull images={imagesTess} />
+        <!-- <h3>Photos © <a href="https://www.tess-h.be">Tess h.</a></h3>
+        <GalleryFull images={imagesTess} /> -->
       </section>
     </main>
   </BasicPage>
@@ -1157,6 +1174,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     padding-block: var(--size-h2);
   }
 
+  section.flow,
   div.flow > * {
     --flow-space: var(--gap-h3);
   }
@@ -1169,9 +1187,13 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     padding-block: var(--size-h2);
   }
 
-  .main-partners img,
   .main-partners a {
+    display: flex;
+    justify-content: center;
+  }
+  .main-partners img {
     object-fit: contain;
+    width: 50%;
   }
 
   .imgGrid img {

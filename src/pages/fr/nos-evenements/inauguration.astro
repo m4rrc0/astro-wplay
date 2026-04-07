@@ -64,7 +64,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
     slot="head"
     ogType="website"
     title="Inauguration Wanna Play - 10 juin 2018"
-    description="Retour sur l'événement fondateur de Wanna Play : l'invocation de Ruego."
+    description="Retour sur l'événement fondateur de Wanna Play: l'invocation de Ruego."
     socialImage={'/archive/images/mailChimp_header-invitation-2.png'}
     ogVideo={false}
     twitterCard="summary"
@@ -80,7 +80,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
         <p><strong>Dimanche 10 juin 2018 à 16h</strong></p>
       </header>
 
-      <section class="flow gap-p padding-y-h1">
+      <section class="flow">
         <p>
           En juin 2018, Wanna Play organise son tout premier événement: l’inauguration officielle du
           projet. Un moment important pour l’équipe… mais surtout une première rencontre avec la
@@ -101,74 +101,77 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
         </p>
       </section>
 
-      <h2>Objectifs de l’événement</h2>
+      <section class="flow">
+        <h2>Objectifs de l’événement</h2>
 
-      <ul>
-        <li>Présenter le projet Wanna Play au public</li>
-        <li>Faire découvrir les jeux de société modernes</li>
-        <li>Créer des rencontres entre joueurs</li>
-        <li>Réunir les acteurs du monde ludique</li>
-      </ul>
+        <ul>
+          <li>Présenter le projet Wanna Play au public</li>
+          <li>Faire découvrir les jeux de société modernes</li>
+          <li>Créer des rencontres entre joueurs</li>
+          <li>Réunir les acteurs du monde ludique</li>
+        </ul>
+      </section>
 
       <!-- Stats -->
-      <section class="flow gap-p padding-y-h1">
-        <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
+      <section class="flow">
+        <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
-            class="box no-border padding-p gap-p color-palette-trans background-overlay border-radius-s text-center stat"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h2">+110</p>
             <p>joueurs</p>
           </li>
           <li
-            class="box no-border padding-p gap-p color-palette-trans background-overlay border-radius-s text-center stat"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h2">11</p>
             <p>partenaires</p>
           </li>
           <li
-            class="box no-border padding-p gap-p color-palette-trans background-overlay border-radius-s text-center stat"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h2">+70</p>
             <p>jeux proposés</p>
           </li>
           <li
-            class="box no-border padding-p gap-p color-palette-trans background-overlay border-radius-s text-center stat"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h2">40</p>
             <p>tables créées</p>
           </li>
           <li
-            class="box no-border padding-p gap-p color-palette-trans background-overlay border-radius-s text-center stat"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h2">16</p>
             <p>interviews</p>
           </li>
           <li
-            class="box no-border padding-p gap-p color-palette-trans background-overlay border-radius-s text-center stat"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
             <p class="h2">8</p>
             <p>jeux offerts (Asmodee)</p>
           </li>
         </ul>
       </section>
+      <section class="flow">
+        <h2>Activités</h2>
+        <h3>Tables de jeux</h3>
 
-      <h2>Activités</h2>
-      <h3>Tables de jeux</h3>
+        <p>
+          Des tables animées par les partenaires et l’équipe Wanna Play ont permis aux visiteurs de
+          découvrir de nombreux jeux de société modernes.
+        </p>
 
-      <p>
-        Des tables animées par les partenaires et l’équipe Wanna Play ont permis aux visiteurs de
-        découvrir de nombreux jeux de société modernes.
-      </p>
+        <h3>Découverte et rencontres</h3>
 
-      <h3>Découverte et rencontres</h3>
-
-      <p>
-        L’événement a permis aux joueurs de rencontrer d’autres passionnés, découvrir de nouveaux
-        jeux et échanger avec les acteurs du monde ludique.
-      </p>
+        <p>
+          L’événement a permis aux joueurs de rencontrer d’autres passionnés, découvrir de nouveaux
+          jeux et échanger avec les acteurs du monde ludique.
+        </p>
+      </section>
 
       <!-- Partenaires -->
-      <section class="flow gap-h4 padding-y-h1">
+      <section class="flow">
         <h2>Partenaires</h2>
         <div class="partners-grid">
           {/* On boucle sur le tableau des images */}
@@ -188,7 +191,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
       </section>
 
       <!-- Visibilité -->
-      <section class="flow gap-p padding-y-h1">
+      <section class="flow">
         <h2>Visibilité</h2>
         <ul class="flow">
           <li>flyer</li>
@@ -204,7 +207,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
       </section>
 
       <!-- Vidéo -->
-      <section class="flow gap-p padding-y-h1">
+      <section class="flow">
         <h2>Souvenirs en vidéo</h2>
         <div class="video-container">
           <iframe src="https://www.youtube.com/embed/laySniWhIU4" frameborder="0" allowfullscreen>
@@ -212,7 +215,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
       </section>
       <!-- Autres vidéos -->
-      <section class="flow gap-p padding-y-h1">
+      <section class="flow">
         <div class="more-videos grid-fluid gap-p" style="--columns: 2;">
           <iframe
             width="560"
@@ -395,6 +398,8 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
   section {
     padding-block: var(--size-h2);
   }
+
+  section.flow,
   div.flow > * {
     --flow-space: var(--gap-h3);
   }

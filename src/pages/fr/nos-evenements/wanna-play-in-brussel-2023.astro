@@ -234,7 +234,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </li>
           </ol>
         </div>
-        <div class="main-partners grid-fluid" style="--column-width-min: var(--size-h1)">
+        <div class="main-partners grid-fluid" style="--column-width-min: var(--size-h2)">
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -349,39 +349,39 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
         <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">2000</p>
+            <p class="h2">2000</p>
             <p>participants</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">200</p>
+            <p class="h2">200</p>
             <p>jeux différents</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">+100</p>
+            <p class="h2">+100</p>
             <p>tables de jeux</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">+74</p>
+            <p class="h2">+74</p>
             <p>animateurs</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">41</p>
+            <p class="h2">41</p>
             <p>partenaires</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">33</p>
+            <p class="h2">33</p>
             <p>bénévoles</p>
           </li>
         </ul>
@@ -530,7 +530,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           Certains n’ont pas pu venir le jour J mais nous ont envoyés des jeux qui ont été animés
           par les bénévoles.
         </p>
-        <div class="flow gap-down-h4">
+        <div class="flow gap-down-p">
           <div class="partners-grid">
             {/* On boucle sur le tableau des images */}
             {
@@ -567,7 +567,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           </div>
         </div>
         <div class="carousel cluster" role="region" aria-roledescription="carousel">
-          <ul class="carousel-inner reset gap-h3">
+          <ul class="carousel-inner reset gap-h4">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
               <figure class="flow">
                 <blockquote>
@@ -661,7 +661,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           eux.
         </p>
         <div class="carousel cluster" role="region" aria-roledescription="carousel">
-          <ul class="carousel-inner reset gap-h3">
+          <ul class="carousel-inner reset gap-h4">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
               <figure class="flow">
                 <blockquote>
@@ -891,7 +891,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
               </li>
             </ul>
           </div>
-          <div class="imgGrid grid-fluid gap-h4">
+          <div class="imgGrid grid-fluid gap-p">
             <Image src={imgVideo} alt="Interview" />
             <Image src={imgVideoMarc} alt="Interview" />
             <Image src={imgVideoTess} alt="Interview" />
@@ -1118,10 +1118,10 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     display: grid;
     /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--size-h2);
+    gap: var(--size-h3);
     align-items: center;
     justify-items: center;
-    margin-bottom: var(--size-h2);
+    margin-bottom: var(--size-h3);
   }
   .partners-grid img {
     max-width: 100%;
@@ -1154,11 +1154,11 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
   }
 
   section {
-    padding-block: var(--size-h1);
+    padding-block: var(--size-h2);
   }
 
   div.flow > * {
-    --flow-space: var(--gap-h2);
+    --flow-space: var(--gap-h3);
   }
 
   .stat {
@@ -1166,7 +1166,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-block: var(--size-h1);
+    padding-block: var(--size-h2);
   }
 
   .main-partners img,

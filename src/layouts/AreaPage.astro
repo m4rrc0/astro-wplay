@@ -75,7 +75,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   />
   <BasicPage {lang}>
     <main class="center width-max">
-      <div id="events-list-container" class="box no-border stack gap-down-h1">
+      <div id="events-list-container" class="box no-border flow gap-down-h1">
         <h1 class="center text">{areaName}</h1>
         <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
         <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
@@ -98,7 +98,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         </script>
 
         <!-- TODO: enable searchin and filtering -->
-        <!-- <div class="center intrinsic stack" style="--gap: var(--size-h5);">
+        <!-- <div class="center intrinsic flow" style="--gap: var(--size-h5);">
           <input type="search" class="fuzzy-search" placeholder="Recherche" />
           <p>Trier par...</p>
           <div class="cluster" style="--gap: var(--size-h7);">
@@ -114,7 +114,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           </div>
         </div> -->
 
-        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-3);">
+        <IO div $skipNoInner class="grid gap-down-p" style="--width-column: var(--width-col-3);">
           <IO ul $skip={!events?.[0]?.name} class="list reset">
             {
               events?.map(event => {
@@ -134,7 +134,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                     style=""
                   >
                     <div
-                      class="box no-border padding-h4 with-sidebar gap-h4
+                      class="box no-border padding-p with-sidebar gap-p
                                         color-palette-trans
                                         background-overlay
                                         "
@@ -148,16 +148,16 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                       <div>
                         <time
                           datetime={time_start.dateTimeRaw}
-                          class="timestart stack gap-down-h8 center intrinsic"
+                          class="timestart flow gap-down-h8 center intrinsic"
                           style="line-height: 1;"
                         >
-                          <span class="size-h1">{time_start?.fr?.day}</span>
-                          <span class="size-h2">{time_start?.fr?.monthShort}</span>
-                          <span class="size-h2">{time_start?.fr?.year}</span>
+                          <span class="size-h2">{time_start?.fr?.day}</span>
+                          <span class="size-h3">{time_start?.fr?.monthShort}</span>
+                          <span class="size-h3">{time_start?.fr?.year}</span>
                         </time>
                         <div>
                           <div class="cover no-gap" style="--min-height: 100%;">
-                            <h2 class="h3 centered">
+                            <h2 class="h4 centered">
                               <a
                                 href={`/${event.path}/`}
                                 class="name reset clickable"
@@ -168,7 +168,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                         </div>
                       </div>
                     </div>
-                    <div class="card-event-footer box no-border padding-h8 stack horizontal split-after-1">
+                    <div class="card-event-footer box no-border padding-h8 flow horizontal split-after-1">
                       <IO
                         p
                         $skipNoInner
@@ -178,7 +178,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                       >
                         {location.addressLocality}
                       </IO>
-                      <ul class="reset stack horizontal">
+                      <ul class="reset flow horizontal">
                         {organizers?.map(({ name, logo }) => (
                           <li>
                             {logo?.src ? (
@@ -188,7 +188,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                                 alt={name}
                                 loading="lazy"
                                 class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                style="width: 2rem; height: 2rem; object-fit:contain;"
                                 width="32"
                                 height="32"
                                 fit="inside"
@@ -200,7 +200,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                                 alt="logo"
                                 loading="lazy"
                                 class=""
-                                style="width: 2rem; max-height: 2rem; max-width: 100%; height: auto;"
+                                style="width: 2rem; height: 2rem; object-fit:contain;"
                                 width="32"
                                 height="32"
                               />
@@ -216,7 +216,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           </IO>
         </IO>
         <IO h2 $skip={!organizations?.[0]} class="center text"> Organisations </IO>
-        <IO div $skipNoInner class="grid gap-down-h4" style="--width-column: var(--width-col-6);">
+        <IO div $skipNoInner class="grid gap-down-p" style="--width-column: var(--width-col-6);">
           <IO ul $skipNoInner class="reset">
             {
               organizations?.map(organization => {
@@ -227,7 +227,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 return (
                   <li
                     class="card-organization
-                      box no-border stack gap-down-h7 split-after-1
+                      box no-border flow gap-down-h7 split-after-1
                       border-radius-s
                       breakout-clickable"
                     style=""
@@ -261,8 +261,8 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                         />
                       )}
                     </div>
-                    <h3>
-                      <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
+                    <h3 class={`${nameIsLong ? ' p' : ' h4'}`}>
+                      <a href={`/${path}/`} class={`reset clickable`}>
                         {name}
                       </a>
                     </h3>

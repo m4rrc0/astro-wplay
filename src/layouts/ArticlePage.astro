@@ -29,7 +29,7 @@ const { title, text, featured_image } = headerT || {}
 // const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
 
 const { width, height } = featured_image || {}
-const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
+const headerLayout = width > 1.5 * height ? 'flow' : 'sideImage'
 
 const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fit: 'cover', quality: '99' })
 
@@ -58,14 +58,14 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     ].filter(({ content }) => content)}
   />
   <BasicPage {lang}>
-    <main class="center max stack gap-down-h1">
+    <main class="center max flow gap-down-h1">
       <!-- <BlockImgLeftHeading block={header} {lang} tag={'header'} /> -->
 
       <!-- HEADER -->
       {
         headerLayout === 'sideImage' ? (
           <header class="size-context-narrow width-max center">
-            <IO div $skipNoInner class="with-sidebar box no-border gap-down-h4" style="--side-width: 22rem; --content-min: 50%;">
+            <IO div $skipNoInner class="with-sidebar box no-border gap-down-p" style="--side-width: 22rem; --content-min: 50%;">
               <IO div $skipNoInner>
                 <IO div $skipNoInner>
                   <ImgDirectus
@@ -80,13 +80,13 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                     fit="contain"
                     quality="99" />
                 </IO>
-                <IO div $skipNoInner class="stack split-after-1 gap-down-h6">
+                <IO div $skipNoInner class="flow split-after-1 gap-down-h6">
                   <h1>{headerT.title}</h1>
                   <IO p $skipNoInner>{headerT.subtitle}</IO>
                   <IO div $skipNoInner class="cluster">
                     <IO ul $skipNoInner class="reset">
                       {authors?.map(author => (
-                        <IO li $skipNoInner class="stack horizontal gap-down-h7">
+                        <IO li $skipNoInner class="flow horizontal gap-down-h7">
                           <IO div $skip={!author?.avatar?.src} class="box no-padding border-radius-circle border-width-1">
                             <!-- <IO img $skip={author?.avatar?.src} src={author?.avatar?.src}
                               class="border-radius-circle" style="max-height: 2em;" /> -->
@@ -112,13 +112,13 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               </IO>
             </IO>
 
-            <IO div $skipNoInner class={`box no-border center | h3
+            <IO div $skipNoInner class={`box no-border center | h4
             `}>
               <Md $skipNoInner content={headerT?.text} />
             </IO>
           </header>
         ) : (
-          <header class="size-context-narrow box no-border center intrinsic stack">
+          <header class="size-context-narrow box no-border center intrinsic flow">
             <h1>{headerT.title}</h1>
             <IO p $skipNoInner>{headerT.subtitle}</IO>
             <IO div $skipNoInner class="cluster">
@@ -126,7 +126,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 <IO div $skipNoInner class="cluster">
                   <IO ul $skipNoInner class="reset">
                     {authors.map(author => (
-                      <IO li $skipNoInner class="stack horizontal gap-down-h7">
+                      <IO li $skipNoInner class="flow horizontal gap-down-h7">
                         <IO div $skip={!author?.avatar?.src} class="box no-padding border-radius-circle border-width-1">
                           <ImgDirectus
                             $skip={!author?.avatar?.src}
@@ -163,7 +163,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 quality="99" />
             </IO>
 
-            <IO div $skipNoInner class="box no-border center | h3">
+            <IO div $skipNoInner class="box no-border center | h4">
                 <strong><Md $skipNoInner content={headerT?.text} /></strong>
             </IO>
           </header>
@@ -171,7 +171,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       }
 
 
-      <IO div $skip={!main?.[0]?.id} class="box no-border center stack gap-down-h2">
+      <IO div $skip={!main?.[0]?.id} class="box no-border center flow gap-down-h2">
         {main.map((block, i) => {
           const blockT = block.translations.find(({ languages_code }) => languages_code === lang.code )
           return !blockT.featured_image ? (
@@ -182,7 +182,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         })}
       </IO>
 
-      <IO div $skip={!footer?.[0]?.id} class="box no-border center stack gap-down-h3">
+      <IO div $skip={!footer?.[0]?.id} class="box no-border center flow gap-down-h3">
         {footer.map(block => (
           <BlockStack {block} {lang} />
         ))}

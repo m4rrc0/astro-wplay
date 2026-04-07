@@ -22,9 +22,9 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   />
   <BasicPage {lang}>
     <main class="center max">
-      <div class="box no-border stack gap-down-h1">
+      <div class="box no-border flow gap-down-h1">
         <h1 class="center text">Articles</h1>
-        <div class="grid gap-down-h4" style="--width-column: var(--width-col-4);">
+        <div class="grid gap-down-p" style="--width-column: var(--width-col-4);">
           <div>
             {
               articles.map(a => {
@@ -35,7 +35,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                   <article
                     class="card-article
                                     breakout-clickable
-                                    box no-border stack gap-down-h2 split-after-2
+                                    box no-border flow gap-down-h2 split-after-2
                                     color-palette-variation-contrast
                                     border-radius-m"
                   >
@@ -52,16 +52,16 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                         quality="99"
                       />
                     </IO>
-                    <h2 class="h3">
+                    <h2 class="h4">
                       <a href={`/${a.path}/`} class="reset clickable">
                         {headerT?.title}
                       </a>
                     </h2>
-                    <IO div $skipNoInner class="stack gap-down-h7">
+                    <IO div $skipNoInner class="flow gap-down-h7">
                       <IO div $skipNoInner class="cluster">
                         <IO ul $skipNoInner class="reset">
                           {a?.authors?.map(author => (
-                            <IO li $skipNoInner class="stack horizontal gap-down-h7">
+                            <IO li $skipNoInner class="flow horizontal gap-down-h7">
                               <IO
                                 div
                                 $skip={!author?.avatar?.src}

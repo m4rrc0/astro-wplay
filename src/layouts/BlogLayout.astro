@@ -12,14 +12,14 @@ const { content: { title, slug, lang, ogType, siteName, description, canonicalUr
   <SEO slot="head" {...{ lang, ogType, siteName, title, description, canonicalUrl }} />
 
   <BasicPageLayout lang={{ code: 'fr' }}>
-    <div class="stack">
+    <div class="flow">
       <slot />
     </div>
   </BasicPageLayout>
 </SkeletonLayout>
 
 <style>
-  .stack {
+  .flow {
     --gap: 1em;
   }
 </style>

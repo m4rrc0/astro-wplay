@@ -128,7 +128,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             </li>
           </ol>
         </div>
-        <div class="main-partners grid-fluid" style="--column-width-min: var(--size-h1)">
+        <div class="main-partners grid-fluid" style="--column-width-min: var(--size-h2)">
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -158,39 +158,39 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </div>
         <ul class="reset grid-fluid" style="--width-column-min: var(--width-col-8);">
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">±2500</p>
+            <p class="h2">±2500</p>
             <p>participants</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">170</p>
+            <p class="h2">170</p>
             <p>jeux différents</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">+70</p>
+            <p class="h2">+70</p>
             <p>tables de jeux</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">36</p>
+            <p class="h2">36</p>
             <p>animateurs</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">20</p>
+            <p class="h2">20</p>
             <p>partenaires</p>
           </li>
           <li
-            class="stat box no-border padding-h4 color-palette-trans background-overlay border-radius-s text-center"
+            class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
           >
-            <p class="h1">26</p>
+            <p class="h2">26</p>
             <p>bénévoles</p>
           </li>
         </ul>
@@ -374,7 +374,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             <li>Publications sur les réseaux sociaux</li>
             <li>Newsletter</li>
           </ul>
-          <div class="imgGrid grid-fluid gap-h4">
+          <div class="imgGrid grid-fluid gap-p">
             <Image src={imgVisibilite1} alt="Interview" />
             <!-- <Image src={imgVisibilite2} alt="Interview" /> -->
             <Image src={imgVisibilite3} alt="Interview" />
@@ -450,10 +450,10 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     display: grid;
     /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--size-h2);
+    gap: var(--size-h3);
     align-items: center;
     justify-items: center;
-    margin-bottom: var(--size-h2);
+    margin-bottom: var(--size-h3);
   }
 
   /* Pour s'assurer que les logos sur une grille complète ne dépassent pas */
@@ -471,11 +471,11 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
   }
 
   section {
-    padding-block: var(--size-h1);
+    padding-block: var(--size-h2);
   }
 
   div.flow > * {
-    --flow-space: var(--gap-h2);
+    --flow-space: var(--gap-h3);
   }
 
   .stat {
@@ -483,7 +483,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-block: var(--size-h1);
+    padding-block: var(--size-h2);
   }
 
   .main-partners img,

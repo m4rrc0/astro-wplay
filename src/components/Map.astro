@@ -626,12 +626,12 @@ time slider, clusters, locate the user -->
         .join('')
 
       const htmlContent = `
-        <div class="card-${itemType === 'events' ? 'event' : 'organization'} box no-border stack gap-down-h7 border-radius-s breakout-clickable map-popup-card">
+        <div class="card-${itemType === 'events' ? 'event' : 'organization'} box no-border flow gap-down-h7 border-radius-s breakout-clickable map-popup-card">
           <div class="center intrinsic" style="justify-content: center; height: 120px; overflow: hidden; margin-bottom: 8px;">
             ${imgFallbackHtml}
           </div>
           <h3 style="margin-top:0; margin-bottom: 8px;">
-            <a href="${itemUrl}" class="reset clickable${nameIsLong ? ' h4' : ''}" style="text-decoration:none; color:inherit;">
+            <a href="${itemUrl}" class="reset clickable${nameIsLong ? ' p' : ''}" style="text-decoration:none; color:inherit;">
               ${name}
             </a>
           </h3>

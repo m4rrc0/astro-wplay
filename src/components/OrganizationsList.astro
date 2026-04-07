@@ -45,7 +45,7 @@ const filteredOrganizations =
       <IO
         ul
         $skipNoInner
-        class="reset grid-fluid gap-h4"
+        class="reset grid-fluid gap-p"
         style="--width-column-min: var(--width-col-6); --width-column-max: 25rem;"
       >
         {filteredOrganizations.map(organization => {
@@ -90,8 +90,8 @@ const filteredOrganizations =
                   />
                 )}
               </div>
-              <h3>
-                <a href={`/${path}/`} class={`reset clickable${nameIsLong ? ' h4' : ''}`}>
+              <h3 class={`${nameIsLong ? ' p' : ' h4'}`}>
+                <a href={`/${path}/`} class={`reset clickable`}>
                   {name}
                 </a>
               </h3>
@@ -120,6 +120,6 @@ const filteredOrganizations =
 <!-- temporary style card for now -->
 <style>
   .organizations-list {
-    margin-block: var(--size-h2);
+    margin-block: var(--size-h3);
   }
 </style>

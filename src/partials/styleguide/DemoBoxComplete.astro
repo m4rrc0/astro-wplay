@@ -4,7 +4,7 @@ import Paragraph from '@partials/styleguide/Paragraph.astro'
 const { style = '', i = 1, palette = i, variation = 'classic' } = Astro.props
 ---
 
-<div data-c-p={palette} data-c-p-var={variation} class={`box stack`} {style}>
+<div data-c-p={palette} data-c-p-var={variation} class={`box flow`} {style}>
   <p class="h3">Palette {palette} - Variation {variation}</p>
   <Paragraph />
   <p>Don't forget to select some text to test colors</p>

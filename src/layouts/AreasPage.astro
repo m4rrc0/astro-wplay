@@ -23,7 +23,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   />
   <BasicPage {lang}>
     <main class="box no-border padding-p">
-      <div class="center intrinsic max-width-measure-h4 stack gap-down-h1">
+      <div class="center intrinsic max-width-measure-h4 flow gap-down-h1">
         <h1 class="center text">Où jouer en Belgique</h1>
         <div class="cluster gap-down-h6" style="--justify-content: center;">
           <ul class="reset">
@@ -51,7 +51,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 <!-- Was just under h1 -->
 <!-- <div class="with-sidebar gap-down-p" style="--content-min: 65%;">
     <div>
-        <ul class="reset stack gap-down-h8 justify-center">
+        <ul class="reset flow gap-down-h8 justify-center">
             {areas.map(area => {
                 return (
                     <li><a href={'/' + area.path[lang.code] + '/'} class={`area-${area.code_name}`}>{area.name[lang.code]}</a></li>

@@ -29,7 +29,7 @@ const { title, text, featured_image } = headerT || {}
 // const { description, opening_hours_remark } = translations?.find(t => t.languages_code === languages_code) || {}
 
 const { width, height } = featured_image || {}
-const headerLayout = width > 1.5 * height ? 'stack' : 'sideImage'
+const headerLayout = width > 1.5 * height ? 'flow' : 'sideImage'
 
 const srcSocial = imageDirectusSrc({ src: featured_image?.src, width: '1200', fit: 'cover', quality: '99' })
 
@@ -58,7 +58,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     ].filter(({ content }) => content)}
   />
   <BasicPage {lang}>
-    <main class="center max stack gap-down-h1">
+    <main class="center max flow gap-down-h1">
       <!-- <BlockImgLeftHeading block={header} {lang} tag={'header'} /> -->
 
       <!-- HEADER -->
@@ -80,7 +80,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                     fit="contain"
                     quality="99" />
                 </IO>
-                <IO div $skipNoInner class="stack split-after-1 gap-down-h6">
+                <IO div $skipNoInner class="flow split-after-1 gap-down-h6">
                   <h1>{headerT.title}</h1>
                   <IO p $skipNoInner>{headerT.subtitle}</IO>
                   <IO div $skipNoInner class="cluster">
@@ -118,7 +118,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             </IO>
           </header>
         ) : (
-          <header class="size-context-narrow box no-border center intrinsic stack">
+          <header class="size-context-narrow box no-border center intrinsic flow">
             <h1>{headerT.title}</h1>
             <IO p $skipNoInner>{headerT.subtitle}</IO>
             <IO div $skipNoInner class="cluster">
@@ -171,7 +171,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       }
 
 
-      <IO div $skip={!main?.[0]?.id} class="box no-border center stack gap-down-h2">
+      <IO div $skip={!main?.[0]?.id} class="box no-border center flow gap-down-h2">
         {main.map((block, i) => {
           const blockT = block.translations.find(({ languages_code }) => languages_code === lang.code )
           return !blockT.featured_image ? (
@@ -182,7 +182,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         })}
       </IO>
 
-      <IO div $skip={!footer?.[0]?.id} class="box no-border center stack gap-down-h3">
+      <IO div $skip={!footer?.[0]?.id} class="box no-border center flow gap-down-h3">
         {footer.map(block => (
           <BlockStack {block} {lang} />
         ))}

@@ -75,7 +75,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   />
   <BasicPage {lang}>
     <main class="center width-max">
-      <div id="events-list-container" class="box no-border stack gap-down-h1">
+      <div id="events-list-container" class="box no-border flow gap-down-h1">
         <h1 class="center text">{areaName}</h1>
         <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
         <IO p $skip={!events?.[0]?.name} class="center text">{eventsPhrase}</IO>
@@ -98,7 +98,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         </script>
 
         <!-- TODO: enable searchin and filtering -->
-        <!-- <div class="center intrinsic stack" style="--gap: var(--size-h5);">
+        <!-- <div class="center intrinsic flow" style="--gap: var(--size-h5);">
           <input type="search" class="fuzzy-search" placeholder="Recherche" />
           <p>Trier par...</p>
           <div class="cluster" style="--gap: var(--size-h7);">
@@ -148,7 +148,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                       <div>
                         <time
                           datetime={time_start.dateTimeRaw}
-                          class="timestart stack gap-down-h8 center intrinsic"
+                          class="timestart flow gap-down-h8 center intrinsic"
                           style="line-height: 1;"
                         >
                           <span class="size-h2">{time_start?.fr?.day}</span>
@@ -227,7 +227,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 return (
                   <li
                     class="card-organization
-                      box no-border stack gap-down-h7 split-after-1
+                      box no-border flow gap-down-h7 split-after-1
                       border-radius-s
                       breakout-clickable"
                     style=""

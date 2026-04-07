@@ -33,7 +33,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     <!-- <iframe
       src={`https://lighthouse.microlink.io/?url=https://api.microlink.io?url=${canonicalUrl.href}%26meta=false%26insights=true`}
     ></iframe> -->
-    <div class="box no-border stack gap-down" style="--gap-down: 1em">
+    <div class="box no-border flow gap-down" style="--gap-down: 1em">
       <h1>Styleguide</h1>
       <p>
         This is actually more of a
@@ -42,7 +42,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         </strong>
         design system.
       </p>
-      <section class="stack gap-down" style="--gap-down: 1em;">
+      <section class="flow gap-down" style="--gap-down: 1em;">
         <h2>Typography</h2>
         <h3>Headings</h3>
         <p class="h1">An h1 fox jumps over the fence or whatever</p>
@@ -66,7 +66,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         <Paragraph />
       </section>
 
-      <section class="stack gap-down" style="--gap-down: 1em;">
+      <section class="flow gap-down" style="--gap-down: 1em;">
         <h2>Blocks and boxes</h2>
         <h3>A code block</h3>
         <code class="code-block">
@@ -83,7 +83,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         </blockquote>
       </section>
 
-      <section class="stack gap-down" style="--gap-down: 1em;">
+      <section class="flow gap-down" style="--gap-down: 1em;">
         <h2>Spacing</h2>
         <p class="size-h9">size-h9</p>
         <div
@@ -123,7 +123,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         </div>
       </section>
 
-      <section class="stack gap-down" style="--gap-down: 1em;">
+      <section class="flow gap-down" style="--gap-down: 1em;">
         <h2>Grid</h2>
         <div class="grid gap-down-h8" style="--width-column: calc(var(--measure) / 3);">
           <div>
@@ -131,7 +131,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               list6.map(i => (
                 <article
                   data-c-p={i}
-                  class={`box no-border stack gap-down`}
+                  class={`box no-border flow gap-down`}
                   style="--padding: var(--size-h5); --gap-down: 1em;"
                 >
                   <p class="h3">An h3 fox jumps over the fence or whatever</p>
@@ -143,7 +143,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         </div>
       </section>
 
-      <section class="stack gap-down" style="--gap-down: 1em;">
+      <section class="flow gap-down" style="--gap-down: 1em;">
         <h2>Colors</h2>
 
         {list6.map(i => <DemoBoxComplete {i} />)}

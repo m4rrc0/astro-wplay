@@ -20,13 +20,13 @@ const srcBadge =
     <meta name="robots" content="noindex" />
   </Fragment>
   <BasicPage {lang}>
-    <main class="stack gap-down-h-1">
+    <main class="flow gap-down-h-1">
       <div class="center box" style="--max-width: 50rem; width: 100%;">
         <details open>
           <summary><h2>Build Hooks</h2></summary>
           {
             PUBLIC_HOOK_PROD ? (
-              <div class="stack gap-down-p center box no-border">
+              <div class="flow gap-down-p center box no-border">
                 {[
                   {
                     branch: 'Prod',
@@ -69,14 +69,14 @@ const srcBadge =
                 ))}
               </div>
             ) : (
-              <div class="max-width-measure-h3 center stack gap-down-h1 box no-border">
+              <div class="max-width-measure-h3 center flow gap-down-h1 box no-border">
                 <p class="h4">PUBLIC_HOOK_PROD est indéfini.</p>
               </div>
             )
           }
         </details>
       </div>
-      <div class="box no-border stack gap-down-h1">
+      <div class="box no-border flow gap-down-h1">
         <IO h2 $skip={!events?.[0]?.name} class="center text">Événements</IO>
         <!-- TODO: HERE -->
         <!-- <script is:inline>
@@ -96,7 +96,7 @@ const srcBadge =
         </script> -->
 
         <!-- TODO: enable searchin and filtering -->
-        <!-- <div class="center intrinsic stack" style="--gap: var(--size-h5);">
+        <!-- <div class="center intrinsic flow" style="--gap: var(--size-h5);">
           <input type="search" class="fuzzy-search" placeholder="Recherche" />
           <p>Trier par...</p>
           <div class="cluster" style="--gap: var(--size-h7);">
@@ -146,7 +146,7 @@ const srcBadge =
                       <div>
                         <time
                           datetime={time_start.dateTimeRaw}
-                          class="timestart stack gap-down-h8 center intrinsic"
+                          class="timestart flow gap-down-h8 center intrinsic"
                           style="line-height: 1;"
                         >
                           <span class="size-h2">{time_start?.fr?.day}</span>

@@ -13,7 +13,9 @@ import imgPanneaux from '@assets/images/festival-2023/visibilite/festival-2023-p
 import imgSignaletique from '@assets/images/festival-2023/visibilite/festival-2023-signaletique.jpeg'
 import imgVideo from '@assets/images/festival-2023/visibilite/festival-2023-video.png'
 import imgVideoJo from '@assets/images/festival-2023/visibilite/festival-2023-video-jo.png'
+import imgVideoJo2 from '@assets/images/festival-2023/visibilite/festival-2023-video-jo-2.jpeg'
 import imgVideoMarc from '@assets/images/festival-2023/visibilite/festival-2023-video-marc.png'
+import imgVideoMarc2 from '@assets/images/festival-2023/visibilite/festival-2023-video-marc-2.jpeg'
 import imgVideoTess from '@assets/images/festival-2023/visibilite/festival-2023-video-tess.png'
 import tatianaDronjak from '@assets/images/partners/tatiana-dronjak.jpg'
 
@@ -159,8 +161,11 @@ const imagesPaulo = import.meta.glob<{ default: ImageMetadata }>(
 const imagesSylwia = import.meta.glob<{ default: ImageMetadata }>(
   '@assets/images/festival-2023/sylwia-malachowska/*.{jpeg,jpg,png,gif,webp,svg}'
 )
-const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/festival-2023/tess/*.{jpeg,jpg,png,gif,webp,svg}'
+const imagesBudgets = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/budgets/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
+  '@assets/images/festival-2023/surprises/*.{jpeg,jpg,png,gif,webp,svg}'
 )
 ---
 
@@ -175,7 +180,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center max" style="margin-top: 0;">
+    <main class="center width-max" style="margin-top: 0; min-width: 0;">
       <header
         class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
         style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
@@ -257,7 +262,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             })
           }
         </div>
-        <div class="video-container">
+        <div class="video-container grid-fluid" style="--column-width-min: 100%">
           <iframe
             src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
             title="YouTube video player"
@@ -266,7 +271,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen></iframe>
         </div>
-        <div class="carousel cluster" role="region" aria-roledescription="carousel">
+        <div class="carousel" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
               <figure class="flow">
@@ -471,8 +476,8 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             </ul> -->
             <!-- Section Conférences -->
             <div
-              class="conference-partners grid-fluid padding-x-relative-xl"
-              style="--width-column-min: var(--width-col-8);"
+              class="conference-partners images grid-fluid padding-x-relative-xl"
+              style="--width-column-min: var(--width-col-7); --width-column-max: var(--width-col-7);"
             >
               {
                 imagesConferencePartners.map(
@@ -481,7 +486,10 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
                       <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
                     )
                     return (
-                      <figure class="flow gap-p" style="text-align: center; margin: 0;">
+                      <figure
+                        class="flow gap-p"
+                        style="text-align: center; margin: 0; align-items: center; margin: auto;"
+                      >
                         {finalLink ? (
                           <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
                             {imgTag}
@@ -509,12 +517,12 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             lumière leur contribution et les défis auxquels elles sont confrontées.
           </p>
           <div
-            class="conference-partners grid-fluid padding-x-relative-xl"
-            style="--width-column-max: var(--width-col-8);"
+            class="conference-partners images grid-fluid padding-x-relative-xl"
+            style="--width-column-min: var(--width-col-7); --width-column-max: var(--width-col-7);"
           >
-            <figure class="flow gap-p" style="text-align: center; margin: 0;">
+            <figure class="flow gap-p" style="text-align: center; margin: 0; margin: auto;">
               <a href="https://www.youtube.com/channel/UCUU0uDuttbZAs-n334cYrhQ">
-                <img src={tatianaDronjak.src} alt="Portrait de Tatiana Dronjak" />
+                <Image src={tatianaDronjak} alt="Portrait de Tatiana Dronjak" />
               </a>
               <figcaption class="flow gap-p">
                 <strong>Tatiana Dronjak</strong> Girl dot Game
@@ -580,7 +588,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
             }
           </div>
         </div>
-        <div class="carousel cluster" role="region" aria-roledescription="carousel">
+        <div class="carousel" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset gap-h4">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
               <figure class="flow">
@@ -674,7 +682,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
           Nous sommes fiers de notre équipe et des relations que nous construisons et gardons avec
           eux.
         </p>
-        <div class="carousel cluster" role="region" aria-roledescription="carousel">
+        <div class="carousel" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset gap-h4">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
               <figure class="flow">
@@ -905,11 +913,17 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
               </li>
             </ul>
           </div>
-          <div class="imgGrid grid-fluid gap-p">
-            <Image src={imgVideo} alt="Interview" />
-            <Image src={imgVideoMarc} alt="Interview" />
-            <Image src={imgVideoTess} alt="Interview" />
-            <Image src={imgVideoJo} alt="Interview" />
+          <div class="images flow">
+            <div class="imgGrid grid-fluid gap-p">
+              <Image src={imgVideoMarc2} alt="Interview" />
+              <Image src={imgVideoJo2} alt="Interview" />
+            </div>
+            <div class="imgGrid grid-fluid gap-p">
+              <Image src={imgVideo} alt="Interview" />
+              <Image src={imgVideoMarc} alt="Interview" />
+              <Image src={imgVideoTess} alt="Interview" />
+              <Image src={imgVideoJo} alt="Interview" />
+            </div>
           </div>
         </div>
 
@@ -960,7 +974,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
               </li>
             </ul>
           </div>
-          <div class="imgGrid grid-fluid gap-h4">
+          <div class="imgGrid images grid-fluid gap-h4">
             <Image src={imgSignaletique} alt="Signaletique" />
             <Image src={affiche} alt="Affiche" />
             <Image src={imgEntree} alt="Entree" />
@@ -991,71 +1005,78 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
 
       <section class="flow">
         <h2>Budget & Surprises</h2>
-        <h3>Budget</h3>
-        <p>
-          Pour la première fois, l’ASBL Wanna Play a bénéficié d’une subvention de la cocof pour
-          organiser le festival.
-        </p>
-        <p>
-          Nous avons évidemment rencontré quelques surprises en cours de route. Par exemple, nous
-          avons constaté des écarts importants entre le nombre de tickets boissons reçus et le
-          nombre réel d’utilisations notées. Heureusement, nous avons pu en discuter avec l’équipe
-          du Jardin et trouver des solutions pour résoudre ce problème.
-        </p>
-        <p>
-          Nous avons sous-estimé les frais de location d’un camion avec chauffeur pour récupérer des
-          tables et des chaises gratuitement au centre de prêt de Naninne. Bien que cette option
-          semblait économique à première vue, elle s’est avérée être un coût important pour le
-          budget. Pour les prochaines éditions, nous devrons mieux prévoir ces coût ou trouver une
-          alternative pour éviter ce type de dépenses imprévues.
-        </p>
-        <p>
-          Pendant les préparatifs du festival, certaines dépenses ont été planifiées sur base de
-          devis oraux et nous avons eu quelques surprises en recevant des factures où étaient
-          ajoutées la TVA ou certains frais cachés. Cela nous a rappelé l’importance de clarifier
-          tous les détails financiers avec nos intervenants dès le départ, afin d’éviter de telles
-          surprises à l’avenir.
-        </p>
-        <p>
-          Malheureusement, le budget ne nous a pas permi de défrayer les bénévoles ou l’équipe et
-          c’est un point d’attention important si nous voulons péréniser le festival.
-        </p>
-        <p>
-          Malgré ces défis, notre gestion financière a été globalement maîtrisée, et nous avons
-          réussi à offrir un festival de qualité, gratuit pour le public, tout en respectant notre
-          budget. Nous sommes conscients des points d’amélioration pour les éditions futures et nous
-          nous efforcerons de continuer à optimiser notre budget tout en maintenant la qualité du
-          festival.
-        </p>
-        <h3>Surprises</h3>
-        <p>
-          Malgré nos efforts de planification (budget compris), nous avons été confrontés à quelques
-          mauvaises surprises…
-        </p>
-        <h4>Problème de communication</h4>
-        <p>
-          La communication avec le pôle événementiel du Jardin était parfois compliqué. Nous avons
-          plusieurs fois dû nous adapter et modifier nos plans, parfois en dernière minute. Une
-          discussion ultérieure avec les gérants du Jardin a eu lieu pour clarifier ces malentendus.
-        </p>
-        <h4>Désistement d’un vidéaste</h4>
-        <p>
-          Le vidéaste qui s’était engagé à couvrir l’événement pour toute la journée s’est désisté
-          la veille, laissant une charge de travail supplémentaire à notre équipe.
-        </p>
-        <h4>Orage</h4>
-        <p>
-          Un orage de ±15 minutes s’est produit dans l’après-midi. Bien qu’il n’ait pas découragé
-          les visiteurs et les partenaires, quelques boîtes de jeux de la boutique SAJOU ont été
-          endommagées. De plus, le roll-up de la bibliothèque d’Anderlecht n’a pas survécu à cet
-          épisode climatique. Nous avons pris note de l’importance de couvrir de manière adéquate
-          tous les partenaires pour éviter de tels problèmes à l’avenir.
-        </p>
-        <p>
-          Malgré ces imprévus, nous avons réussi à surmonter les difficultés grâce à l’implication
-          et à l’engagement de notre équipe. Ces situations nous ont également permis de tirer des
-          leçons pour améliorer l’organisation des futurs événements.
-        </p>
+        <div class="flow">
+          <h3>Budget</h3>
+          <p>
+            Pour la première fois, l’ASBL Wanna Play a bénéficié d’une subvention de la cocof pour
+            organiser le festival.
+          </p>
+          <p>
+            Nous avons évidemment rencontré quelques surprises en cours de route. Par exemple, nous
+            avons constaté des écarts importants entre le nombre de tickets boissons reçus et le
+            nombre réel d’utilisations notées. Heureusement, nous avons pu en discuter avec l’équipe
+            du Jardin et trouver des solutions pour résoudre ce problème.
+          </p>
+          <p>
+            Nous avons sous-estimé les frais de location d’un camion avec chauffeur pour récupérer
+            des tables et des chaises gratuitement au centre de prêt de Naninne. Bien que cette
+            option semblait économique à première vue, elle s’est avérée être un coût important pour
+            le budget. Pour les prochaines éditions, nous devrons mieux prévoir ces coût ou trouver
+            une alternative pour éviter ce type de dépenses imprévues.
+          </p>
+          <p>
+            Pendant les préparatifs du festival, certaines dépenses ont été planifiées sur base de
+            devis oraux et nous avons eu quelques surprises en recevant des factures où étaient
+            ajoutées la TVA ou certains frais cachés. Cela nous a rappelé l’importance de clarifier
+            tous les détails financiers avec nos intervenants dès le départ, afin d’éviter de telles
+            surprises à l’avenir.
+          </p>
+          <p>
+            Malheureusement, le budget ne nous a pas permi de défrayer les bénévoles ou l’équipe et
+            c’est un point d’attention important si nous voulons péréniser le festival.
+          </p>
+          <p>
+            Malgré ces défis, notre gestion financière a été globalement maîtrisée, et nous avons
+            réussi à offrir un festival de qualité, gratuit pour le public, tout en respectant notre
+            budget. Nous sommes conscients des points d’amélioration pour les éditions futures et
+            nous nous efforcerons de continuer à optimiser notre budget tout en maintenant la
+            qualité du festival.
+          </p>
+          <GalleryFull images={imagesBudgets} columns={5} ratio="1/1" />
+        </div>
+        <div class="flow">
+          <h3>Surprises</h3>
+          <p>
+            Malgré nos efforts de planification (budget compris), nous avons été confrontés à
+            quelques mauvaises surprises…
+          </p>
+          <h4>Problème de communication</h4>
+          <p>
+            La communication avec le pôle événementiel du Jardin était parfois compliqué. Nous avons
+            plusieurs fois dû nous adapter et modifier nos plans, parfois en dernière minute. Une
+            discussion ultérieure avec les gérants du Jardin a eu lieu pour clarifier ces
+            malentendus.
+          </p>
+          <h4>Désistement d’un vidéaste</h4>
+          <p>
+            Le vidéaste qui s’était engagé à couvrir l’événement pour toute la journée s’est désisté
+            la veille, laissant une charge de travail supplémentaire à notre équipe.
+          </p>
+          <h4>Orage</h4>
+          <p>
+            Un orage de ±15 minutes s’est produit dans l’après-midi. Bien qu’il n’ait pas découragé
+            les visiteurs et les partenaires, quelques boîtes de jeux de la boutique SAJOU ont été
+            endommagées. De plus, le roll-up de la bibliothèque d’Anderlecht n’a pas survécu à cet
+            épisode climatique. Nous avons pris note de l’importance de couvrir de manière adéquate
+            tous les partenaires pour éviter de tels problèmes à l’avenir.
+          </p>
+          <p>
+            Malgré ces imprévus, nous avons réussi à surmonter les difficultés grâce à l’implication
+            et à l’engagement de notre équipe. Ces situations nous ont également permis de tirer des
+            leçons pour améliorer l’organisation des futurs événements.
+          </p>
+          <GalleryFull images={imagesSurprises} columns={6} ratio="1/1" />
+        </div>
       </section>
       <section>
         <h2>Photos © Oriane Delavallee</h2>
@@ -1078,41 +1099,82 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
 <style>
   .video-container {
     width: 100%;
-    display: flex;
     justify-content: center;
   }
 
   .video-container iframe {
-    width: 66.66%;
+    width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
   }
+  /* ── Carousel ── */
+  .carousel {
+    width: 100%;
+    min-width: 0;
+    max-width: 100vw;
+    --carousel-item-width: 22rem;
+    --carousel-gap: var(--gap, 1rem);
+    --carousel-peek: 2rem; /* bord du slide suivant visible */
+  }
+
   .carousel-inner {
     display: flex;
     align-items: stretch;
     flex-wrap: nowrap;
+    gap: var(--carousel-gap);
     overflow-x: auto;
     scroll-behavior: smooth;
-    gap: var(--gap);
+    /* Scroll snap */
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--carousel-peek);
+    /* Cacher la scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    /* Peek effect: padding pour montrer le bord du slide suivant */
+    padding-inline: var(--carousel-peek);
+    /* Alignement vertical */
+    padding-block: 0.5rem;
+    /* Negative margin pour compenser le padding sans casser le layout */
+    margin-inline: calc(-1 * var(--carousel-peek));
+  }
+  .carousel-inner::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
   }
 
   .carousel-item {
-    width: 100%;
-    flex: 0 0 100%;
-    max-width: 25rem;
-    border: 4px solid var(--color-blue);
+    flex: 0 0 var(--carousel-item-width);
+    min-width: 0;
+    scroll-snap-align: start;
+    border: 2px solid var(--color-blue, #2563eb);
     border-radius: var(--border-radius-l);
+    position: relative;
+  }
+
+  /* Guillemet décoratif */
+  .carousel-item blockquote::before {
+    content: '\201C';
+    display: block;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--color-blue, #2563eb);
+    opacity: 0.3;
+    margin-bottom: -1rem;
+    font-family: Georgia, serif;
   }
 
   .carousel-item figure {
     display: flex;
-    flex-direction: column; /* Aligne le texte et l'auteur verticalement */
+    flex-direction: column;
     width: 100%;
     height: 100%;
   }
 
   .carousel-item figcaption {
     text-align: right;
+    margin-top: auto;
+    padding-top: var(--size-h7, 0.5rem);
+    font-size: 0.9em;
+    opacity: 0.8;
   }
 
   .carousel-item blockquote {
@@ -1120,14 +1182,13 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     padding: 0;
     border: none;
     flex-grow: 1;
+    font-style: italic;
   }
 
   @media (max-width: 45rem) {
-    .carousel-inner {
-      padding-inline: 0;
-    }
-    .carousel-item {
-      flex-basis: 92%;
+    .carousel {
+      --carousel-item-width: 85%;
+      --carousel-peek: 1.25rem;
     }
   }
 
@@ -1151,7 +1212,7 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     max-width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
-    border-radius: var(--border-radius-m);
+    border-radius: var(--border-radius-s);
   }
 
   .gallery-img {
@@ -1196,6 +1257,9 @@ const imagesTess = import.meta.glob<{ default: ImageMetadata }>(
     width: 50%;
   }
 
+  .images {
+    padding-block: var(--size-h3);
+  }
   .imgGrid img {
     width: 100%;
     object-fit: cover;

@@ -209,7 +209,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
       <!-- Vidéo -->
       <section class="flow">
         <h2>Souvenirs en vidéo</h2>
-        <div class="video-container">
+        <div class="video-container grid-fluid" style="--column-width-min:100%">
           <iframe src="https://www.youtube.com/embed/laySniWhIU4" frameborder="0" allowfullscreen>
           </iframe>
         </div>
@@ -218,8 +218,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
       <section class="flow">
         <div class="more-videos grid-fluid gap-p" style="--columns: 2;">
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/EN-lcEHG0Hs?si=mRSzhD0Lyv6eYS6W"
             title="YouTube video player"
             frameborder="0"
@@ -229,8 +227,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/mm7Ns9f2HOo?si=3w84Q5h4ptOvL89v"
             title="YouTube video player"
             frameborder="0"
@@ -240,8 +236,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/xuprLDbqVBo?si=olP5sj9AJUI8Nmhj"
             title="YouTube video player"
             frameborder="0"
@@ -251,8 +245,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/6ETJeapT3RU?si=3IiKbZUpJFNisz-W"
             title="YouTube video player"
             frameborder="0"
@@ -262,8 +254,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/QXAKaPxA7Ws?si=2hVHoR6MiJP4k_Av"
             title="YouTube video player"
             frameborder="0"
@@ -273,8 +263,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/rvrQFy85oX4?si=jBQGXj6c5Z0-SErm"
             title="YouTube video player"
             frameborder="0"
@@ -284,8 +272,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/d1-UE918_QA?si=Ukwl8H2lG4VdS7kT"
             title="YouTube video player"
             frameborder="0"
@@ -295,8 +281,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            width="560"
-            height="315"
             src="https://www.youtube.com/embed/xj5RawWEDzc?si=UU7dwfOMsGUAa6Tt"
             title="YouTube video player"
             frameborder="0"
@@ -373,12 +357,11 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
   }
   .video-container {
     width: 100%;
-    display: flex;
     justify-content: center;
   }
 
   .video-container iframe {
-    width: 66.66%;
+    width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
   }

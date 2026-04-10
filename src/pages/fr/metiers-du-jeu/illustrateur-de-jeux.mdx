@@ -4,9 +4,16 @@ title: 'Devenir illustrateur de jeux: Le guide'
 ---
 
 import banner from '@assets/images/covers/illustrateur-de-jeu.jpg'
+import { Image } from 'astro:assets'
 
 <div class="img-banner">
-  <img src={banner.src} alt="" />
+  <Image
+    src={banner}
+    alt=""
+    widths={[240, 540, 720, 1200, banner.width]}
+    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${banner.width}px`}
+    loading="eager"
+  />
 </div>
 
 # Devenir illustrateur de jeux

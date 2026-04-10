@@ -1,0 +1,53 @@
+---
+import { Image, getImage } from 'astro:assets'
+
+/**
+ * Props:
+ *   members – tableau de { fileName, alt?, name }
+ *   width   – largeur optimisée (défaut: 240)
+ */
+const { members = [], width = 240 } = Astro.props
+
+const globImages = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/images/team/*.{jpeg,jpg,png,gif,webp,svg}'
+)
+
+const resolvedMembers = (
+  await Promise.all(
+    members.map(async (member: { fileName: string; alt?: string; name: string }) => {
+      const pathKey = Object.keys(globImages).find(p => p.includes(member.fileName))
+      const mod = pathKey ? await globImages[pathKey]() : null
+      const img = mod?.default ?? null
+
+      if (!img) return null
+
+      let optimizedMeta = null
+      try {
+        optimizedMeta = await getImage({ src: img, width })
+      } catch {
+        // SVG ou format non optimisable : on garde l'image brute
+        optimizedMeta = null
+      }
+
+      return {
+        img,
+        optimizedMeta,
+        alt: member.alt ?? member.name,
+        name: member.name,
+      }
+    })
+  )
+).filter(Boolean)
+---
+
+{resolvedMembers.map(member => (
+  <figure class="card-team flow gap-p" style="text-align: center; align-items: center; margin: 0 auto;">
+    {member.optimizedMeta
+      ? <img src={member.optimizedMeta.src} {...member.optimizedMeta.attributes} alt={member.alt} />
+      : <Image src={member.img} alt={member.alt} width={240} height={240} />
+    }
+    <figcaption>
+      <strong>{member.name}</strong>
+    </figcaption>
+  </figure>
+))}

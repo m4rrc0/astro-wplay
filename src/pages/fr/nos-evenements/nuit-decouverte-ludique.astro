@@ -7,6 +7,7 @@ import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
 import { getOrganizations } from '../../../store/dataService.js'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
 import GalleryFull from '@partials/GalleryFull.astro'
+import appCompagnon from '@images/nuit-decouverte-ludique-2018/BGF-app-comp_google-play_1024xx500.png'
 
 const lang = { code: 'fr' }
 
@@ -173,7 +174,7 @@ const partners = import.meta.glob<{ default: ImageMetadata }>(
 const imagesPartners = await getOptimizedImages(partnersData, partners, organizations)
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
-  '@assets/images/nuit-decouverte-ludique-2018/*.{jpeg,jpg,png,gif,webp,svg}'
+  '@assets/images/nuit-decouverte-ludique-2018/galerie/*.{jpeg,jpg,png,gif,webp,svg}'
 )
 ---
 
@@ -283,6 +284,9 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
         <h3 class="">
           <a href="https://bgf.wanna-play.be/">Une app compagnon</a>
         </h3>
+        <div class="center max">
+          <Image src={appCompagnon} alt="App compagnon" />
+        </div>
         <p>
           On développe en parallèle de l'organisation de la nocturne une progressive web app. Une
           autre manière de découvrir le festival depuis ton smartphone ou ton PC.
@@ -313,7 +317,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
       <!-- Galerie Photos -->
       <section class="flow">
-        <h2>Photos © Iris Senden</h2>
+        <h2>Photos © Iris Simonet</h2>
         <GalleryFull {images} columns={5} />
       </section>
     </main>

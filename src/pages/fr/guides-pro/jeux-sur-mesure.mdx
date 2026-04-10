@@ -4,10 +4,18 @@ title: 'Créer un jeu sur mesure: Le guide pour incarner votre marque'
 ---
 
 import banner from '@assets/images/covers/Creer-un-jeu.jpg'
+import { Image } from 'astro:assets'
 
 <div class="img-banner">
-  <img src={banner.src} alt="" />
+  <Image
+    src={banner}
+    alt=""
+    widths={[240, 540, 720, 1200, banner.width]}
+    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${banner.width}px`}
+    loading="eager"
+  />
 </div>
+
 # Crée ton jeu: Le guide pour incarner ta marque
 
 Ton message est important. Ta culture d'entreprise est unique. Mais dans le bruit ambiant, comment

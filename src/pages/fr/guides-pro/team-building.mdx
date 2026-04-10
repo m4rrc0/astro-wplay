@@ -4,11 +4,17 @@ title: 'Team building par le jeu: Le guide pour (vraiment) souder vos équipes'
 ---
 
 import banner from '@assets/images/covers/Team-Building.jpg'
+import { Image } from 'astro:assets'
 
 <div class="img-banner">
-  <img src={banner.src} alt="" />
+  <Image
+    src={banner}
+    alt=""
+    widths={[240, 540, 720, 1200, banner.width]}
+    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${banner.width}px`}
+    loading="eager"
+  />
 </div>
-
 # Team building par le jeu: Le guide pour (vraiment) souder vos équipes
 
 Oubliez la journée karting sous la pluie et le cours de poterie où seul le CEO s'amuse. Et si, pour

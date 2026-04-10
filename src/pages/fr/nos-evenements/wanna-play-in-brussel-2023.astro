@@ -475,10 +475,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
               <li><strong>Tatiana Dronjak</strong> (Girl dot Game)</li>
             </ul> -->
             <!-- Section Conférences -->
-            <div
-              class="conference-partners images grid-fluid padding-x-relative-xl"
-              style="--width-column-min: var(--width-col-7); --width-column-max: var(--width-col-7);"
-            >
+            <div class="conference-partners images cluster items-start">
               {
                 imagesConferencePartners.map(
                   ({ optimizedMeta, displayName, role, finalLink, alt }) => {
@@ -488,7 +485,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
                     return (
                       <figure
                         class="flow gap-p"
-                        style="text-align: center; margin: 0; align-items: center; margin: auto;"
+                        style="text-align: center; align-items: center; margin: 0 auto; width: var(--width-col-8);"
                       >
                         {finalLink ? (
                           <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
@@ -516,11 +513,11 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
             porté sur le rôle et la représentation des femmes dans l’univers du jeu, mettant en
             lumière leur contribution et les défis auxquels elles sont confrontées.
           </p>
-          <div
-            class="conference-partners images grid-fluid padding-x-relative-xl"
-            style="--width-column-min: var(--width-col-7); --width-column-max: var(--width-col-7);"
-          >
-            <figure class="flow gap-p" style="text-align: center; margin: 0; margin: auto;">
+          <div class="conference-partners images cluster items-start justify-start">
+            <figure
+              class="flow gap-p"
+              style="text-align: center; margin: 0; width: var(--width-col-8);"
+            >
               <a href="https://www.youtube.com/channel/UCUU0uDuttbZAs-n334cYrhQ">
                 <Image src={tatianaDronjak} alt="Portrait de Tatiana Dronjak" />
               </a>
@@ -936,9 +933,8 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           <a
             href="/assets/files/Wanna-Play-in-Brussels_communique-de-press-08-07-2023.pdf"
             target="_blank"
-            download="Wanna-Play-in-Brussels_communique-de-press-08-07-2023"
           >
-            Télécharger le Communiqué de Presse (PDF)
+            Voir le Communiqué de Presse (PDF)
           </a>
         </div>
 
@@ -987,16 +983,12 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
         <h2>Documents à télécharger</h2>
         <ul>
           <li>
-            <a
-              href="/assets/files/Wanna-Play-Rapport-Activité-08-juillet-2023.pdf"
-              target="_blank"
-              download="Wanna-Play-Rapport-Activité-08-juillet-2023"
-            >
+            <a href="/assets/files/Wanna-Play-Rapport-Activité-08-juillet-2023.pdf" target="_blank">
               <strong>Rapport d'Activité 2023</strong> (PDF)
             </a>
           </li>
           <li>
-            <a href={affiche.src} target="_blank" download="affiche_festival_2023">
+            <a href={affiche.src} target="_blank">
               <strong>Affiche 2023</strong> (PNG)
             </a>
           </li>
@@ -1112,6 +1104,8 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     width: 100%;
     min-width: 0;
     max-width: 100vw;
+    overflow-x: hidden;
+    --gap: var(--gap-h3);
     --carousel-item-width: 22rem;
     --carousel-gap: var(--gap, 1rem);
     --carousel-peek: 2rem; /* bord du slide suivant visible */

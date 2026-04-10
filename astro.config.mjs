@@ -62,6 +62,9 @@ export default defineConfig({
     //   exclude: [file => file.startsWith('./dist/fr/e')],
     // }),
     icon(),
-    UnoCSS(),
+    UnoCSS({
+      injectReset: false,
+      injectEntry: false, // Empêche l'injection automatique
+    }),
   ],
 })

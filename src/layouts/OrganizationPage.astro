@@ -210,7 +210,7 @@ if (jsonldType === 'Library') {
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center max" style="margin-top: 0;">
+    <main class="max" style="margin-top: 0;">
       <header>
         <div
           class="flex center text box no-border flow gap-h7
@@ -300,12 +300,7 @@ if (jsonldType === 'Library') {
 
       {
         (opening_hours_strings?.[0] || opening_hours_remark || opening_hours_notes) && (
-          <div
-            class="
-        box no-border
-        color-palette-variation-funky-contrast
-      "
-          >
+          <div class="box no-border color-palette-variation-funky-contrast">
             <div class="center max-width-measure-p flow gap-h7 recursive">
               <h2>Horaires</h2>
               {opening_hours_strings?.[0] && (
@@ -363,7 +358,7 @@ if (jsonldType === 'Library') {
       {
         links?.[0] && (
           <div class="box no-border cluster center max-width-measure-p">
-            <ul class="reset justify-around flow horizontal">
+            <ul class="reset justify-center cluster">
               {links.map(({ name, url, iconName }) => {
                 const followPolicy = name?.code_name === 'website' ? 'dofollow' : 'nofollow'
                 return (

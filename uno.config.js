@@ -47,24 +47,24 @@ export default defineConfig({
   //   }
   // },
   presets: [
-    presetWebFonts({
-      provider: 'fontsource', // 'google' | 'bunny' | 'fontshare' | 'fontsource' | 'coollabs' | 'none'
-      fonts: {
-        // Add your custom fonts here
-      },
-      extendTheme: false, // default: true
-      // themeKey: "fontFamily", // default: 'fontFamily'
-      inlineImports: true, // default: true
-      processors: createLocalFontProcessor({
-        cacheDir: path.join('.cache', 'unocss', 'fonts'), // Directory to cache the fonts
-        fontAssetsDir: 'public/assets/fonts', // Placed in public for fast resolution by Astro during dev
-        fontServeBaseUrl: '/assets/fonts', // Base URL to serve the fonts from the client
-        // fetch: async (url) => {
-        //   console.log({ url });
-        //   return fetch(url);
-        // }, // Custom fetch function to download the fonts
-      }),
-    }),
+    // presetWebFonts({
+    //   provider: 'fontsource', // 'google' | 'bunny' | 'fontshare' | 'fontsource' | 'coollabs' | 'none'
+    //   fonts: {
+    //     // Add your custom fonts here
+    //   },
+    //   extendTheme: false, // default: true
+    //   // themeKey: "fontFamily", // default: 'fontFamily'
+    //   inlineImports: true, // default: true
+    //   processors: createLocalFontProcessor({
+    //     cacheDir: path.join('.cache', 'unocss', 'fonts'), // Directory to cache the fonts
+    //     fontAssetsDir: 'public/assets/fonts', // Placed in public for fast resolution by Astro during dev
+    //     fontServeBaseUrl: '/assets/fonts', // Base URL to serve the fonts from the client
+    //     // fetch: async (url) => {
+    //     //   console.log({ url });
+    //     //   return fetch(url);
+    //     // }, // Custom fetch function to download the fonts
+    //   }),
+    // }),
     presetWind4mod,
     //   presetAttributify(),
     //   presetIcons(),

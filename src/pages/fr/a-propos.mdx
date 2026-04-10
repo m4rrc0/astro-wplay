@@ -4,10 +4,11 @@ title: "À Propos: L'Aventure Wanna Play"
 ---
 
 import { MtObf, Img } from '@components'
-import marc from '@images/team/WannaPlayTeam_Marc.jpg'
-import tess from '@images/team/WannaPlayTeam_Tess.jpg'
-import yves from '@images/team/WannaPlayTeam_Yves.jpg'
-import jo from '@images/team/WannaPlayTeam_Jo.jpg'
+import TeamGrid from '@partials/TeamGrid.astro'
+import marc from '@images/team/WannaPlayTeam_Marc.svg'
+import tess from '@images/team/WannaPlayTeam_Tess.svg'
+import yves from '@images/team/WannaPlayTeam_Yves.svg'
+import jo from '@images/team/WannaPlayTeam_Jo.svg'
 
 ## Notre mantra
 
@@ -44,7 +45,7 @@ animer, structurer… et évidemment jouer. On mélange les profils, les compét
 (parfois un peu folles) pour former une équipe dynamique qui partage une même obsession: faire vivre
 le jeu. Vraiment.
 
-<div class="grid-fluid gap-h2 flow stop" style="--width-column-min: var(--width-col-3);">
+<div class="grid-fluid gap-h2" style="--width-column-min: var(--width-col-3);">
   <div class="card-team center">
 		<Img
 			src={marc}
@@ -108,6 +109,47 @@ le jeu. Vraiment.
 Wanna Play, c’est aussi toutes les personnes qui sont passées par l’asbl. Celles qui ont donné du
 temps, des idées, de l’énergie. Un coup de main ponctuel ou un vrai bout de chemin. Le projet
 grandit grâce aux rencontres. Et il continuera à évoluer avec celles à venir. **Merci à tous!**
+
+<div class="grid-fluid gap-h4 items-start" style="--width-column-min: var(--width-col-9);">
+  <TeamGrid
+    members={[
+      {
+        fileName: 'WannaPlayTeam_Roxanne',
+        alt: 'Illustration du visage de Roxanne',
+        name: 'Roxanne',
+      },
+      { fileName: 'WannaPlayTeam_Jenny', alt: 'Illustration du visage de Jenny', name: 'Jenny' },
+      { fileName: 'WannaPlayTeam_Pierre', alt: 'Illustration du visage de Pierre', name: 'Pierre' },
+      {
+        fileName: 'WannaPlayTeam_Quentin_L',
+        alt: 'Illustration du visage de ',
+        name: 'Quentin L.',
+      },
+      { fileName: 'WannaPlayTeam_Maryse', alt: 'Illustration du visage de ', name: 'Maryse' },
+      { fileName: 'WannaPlayTeam_Louis', alt: 'Illustration du visage de ', name: 'Louis' },
+      { fileName: 'WannaPlayTeam_Thierry', alt: 'Illustration du visage de ', name: 'Thierry' },
+      {
+        fileName: 'WannaPlayTeam_Quentin_D',
+        alt: 'Illustration du visage de Quentin D.',
+        name: 'Quentin D.',
+      },
+      { fileName: 'WannaPlayTeam_Kevin', alt: 'Illustration du visage de Kevin', name: 'Kevin' },
+      {
+        fileName: 'WannaPlayTeam_Youssef',
+        alt: 'Illustration du visage de Youssef',
+        name: 'Youssef',
+      },
+      { fileName: 'WannaPlayTeam_Paul', alt: 'Illustration du visage de Paul', name: 'Paul' },
+      { fileName: 'WannaPlayTeam_Sophie', alt: 'Illustration du visage de Sophie', name: 'Sophie' },
+      { fileName: 'WannaPlayTeam_Emilie', alt: 'Illustration du visage de Emilie', name: 'Emilie' },
+      {
+        fileName: 'WannaPlayTeam_Mathieu',
+        alt: 'Illustration du visage de Mathieu',
+        name: 'Mathieu',
+      },
+    ]}
+  />
+</div>
 
 ## Quelques exemples de projets
 

@@ -152,7 +152,8 @@ body,
 .color-palette-green,
 .color-palette-success,
 .color-palette-bar,
-.color-palette-restaurant {
+.color-palette-restaurant,
+.color-palette-lodge {
   --color-neutral-palette: var(--color-white);
   --color-primary-palette: var(--color-green);
   --color-secondary-palette: var(--color-blue);

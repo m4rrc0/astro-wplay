@@ -192,11 +192,11 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   />
 
   <BasicPage {lang}>
-    <main class="center max flow gap-down-h3" style="margin-top: 0;">
+    <main class="center max flow gap-down-h3">
       <!-- Header -->
       <header
-        class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+        class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>
           Brussels Games Festival 2018<br />
@@ -205,26 +205,26 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       </header>
 
       <!-- Intro -->
-      <section class="flow padding-x-relative-l">
+      <section class="flow">
         <p class="size-h4"><strong>Une nuit de découvertes ludiques</strong></p>
         <p>
           Plus de 50 nouveautés 2018 étaient disponibles toute la nuit au Brussels Games Festival
           grâce à la complicité de nos partenaires éditeurs et distributeurs.
         </p>
-        <div class="video-container">
+        <div
+          class="video-container grid-fluid"
+          style="--column-width-min: 100%; max-width: var(--width-col-2); margin-inline: auto;"
+        >
           <iframe
-            src="https://www.youtube.com/embed/Z895F3XZ-sg?si=xk0QdQu9DTQfUMT2"
+            src="https://www.youtube-nocookie.com/embed/Z895F3XZ-sg?si=xk0QdQu9DTQfUMT2"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
             style="max-width: 100%; border-radius: var(--border-radius-m);"></iframe>
         </div>
-      </section>
-
-      <!-- Stats -->
-      <section>
         <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
             class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
@@ -284,8 +284,10 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
         <h3 class="">
           <a href="https://bgf.wanna-play.be/">Une app compagnon</a>
         </h3>
-        <div class="center max">
-          <Image src={appCompagnon} alt="App compagnon" />
+        <div class="max" style="max-width: var(--width-col-4);">
+          <a href={appCompagnon.src} target="_blank" rel="noopener noreferrer">
+            <Image src={appCompagnon} alt="App compagnon" />
+          </a>
         </div>
         <p>
           On développe en parallèle de l'organisation de la nocturne une progressive web app. Une
@@ -393,12 +395,11 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
   .video-container {
     width: 100%;
-    display: flex;
     justify-content: center;
   }
 
   .video-container iframe {
-    width: 66.66%;
+    width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
   }

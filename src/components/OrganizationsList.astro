@@ -3,6 +3,7 @@ import { IO, Img, ImgDirectus } from '@components'
 import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
 import { getOrganizations } from '../store/dataService.js'
 import { start as startDirectus } from '../services/directus.js'
+import badge from '@assets/images/badge.png'
 
 // Props passed from the MDX page
 const { type, areaCode, lang = { code: 'fr' } } = Astro.props
@@ -46,21 +47,34 @@ const filteredOrganizations =
         ul
         $skipNoInner
         class="reset grid-fluid gap-p"
-        style="--width-column-min: var(--width-col-6); --width-column-max: 25rem;"
+        style="--width-column-min: var(--width-col-6); --width-column-max: 25rem; grid-template-columns: repeat(auto-fill, minmax(min(var(--width-column-min, 10rem), 100%), 1fr));"
       >
         {filteredOrganizations.map(organization => {
-          const { name, path, logo, typesTranslated, location, servicesTranslated } = organization
+          const {
+            name,
+            path,
+            logo,
+            typesTranslated,
+            location,
+            servicesTranslated,
+            admin_categories,
+          } = organization
+          const isPartner =
+            admin_categories?.includes('partner') || admin_categories?.includes('badge_default')
 
           const nameIsLong = name?.length > 30
 
           return (
             <li
-              class="card-organization box no-border flow gap-h7 border-radius-s breakout-clickable"
-              style=""
+              class={`card-organization box no-border flow gap-h7 border-radius-s breakout-clickable ${isPartner ? 'badge' : ''}`}
+              style={`--badge-url: url(${badge.src});`}
               data-zip={location?.postalCode}
               data-city={location?.addressLocality}
               data-services={servicesTranslated?.map(s => s.code_name)}
             >
+              {isPartner && (
+                <div class="badge-hover" title={`${name} est partenaire de Wannaplay`} />
+              )}
               <div
                 class="center intrinsic"
                 style="justify-content: center; height: var(--width-col-10); overflow: hidden;"
@@ -121,5 +135,34 @@ const filteredOrganizations =
 <style>
   .organizations-list {
     margin-block: var(--size-h3);
+  }
+
+  .badge {
+    position: relative;
+    overflow: visible !important;
+    border: 3px solid var(--color-blue) !important;
+  }
+  .badge::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    right: -16px;
+    width: 46px;
+    aspect-ratio: 1;
+    background-image: var(--badge-url);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 10;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  }
+  .badge-hover {
+    position: absolute;
+    top: -12px;
+    right: -16px;
+    width: 46px;
+    aspect-ratio: 1;
+    z-index: 10;
   }
 </style>

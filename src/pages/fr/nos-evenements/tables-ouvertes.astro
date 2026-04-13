@@ -19,11 +19,11 @@ const lang = { code: 'fr' }
   />
 
   <BasicPage {lang}>
-    <main class="center max flow gap-down-h3" style="margin-top: 0;">
+    <main class="center max flow gap-down-h3">
       <!-- Header -->
       <header
-        class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+        class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>
           Brussels Games Festival 2017<br />
@@ -65,9 +65,12 @@ const lang = { code: 'fr' }
 
       <!-- Video -->
       <section class="flow">
-        <div class="video-container">
+        <div
+          class="video-container grid-fluid"
+          style="--column-width-min:100%; max-width: var(--width-col-2); margin-inline: auto;"
+        >
           <iframe
-            src="https://www.youtube.com/embed/ObbUL0Oosaw"
+            src="https://www.youtube-nocookie.com/embed/ObbUL0Oosaw"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -107,10 +110,11 @@ const lang = { code: 'fr' }
 <style>
   .video-container {
     width: 100%;
+    justify-content: center;
   }
 
   .video-container iframe {
-    width: 66.66%;
+    width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
   }
@@ -134,11 +138,5 @@ const lang = { code: 'fr' }
 
   .stat {
     padding-block: var(--size-h2);
-  }
-
-  .video-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
   }
 </style>

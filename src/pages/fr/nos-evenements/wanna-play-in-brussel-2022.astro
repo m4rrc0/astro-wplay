@@ -79,10 +79,10 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center max" style="margin-top: 0;">
+    <main class="center max">
       <header
-        class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+        class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>Wanna Play in Brussel 2022</h1>
       </header>
@@ -90,7 +90,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
       <section class="flow">
         <div class="flow">
           <p>
-            <strong>Wanna Play in Brussels 2022 - 1ère édition</strong>
+            <strong>1ère édition</strong>
           </p>
           <p>
             Un festival gratuit d’une journée consacré aux jeux de société dans un lieu historique
@@ -150,10 +150,14 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             })
           }
         </div>
-        <div class="video-container">
+        <div
+          class="video-container grid-fluid"
+          style="--column-width-min: 100%; max-width: var(--width-col-2); margin-inline: auto;"
+        >
           <iframe
-            src="https://www.youtube.com/embed/-QKaLnTcTr0?si=soq7AM3vRK7je99S"
+            src="https://www.youtube-nocookie.com/embed/-QKaLnTcTr0?si=soq7AM3vRK7je99S"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -257,11 +261,15 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
       </section>
 
       <section class="flow">
-        <h2>Vidéos</h2>
-        <div class="video-grid">
+        <h2>Mini-interview</h2>
+        <div
+          class="video-container grid-fluid"
+          style="--column-width-min: 100%; max-width: var(--width-col-2);"
+        >
           <iframe
-            src="https://www.youtube.com/embed/PMNHLvEaFm4?si=YXSK8_l-d9OEfFr1"
+            src="https://www.youtube-nocookie.com/embed/PMNHLvEaFm4?si=YXSK8_l-d9OEfFr1"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -275,29 +283,6 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           Nous avons également reçu le soutien de nombreux acteurs ludiques Bruxellois et Belges
           dont:
         </p>
-        <ul>
-          <li>
-            Thierry Saeys (propriétaire du magasin Sajou, ex-organisateur du Jette’s Gaming Tour,
-            chroniqueur RTBF, papa du jeu 'Assosiation 10 dés') qui nous a beaucoup conseillé lors
-            de la préparation de l’événement et pour la diffusion sur les réseaux sociaux.
-          </li>
-          <li>
-            Toute l’équipe du Jardin pour la mise à disposition des lieux, la coordination
-            logistique,…
-          </li>
-          <li>La ludothèque de l’espace Carême</li>
-          <li>
-            Etienne Espreman: auteur de jeux (dont Bruxelles 1893) et copropriétaire de la maison
-            d’édition Geek Attitude Games
-          </li>
-          <li>Asmodée Belgique</li>
-          <li>Repos Production</li>
-          <li>Geronimo</li>
-          <li>Pearl Games</li>
-          <li>PLOEF!</li>
-          <li>Chez Cubitus</li>
-          <li>...</li>
-        </ul>
         <div class="partners-grid">
           {/* On boucle sur le tableau des images */}
           {
@@ -328,7 +313,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
       <section class="flow">
         <h2>Bénévoles</h2>
         <p>
-          Nos bénévoles ont été la véritable force motrice du festival cette année. Une équipe de 14
+          Nos bénévoles ont été la véritable force motrice du festival cette année. Une équipe de 26
           bénévoles dévoués s'est mobilisée pour assurer le bon déroulement de l'événement.
         </p>
         <p>
@@ -427,18 +412,28 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           </ul>
         </section>
       </section>
+      <section class="flow">
+        <h2>Remerciements</h2>
+        <p>
+          Un tout grand merci à Aiden Boydens, Alain Bodart, Baptiste Delfini, Brigitte Simonet,
+          Béatrice Bosschaert, Cyril Lefebvre, India Hadri, Iris Senden, Jeanette Veloso, Jim Colin,
+          Jean- Marc Rogier, Julie Facker, Julien Vandenheede, Joelle Garnier, Leila Myar, Louis
+          Detaeye, Marc Colin, Marine de Lamotte, Maarten Vandenbroeck, Morgane Coubeaux, Morgane
+          Senden, Nelson Ribeiro Silva, Pierre Vannieuwerburgh, Quentin Lammerant, Roxane Gruel,
+          Véronique Bosschaert et Véronique Simonet
+        </p>
+      </section>
     </main>
   </BasicPage>
 </SkeletonPage>
 <style>
   .video-container {
     width: 100%;
-    display: flex;
     justify-content: center;
   }
 
   .video-container iframe {
-    width: 66.66%;
+    width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
   }
@@ -503,5 +498,11 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     width: 100%;
     object-fit: cover;
     border-radius: var(--border-radius-s);
+    aspect-ratio: 1/1;
+  }
+  .more-videos iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-l);
   }
 </style>

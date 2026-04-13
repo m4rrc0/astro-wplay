@@ -85,8 +85,8 @@ const conferenceData = [
 
 // VIP partners
 const vipData = [
-  { fileName: 'logo-ludeo', alt: 'Logo Ludeo', link: '' },
   { fileName: 'logo-art-of-games', alt: 'Logo Art of Games', link: '' },
+  { fileName: 'logo-ludeo', alt: 'Logo Ludeo', link: '' },
   { fileName: 'logo-happy-meeple', alt: 'Logo Happy Meeple', link: '' },
   { fileName: 'logo-critical-', alt: 'Logo Critical', link: '' },
   {
@@ -180,10 +180,10 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center width-max" style="margin-top: 0; min-width: 0;">
+    <main class="center width-max" style="min-width: 0;">
       <header
-        class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+        class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>Wanna Play in Brussel 2023</h1>
       </header>
@@ -191,7 +191,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
       <section class="flow">
         <div class="flow">
           <p>
-            <strong>Wanna Play in Brussels 2023 - 2e édition</strong>
+            <strong>2e édition</strong>
           </p>
           <p>
             Le festival «Wanna Play in Brussels» a connu sa deuxième édition cette année. Après le
@@ -262,10 +262,14 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
             })
           }
         </div>
-        <div class="video-container grid-fluid" style="--column-width-min: 100%">
+        <div
+          class="video-container grid-fluid"
+          style="--column-width-min: 100%; max-width: var(--width-col-2); margin-inline: auto;"
+        >
           <iframe
-            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
+            src="https://www.youtube-nocookie.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -434,30 +438,6 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
         </ul>
       </section>
 
-      <!-- <section>
-        <h2>Vidéos</h2>
-        <div>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
-        </div>
-      </section> -->
-
       <section class="flow">
         <h2>Conférences</h2>
         <div class="flow">
@@ -548,7 +528,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           par les bénévoles.
         </p>
         <div class="flow gap-down-p">
-          <h3>Partenaires VIP</h3>
+          <h3>Partenaires VIP et premium</h3>
           <div class="partners-grid">
             {/* On boucle sur le tableau des images */}
             {
@@ -1073,16 +1053,30 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
       <section>
         <h2>Photos © Oriane Delavallee</h2>
         <GalleryFull images={imagesOriane} />
-        <h2>Photos © <a href="https://www.instagram.com/paulosmok/">Paulo Ribeiro</a></h2>
-        <GalleryFull images={imagesPaulo} />
         <h2>
           Photos © <a href="https://www.instagram.com/p/CwKn0JLrlII/?img_index=1"
             >Sylwia Malachowska</a
           >
         </h2>
         <GalleryFull images={imagesSylwia} />
+        <h2>Photos © <a href="https://www.instagram.com/paulosmok/">Paulo Ribeiro</a></h2>
+        <GalleryFull images={imagesPaulo} />
         <!-- <h3>Photos © <a href="https://www.tess-h.be">Tess h.</a></h3>
         <GalleryFull images={imagesTess} /> -->
+      </section>
+      <section class="flow">
+        <h2>Remerciements</h2>
+        <p>
+          Un tout grand merci à Alain Bodart, Amaya Louis, Annie Lalé, Anne Hannaert, Ann Pichot,
+          Aurélien Gosse, Aurélien Roman, Brigitte & Véronique Simonet, Chloé Mispelon, Christine
+          Baele, Coralie Henderyckx, Cyril Lefebvre, Frédéric Goossens, Frédérik Rooseleir, Hamza
+          Zimach, Hao Yong Daniel Choi, Jean-Marc Rogier, Jeannette & Francisco Veloso, Jeremy
+          Musette, Jimmy & Marc Colin, Joëlle Garnier, Joëlle Henrotin, Julie Fäcker, Karine Gaspar,
+          Laetitia Parma, Leila Myar, Lina De Munck, Maarten Van den Broeck, Marine de Lamotte,
+          Mattéo Bombasaro, Mireille Hartman, Morgane Coubeaux, Nelson Ribeiro Silva, Oriane
+          Delavallée, Quentin Dispas, Quentin Lammerant, Roxane Gruel, Sylwia Malachowska, Thierry
+          Saeys, Valérie Rosière, Vincent Van Esch et Wannes Van den Bergh.
+        </p>
       </section>
     </main>
   </BasicPage>
@@ -1258,5 +1252,6 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     width: 100%;
     object-fit: cover;
     border-radius: var(--border-radius-s);
+    aspect-ratio: 1/1;
   }
 </style>

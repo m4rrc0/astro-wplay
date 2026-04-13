@@ -71,10 +71,10 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
   />
 
   <BasicPage {lang}>
-    <main class="center max" style="margin-top: 0;">
+    <main class="center max">
       <header
-        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl full-bleed"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>Inauguration</h1>
         <p><strong>Dimanche 10 juin 2018 à 16h</strong></p>
@@ -110,6 +110,24 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           <li>Créer des rencontres entre joueurs</li>
           <li>Réunir les acteurs du monde ludique</li>
         </ul>
+      </section>
+
+      <section class="flow">
+        <div
+          class="video-container grid-fluid"
+          style="--column-width-min:100%; max-width: var(--width-col-2); margin-inline: auto;"
+        >
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/laySniWhIU4"
+            title="YouTube video player"
+            loading="lazy"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          >
+          </iframe>
+        </div>
       </section>
 
       <!-- Stats -->
@@ -190,6 +208,20 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
         </div>
       </section>
 
+      <section class="flow">
+        <h2>Bénévoles</h2>
+        <p>
+          Nos bénévoles ont été une aide inestimable pour la réussite de cette inauguration. Une
+          belle équipe s'est mobilisée pour assurer le bon déroulement de l'événement.
+        </p>
+        <p>
+          Leur énergie a permis de créer une ambiance chaleureuse et bienveillante tout au long de
+          la journée. Un tout grand merci à Iris Simonet, Hugo Salvaire, Véronique Bosschaert, India
+          Hadri, Teodora Rusu, Véronique Simonet, Morgane Senden et Johnny Colin pour leur
+          implication!
+        </p>
+      </section>
+
       <!-- Visibilité -->
       <section class="flow">
         <h2>Visibilité</h2>
@@ -208,18 +240,12 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
 
       <!-- Vidéo -->
       <section class="flow">
-        <h2>Souvenirs en vidéo</h2>
-        <div class="video-container grid-fluid" style="--column-width-min:100%">
-          <iframe src="https://www.youtube.com/embed/laySniWhIU4" frameborder="0" allowfullscreen>
-          </iframe>
-        </div>
-      </section>
-      <!-- Autres vidéos -->
-      <section class="flow">
+        <h2>Les interviews</h2>
         <div class="more-videos grid-fluid gap-p" style="--columns: 2;">
           <iframe
-            src="https://www.youtube.com/embed/EN-lcEHG0Hs?si=mRSzhD0Lyv6eYS6W"
+            src="https://www.youtube-nocookie.com/embed/EN-lcEHG0Hs?si=mRSzhD0Lyv6eYS6W"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -227,8 +253,9 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            src="https://www.youtube.com/embed/mm7Ns9f2HOo?si=3w84Q5h4ptOvL89v"
+            src="https://www.youtube-nocookie.com/embed/mm7Ns9f2HOo?si=3w84Q5h4ptOvL89v"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -236,8 +263,9 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            src="https://www.youtube.com/embed/xuprLDbqVBo?si=olP5sj9AJUI8Nmhj"
+            src="https://www.youtube-nocookie.com/embed/xuprLDbqVBo?si=olP5sj9AJUI8Nmhj"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -245,8 +273,9 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            src="https://www.youtube.com/embed/6ETJeapT3RU?si=3IiKbZUpJFNisz-W"
+            src="https://www.youtube-nocookie.com/embed/6ETJeapT3RU?si=3IiKbZUpJFNisz-W"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -254,8 +283,9 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            src="https://www.youtube.com/embed/QXAKaPxA7Ws?si=2hVHoR6MiJP4k_Av"
+            src="https://www.youtube-nocookie.com/embed/QXAKaPxA7Ws?si=2hVHoR6MiJP4k_Av"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -263,8 +293,9 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            src="https://www.youtube.com/embed/rvrQFy85oX4?si=jBQGXj6c5Z0-SErm"
+            src="https://www.youtube-nocookie.com/embed/rvrQFy85oX4?si=jBQGXj6c5Z0-SErm"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -272,8 +303,9 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            src="https://www.youtube.com/embed/d1-UE918_QA?si=Ukwl8H2lG4VdS7kT"
+            src="https://www.youtube-nocookie.com/embed/d1-UE918_QA?si=Ukwl8H2lG4VdS7kT"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -281,8 +313,9 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           >
           </iframe>
           <iframe
-            src="https://www.youtube.com/embed/xj5RawWEDzc?si=UU7dwfOMsGUAa6Tt"
+            src="https://www.youtube-nocookie.com/embed/xj5RawWEDzc?si=UU7dwfOMsGUAa6Tt"
             title="YouTube video player"
+            loading="lazy"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"

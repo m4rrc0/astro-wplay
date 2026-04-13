@@ -73,7 +73,7 @@ export default [
         },
         {
           [symbols.selector]: () => `:where(.flow.horizontal.recursive) * + *`,
-          'margin-inline-start': 'var(--gap-stack)',
+          'margin-inline-start': 'var(--flow-space, 1em)',
         },
       ]
     },
@@ -109,7 +109,7 @@ export default [
         },
         {
           [symbols.selector]: () => `:where(.flow.horizontal.recursive) * + *`,
-          'margin-inline-start': 'var(--gap-stack)',
+          'margin-inline-start': 'var(--flow-space, 1em)',
         },
       ]
     },

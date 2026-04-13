@@ -20,17 +20,17 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   <BasicPage {lang}>
     <main class="center width-max flow gap-h2">
       <header
-        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'
+        class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl full-bleed"
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h2)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>Nos événements</h1>
-        <p class="h4 max-width-measure center text">
-          Depuis 2017, Wanna Play réunit joueurs et "moins joueurs" autour de concepts très
-          différents
-        </p>
       </header>
 
       <div class="flow">
+        <h2 class="center text">
+          Depuis 2017, Wanna Play réunit joueurs et "moins joueurs" autour de concepts très
+          différents
+        </h2>
         <p>
           Depuis nos débuts, on adore créer des moments qui rassemblent. On a déjà organisé deux
           festivals, de nombreuses soirées jeux et animations publiques ou privées, ainsi que des
@@ -110,15 +110,17 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       </section>
 
       <section>
-        <ul class="flow">
+        <ul class="other-events flow">
           <li>
-            <p>Festival de la bière</p>
+            <p class="bold">Festival de la bière</p>
             <p>(… - 2025)</p>
             <p>Bruxelles - Woluwe-Saint-Pierre</p>
             <p>Coordination et animation</p>
           </li>
           <li>
-            <p>Soirées jeux <a href="https://jardin.brussels/fr">au Bar du Jardin</a></p>
+            <p class="bold">
+              Soirées jeux <a href="https://jardin.brussels/fr">au Bar du Jardin</a>
+            </p>
             <p>(Avril, mai, juin 2023)</p>
             <p>Bruxelles - Centre ville</p>
             <p>
@@ -129,13 +131,15 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             </p>
           </li>
           <li>
-            <p>Apéro x Serious Game à <a href="https://www.lafonderie.be/">la Fonderie</a></p>
+            <p class="bold">
+              Apéro x Serious Game à <a href="https://www.lafonderie.be/">la Fonderie</a>
+            </p>
             <p>(03.06.2023 - 17.06.2023)</p>
             <p>Bruxelles - Molenbeek-Saint-Jean</p>
             <p>Coodination et animation jeux de société et jeux géants</p>
           </li>
           <li>
-            <p><a href="https://muntpunt.be/">Muntpunt</a> - All You Can Play</p>
+            <p class="bold"><a href="https://muntpunt.be/">Muntpunt</a> - All You Can Play</p>
             <p>(16/03/2023 - 20/09/2023 - 12/10/2023)</p>
             <p>Bruxelles - Centre ville</p>
             <p>Soirée jeux de société Muntpunt</p>
@@ -151,7 +155,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             </p>
           </li>
           <li>
-            <p>Festival des Idées Bleues</p>
+            <p class="bold">Festival des Idées Bleues</p>
             <p>(01.10.2023)</p>
             <p>Wavre</p>
             <p>
@@ -161,11 +165,11 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             </p>
           </li>
           <li>
-            <a href="https://www.belvue.be/cms/web/fr/">Belvue</a>
+            <a href="https://www.belvue.be/cms/web/fr/" class="bold">Belvue</a>
             <p>Coordination, animation</p>
           </li>
           <li>
-            <p>concours évent jeux quartier</p>
+            <p class="bold">concours évent jeux quartier</p>
           </li>
         </ul>
 

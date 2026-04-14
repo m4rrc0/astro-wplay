@@ -2,6 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
 import { Image } from 'astro:assets'
+import { YouTube } from 'astro-embed'
 import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
 import { getOrganizations } from '../../../store/dataService.js'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
@@ -266,14 +267,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           class="video-container grid-fluid"
           style="--column-width-min: 100%; max-width: var(--width-col-2); margin-inline: auto;"
         >
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/cc5frcsJbcc?si=ws0_WmnGpnLN11yf"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
+          <YouTube id="cc5frcsJbcc" />
         </div>
         <div class="carousel" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset">
@@ -1088,7 +1082,8 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     justify-content: center;
   }
 
-  .video-container iframe {
+  .video-container iframe,
+  .video-container lite-youtube {
     width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
@@ -1133,9 +1128,10 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     flex: 0 0 var(--carousel-item-width);
     min-width: 0;
     scroll-snap-align: start;
-    border: 2px solid var(--color-blue, #2563eb);
     border-radius: var(--border-radius-l);
     position: relative;
+    background-color: var(--color-blue);
+    color: var(--color-white);
   }
 
   /* Guillemet décoratif */
@@ -1144,7 +1140,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     display: block;
     font-size: 3.5rem;
     line-height: 1;
-    color: var(--color-blue, #2563eb);
+    color: var(--color-white, #2563eb);
     opacity: 0.3;
     margin-bottom: -1rem;
     font-family: Georgia, serif;

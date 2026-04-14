@@ -2,6 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
 import { Image } from 'astro:assets'
+import { YouTube } from 'astro-embed'
 import type { ImageMetadata } from 'astro'
 import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
 import { getOrganizations } from '../../../store/dataService.js'
@@ -215,15 +216,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
           class="video-container grid-fluid"
           style="--column-width-min: 100%; max-width: var(--width-col-2); margin-inline: auto;"
         >
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/Z895F3XZ-sg?si=xk0QdQu9DTQfUMT2"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            style="max-width: 100%; border-radius: var(--border-radius-m);"></iframe>
+          <YouTube id="Z895F3XZ-sg" />
         </div>
         <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
@@ -398,7 +391,8 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     justify-content: center;
   }
 
-  .video-container iframe {
+  .video-container iframe,
+  .video-container lite-youtube {
     width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);

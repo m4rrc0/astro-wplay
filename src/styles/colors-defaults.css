@@ -36,14 +36,14 @@ body,
 a,
 a:--c-p--any,
 :--c-p--any a {
-  color: var(--color-text, --color-text__a);
-  background-color: var(--color-bg__a);
+  color: var(--color-text__a, var(--color-text));
+  background-color: var(--color-bg, var(--color-bg__a));
 }
 a:hover,
 a:--c-p--any:hover,
 :--c-p--any a:hover {
-  color: var(--color-text__a--hover);
-  background-color: var(--color-bg__a--hover);
+  color: var(--color-text__a--hover, var(--color-text--hover));
+  background-color: var(--color-bg--hover, var(--color-bg__a--hover));
 }
 :--button,
 :--button:--c-p--any,

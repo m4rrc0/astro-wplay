@@ -2,6 +2,7 @@
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
 import { Image } from 'astro:assets'
+import { YouTube } from 'astro-embed'
 import type { ImageMetadata } from 'astro'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
 import GalleryFull from '@partials/GalleryFull.astro'
@@ -117,16 +118,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           class="video-container grid-fluid"
           style="--column-width-min:100%; max-width: var(--width-col-2); margin-inline: auto;"
         >
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/laySniWhIU4"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
+          <YouTube id="laySniWhIU4" />
         </div>
       </section>
 
@@ -242,86 +234,14 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
       <section class="flow">
         <h2>Les interviews</h2>
         <div class="more-videos grid-fluid gap-p" style="--columns: 2;">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/EN-lcEHG0Hs?si=mRSzhD0Lyv6eYS6W"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/mm7Ns9f2HOo?si=3w84Q5h4ptOvL89v"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/xuprLDbqVBo?si=olP5sj9AJUI8Nmhj"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/6ETJeapT3RU?si=3IiKbZUpJFNisz-W"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/QXAKaPxA7Ws?si=2hVHoR6MiJP4k_Av"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/rvrQFy85oX4?si=jBQGXj6c5Z0-SErm"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/d1-UE918_QA?si=Ukwl8H2lG4VdS7kT"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/xj5RawWEDzc?si=UU7dwfOMsGUAa6Tt"
-            title="YouTube video player"
-            loading="lazy"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          >
-          </iframe>
+          <YouTube id="EN-lcEHG0Hs" />
+          <YouTube id="mm7Ns9f2HOo" />
+          <YouTube id="xuprLDbqVBo" />
+          <YouTube id="6ETJeapT3RU" />
+          <YouTube id="QXAKaPxA7Ws" />
+          <YouTube id="rvrQFy85oX4" />
+          <YouTube id="d1-UE918_QA" />
+          <YouTube id="xj5RawWEDzc" />
         </div>
       </section>
 
@@ -393,13 +313,15 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
     justify-content: center;
   }
 
-  .video-container iframe {
+  .video-container iframe,
+  .video-container lite-youtube {
     width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
   }
 
-  .more-videos iframe {
+  .more-videos iframe,
+  .more-videos lite-youtube {
     width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);

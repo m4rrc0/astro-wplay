@@ -1,6 +1,7 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
+import { YouTube } from 'astro-embed'
 
 import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
 
@@ -69,14 +70,7 @@ const lang = { code: 'fr' }
           class="video-container grid-fluid"
           style="--column-width-min:100%; max-width: var(--width-col-2); margin-inline: auto;"
         >
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/ObbUL0Oosaw"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          >
-          </iframe>
+          <YouTube id="ObbUL0Oosaw" />
         </div>
       </section>
 
@@ -113,7 +107,8 @@ const lang = { code: 'fr' }
     justify-content: center;
   }
 
-  .video-container iframe {
+  .video-container iframe,
+  .video-container lite-youtube {
     width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);

@@ -1,5 +1,6 @@
 ---
 import 'maplibre-gl/dist/maplibre-gl.css'
+import { Image } from 'astro:assets'
 
 export interface Props {
   itemType?: 'organizations' | 'events'
@@ -12,28 +13,19 @@ export interface Props {
 const { itemType = 'organizations', area, city, date, orgType } = Astro.props
 ---
 
-<div>
-  <div
-    id="map"
-    data-item-type={itemType}
-    data-area={area}
-    data-city={city}
-    data-date={date}
-    data-org-type={orgType}
-    style="width: 100%; height: 700px; height: min(700px, 80vh)"
-  >
-  </div>
-  <p class="map-notice color-palette-teal">
-    <small>
-      Cette carte est en phase d'expérimentation. N'hésite pas à <a href="/fr/contact/"
-        >nous contacter</a
-      > si tu rencontres des problèmes.
-    </small>
-  </p>
+<div
+  id="map"
+  data-item-type={itemType}
+  data-area={area}
+  data-city={city}
+  data-date={date}
+  data-org-type={orgType}
+  style="width: 100%; 
+  min-height: 400px; 
+  height: min(600px, 55vh);
+  background-color: #e5e5e5;"
+>
 </div>
-
-<!-- https://maplibre.org/maplibre-gl-js/docs/examples/create-and-style-clusters/
-time slider, clusters, locate the user -->
 
 <script>
   import maplibregl, { NavigationControl } from 'maplibre-gl'
@@ -49,36 +41,6 @@ time slider, clusters, locate the user -->
     [1.9, 49.4], // West, South
     [7.1, 51.55], // East, North
   ]
-
-  // // changer "province" en "area"
-  // const areaFullViewConfig: Record<string, { center: [number, number]; zoom: number }> = {
-  //   antwerp: { center: [4.55, 51.21], zoom: 9.2 },
-  //   'flemish-brabant': { center: [4.58, 50.85], zoom: 9.6 },
-  //   'walloon-brabant': { center: [4.55, 50.67], zoom: 10.2 },
-  //   brussels: { center: [4.3517, 50.8439], zoom: 11.5 },
-  //   'west-flanders': { center: [3.15, 51.05], zoom: 9.0 },
-  //   'east-flanders': { center: [3.75, 51.03], zoom: 9.4 },
-  //   hainaut: { center: [3.8486, 50.4445], zoom: 9.0 },
-  //   liege: { center: [5.5973, 50.5042], zoom: 9.0 },
-  //   limburg: { center: [5.3974, 50.9891], zoom: 9.15 },
-  //   luxembourg: { center: [5.3565, 49.9428], zoom: 8.56 },
-  //   namur: { center: [4.85, 50.35], zoom: 9.2 },
-  // }
-
-  // // changer "capital" en "city"
-  // const capitalsConfig: Record<string, { center: [number, number]; zoom: number }> = {
-  //   antwerp: { center: [4.4025, 51.2194], zoom: 13 }, // Anvers
-  //   'flemish-brabant': { center: [4.7009, 50.8798], zoom: 13 }, // Louvain
-  //   'walloon-brabant': { center: [4.6144, 50.6683], zoom: 13 }, // Wavre
-  //   brussels: { center: [4.3517, 50.8503], zoom: 12 },
-  //   'west-flanders': { center: [3.2247, 51.2093], zoom: 13 }, // Bruges
-  //   'east-flanders': { center: [3.7174, 51.0543], zoom: 13 }, // Gand
-  //   hainaut: { center: [4.4447, 50.4108], zoom: 12.5 }, // Charleroi
-  //   liege: { center: [5.5797, 50.6326], zoom: 13 }, // Liège
-  //   limburg: { center: [5.3325, 50.9307], zoom: 13 }, // Hasselt
-  //   luxembourg: { center: [5.8131, 49.6833], zoom: 13 }, // Arlon
-  //   namur: { center: [4.8675, 50.4669], zoom: 13 }, // Namur
-  // }
 
   const mapContainer = document.getElementById('map')
   const itemType = mapContainer?.getAttribute('data-item-type') || 'organizations'
@@ -164,29 +126,6 @@ time slider, clusters, locate the user -->
     cooperativeGestures: true,
   })
 
-  // // Get bounds of the map
-  // map.on('moveend', () => {
-  //   const bounds = map.getBounds()
-  //   const sw = bounds.getSouthWest()
-  //   const ne = bounds.getNorthEast()
-
-  //   console.log('--- Nouveaux Bounds ---')
-  //   console.log(
-  //     `[[${sw.lng.toFixed(4)}, ${sw.lat.toFixed(4)}], [${ne.lng.toFixed(4)}, ${ne.lat.toFixed(4)}]]`
-  //   )
-  // })
-
-  // // Get center and zoom of the map
-  // map.on('moveend', () => {
-  //   const center = map.getCenter()
-  //   const zoom = map.getZoom()
-
-  //   console.log('--- Nouvelle Config Capitale ---')
-  //   console.log(
-  //     `center: [${center.lng.toFixed(4)}, ${center.lat.toFixed(4)}], zoom: ${zoom.toFixed(2)}`
-  //   )
-  // })
-
   map.addControl(
     new maplibregl.AttributionControl({
       compact: true,
@@ -268,24 +207,54 @@ time slider, clusters, locate the user -->
 
   // We loop through the features to resolve the dynamic CSS color tokens into actual Hex codes
   const uniqueColorsSet = new Set<string>()
-  // Maps resolved hex color → Set of unique translated labels
+  // Maps token → Set of unique translated labels
   const legendItemsMap = new Map<string, Set<string>>()
+  const paletteCache = new Map<string, string>()
 
-  geojson.features = geojson.features.map((feature: any) => {
-    // We retrieve the colorPaletteToken that we added in organizations.json.js
-    const colorPaletteToken = feature.properties.color || 'default'
+  function resolvePaletteColor(token: string) {
+    if (!token) return '#000000'
+    if (paletteCache.has(token)) return paletteCache.get(token)!
 
-    // Try getting CSS variable --color-{colorPaletteToken} or --color-palette-{colorPaletteToken}
-    let cssColor = getComputedStyle(document.body)
-      .getPropertyValue(`--color-${colorPaletteToken}`)
-      .trim()
-    if (!cssColor) {
-      cssColor = getComputedStyle(document.body)
-        .getPropertyValue(`--color-palette-${colorPaletteToken}`)
+    // Create a temporary hidden DOM element to resolve the CSS variables assigned by the class
+    const tempDiv = document.createElement('div')
+    tempDiv.className = `color-palette-${token}`
+    tempDiv.style.color = 'var(--color-primary-palette, var(--color-primary, black))'
+    tempDiv.style.display = 'none'
+    document.body.appendChild(tempDiv)
+
+    let resolved = getComputedStyle(tempDiv).color
+
+    // Fallback if the class didn't define a color
+    if (
+      !resolved ||
+      resolved === 'rgb(0, 0, 0)' ||
+      resolved === 'rgba(0, 0, 0, 0)' ||
+      resolved === 'black'
+    ) {
+      const directColorVal = getComputedStyle(document.body)
+        .getPropertyValue(`--color-${token}`)
         .trim()
+      if (directColorVal) {
+        tempDiv.style.color = directColorVal
+        resolved = getComputedStyle(tempDiv).color
+      }
     }
 
-    const resolvedColor = cssColor || '#000000'
+    document.body.removeChild(tempDiv)
+    const finalColor = resolved && resolved !== 'rgba(0, 0, 0, 0)' ? resolved : '#000000'
+    paletteCache.set(token, finalColor)
+    return finalColor
+  }
+
+  geojson.features = geojson.features.map((feature: any) => {
+    const tempCode = feature.properties.types?.[0]?.code
+    const tempColor = feature.properties.color
+    const colorPaletteToken =
+      itemType === 'events'
+        ? tempColor || tempCode || 'default'
+        : tempCode || tempColor || 'default'
+
+    const resolvedColor = resolvePaletteColor(colorPaletteToken)
     feature.properties.typeColor = resolvedColor // Fallback
     uniqueColorsSet.add(resolvedColor)
 
@@ -298,27 +267,20 @@ time slider, clusters, locate the user -->
         const translatedLabel = translationObj?.translations?.[0]?.default_label
         const labelText = translatedLabel || t.label || t.code
 
-        const typeColorToken = t.color || t.code || colorPaletteToken
-        let typeColor = getComputedStyle(document.body)
-          .getPropertyValue(`--color-${typeColorToken}`)
-          .trim()
-
-        if (!typeColor)
-          typeColor = getComputedStyle(document.body)
-            .getPropertyValue(`--color-palette-${typeColorToken}`)
-            .trim()
-
-        const typeResolvedColor = typeColor || resolvedColor
+        const typeColorToken =
+          itemType === 'events'
+            ? t.colorPalette || t.color || t.code || colorPaletteToken
+            : t.code || t.colorPalette || t.color || colorPaletteToken
+        const typeResolvedColor = resolvePaletteColor(typeColorToken)
 
         if (labelText) {
-          if (!legendItemsMap.has(typeResolvedColor))
-            legendItemsMap.set(typeResolvedColor, new Set())
-          legendItemsMap.get(typeResolvedColor)!.add(labelText)
+          if (!legendItemsMap.has(typeColorToken)) legendItemsMap.set(typeColorToken, new Set())
+          legendItemsMap.get(typeColorToken)!.add(labelText)
         }
       })
     } else {
-      if (!legendItemsMap.has(resolvedColor)) legendItemsMap.set(resolvedColor, new Set())
-      legendItemsMap.get(resolvedColor)!.add(colorPaletteToken)
+      if (!legendItemsMap.has(colorPaletteToken)) legendItemsMap.set(colorPaletteToken, new Set())
+      legendItemsMap.get(colorPaletteToken)!.add(colorPaletteToken)
     }
 
     return feature
@@ -326,11 +288,11 @@ time slider, clusters, locate the user -->
 
   const uniqueColors = Array.from(uniqueColorsSet)
 
-  // Build legendItems grouped by color, with labels sorted alphabetically within each group
-  const legendItems = Array.from(legendItemsMap.entries()).flatMap(([color, labelsSet]) =>
+  // Build legendItems grouped by token (palette), with labels sorted alphabetically within each group
+  const legendItems = Array.from(legendItemsMap.entries()).flatMap(([token, labelsSet]) =>
     Array.from(labelsSet)
       .sort((a, b) => a.localeCompare(b))
-      .map(label => ({ color, label }))
+      .map(label => ({ token, label }))
   )
 
   // Build cluster properties for MapLibre
@@ -407,84 +369,105 @@ time slider, clusters, locate the user -->
     })
 
     map.addLayer({
-      id: 'unclustered-point',
+      id: 'unclustered-hidden',
       type: 'circle',
       source: 'items-source',
       filter: ['!', ['has', 'point_count']],
       paint: {
-        'circle-color': ['get', 'typeColor'],
-        'circle-radius': 8,
-        'circle-stroke-width': 1,
-        'circle-stroke-color': '#fff',
+        'circle-radius': 0, // Invisible layer needed to use queryRenderedFeatures
+        'circle-opacity': 0,
       },
     })
 
     // objects for caching and keeping track of HTML marker objects (for performance)
-    const markers: Record<string, maplibregl.Marker> = {}
-    let markersOnScreen: Record<string, maplibregl.Marker> = {}
+    const markers = new Map<string, maplibregl.Marker>()
+    let markersOnScreen = new Map<string, maplibregl.Marker>()
 
     function updateMarkers() {
-      const newMarkers: Record<string, maplibregl.Marker> = {}
+      const newMarkers = new Map<string, maplibregl.Marker>()
 
       // We use queryRenderedFeatures instead of querySourceFeatures to avoid ghost clusters from stale tiles during zoom animations
-      const features = map.queryRenderedFeatures({ layers: ['clusters-hidden'] })
+      const features = map.queryRenderedFeatures({
+        layers: ['clusters-hidden', 'unclustered-hidden'],
+      })
 
-      // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
-      // and add it to the map if it's not there already
+      // for every cluster and unclustered point on the screen, create an HTML marker for it
       for (let i = 0; i < features.length; i++) {
         const coords = features[i].geometry.coordinates as [number, number]
         const props = features[i].properties
-        if (!props.cluster) continue
-        const id = props.cluster_id
+        const isCluster = props.cluster
+        const id = isCluster ? props.cluster_id : props.id
 
-        // Build a cache key that changes if the cluster content changes (e.g., after filtering)
-        const counts = uniqueColors.map(c => props['color_' + c.replace(/[^a-zA-Z0-9]/g, '')] || 0)
-        const cacheKey = `${id}_${props.point_count}_${counts.join('-')}`
+        // Cache key logic
+        let cacheKey = ''
+        let counts: number[] = []
+        if (isCluster) {
+          counts = uniqueColors.map(c => props['color_' + c.replace(/[^a-zA-Z0-9]/g, '')] || 0)
+          cacheKey = `cluster_${id}_${props.point_count}_${counts.join('-')}`
+        } else {
+          cacheKey = `point_${id}_${props.typeColor}`
+        }
 
-        let marker = markers[cacheKey]
+        let marker = markers.get(cacheKey)
         if (!marker) {
-          const el = createDonutChart(props, counts)
+          let el
+          if (isCluster) {
+            el = createDonutChart(props, counts)
+            el.addEventListener('click', async e => {
+              e.stopPropagation()
+              const source = map.getSource('items-source') as any
+              if (source.getClusterExpansionZoom) {
+                const zoom = await source.getClusterExpansionZoom(id)
+                map.easeTo({
+                  center: coords,
+                  zoom,
+                })
+              }
+            })
+          } else {
+            // Unclustered HTML Marker
+            el = document.createElement('div')
+            el.className = 'map-point-marker'
+            el.style.cssText = `width:16px;height:16px;border-radius:50%;background-color:${props.typeColor};border:2px solid #fff;box-shadow: 0 1px 3px rgba(0,0,0,0.3);cursor:pointer;`
 
-          // Add click event for expanding cluster
-          el.addEventListener('click', async e => {
-            e.stopPropagation()
-            const source = map.getSource('items-source') as any
-            if (source.getClusterExpansionZoom) {
-              const zoom = await source.getClusterExpansionZoom(id)
-              map.easeTo({
-                center: coords,
-                zoom,
-              })
-            }
-          })
+            el.addEventListener('click', e => {
+              e.stopPropagation()
+              openPopup(features[i])
+            })
+          }
 
-          marker = markers[cacheKey] = new maplibregl.Marker({
+          marker = new maplibregl.Marker({
             element: el,
           }).setLngLat(coords)
+          markers.set(cacheKey, marker)
         } else {
-          // Keep coordinates in sync if the cluster center shifted slightly
           marker.setLngLat(coords)
         }
-        newMarkers[cacheKey] = marker
+        newMarkers.set(cacheKey, marker)
 
-        if (!markersOnScreen[cacheKey]) marker.addTo(map)
+        if (!markersOnScreen.has(cacheKey)) marker.addTo(map)
       }
       // for every marker we've added previously, remove those that are no longer visible
-      for (const key in markersOnScreen) {
-        if (!newMarkers[key]) {
-          markersOnScreen[key].remove()
-          delete markers[key] // Prevent memory leak by removing it from cache too
+      for (const [key, marker] of markersOnScreen) {
+        if (!newMarkers.has(key)) {
+          marker.remove()
+          markers.delete(key) // Prevent memory leak by removing it from cache too
         }
       }
       markersOnScreen = newMarkers
     }
 
-    // We use the render event to perfectly sync the HTML markers with the rendered tiles,
-    // avoiding the ghost cluster bug where old source tiles linger during zoom animations.
+    // "Throttle" le rendu avec requestAnimationFrame pour le limiter à 60 FPS
+    // On doit impérativement utiliser l'évènement 'render' car queryRenderedFeatures()
+    // ne trouve les points qu'APRÈS qu'ils aient été dessinés par WebGL.
+    let rafId: number | null = null
     map.on('render', () => {
-      if (map.getSource('items-source')) {
+      if (!map.getSource('items-source')) return
+      if (rafId) return // Déjà en attente dans la file d'attente d'affichage
+      rafId = requestAnimationFrame(() => {
+        rafId = null
         updateMarkers()
-      }
+      })
     })
 
     // Initial call
@@ -573,15 +556,10 @@ time slider, clusters, locate the user -->
       ].join(' ')
     }
 
-    // When a click event occurs on a feature in the unclustered-point layer, open a popup at the location of the feature, with description HTML from its properties.
-    map.on('click', 'unclustered-point', e => {
-      const coordinates = e.features[0].geometry.coordinates.slice()
-      const props = e.features[0].properties
-
-      // Ensure that if the map is zoomed out such that multiple copies of the feature are visible, the popup appears over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
-      }
+    // Helper to open popup for HTML markers
+    function openPopup(feature: any) {
+      const coordinates = feature.geometry.coordinates.slice()
+      const props = feature.properties
 
       // Generate HTML for the popup card, mimicking the OrganizationsPage list items
       const name = props.name || ''
@@ -612,13 +590,13 @@ time slider, clusters, locate the user -->
         : '/assets/images/placeholder.svg' // Fallback image (similar to the Astro <Img> fallback)
 
       const imgFallbackHtml = logoId
-        ? `<img src="${imgSrc}" alt="${name}" loading="lazy" style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;" width="120" height="120" />`
+        ? `<Image src="${imgSrc}" alt="${name}" loading="lazy" style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;" width="120" height="120" />`
         : `<div style="width:120px;height:120px;background-color:#010fff;border-radius:50%;display:flex;align-items:center;justify-content:center"><span style="color:white;font-weight:bold">WP</span></div>`
 
       // Types list generator
       const typesHtml = types
         .map((t: any) => {
-          const palette = `color-palette-${t.color || t.code}`
+          const palette = `color-palette-${t.code}`
           // Get the translation for the current lang, or default back to french, or code
           const labelText = t.labels?.[langCode] || t.labels?.['fr'] || t.label || t.code
           return `<li class="box no-border padding-x-h8 padding-y-h9 ${palette} color-palette-variation-contrast border-radius-s">${labelText}</li>`
@@ -652,18 +630,10 @@ time slider, clusters, locate the user -->
       // We add a custom CSS class to the popup to override MapLibre's default padding/background
       // so it looks exactly like the card CSS
       new maplibregl.Popup({ className: 'custom-card-popup', closeButton: true, maxWidth: '300px' })
-        .setLngLat(coordinates)
+        .setLngLat(coordinates as [number, number])
         .setHTML(htmlContent)
         .addTo(map)
-    })
-
-    // Also add pointer cursor for unclustered points
-    map.on('mouseenter', 'unclustered-point', () => {
-      map.getCanvas().style.cursor = 'pointer'
-    })
-    map.on('mouseleave', 'unclustered-point', () => {
-      map.getCanvas().style.cursor = ''
-    })
+    }
 
     // --- APPLY FILTERS FROM STORE ---
     if (itemType === 'organizations') {
@@ -700,9 +670,9 @@ time slider, clusters, locate the user -->
     class LegendControl {
       _container: HTMLDivElement | null = null
       _map: maplibregl.Map | undefined
-      _legendItems: { color: string; label: string }[]
+      _legendItems: { token: string; label: string }[]
 
-      constructor(items: { color: string; label: string }[]) {
+      constructor(items: { token: string; label: string }[]) {
         this._legendItems = items
       }
 
@@ -728,11 +698,12 @@ time slider, clusters, locate the user -->
             </button>
           </div>`
 
-        html += '<div id="legend-content" style="display: none; flex-direction: column; gap: 6px;">'
+        html +=
+          '<ul id="legend-content" class="flow gap-h8 reset" style="display: none; margin-top: 10px; margin-bottom: 0; padding: 0; list-style: none;">'
         this._legendItems.forEach(item => {
-          html += `<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-black, black);"><span style="width: 14px; height: 14px; border-radius: 50%; background-color: ${item.color}; display: inline-block; flex-shrink: 0; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);"></span><span style="line-height: 1.2;">${item.label}</span></div>`
+          html += `<li class="box no-border padding-x-h8 padding-y-h9 color-palette-${item.token} color-palette-variation-contrast border-radius-s" style="font-size: 13px;">${item.label}</li>`
         })
-        html += '</div>'
+        html += '</ul>'
 
         this._container.innerHTML = html
 
@@ -824,5 +795,7 @@ time slider, clusters, locate the user -->
   }
   .maplibregl-canvas {
     filter: grayscale(1);
+    will-change: filter;
+    contain: strict;
   }
 </style>

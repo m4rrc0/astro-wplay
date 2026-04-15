@@ -4,8 +4,8 @@ layout: '@layouts/MarkdownPage.astro'
 
 import { Image } from 'astro:assets'
 import { YouTube } from 'astro-embed'
-import beDetective from '@assets/images/partners/logo-be-dete.png'
-import bgf from '@assets/images/partners/logo-ludiris-asbl.png'
+import beDetective from '@assets/images/partners/logo-be-dete.webp'
+import bgf from '@assets/images/partners/logo-ludiris-asbl.webp'
 
 <header
   class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
@@ -39,11 +39,14 @@ partager et créer du lien, même à distance.
 
 <div class="cluster justify-center" style="gap: 5em;">
   <Image src={beDetective} alt="Be Detectives" width={150} height={150} />
-  <Image src={bgf} alt="Brussels Games Festival" width={150} height={150} />
+  <Image src={bgf} alt="Brussels Games Festival" width={128} height={128} />
 </div>
 
-<div class="video-container" style="margin: auto; max-width: var(--width-col-2);">
-  <YouTube id="l8cuK7a-elE" />
+<div
+  class="video-container"
+  style="margin: auto; max-width: var(--width-col-2); margin-block: var(--size-h2);"
+>
+  <YouTube id="l8cuK7a-elE" title="Le jeu parfait" />
 </div>
 
 <section>

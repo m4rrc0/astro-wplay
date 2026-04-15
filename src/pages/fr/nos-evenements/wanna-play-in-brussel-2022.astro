@@ -1,17 +1,17 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
-import { SEO } from '@components'
+import { SEO, Img } from '@components'
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 import { YouTube } from 'astro-embed'
-import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
+import bannerPaper from '@assets/images/WannaPlay-banner-paper.jpeg'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
-import imgVisibilite1 from '@assets/images/photos-Festival-2022/visibilite/IMG_6022.JPG'
-import imgVisibilite2 from '@assets/images/photos-Festival-2022/visibilite/IMG_6023.JPG'
-import imgVisibilite3 from '@assets/images/photos-Festival-2022/visibilite/IMG_6271.JPG'
-import imgVisibilite4 from '@assets/images/photos-Festival-2022/visibilite/IMG_6272.JPG'
-import imgVisibilite5 from '@assets/images/photos-Festival-2022/visibilite/IMG_6273.JPG'
-import imgVisibilite6 from '@assets/images/photos-Festival-2022/visibilite/IMG_6274.JPG'
+import imgVisibilite1 from '@assets/images/photos-Festival-2022/visibilite/IMG_6022.webp'
+import imgVisibilite2 from '@assets/images/photos-Festival-2022/visibilite/IMG_6023.webp'
+import imgVisibilite3 from '@assets/images/photos-Festival-2022/visibilite/IMG_6271.webp'
+import imgVisibilite4 from '@assets/images/photos-Festival-2022/visibilite/IMG_6272.webp'
+import imgVisibilite5 from '@assets/images/photos-Festival-2022/visibilite/IMG_6273.webp'
+import imgVisibilite6 from '@assets/images/photos-Festival-2022/visibilite/IMG_6274.webp'
 
 // const { lang } = Astro.props
 const lang = { code: 'fr' }
@@ -83,16 +83,14 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     <main class="center max">
       <header
         class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>Wanna Play in Brussel 2022</h1>
       </header>
 
       <section class="flow">
         <div class="flow">
-          <p>
-            <strong>1ère édition</strong>
-          </p>
+          <p class="h2">1ère édition</p>
           <p>
             Un festival gratuit d’une journée consacré aux jeux de société dans un lieu historique
             en plein centre de Bruxelles.
@@ -111,9 +109,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           </p>
         </div>
         <div class="flow">
-          <p>
-            <strong>Le festival avait plusieurs objectifs principaux</strong>
-          </p>
+          <p class="h3">Le festival avait plusieurs objectifs principaux</p>
           <ol>
             <li>
               Promouvoir le jeu à Bruxelles comme canal privilégié pour créer du lien entre
@@ -136,7 +132,15 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
-              const imgTag = <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+              const imgTag = (
+                <Image
+                  src={optimizedMeta.src}
+                  {...optimizedMeta.attributes}
+                  alt={alt}
+                  widths={[240, 540, 720, 1200, optimizedMeta.width]}
+                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${optimizedMeta.width}px`}
+                />
+              )
               return finalLink ? (
                 <a
                   href={finalLink}
@@ -197,32 +201,6 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         </ul>
       </section>
 
-      <!-- <section class="flow  ">
-        <h2>Photos</h2>
-        <div class="grid gap-h6" style="--width-column: 250px;">
-          <ul class="reset">
-            <li>
-              <Image src={gagBack} alt="" class="gallery-img" />
-            </li>
-            <li>
-              <Image src={hoplaFlorent} alt="" class="gallery-img" />
-            </li>
-            <li>
-              <Image src={kidsStoryTime} alt="" class="gallery-img" />
-            </li>
-            <li>
-              <Image src={kids} alt="" class="gallery-img" />
-            </li>
-            <li>
-              <Image src={londonPierre} alt="" class="gallery-img" />
-            </li>
-            <li>
-              <Image src={moonArea} alt="" class="gallery-img" />
-            </li>
-          </ul>
-        </div>
-      </section> -->
-
       <section class="flow">
         <h2>Activités</h2>
         <ul class="flow">
@@ -260,7 +238,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           class="video-container grid-fluid"
           style="--column-width-min: 100%; max-width: var(--width-col-2);"
         >
-          <YouTube id="PMNHLvEaFm4" />
+          <YouTube id="PMNHLvEaFm4" title="Wanna Play in Brussel 2022 - mini-interview" />
         </div>
       </section>
 
@@ -274,7 +252,15 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
           {/* On boucle sur le tableau des images */}
           {
             imagesPartners.map(({ optimizedMeta, alt, finalLink }) => {
-              const imgTag = <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+              const imgTag = (
+                <Image
+                  src={optimizedMeta.src}
+                  {...optimizedMeta.attributes}
+                  alt={alt}
+                  widths={[240, 540, 720, 1200, optimizedMeta.width]}
+                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${optimizedMeta.width}px`}
+                />
+              )
               return finalLink ? (
                 <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
                   {imgTag}
@@ -285,16 +271,6 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             })
           }
         </div>
-        <!-- <div class="grid gap-h6" style="--width-column: 250px;">
-          <ul class="reset">
-            <li>
-              <Image src={gagBack} alt="" />
-            </li>
-            <li>
-              <Image src={hoplaFlorent} alt="" />
-            </li>
-          </ul>
-        </div> -->
       </section>
 
       <section class="flow">
@@ -350,12 +326,37 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             <li>Newsletter</li>
           </ul>
           <div class="imgGrid grid-fluid gap-p">
-            <Image src={imgVisibilite1} alt="Interview" />
+            <Image
+              src={imgVisibilite1}
+              alt="Interview"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVisibilite1.width}px`}
+            />
             <!-- <Image src={imgVisibilite2} alt="Interview" /> -->
-            <Image src={imgVisibilite3} alt="Interview" />
-            <Image src={imgVisibilite4} alt="Interview" />
-            <Image src={imgVisibilite5} alt="Interview" />
-            <Image src={imgVisibilite6} alt="Interview" />
+            <Image
+              src={imgVisibilite3}
+              alt="Interview"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVisibilite3.width}px`}
+            />
+            <Image
+              src={imgVisibilite4}
+              alt="Interview"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVisibilite4.width}px`}
+            />
+            <Image
+              src={imgVisibilite5}
+              alt="Interview"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVisibilite5.width}px`}
+            />
+            <Image
+              src={imgVisibilite6}
+              alt="Interview"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVisibilite6.width}px`}
+            />
           </div>
         </div>
 

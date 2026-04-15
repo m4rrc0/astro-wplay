@@ -34,8 +34,8 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
       <form
         id="organizationsForm"
-        class="flow horizontal justify-center"
-        style="flex-wrap: wrap; gap: var(--size-p)"
+        class="cluster horizontal justify-center"
+        style="flex-wrap: wrap; margin-block: var(--size-h3);"
       >
         <div class="popover-filter-wrapper">
           <button
@@ -178,10 +178,10 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       <IO
         ul
         $skipNoInner
-        class="organizations-list grid-fluid gap-down-h7 reset"
+        class="organizations-list grid-fluid reset"
         style="--width-column-min: var(--width-col-6); --gap-grid: var(--size-p);"
       >
-        <PubOrgaList />
+        <!-- <PubOrgaList /> -->
         {
           organizations?.map((organization, index) => {
             const {
@@ -201,7 +201,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             return (
               <li
                 class={`card-organization
-                      box no-border flow gap-h7
+                      box no-border flow gap-h4
                       border-radius-s
                       breakout-clickable
                       ${isPartner ? 'badge' : ''}`}
@@ -242,14 +242,15 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                     />
                   )}
                 </div>
-                <h3 class={`${nameIsLong ? ' p' : ' h4'}`}>
+                <h3 class="p">
+                  {/* <h3 class={`${nameIsLong ? ' p' : ' h4'}`}> */}
                   <a href={`/${path}/`} class={`reset clickable`}>
                     {name}
                   </a>
                 </h3>
-                <ul class="cluster gap-h8 reset">
+                <ul class="cluster gap-h8 reset" style="margin-top: var(--size-h4);">
                   {typesTranslated?.map(type => {
-                    const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
+                    const currentPalette = `color-palette-${type.code_name}`
                     return (
                       <li
                         class={`box no-border padding-x-h8 padding-y-h9

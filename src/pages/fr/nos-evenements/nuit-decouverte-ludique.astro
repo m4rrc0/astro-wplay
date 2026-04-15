@@ -4,7 +4,7 @@ import { SEO } from '@components'
 import { Image } from 'astro:assets'
 import { YouTube } from 'astro-embed'
 import type { ImageMetadata } from 'astro'
-import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
+import bannerPaper from '@assets/images/WannaPlay-banner-paper.jpeg'
 import { getOrganizations } from '../../../store/dataService.js'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
 import GalleryFull from '@partials/GalleryFull.astro'
@@ -197,7 +197,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       <!-- Header -->
       <header
         class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>
           Brussels Games Festival 2018<br />
@@ -214,9 +214,9 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
         </p>
         <div
           class="video-container grid-fluid"
-          style="--column-width-min: 100%; max-width: var(--width-col-2); margin-inline: auto;"
+          style="--column-width-min: 100%; max-width: var(--width-col-2); margin-inline: auto; margin-block: var(--size-h2);"
         >
-          <YouTube id="Z895F3XZ-sg" />
+          <YouTube id="Z895F3XZ-sg" title="La nuit des découvertes ludiques" />
         </div>
         <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
@@ -279,7 +279,12 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
         </h3>
         <div class="max" style="max-width: var(--width-col-4);">
           <a href={appCompagnon.src} target="_blank" rel="noopener noreferrer">
-            <Image src={appCompagnon} alt="App compagnon" />
+            <Image
+              src={appCompagnon}
+              alt="App compagnon"
+              widths={[240, 540, 720, 1200, appCompagnon.width]}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${appCompagnon.width}px`}
+            />
           </a>
         </div>
         <p>

@@ -37,7 +37,7 @@ a,
 a:--c-p--any,
 :--c-p--any a {
   color: var(--color-text__a, var(--color-text));
-  background-color: var(--color-bg, var(--color-bg__a));
+  background-color: var(--color-bg__a);
 }
 a:hover,
 a:--c-p--any:hover,
@@ -49,8 +49,8 @@ a:--c-p--any:hover,
 :--button:--c-p--any,
 :--c-p--any :--button {
   color: var(--color-text, --color-text__button);
-  background-color: var(--color-bg, --color-bg__button);
-  border-color: var(--color-border__button, currentcolor);
+  background-color: var(--color-bg__button, var(--color-bg));
+  border-color: var(currentcolor, --color-border__button);
 }
 :--button:hover,
 :--button:--c-p--any:hover,

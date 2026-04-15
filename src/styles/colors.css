@@ -27,6 +27,14 @@
   --color-black: hsl(0, 0%, 7%);
   --color-dark: hsl(0, 0%, 20%);
   --color-grey: hsl(0, 0%, 53%);
+  --hsl-yellow: 43deg, 98%, 60%;
+  --color-yellow: hsl(var(--hsl-yellow));
+  --hsl-purple-dark: 273deg, 23%, 40%;
+  --color-purple-dark: hsl(var(--hsl-purple-dark));
+  --hsl-blue-light: 215deg, 62%, 56%;
+  --color-blue-light: hsl(var(--hsl-blue-light));
+  --hsl-gray-light: 222deg, 12%, 79%;
+  --color-gray-light: hsl(var(--hsl-gray-light));
 
   color: var(--color-text, hsl(221deg, 55%, 41%));
 }
@@ -85,8 +93,10 @@ body,
 body,
 [data-c-p='main'],
 [data-c-p='blue'],
+[data-c-p='boardgame_services'],
 .color-palette-main,
-.color-palette-blue {
+.color-palette-blue,
+.color-palette-boardgame_services {
   --color-neutral-palette: var(--color-white);
   --color-primary-palette: var(--color-blue);
   --color-secondary-palette: var(--color-teal);
@@ -103,11 +113,11 @@ body,
 
 [data-c-p='red'],
 [data-c-p='danger'],
-[data-c-p='escape_room'],
+/* [data-c-p='escape_room'], */
 [data-c-p='festival'],
 .color-palette-red,
 .color-palette-danger,
-.color-palette-escape_room,
+/* .color-palette-escape_room, */
 .color-palette-festival {
   --color-neutral-palette: var(--color-white);
   --color-primary-palette: var(--color-red);
@@ -134,17 +144,6 @@ body,
   --color-secondary-palette: var(--color-orange);
 }
 
-[data-c-p='orange'],
-[data-c-p='warning'],
-[data-c-p='toy_library'],
-.color-palette-orange,
-.color-palette-warning,
-.color-palette-toy_library {
-  --color-neutral-palette: var(--color-white);
-  --color-primary-palette: var(--color-orange);
-  --color-secondary-palette: var(--color-purple);
-}
-
 [data-c-p='green'],
 [data-c-p='success'],
 [data-c-p='bar'],
@@ -156,6 +155,53 @@ body,
 .color-palette-lodge {
   --color-neutral-palette: var(--color-white);
   --color-primary-palette: var(--color-green);
+  --color-secondary-palette: var(--color-blue);
+}
+
+[data-c-p='yellow'],
+[data-c-p='lodge'],
+.color-palette-yellow,
+.color-palette-lodge {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-yellow);
+  --color-secondary-palette: var(--color-blue);
+}
+
+[data-c-p='orange'],
+[data-c-p='warning'],
+[data-c-p='toy_library'],
+.color-palette-orange,
+.color-palette-warning,
+.color-palette-toy_library {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-orange);
+  --color-secondary-palette: var(--color-purple);
+}
+
+[data-c-p='blue-light'],
+[data-c-p='distributor'],
+[data-c-p='publisher'],
+.color-palette-blue-light,
+.color-palette-distributor,
+.color-palette-publisher {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-blue-light);
+  --color-secondary-palette: var(--color-blue);
+}
+
+[data-c-p='purple-dark'],
+[data-c-p='escape_room'],
+.color-palette-purple-dark,
+.color-palette-escape_room {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-purple-dark);
+  --color-secondary-palette: var(--color-purple);
+}
+
+[data-c-p='gray-light'],
+.color-palette-other {
+  --color-neutral-palette: var(--color-white);
+  --color-primary-palette: var(--color-gray-light);
   --color-secondary-palette: var(--color-blue);
 }
 

@@ -3,7 +3,7 @@ import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO } from '@components'
 import { YouTube } from 'astro-embed'
 
-import bannerPaper from '../../../assets/images/WannaPlay-banner-paper.jpeg'
+import bannerPaper from '@assets/images/WannaPlay-banner-paper.jpeg'
 
 const lang = { code: 'fr' }
 ---
@@ -24,7 +24,7 @@ const lang = { code: 'fr' }
       <!-- Header -->
       <header
         class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>
           Brussels Games Festival 2017<br />
@@ -70,7 +70,7 @@ const lang = { code: 'fr' }
           class="video-container grid-fluid"
           style="--column-width-min:100%; max-width: var(--width-col-2); margin-inline: auto;"
         >
-          <YouTube id="ObbUL0Oosaw" />
+          <YouTube id="ObbUL0Oosaw" title="BGF 2017 - tables ouvertes" />
         </div>
       </section>
 

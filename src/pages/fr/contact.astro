@@ -3,6 +3,8 @@ import path from 'node:path'
 // import Fragment from 'astro/components'
 import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, MtObf } from '@components'
+import { Image } from 'astro:assets'
+import cover from '@assets/images/covers/devenir-pro.webp'
 
 const email = import.meta.env.CONTACT_EMAIL
 
@@ -23,24 +25,31 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
   />
 
   <BasicPage lang={{ code: 'fr' }}>
-    <main class="max-width-measure-h5 center flow gap-h2 box no-border v--flow-space:1em">
+    <main class="max center flow v--flow-space:1em" style="margin-bottom: var(--size-h1);">
+      <div>
+        <Image
+          src={cover}
+          alt=""
+          widths={[240, 540, 720, 1200, cover.width]}
+          sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${cover.width}px`}
+        />
+      </div>
       <h1 class="center text">Contacte-nous</h1>
 
-      <p class="h3 center text">
-        <span>par e-mail à</span>
-        <MtObf {email} />
-        </span>
-      </p>
-
       <div class="center">
-        <p>Retrouve nous aussi sur:</p>
-        <ul>
+        <ul class="cluster list reset justify-center">
           <li>
-          <a
-            href="https://www.facebook.com/WannaPlayBE/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Facebook
+            <MtObf {email} />
+          </li>
+          <li>
+            <a
+              href="https://www.facebook.com/WannaPlayBE/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Facebook
+            </a>
+          </li>
+          <li>
             <a
               href="https://www.instagram.com/wannaplay_be/"
               target="_blank"
@@ -72,7 +81,6 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               >Redbubble
             </a>
           </li>
-          <li>En live lors d'événements ludiques belges 😉</li>
         </ul>
       </div>
     </main>

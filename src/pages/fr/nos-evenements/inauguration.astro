@@ -75,7 +75,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
     <main class="center max">
       <header
         class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl full-bleed"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>Inauguration</h1>
         <p><strong>Dimanche 10 juin 2018 à 16h</strong></p>
@@ -118,7 +118,7 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           class="video-container grid-fluid"
           style="--column-width-min:100%; max-width: var(--width-col-2); margin-inline: auto;"
         >
-          <YouTube id="laySniWhIU4" />
+          <YouTube id="laySniWhIU4" title="Inauguration - 10 juin 2018" />
         </div>
       </section>
 
@@ -226,7 +226,16 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
           <li>musique et effet sonore</li>
         </ul>
         <div class="photos-grid grid-fluid gap-h4" style="--columns: 3;">
-          {inaugurationPhotos.map(mod => <Image src={mod.default} alt="" />)}
+          {
+            inaugurationPhotos.map(mod => (
+              <Image
+                src={mod.default}
+                alt=""
+                widths={[240, 540, 720, 1200, mod.default.width]}
+                sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${mod.default.width}px`}
+              />
+            ))
+          }
         </div>
       </section>
 
@@ -234,14 +243,14 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
       <section class="flow">
         <h2>Les interviews</h2>
         <div class="more-videos grid-fluid gap-p" style="--columns: 2;">
-          <YouTube id="EN-lcEHG0Hs" />
-          <YouTube id="mm7Ns9f2HOo" />
-          <YouTube id="xuprLDbqVBo" />
-          <YouTube id="6ETJeapT3RU" />
-          <YouTube id="QXAKaPxA7Ws" />
-          <YouTube id="rvrQFy85oX4" />
-          <YouTube id="d1-UE918_QA" />
-          <YouTube id="xj5RawWEDzc" />
+          <YouTube id="EN-lcEHG0Hs" title="Interview - 1/6" />
+          <YouTube id="mm7Ns9f2HOo" title="Interview - 2/6" />
+          <YouTube id="xuprLDbqVBo" title="Interview - 3/6" />
+          <YouTube id="6ETJeapT3RU" title="Interview - 4/6" />
+          <YouTube id="QXAKaPxA7Ws" title="Interview - 5/6" />
+          <YouTube id="rvrQFy85oX4" title="Interview - 6/6" />
+          <YouTube id="d1-UE918_QA" title="#Bonus" />
+          <YouTube id="xj5RawWEDzc" title="Inauguration" />
         </div>
       </section>
 

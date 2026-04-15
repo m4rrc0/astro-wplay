@@ -1,24 +1,23 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
-import { SEO } from '@components'
+import { SEO, Img } from '@components'
 import { Image } from 'astro:assets'
 import { YouTube } from 'astro-embed'
-import moonArea from '../../../assets/images/photos-Festival-2022/moon-area.jpg'
 import { getOrganizations } from '../../../store/dataService.js'
 import getOptimizedImages from '../../../utils/getOptimizedImages.js'
 import GalleryFull from '@partials/GalleryFull.astro'
-import affiche from '@assets/images/festival-2023/visibilite/festival-2023-affiche.png'
-import imgEntree from '@assets/images/festival-2023/visibilite/festival-2023-entree.jpg'
-import imgMap from '@assets/images/festival-2023/visibilite/festival-2023-map.jpg'
-import imgPanneaux from '@assets/images/festival-2023/visibilite/festival-2023-panneaux.jpg'
-import imgSignaletique from '@assets/images/festival-2023/visibilite/festival-2023-signaletique.jpeg'
-import imgVideo from '@assets/images/festival-2023/visibilite/festival-2023-video.png'
-import imgVideoJo from '@assets/images/festival-2023/visibilite/festival-2023-video-jo.png'
-import imgVideoJo2 from '@assets/images/festival-2023/visibilite/festival-2023-video-jo-2.jpeg'
-import imgVideoMarc from '@assets/images/festival-2023/visibilite/festival-2023-video-marc.png'
-import imgVideoMarc2 from '@assets/images/festival-2023/visibilite/festival-2023-video-marc-2.jpeg'
-import imgVideoTess from '@assets/images/festival-2023/visibilite/festival-2023-video-tess.png'
-import tatianaDronjak from '@assets/images/partners/tatiana-dronjak.jpg'
+import affiche from '@assets/images/festival-2023/visibilite/festival-2023-affiche.webp'
+import imgEntree from '@assets/images/festival-2023/visibilite/festival-2023-entree.webp'
+import imgMap from '@assets/images/festival-2023/visibilite/festival-2023-map.webp'
+import imgPanneaux from '@assets/images/festival-2023/visibilite/festival-2023-panneaux.webp'
+import imgSignaletique from '@assets/images/festival-2023/visibilite/festival-2023-signaletique.webp'
+import imgVideo from '@assets/images/festival-2023/visibilite/festival-2023-video.webp'
+import imgVideoJo from '@assets/images/festival-2023/visibilite/festival-2023-video-jo.webp'
+import imgVideoJo2 from '@assets/images/festival-2023/visibilite/festival-2023-video-jo-2.webp'
+import imgVideoMarc from '@assets/images/festival-2023/visibilite/festival-2023-video-marc.webp'
+import imgVideoMarc2 from '@assets/images/festival-2023/visibilite/festival-2023-video-marc-2.webp'
+import imgVideoTess from '@assets/images/festival-2023/visibilite/festival-2023-video-tess.webp'
+import tatianaDronjak from '@assets/images/partners/tatiana-dronjak.webp'
 
 const mainPartnersData = [
   {
@@ -184,16 +183,14 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     <main class="center width-max" style="min-width: 0;">
       <header
         class="flex center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
-        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); margin-top: calc(-1 * var(--size-h1)); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
+        style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
       >
         <h1>Wanna Play in Brussel 2023</h1>
       </header>
 
       <section class="flow">
         <div class="flow">
-          <p>
-            <strong>2e édition</strong>
-          </p>
+          <p class="h2">2e édition</p>
           <p>
             Le festival «Wanna Play in Brussels» a connu sa deuxième édition cette année. Après le
             succès fulgurant de la première édition. Cet événement ludique a été une véritable
@@ -208,9 +205,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           </p>
         </div>
         <div class="flow">
-          <p>
-            <strong>Le festival avait plusieurs objectifs principaux</strong>
-          </p>
+          <p class="h3">Le festival avait plusieurs objectifs principaux</p>
           <ol class="flow">
             <li>
               <p><strong>Faire découvrir les jeux de société modernes</strong></p>
@@ -248,7 +243,15 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
-              const imgTag = <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+              const imgTag = (
+                <Image
+                  src={optimizedMeta.src}
+                  {...optimizedMeta.attributes}
+                  alt={alt}
+                  widths={[240, 540, 720, 1200, optimizedMeta.width]}
+                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${optimizedMeta.width}px`}
+                />
+              )
               return finalLink ? (
                 <a
                   href={finalLink}
@@ -267,10 +270,10 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           class="video-container grid-fluid"
           style="--column-width-min: 100%; max-width: var(--width-col-2); margin-inline: auto;"
         >
-          <YouTube id="cc5frcsJbcc" />
+          <YouTube id="cc5frcsJbcc" title="Wanna Play in Brussel 2023" />
         </div>
         <div class="carousel" role="region" aria-roledescription="carousel">
-          <ul class="carousel-inner reset">
+          <ul class="carousel-inner reset reel overflowing">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
               <figure class="flow">
                 <blockquote>
@@ -354,6 +357,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
             </li>
           </ul>
         </div>
+
         <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
             class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
@@ -454,7 +458,13 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
                 imagesConferencePartners.map(
                   ({ optimizedMeta, displayName, role, finalLink, alt }) => {
                     const imgTag = (
-                      <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                      <Image
+                        src={optimizedMeta.src}
+                        {...optimizedMeta.attributes}
+                        alt={alt}
+                        widths={[240, 540, 720, 1200, optimizedMeta.width]}
+                        sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${optimizedMeta.width}px`}
+                      />
                     )
                     return (
                       <figure
@@ -493,7 +503,12 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
               style="text-align: center; margin: 0; width: var(--width-col-8);"
             >
               <a href="https://www.youtube.com/channel/UCUU0uDuttbZAs-n334cYrhQ">
-                <Image src={tatianaDronjak} alt="Portrait de Tatiana Dronjak" />
+                <Image
+                  src={tatianaDronjak}
+                  alt="Portrait de Tatiana Dronjak"
+                  widths={[240, 540, 720, 1200, 'auto']}
+                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${tatianaDronjak.width}px`}
+                />
               </a>
               <figcaption class="flow gap-p">
                 <strong>Tatiana Dronjak</strong> Girl dot Game
@@ -523,12 +538,18 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
         </p>
         <div class="flow gap-down-p">
           <h3>Partenaires VIP et premium</h3>
-          <div class="partners-grid">
+          <div class="partners-grid vip">
             {/* On boucle sur le tableau des images */}
             {
               imagesVipPartners.map(({ optimizedMeta, alt, finalLink }) => {
                 const imgTag = (
-                  <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                  <Image
+                    src={optimizedMeta.src}
+                    {...optimizedMeta.attributes}
+                    alt={alt}
+                    widths={[240, 540, 720, 1200, optimizedMeta.width]}
+                    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${optimizedMeta.width}px`}
+                  />
                 )
                 return finalLink ? (
                   <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
@@ -546,7 +567,13 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
             {
               imagesGeneralPartners.map(({ optimizedMeta, alt, finalLink }) => {
                 const imgTag = (
-                  <img src={optimizedMeta.src} {...optimizedMeta.attributes} alt={alt} />
+                  <Image
+                    src={optimizedMeta.src}
+                    {...optimizedMeta.attributes}
+                    alt={alt}
+                    widths={[240, 540, 720, 1200, optimizedMeta.width]}
+                    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${optimizedMeta.width}px`}
+                  />
                 )
                 return finalLink ? (
                   <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
@@ -560,7 +587,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           </div>
         </div>
         <div class="carousel" role="region" aria-roledescription="carousel">
-          <ul class="carousel-inner reset gap-h4">
+          <ul class="carousel-inner reset reel overflowing">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
               <figure class="flow">
                 <blockquote>
@@ -654,7 +681,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           eux.
         </p>
         <div class="carousel" role="region" aria-roledescription="carousel">
-          <ul class="carousel-inner reset gap-h4">
+          <ul class="carousel-inner reset reel overflowing">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
               <figure class="flow">
                 <blockquote>
@@ -886,14 +913,44 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           </div>
           <div class="images flow">
             <div class="imgGrid grid-fluid gap-p">
-              <Image src={imgVideoMarc2} alt="Interview" />
-              <Image src={imgVideoJo2} alt="Interview" />
+              <Image
+                src={imgVideoMarc2}
+                alt="Interview"
+                widths={[240, 540, 720, 1200, 'auto']}
+                sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVideoMarc2.width}px`}
+              />
+              <Image
+                src={imgVideoJo2}
+                alt="Interview"
+                widths={[240, 540, 720, 1200, 'auto']}
+                sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVideoJo2.width}px`}
+              />
             </div>
             <div class="imgGrid grid-fluid gap-p">
-              <Image src={imgVideo} alt="Interview" />
-              <Image src={imgVideoMarc} alt="Interview" />
-              <Image src={imgVideoTess} alt="Interview" />
-              <Image src={imgVideoJo} alt="Interview" />
+              <Image
+                src={imgVideo}
+                alt="Interview"
+                widths={[240, 540, 720, 1200, 'auto']}
+                sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVideo.width}px`}
+              />
+              <Image
+                src={imgVideoMarc}
+                alt="Interview"
+                widths={[240, 540, 720, 1200, 'auto']}
+                sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVideoMarc.width}px`}
+              />
+              <Image
+                src={imgVideoTess}
+                alt="Interview"
+                widths={[240, 540, 720, 1200, 'auto']}
+                sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVideoTess.width}px`}
+              />
+              <Image
+                src={imgVideoJo}
+                alt="Interview"
+                widths={[240, 540, 720, 1200, 'auto']}
+                sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgVideoJo.width}px`}
+              />
             </div>
           </div>
         </div>
@@ -945,10 +1002,32 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
             </ul>
           </div>
           <div class="imgGrid images grid-fluid gap-h4">
-            <Image src={imgSignaletique} alt="Signaletique" />
-            <Image src={affiche} alt="Affiche" />
-            <Image src={imgEntree} alt="Entree" />
-            <Image src={imgPanneaux} alt="Panneaux" />
+            <Image
+              src={imgSignaletique}
+              alt="Signaletique"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgSignaletique.width}px`}
+            />
+            <Image
+              src={affiche}
+              alt="Affiche"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${affiche.width}px`}
+            />
+            <Image
+              src={imgEntree}
+              alt="Entree"
+              style="object-position: 10%;"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgEntree.width}px`}
+            />
+            <Image
+              src={imgPanneaux}
+              alt="Panneaux"
+              style="object-position: 90%;"
+              widths={[240, 540, 720, 1200, 'auto']}
+              sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${imgPanneaux.width}px`}
+            />
           </div>
         </div>
       </section>
@@ -1101,27 +1180,15 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
   }
 
   .carousel-inner {
-    display: flex;
-    align-items: stretch;
-    flex-wrap: nowrap;
-    gap: var(--carousel-gap);
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    /* Scroll snap */
+    --item-width: min(100%, 25rem);
+    --gap-reel: var(--size-h6);
+    --color-thumb: var(--color-blue);
+    --color-track: var(--color-border);
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--carousel-peek);
-    /* Cacher la scrollbar */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
-    /* Peek effect: padding pour montrer le bord du slide suivant */
-    padding-inline: var(--carousel-peek);
-    /* Alignement vertical */
-    padding-block: 0.5rem;
-    /* Negative margin pour compenser le padding sans casser le layout */
-    margin-inline: calc(-1 * var(--carousel-peek));
-  }
-  .carousel-inner::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    scroll-padding-inline: var(--size-h1);
+    padding-inline: var(--size-h1);
+    margin-inline: calc(-1 * var(--size-h1));
+    align-items: stretch;
   }
 
   .carousel-item {
@@ -1132,6 +1199,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     position: relative;
     background-color: var(--color-blue);
     color: var(--color-white);
+    margin-bottom: 1em;
   }
 
   /* Guillemet décoratif */
@@ -1180,6 +1248,13 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     display: grid;
     /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--size-h3);
+    align-items: center;
+    justify-items: center;
+    margin-bottom: var(--size-h3);
+  }
+  .partners-grid.vip {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: var(--size-h3);
     align-items: center;
     justify-items: center;

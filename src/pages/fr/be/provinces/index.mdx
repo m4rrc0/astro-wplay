@@ -6,10 +6,13 @@ lang: { code: 'fr' }
 
 import { BelgiumMap } from '@partials'
 import { areas } from '@store/transforms/utils.js'
-import banner from '@assets/images/covers/par-province.jpg'
+import banner from '@assets/images/covers/par-province.webp'
 import { Image } from 'astro:assets'
 
-<div class="img-banner">
+<div
+  class="img-banner full-bleed"
+  style=" box-sizing: border-box; --full-bleed-max-width: var(--width-max);"
+>
   <Image
     src={banner}
     alt=""

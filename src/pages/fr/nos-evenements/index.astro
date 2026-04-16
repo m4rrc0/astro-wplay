@@ -18,7 +18,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center width-max flow gap-h2">
+    <main class="center width-max flow gap-h2 layout-basic_page">
       <header
         class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl full-bleed"
         style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
@@ -213,15 +213,6 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       align-items: center;
       justify-content: center;
       padding: var(--size-h3);
-    }
-
-    section {
-      padding-block: var(--size-h1);
-    }
-
-    section.flow,
-    div.flow > * {
-      --flow-space: var(--gap-h2);
     }
   </style>
 </SkeletonPage>

@@ -1,5 +1,6 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
+import '@styles/partials/our-projets.css'
 import { SEO } from '@components'
 import { YouTube } from 'astro-embed'
 
@@ -20,7 +21,7 @@ const lang = { code: 'fr' }
   />
 
   <BasicPage {lang}>
-    <main class="center max flow gap-down-h3">
+    <main class="center max">
       <!-- Header -->
       <header
         class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
@@ -33,7 +34,7 @@ const lang = { code: 'fr' }
       </header>
 
       <!-- Intro -->
-      <section class="flow padding-x-relative-l">
+      <section class="flow">
         <p>
           Premier test grandeur nature en août 2017, on participe pour la première fois au
           <a href="https://brusselsgamesfestival.be/fr/">Brussels Games Festival</a>. Le projet en
@@ -100,38 +101,3 @@ const lang = { code: 'fr' }
     </main>
   </BasicPage>
 </SkeletonPage>
-
-<style>
-  .video-container {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .video-container iframe,
-  .video-container lite-youtube {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--border-radius-l);
-  }
-
-  /* Concept Box (Tilted style) */
-  .sur-place-box {
-    transform: rotate(-1deg);
-    margin: var(--size-h4) auto;
-    max-width: 700px;
-    box-shadow: var(--shadow-raised-s);
-  }
-
-  section {
-    padding-block: var(--size-h2);
-  }
-
-  section.flow,
-  div.flow > * {
-    --flow-space: var(--gap-h3);
-  }
-
-  .stat {
-    padding-block: var(--size-h2);
-  }
-</style>

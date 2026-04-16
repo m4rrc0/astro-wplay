@@ -55,6 +55,9 @@ const formatInferred = image?.type?.replace('image/', '').replace(/\+xml$/, '')
   {/* background="rgba(100,100,100, 0)" */}
   {...id ? { id } : {}}
   {..._class ? { class: _class } : {}}
-  {...style ? { style } : {}}
+  style={{
+    background: 'rgba(100,100,100, 0.1)',
+    ...style,
+  }}
   onload={`this.style.background = 'transparent';${onload || ''}`}
 />

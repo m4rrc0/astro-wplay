@@ -34,8 +34,8 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       {/* <script src="@assets/js/organizations-filter.js" defer type="module"></script> */}
       <form
         id="organizationsForm"
-        class="cluster horizontal justify-center"
-        style="flex-wrap: wrap; margin-block: var(--size-h3);"
+        class="cluster justify-center"
+        style="margin-block: var(--size-h3);"
       >
         <div class="popover-filter-wrapper">
           <button
@@ -250,7 +250,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
                 </h3>
                 <ul class="cluster gap-h8 reset" style="margin-top: var(--size-h4);">
                   {typesTranslated?.map(type => {
-                    const currentPalette = `color-palette-${type.code_name}`
+                    const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
                     return (
                       <li
                         class={`box no-border padding-x-h8 padding-y-h9

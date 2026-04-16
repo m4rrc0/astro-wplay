@@ -4,13 +4,13 @@ title: 'Jouer en Belgique: le guide complet du jeu de société'
 ---
 
 import banner from '@assets/images/covers/guide-complet.webp'
-import { Image } from 'astro:assets'
+import { Img } from '@components'
 
 <div
   class="img-banner full-bleed"
   style=" box-sizing: border-box; --full-bleed-max-width: var(--width-max);"
 >
-  <Image
+  <Img
     src={banner}
     alt=""
     widths={[240, 540, 720, 1200, banner.width]}

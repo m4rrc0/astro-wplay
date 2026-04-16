@@ -1,5 +1,6 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
+import '@styles/partials/our-projets.css'
 import { SEO } from '@components'
 import { Image } from 'astro:assets'
 import { YouTube } from 'astro-embed'
@@ -269,64 +270,16 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
 </SkeletonPage>
 
 <style>
-  /* Tilted "sur place" card */
-  .sur-place-box {
-    transform: rotate(-3deg);
-    margin: var(--size-h4) auto;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: var(--shadow-raised-s);
-  }
-
-  /* Stat numbers — use color-primary from palette */
-  .stat-nb {
-    font-weight: bold;
-    color: var(--color-primary);
-    margin: 0;
-  }
-  /* Partner logos */
-  .partner-logo {
-    height: 70px;
-    width: 70px;
-    object-fit: contain;
-  }
-  .partners-grid {
-    display: grid;
-    /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--size-h3);
-    align-items: center;
-    justify-items: center;
-    margin-bottom: var(--size-h3);
-  }
-
-  @media (min-width: 1024px) {
-    .partners-grid {
-      grid-template-columns: repeat(8, 1fr);
-    }
-  }
-  .partners-grid img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 100px;
-  }
-
   .photos-grid img {
     width: 100%;
-    height: 200px;
+    aspect-ratio: 16/9;
     object-fit: cover;
-  }
-  .video-container {
-    width: 100%;
-    justify-content: center;
+    border-radius: var(--border-radius-s);
   }
 
-  .video-container iframe,
-  .video-container lite-youtube {
+  .more-videos {
     width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--border-radius-l);
+    justify-content: center;
   }
 
   .more-videos iframe,
@@ -334,20 +287,6 @@ const imagesIndiaTeoTess = import.meta.glob<{ default: ImageMetadata }>(
     width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-l);
-  }
-  .stat {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: var(--size-h2);
-  }
-  section {
-    padding-block: var(--size-h2);
-  }
-
-  section.flow,
-  div.flow > * {
-    --flow-space: var(--gap-h3);
+    max-width: var(--width-col-2);
   }
 </style>

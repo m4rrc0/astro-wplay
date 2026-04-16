@@ -1,5 +1,6 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
+import '@styles/partials/our-projets.css'
 import { SEO, Img } from '@components'
 import { Image } from 'astro:assets'
 import { YouTube } from 'astro-embed'
@@ -236,10 +237,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
             </li>
           </ol>
         </div>
-        <div
-          class="main-partners grid-fluid padding-x-relative-xl"
-          style="--column-width-min: var(--size-h4); --column-width-max: var(--size-h4);"
-        >
+        <div class="cluster padding-x-relative-xl justify-center gap-h1">
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -248,15 +246,14 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
                   src={optimizedMeta.src}
                   {...optimizedMeta.attributes}
                   alt={alt}
-                  widths={[240, 540, 720, 1200, optimizedMeta.width]}
-                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${optimizedMeta.width}px`}
+                  width="150px"
                 />
               )
               return finalLink ? (
                 <a
                   href={finalLink}
                   target={finalLink.startsWith('http') ? '_blank' : ''}
-                  class="content-center"
+                  class="content-center flow justify-center"
                 >
                   {imgTag}
                 </a>
@@ -272,6 +269,8 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
         >
           <YouTube id="cc5frcsJbcc" title="Wanna Play in Brussel 2023" />
         </div>
+      </section>
+      <section class="flow">
         <div class="carousel" role="region" aria-roledescription="carousel">
           <ul class="carousel-inner reset reel overflowing">
             <li class="carousel-item box border-radius-l" role="group" aria-roledescription="slide">
@@ -453,7 +452,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
               <li><strong>Tatiana Dronjak</strong> (Girl dot Game)</li>
             </ul> -->
             <!-- Section Conférences -->
-            <div class="conference-partners images cluster items-start">
+            <div class="conference-partners images cluster items-start justify-start">
               {
                 imagesConferencePartners.map(
                   ({ optimizedMeta, displayName, role, finalLink, alt }) => {
@@ -469,7 +468,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
                     return (
                       <figure
                         class="flow gap-p"
-                        style="text-align: center; align-items: center; margin: 0 auto; width: var(--width-col-8);"
+                        style="text-align: center; align-items: center; margin: 0; width: var(--width-col-8);"
                       >
                         {finalLink ? (
                           <a href={finalLink} target={finalLink.startsWith('http') ? '_blank' : ''}>
@@ -531,7 +530,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
           boutiques, des médias spécialisés dans les jeux de société, des ludothèques, une école,
           des influenceurs, des auteurs,…
         </p>
-        <p>Leur contribution a été essentielle pour la réussite de l’événement</p>
+        <p>Leur contribution a été essentielle pour la réussite de l’événement.</p>
         <p>
           Certains n’ont pas pu venir le jour J mais nous ont envoyés des jeux qui ont été animés
           par les bénévoles.
@@ -912,7 +911,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
             </ul>
           </div>
           <div class="images flow">
-            <div class="imgGrid grid-fluid gap-p">
+            <div class="img-grid grid-fluid gap-p">
               <Image
                 src={imgVideoMarc2}
                 alt="Interview"
@@ -1156,17 +1155,6 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
 </SkeletonPage>
 
 <style>
-  .video-container {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .video-container iframe,
-  .video-container lite-youtube {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--border-radius-l);
-  }
   /* ── Carousel ── */
   .carousel {
     width: 100%;
@@ -1244,27 +1232,12 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     }
   }
 
-  .partners-grid {
-    display: grid;
-    /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--size-h3);
-    align-items: center;
-    justify-items: center;
-    margin-bottom: var(--size-h3);
-  }
   .partners-grid.vip {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: var(--size-h3);
     align-items: center;
     justify-items: center;
     margin-bottom: var(--size-h3);
-  }
-  .partners-grid img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 100px;
   }
 
   .conference-partners img {
@@ -1274,55 +1247,7 @@ const imagesSurprises = import.meta.glob<{ default: ImageMetadata }>(
     border-radius: var(--border-radius-s);
   }
 
-  .gallery-img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    aspect-ratio: 4/3;
-    border-radius: var(--border-radius-s);
-  }
-
-  /* Pour s'assurer que les logos sur une grille complète ne dépassent pas */
-  @media (min-width: 1024px) {
-    .partners-grid {
-      grid-template-columns: repeat(8, 1fr);
-    }
-  }
-
-  section {
-    padding-block: var(--size-h2);
-  }
-
-  section.flow,
-  div.flow > * {
-    --flow-space: var(--gap-h3);
-  }
-
-  .stat {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-block: var(--size-h2);
-  }
-
-  .main-partners a {
-    display: flex;
-    justify-content: center;
-  }
-  .main-partners img {
-    object-fit: contain;
-    width: 50%;
-  }
-
   .images {
     padding-block: var(--size-h3);
-  }
-  .imgGrid img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: var(--border-radius-s);
-    aspect-ratio: 1/1;
   }
 </style>

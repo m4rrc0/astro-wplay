@@ -1,6 +1,7 @@
 ---
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { Image } from 'astro:assets'
+import { Img } from '@components'
 
 export interface Props {
   itemType?: 'organizations' | 'events'
@@ -23,7 +24,7 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
   style="width: 100%; 
   min-height: 400px; 
   height: min(600px, 55vh);
-  background-color: #e5e5e5;"
+  background-color: rgba(100,100,100, 0.1)"
 >
 </div>
 
@@ -586,12 +587,12 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
       // Image source logic using Directus Assets endpoint (if logoId exists)
       const directusUrl = 'https://cms.wanna-play.be' // Same base as configured in Astro
       const imgSrc = logoId
-        ? `${directusUrl}/assets/${logoId}?width=120&height=120&fit=inside&quality=99`
+        ? `${directusUrl}/assets/${logoId}?width=100&height=100&fit=inside&quality=99`
         : '/assets/images/placeholder.svg' // Fallback image (similar to the Astro <Img> fallback)
 
       const imgFallbackHtml = logoId
-        ? `<Image src="${imgSrc}" alt="${name}" loading="lazy" style="width: 120px; max-width: 100%; height: auto; max-height: 120px; object-fit: contain;" width="120" height="120" />`
-        : `<div style="width:120px;height:120px;background-color:#010fff;border-radius:50%;display:flex;align-items:center;justify-content:center"><span style="color:white;font-weight:bold">WP</span></div>`
+        ? `<Img src="${imgSrc}" alt="${name}" loading="lazy" style="width: 100px; max-width: 100%; height: auto; max-height: 100px; object-fit: contain;" width="100" height="100" />`
+        : `<div style="width:100px;height:100px;background-color:#010fff;border-radius:50%;display:flex;align-items:center;justify-content:center"><span style="color:white;font-weight:bold">WP</span></div>`
 
       // Types list generator
       const typesHtml = types
@@ -604,23 +605,21 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
         .join('')
 
       const htmlContent = `
-        <div class="card-${itemType === 'events' ? 'event' : 'organization'} box no-border flow gap-down-h7 border-radius-s breakout-clickable map-popup-card">
-          <div class="center intrinsic" style="justify-content: center; height: 120px; overflow: hidden; margin-bottom: 8px;">
+        <div class="card-${itemType === 'events' ? 'event' : 'organization'} box no-border flow gap-h7 border-radius-s breakout-clickable map-popup-card">
+          <div class="center intrinsic" style="justify-content: center; height: 120px; overflow: hidden;">
             ${imgFallbackHtml}
           </div>
-          <h3 style="margin-top:0; margin-bottom: 8px;">
-            <a href="${itemUrl}" class="reset clickable${nameIsLong ? ' p' : ''}" style="text-decoration:none; color:inherit;">
+          <h3 class="p" style="margin-top:0;">
+            <a href="${itemUrl}" class="reset clickable${nameIsLong ? ' p' : ''}" style="text-decoration:none;">
               ${name}
             </a>
           </h3>
           ${
             typesHtml
               ? `
-            <div class="cluster gap-down-h8" style="margin-top: 10px;">
-              <ul class="reset" style="list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:8px;">
+              <ul class="cluster gap-h8 reset" style="list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:8px;">
                 ${typesHtml}
               </ul>
-            </div>
           `
               : ''
           }
@@ -629,7 +628,12 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
 
       // We add a custom CSS class to the popup to override MapLibre's default padding/background
       // so it looks exactly like the card CSS
-      new maplibregl.Popup({ className: 'custom-card-popup', closeButton: true, maxWidth: '300px' })
+      new maplibregl.Popup({
+        className: 'custom-card-popup',
+        closeButton: true,
+        maxWidth: '180px',
+        focusAfterOpen: false,
+      })
         .setLngLat(coordinates as [number, number])
         .setHTML(htmlContent)
         .addTo(map)
@@ -692,7 +696,7 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
         const chevronSvg = `<svg width="1em" height="1em" role="img" style="flex-shrink: 0; transition: transform 0.3s ease; transform: rotate(180deg);" viewBox="0 0 24 24"><path fill="currentColor" d="m20 9l-8 8l-8-8l1.414-1.414L12 14.172l6.586-6.586z"></path></svg>`
 
         let html = `<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
-            <strong style="font-size: 14px; color: var(--color-black, black);">Légende</strong>
+            <strong style="font-size: 14px; color: var(--color-blue, black);">Légende</strong>
             <button id="legend-toggle" style="background: var(--color-grey-light, #eee); border: none; cursor: pointer; padding: 4px; border-radius: 4px; color: var(--color-black, black); display: flex; align-items: center; justify-content: center;">
               ${chevronSvg}
             </button>
@@ -752,6 +756,7 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
     padding: 0;
     box-shadow: none;
     border-radius: 0;
+    max-width: 180px;
   }
 
   .custom-card-popup .maplibregl-popup-tip {
@@ -760,22 +765,22 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
 
   .custom-card-popup .maplibregl-popup-close-button {
     background-color: var(--color-white);
-    color: var(--color-black);
+    color: var(--color-blue);
     border-radius: 50%;
     width: 24px;
     height: 24px;
     font-size: 16px;
-    top: -10px;
-    right: -10px;
+    top: -5px;
+    right: -5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    /* z-index: 10; */
   }
 
   .custom-card-popup .maplibregl-popup-close-button:hover {
-    background-color: var(--color-grey-light);
+    background-color: var(--color-blue);
   }
 
   /* Ensure the card inside the popup has background and shadow */
@@ -784,18 +789,23 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
     /* box class handles padding normally, but we ensure it's not collapsed by a bad var */
     padding: var(--padding, 24px);
     box-shadow: var(--shadow-m, 0 4px 6px rgba(0, 0, 0, 0.1));
-    border: 1px solid var(--color-grey-light, #e0e0e0);
+    border: 1px solid var(--color-gray-light, #e0e0e0);
   }
 
   /* Force link color to normal instead of MapLibre default blue */
   .custom-card-popup .map-popup-card a,
   .custom-card-popup .maplibregl-popup-content a {
-    color: var(--color-black, #000) !important;
     text-decoration: none !important;
   }
   .maplibregl-canvas {
     filter: grayscale(1);
     will-change: filter;
     contain: strict;
+  }
+
+  .maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib-inner,
+  .maplibregl-ctrl-bottom-right a {
+    font-size: 12px;
+    color: var(--color-blue);
   }
 </style>

@@ -1,5 +1,6 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
+import '@styles/partials/our-projets.css'
 import { SEO, Img } from '@components'
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
@@ -125,10 +126,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             </li>
           </ol>
         </div>
-        <div
-          class="main-partners grid-fluid padding-x-relative-xl"
-          style="--column-width-min: var(--size-h4); --column-width-max: var(--size-h4);"
-        >
+        <div class="cluster padding-x-relative-xl justify-center gap-h1">
           {/* On boucle sur le tableau des PARTENAIRES PRINCIPAUX */}
           {
             imagesMainPartners.map(({ optimizedMeta, alt, finalLink }) => {
@@ -137,15 +135,14 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
                   src={optimizedMeta.src}
                   {...optimizedMeta.attributes}
                   alt={alt}
-                  widths={[240, 540, 720, 1200, optimizedMeta.width]}
-                  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 1200px, ${optimizedMeta.width}px`}
+                  width="150px"
                 />
               )
               return finalLink ? (
                 <a
                   href={finalLink}
                   target={finalLink.startsWith('http') ? '_blank' : ''}
-                  class="content-center"
+                  class="content-center flow justify-center"
                 >
                   {imgTag}
                 </a>
@@ -161,6 +158,8 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
         >
           <YouTube id="-QKaLnTcTr0" title="Wanna Play in Brussel 2022" />
         </div>
+      </section>
+      <section class="flow">
         <ul class="reset grid-fluid gap-p" style="--width-column-min: var(--width-col-8);">
           <li
             class="stat box no-border padding-p color-palette-trans background-overlay border-radius-s text-center"
@@ -325,7 +324,7 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
             <li>Publications sur les réseaux sociaux</li>
             <li>Newsletter</li>
           </ul>
-          <div class="imgGrid grid-fluid gap-p">
+          <div class="img-grid grid-fluid gap-p">
             <Image
               src={imgVisibilite1}
               alt="Interview"
@@ -414,84 +413,3 @@ const imagesPartners = await getOptimizedImages(partnersData, partners, organiza
     </main>
   </BasicPage>
 </SkeletonPage>
-<style>
-  .video-container {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .video-container iframe,
-  .video-container lite-youtube {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--border-radius-l);
-  }
-
-  .video-grid iframe {
-    width: 50%;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--border-radius-l);
-  }
-
-  .partners-grid {
-    display: grid;
-    /* 6 colonnes par défaut, qui s'adaptent si l'écran est plus petit */
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--size-h3);
-    align-items: center;
-    justify-items: center;
-    margin-bottom: var(--size-h3);
-  }
-
-  /* Pour s'assurer que les logos sur une grille complète ne dépassent pas */
-  @media (min-width: 1024px) {
-    .partners-grid {
-      grid-template-columns: repeat(8, 1fr);
-    }
-  }
-
-  .partners-grid img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 100px;
-  }
-
-  section {
-    padding-block: var(--size-h2);
-  }
-
-  section.flow,
-  div.flow > * {
-    --flow-space: var(--gap-h3);
-  }
-
-  .stat {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-block: var(--size-h2);
-  }
-
-  .main-partners a {
-    display: flex;
-    justify-content: center;
-  }
-  .main-partners img {
-    object-fit: contain;
-    width: 33%;
-  }
-
-  .imgGrid img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: var(--border-radius-s);
-    aspect-ratio: 1/1;
-  }
-  .more-videos iframe {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--border-radius-l);
-  }
-</style>

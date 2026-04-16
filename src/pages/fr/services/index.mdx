@@ -4,10 +4,10 @@ title: 'Nos services: donnons vie à tes projets ludiques'
 ---
 
 import banner from '@assets/images/covers/nos-services.webp'
-import { Image } from 'astro:assets'
+import { Img } from '@components'
 
-<div class="img-banner color-palette-teal color-palette-variation-contrast background-overlay">
-  <Image
+<div class="img-banner">
+  <Img
     src={banner}
     alt=""
     widths={[240, 540, 720, 1200, banner.width]}

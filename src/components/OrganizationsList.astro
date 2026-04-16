@@ -111,7 +111,7 @@ const filteredOrganizations =
               </h3>
               <ul class="cluster gap-h8 reset">
                 {typesTranslated?.map(type => {
-                  const currentPalette = `color-palette-${type.code_name || type.colorPalette}`
+                  const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
                   return (
                     <li
                       class={`box no-border padding-x-h8 padding-y-h9

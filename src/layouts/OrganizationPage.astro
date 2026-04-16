@@ -357,92 +357,94 @@ if (jsonldType === 'Library') {
 
       {
         links?.[0] && (
-          <div class="box no-border cluster center max-width-measure-p">
-            <ul class="reset justify-center cluster center">
-              {links.map(({ name, url, iconName }) => {
-                const followPolicy = name?.code_name === 'website' ? 'dofollow' : 'nofollow'
-                return (
-                  <li>
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel={`noopener noreferrer ${followPolicy}`}
-                      class="
+          <ul class="reset cluster justify-center">
+            {links.map(({ name, url, iconName }) => {
+              const followPolicy = name?.code_name === 'website' ? 'dofollow' : 'nofollow'
+              return (
+                <li>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel={`noopener noreferrer ${followPolicy}`}
+                    class="
                   box no-border flow center intrinsic
                 "
-                    >
-                      <Icon name={iconName} size="1em" class="size-h2" />
-                      <div class="size-p">{name.fr}</div>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
+                  >
+                    <Icon name={iconName} size="1em" class="size-h2" />
+                    <div class="size-p">{name.fr}</div>
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
         )
       }
       {
         events?.[0] && (
           <div class="box no-border flow">
             <h2>Prochains événements</h2>
-              <IO ul $skip={!events?.[0]?.name} class="grid-fluid gap-p list reset" style="--width-column-min: var(--width-col-3);">
-                {events?.map(event => {
-                  const { name, location, cover_image, time_start } = event
+            <IO
+              ul
+              $skip={!events?.[0]?.name}
+              class="grid-fluid gap-p list reset"
+              style="--width-column-min: var(--width-col-3);"
+            >
+              {events?.map(event => {
+                const { name, location, cover_image, time_start } = event
 
-                  const srcCover = imageDirectusSrc({
-                    src: cover_image?.src,
-                    width: '1000',
-                    fit: 'cover',
-                    quality: '50',
-                  })
+                const srcCover = imageDirectusSrc({
+                  src: cover_image?.src,
+                  width: '1000',
+                  fit: 'cover',
+                  quality: '50',
+                })
 
-                  return (
-                    <li
-                      class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                      style=""
+                return (
+                  <li
+                    class="card-event breakout-clickable box no-border no-padding border-radius-s"
+                    style=""
+                  >
+                    <div
+                      class="box no-border padding-p with-sidebar gap-p color-palette-trans background-overlay"
+                      style={
+                        srcCover
+                          ? `background-image: url("${srcCover}"); `
+                          : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`
+                      }
                     >
-                      <div
-                    class="box no-border padding-p with-sidebar gap-p color-palette-trans background-overlay"
-                        style={
-                          (srcCover
-                            ? `background-image: url("${srcCover}"); `
-                            : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`)
-                        }
+                      <time
+                        datetime={time_start.dateTimeRaw}
+                        class="timestart flow gap-h8 center intrinsic"
+                        style="line-height: 1;"
                       >
-                        <time
-                          datetime={time_start.dateTimeRaw}
-                          class="timestart flow gap-h8 center intrinsic"
-                          style="line-height: 1;"
-                        >
-                          <span class="size-h2">{time_start?.fr?.day}</span>
-                          <span class="size-h3">{time_start?.fr?.monthShort}</span>
-                          <span class="size-h3">{time_start?.fr?.year}</span>
-                        </time>
-                        <div class="flow justify-center align-items-center no-gap">
-                          <h2 class="h4 centered">
-                            <a
-                              href={`/${event.path}/`}
-                              class="name reset clickable"
-                              set:html={name}
-                            />
-                          </h2>
-                        </div>
+                        <span class="size-h2">{time_start?.fr?.day}</span>
+                        <span class="size-h3">{time_start?.fr?.monthShort}</span>
+                        <span class="size-h3">{time_start?.fr?.year}</span>
+                      </time>
+                      <div class="flow justify-center align-items-center no-gap">
+                        <h2 class="h4 centered">
+                          <a
+                            href={`/${event.path}/`}
+                            class="name reset clickable"
+                            set:html={name}
+                          />
+                        </h2>
                       </div>
-                      <div class="card-event-footer box no-border padding-h8 flow horizontal justify-between">
-                        <IO
-                          p
-                          $skipNoInner
-                          class="zip city h5"
-                          data-zip={location?.postalCode}
-                          data-city={location?.addressLocality}
-                        >
-                          {location?.addressLocality}
-                        </IO>
-                      </div>
-                    </li>
-                  )
-                })}
-              </IO>
+                    </div>
+                    <div class="card-event-footer box no-border padding-h8 flow horizontal justify-between">
+                      <IO
+                        p
+                        $skipNoInner
+                        class="zip city h5"
+                        data-zip={location?.postalCode}
+                        data-city={location?.addressLocality}
+                      >
+                        {location?.addressLocality}
+                      </IO>
+                    </div>
+                  </li>
+                )
+              })}
             </IO>
           </div>
         )

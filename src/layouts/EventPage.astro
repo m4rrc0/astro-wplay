@@ -264,7 +264,7 @@ if (jsonldType === 'EventSeries') {
             "
           >
             <p class="size-h4">Organisé par</p>
-            <ul class="box no-border center max-width-measure-p cluster reset justify-center">
+            <ul class="box no-border center max-width-measure-p cluster reset">
               {organizers.map(({ name, boardgame_related, links, path, logo }) => (
                 <li>
                   <a
@@ -391,29 +391,27 @@ if (jsonldType === 'EventSeries') {
 
       {
         links?.[0] && (
-          <div class="box no-border center max-width-measure-p">
-            <ul class="cluster reset justify-center">
-              {links.map(({ name, url, iconName }) => {
-                const followPolicy = name?.code_name === 'website' ? 'dofollow' : 'nofollow'
+          <ul class="cluster reset justify-center">
+            {links.map(({ name, url, iconName }) => {
+              const followPolicy = name?.code_name === 'website' ? 'dofollow' : 'nofollow'
 
-                return (
-                  <li>
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel={`noopener noreferrer ${followPolicy}`}
-                      class="
+              return (
+                <li>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel={`noopener noreferrer ${followPolicy}`}
+                    class="
                   box no-border center intrinsic text-center gap-y-[var(--size-h8)]
                 "
-                    >
-                      <Icon name={iconName} size="1em" class="size-h2" />
-                      <div class="size-p">{name.fr}</div>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
+                  >
+                    <Icon name={iconName} size="1em" class="size-h2" />
+                    <div class="size-p">{name.fr}</div>
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
         )
       }
 

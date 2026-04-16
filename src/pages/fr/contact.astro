@@ -36,11 +36,13 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       </div>
       <h1 class="center text">Contacte-nous</h1>
 
-      <div class="center">
+      <p class="h3 center text">
+        <span>par e-mail à</span>
+        <MtObf {email} />
+      </p>
+      <div class="center text flow" style="margin-top: var(--size-h1);">
+        <p>Retrouvez-nous aussi sur:</p>
         <ul class="cluster list reset justify-center">
-          <li>
-            <MtObf {email} />
-          </li>
           <li>
             <a
               href="https://www.facebook.com/WannaPlayBE/"
@@ -82,6 +84,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             </a>
           </li>
         </ul>
+        <p>En live lors d'événements ludiques belges 😉</p>
       </div>
     </main>
   </BasicPage>

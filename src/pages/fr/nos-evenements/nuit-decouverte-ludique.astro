@@ -1,5 +1,6 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
+import '@styles/partials/our-projets.css'
 import { SEO } from '@components'
 import { Image } from 'astro:assets'
 import { YouTube } from 'astro-embed'
@@ -193,7 +194,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   />
 
   <BasicPage {lang}>
-    <main class="center max flow gap-down-h3">
+    <main class="center max">
       <!-- Header -->
       <header
         class="center text flow items-center color-palette-trans background-overlay padding-y-relative-xl full-bleed"
@@ -325,17 +326,6 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 </SkeletonPage>
 
 <style>
-  /* Tilted app card */
-  /* .app-card {
-    transform: rotate(1.5deg);
-    margin: var(--size-h4) auto;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: var(--shadow-raised-s);
-    border: 1px solid hsl(0, 0%, 90%);
-  } */
-
-  /* CTA button */
   .cta-button {
     display: inline-block;
     background: var(--color-primary);
@@ -343,63 +333,5 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     padding: 10px 20px;
     text-decoration: none;
     font-weight: bold;
-  }
-
-  /* App stats top border separator */
-  .app-stats-border {
-    border-top: 1px solid hsl(0, 0%, 90%);
-  }
-
-  /* Gallery images */
-  .gallery-img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-  }
-
-  .partners-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--size-h3);
-    align-items: center;
-    justify-items: center;
-    margin-bottom: var(--size-h3);
-  }
-  .partners-grid img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 100px;
-  }
-  @media (min-width: 1024px) {
-    .partners-grid {
-      grid-template-columns: repeat(8, 1fr);
-    }
-  }
-
-  section {
-    padding-block: var(--size-h2);
-  }
-
-  section.flow,
-  div.flow > * {
-    --flow-space: var(--gap-h3);
-  }
-
-  .stat {
-    padding-block: var(--size-h2);
-  }
-
-  .video-container {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .video-container iframe,
-  .video-container lite-youtube {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--border-radius-l);
   }
 </style>

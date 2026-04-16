@@ -33,8 +33,8 @@
   --color-purple-dark: hsl(var(--hsl-purple-dark));
   --hsl-blue-light: 215deg, 62%, 56%;
   --color-blue-light: hsl(var(--hsl-blue-light));
-  --hsl-gray-light: 222deg, 12%, 79%;
-  --color-gray-light: hsl(var(--hsl-gray-light));
+  --hsl-grey-light: 222deg, 12%, 79%;
+  --color-grey-light: hsl(var(--hsl-grey-light));
 
   color: var(--color-text, hsl(221deg, 55%, 41%));
 }
@@ -198,10 +198,10 @@ body,
   --color-secondary-palette: var(--color-purple);
 }
 
-[data-c-p='gray-light'],
+[data-c-p='grey-light'],
 .color-palette-other {
   --color-neutral-palette: var(--color-white);
-  --color-primary-palette: var(--color-gray-light);
+  --color-primary-palette: var(--color-grey-light);
   --color-secondary-palette: var(--color-blue);
 }
 

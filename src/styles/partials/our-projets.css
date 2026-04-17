@@ -7,6 +7,62 @@ div.flow > * {
   --flow-space: var(--gap-h3);
 }
 
+.project-card {
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .project-card-header::before {
+  opacity: 0.2;
+}
+.project-card:hover .project-card-header p {
+  /* background-color: color-mix(in srgb, var(--color-neutral) 50%, transparent); */
+  background-color: var(--color-neutral);
+}
+
+.project-card-header {
+  width: 100%;
+  height: 15rem;
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+
+  & p {
+    display: block;
+    width: 100%;
+    padding-inline: var(--size-p);
+    padding-block: 0.5em;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+}
+
+.project-card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-neutral);
+  opacity: 0.5;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.project-card-header p {
+  z-index: 2;
+}
+
+.project-card-body a.button {
+  width: fit-content;
+  text-align: center;
+  padding-inline: var(--size-p);
+  text-decoration: none;
+}
+
 .video-container {
   width: 100%;
   justify-content: center;
@@ -48,4 +104,72 @@ div.flow > * {
   object-fit: cover;
   border-radius: var(--border-radius-s);
   aspect-ratio: 1/1;
+}
+
+/* ================== */
+/* Test project-card */
+/* ================== */
+
+/* Test 1 */
+.test1 .project-card-header p {
+  width: auto;
+  border-top-right-radius: var(--border-radius-m);
+}
+
+/* ---------------- */
+/* Test 2 */
+.test2 .project-card-header {
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.test2 .project-card-header p {
+  width: auto;
+}
+
+/* ---------------- */
+/* Test 3 */
+.test3.project-card:hover .project-card-header p {
+  background-color: transparent;
+}
+
+/* ---------------- */
+/* Test 5 */
+.test5.project-card:hover .project-card-header p {
+  background-color: transparent;
+}
+
+.test5 .project-card-header p {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+  background-image: linear-gradient(var(--color-neutral), var(--color-neutral));
+  background-repeat: no-repeat;
+  background-size: 100% 0%;
+  background-position: bottom;
+
+  transition:
+    background-size 0.3s ease-out,
+    color 0.3s;
+}
+
+.test5:hover .project-card-header p {
+  background-size: 100% 100%; /* La hauteur passe à 100% */
+}
+
+/* ---------------- */
+/* test 6 */
+.test6 .project-card-header p {
+  width: fit-content;
+  border-top-right-radius: var(--border-radius-m);
+}
+
+/* ---------------- */
+/* Test 7 */
+.test7 .project-card-header p {
+  width: fit-content;
+  border-top-right-radius: var(--border-radius-m);
+  background-image: linear-gradient(var(--color-secondary), var(--color-secondary));
+}
+.test7 .project-card-header::before {
+  background-color: var(--color-secondary);
 }

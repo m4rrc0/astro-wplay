@@ -1,6 +1,8 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
+import '@styles/partials/our-projets.css'
 import { SEO } from '@components'
+import bannerApero from '@assets/images/inauguration-2018/veronique-bosschaert/IMG_9165_2.webp'
 const lang = { code: 'fr' }
 const pageUrl = new URL(Astro.url.pathname, Astro.site)
 const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
@@ -18,7 +20,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="center width-max flow gap-h2 layout-basic_page">
+    <main class="center width-max flow gap-h2">
       <header
         class="flex center text flow items-center gap-h7 color-palette-trans background-overlay padding-y-relative-xl full-bleed"
         style='background-image: url("/assets/images/WannaPlay-banner-paper.jpeg"); box-sizing: border-box; --full-bleed-max-width: var(--width-max);'
@@ -57,74 +59,210 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 
       <section class="flow">
         <h2 class="center text">Organisé par Wanna Play</h2>
-        <ul class="grid-fluid gap-p list reset" style="--width-column-min: var(--width-col-4);">
+        <ul
+          class="grid-fluid gap-p list reset"
+          style="--columns: 3; --width-column-min: var(--width-col-4);"
+        >
           <li
-            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-contrast"
+            class="test1 project-card border-radius-m color-palette-variation-contrast breakout-clickable"
           >
-            <a href="/fr/nos-evenements/wanna-play-in-brussel-2023" class="reset block">
-              <h3 class="p">Festival Wanna Play in Brussel 2023</h3>
-            </a>
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">08.07.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">Festival Wanna Play in Brussel 2023</p>
+              <p>⚠️ Coodination et animation</p>
+              <p>Bruxelles - Jardin du Grand Hospice Pacheco</p>
+              <a href="/fr/nos-evenements/wanna-play-in-brussel-2023" class="button clickable"
+                >En savoir plus</a
+              >
+            </div>
           </li>
           <li
-            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-contrast"
+            class="test2 project-card border-radius-m color-palette-variation-contrast breakout-clickable"
           >
-            <a href="/fr/nos-evenements/wanna-play-in-brussel-2022" class="reset block">
-              <h3 class="p">Festival Wanna Play in Brussel 2022</h3>
-            </a>
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">30.07.2022</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">Festival Wanna Play in Brussel 2022</p>
+              <p>⚠️ Coodination et animation</p>
+              <p>Bruxelles - Jardin du Grand Hospice Pacheco</p>
+              <a href="/fr/nos-evenements/wanna-play-in-brussel-2022" class="button clickable"
+                >En savoir plus</a
+              >
+            </div>
           </li>
           <li
-            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-contrast"
+            class="test3 project-card border-radius-m color-palette-variation-contrast breakout-clickable"
           >
-            <a href="/fr/nos-evenements/inauguration" class="reset block">
-              <h3 class="p">Inauguration et soirée jeux</h3>
-            </a>
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">10.06.2018</p>
+            </div>
+            <div
+              class="project-card-body box no-border flow bleed-bg"
+              style="--bleed-inline: 0; --bleed-top: 1rem"
+            >
+              <p class="h4">Inauguration et soirée jeux</p>
+              <p>⚠️ Coodination et animation</p>
+              <p>⚠️ Bruxelles - Jardin du Grand Hospice Pacheco</p>
+              <a href="/fr/nos-evenements/inauguration" class="button clickable">En savoir plus</a>
+            </div>
           </li>
         </ul>
       </section>
 
       <section class="flow">
         <h2 class="center text">En partenariat</h2>
-        <ul class="grid-fluid gap-p list reset" style="--width-column-min: var(--width-col-4);">
+
+        <ul
+          class="grid-fluid gap-p list reset"
+          style="--columns: 3; --width-column-min: var(--width-col-4);"
+        >
           <li
-            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-funky-contrast"
+            class="test4 project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
           >
-            <a href="/fr/nos-evenements/le-jeu-parfait" class="reset block">
-              <h3 class="p">Le jeu parfait</h3>
-            </a>
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">Le jeu parfait</p>
+              <p class="bold">⚠️ … - 2020</p>
+              <p>⚠️ Coodination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+              <a href="/fr/nos-evenements/le-jeu-parfait" class="button clickable">En savoir plus</a
+              >
+            </div>
           </li>
           <li
-            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-funky-contrast"
+            class="test5 project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
           >
-            <a href="/fr/nos-evenements/nuit-decouverte-ludique" class="reset block">
-              <h3 class="p">La nuit des découvertes ludiques</h3>
-            </a>
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">⚠️ 2018</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">La nuit des découvertes ludiques</p>
+              <p>⚠️ Coodination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+              <a href="/fr/nos-evenements/nuit-decouverte-ludique" class="button clickable"
+                >En savoir plus</a
+              >
+            </div>
           </li>
           <li
-            class="event-card breakout-clickable box no-border border-radius-s color-palette-variation-funky-contrast"
+            class="test5 test6 project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
           >
-            <a href="/fr/nos-evenements/tables-ouvertes" class="reset block">
-              <h3 class="p">Tables ouvertes</h3>
-            </a>
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">⚠️ … - 2017</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">Tables ouvertes</p>
+              <p>⚠️ Coodination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+              <a href="/fr/nos-evenements/tables-ouvertes" class="button clickable"
+                >En savoir plus</a
+              >
+            </div>
+          </li>
+          <li
+            class="test5 test7 project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">… - 2025</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">Festival de la bière</p>
+              <p>Coodination et animation</p>
+              <p>Bruxelles - Woluwe-Saint-Pierre</p>
+            </div>
+          </li>
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">Avril, mai, juin 2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">
+                Soirées jeux <a href="https://jardin.brussels/fr">au Bar du Jardin</a>
+              </p>
+              <p>
+                Coodination et animation de 3 soirées jeux à thème (Couleurs, Nature, Fantastique)
+                dans le Bar du Jardin du <a href="https://www.grand-hospice.brussels/"
+                  >Grand Hospice</a
+                >
+              </p>
+              <p>Bruxelles - Centre ville</p>
+            </div>
+          </li>
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">03.06.2023 - 17.06.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">
+                Apéro x Serious Game à <a href="https://www.lafonderie.be/">la Fonderie</a>
+              </p>
+              <p>Coodination et animation jeux de société et jeux géants</p>
+              <p>Bruxelles - Molenbeek-Saint-Jean</p>
+            </div>
+          </li>
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">16.03.2023 - 20.09.2023 - 12.10.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">
+                <a href="https://muntpunt.be/">Muntpunt</a> - All You Can Play
+              </p>
+              <p>Coordination et animation FR ENG NL</p>
+              <p>Bruxelles - Centre ville</p>
+            </div>
+          </li>
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">01.10.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">Festival des Idées Bleues</p>
+              <p>
+                Aide animation, rangement, photos sur le festival organisé par la boutique <a
+                  href="https://www.lesideesbleues.be/">Les Idées Bleues</a
+                >
+              </p>
+              <p>Wavre</p>
+            </div>
+          </li>
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">01.10.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4"><a href="https://www.belvue.be/cms/web/fr/" class="bold">Belvue</a></p>
+              <p>Coordination, animation</p>
+            </div>
+          </li>
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
+            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">01.10.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <p class="h4">Concours évent jeux quartier</p>
+            </div>
           </li>
         </ul>
       </section>
-      <!-- 
-      <section class="grid-fluid">
-        <div class="flow box no-border border-radius-s color-palette-variation-funky-contrast">
-          <div>
-            <p>16/03/2023 - 20/09/2023 - 12/10/2023</p>
-          </div>
-          <div>
-            <p><strong>Muntpunt - All You Can Play</strong></p>
-            <p>Coordination et animation FR ENG NL</p>
-          </div>
-          <div>
-            <p>Bruxelles - Centre ville</p>
-          </div>
-        </div>
-      </section> -->
 
-      <section>
+      <!-- <section>
         <ul class="other-events flow">
           <li>
             <p class="bold">Festival de la bière</p>
@@ -153,6 +291,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             <p>Bruxelles - Molenbeek-Saint-Jean</p>
             <p>Coodination et animation jeux de société et jeux géants</p>
           </li>
+
           <li>
             <p class="bold"><a href="https://muntpunt.be/">Muntpunt</a> - All You Can Play</p>
             <p>(16/03/2023 - 20/09/2023 - 12/10/2023)</p>
@@ -167,7 +306,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <a href="https://www.instagram.com/des_mentiel/">Dés-mentiel, </a>
               <a href="https://www.instagram.com/cabinet_de_letrange/">Cabinet de l'étrange</a>
               Et une soirée spéciale 'Discovery Night SPIEL-Essen'
-            </p>
+              </p>
           </li>
           <li>
             <p class="bold">Festival des Idées Bleues</p>
@@ -187,32 +326,14 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             <p class="bold">concours évent jeux quartier</p>
           </li>
         </ul>
+      </section> -->
 
-        <section class="center text flow">
-          <p>Tu veux proposer un partenariat ou organiser un événement ludique avec nous?</p>
-          <p>
-            <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">Contacte-nous</a>
-          </p>
-        </section>
+      <section class="center text flow">
+        <p>Tu veux proposer un partenariat ou organiser un événement ludique avec nous?</p>
+        <p>
+          <a href="/fr/contact/" class="reset button padding-x-h5 padding-y-h7">Contacte-nous</a>
+        </p>
       </section>
     </main>
   </BasicPage>
-
-  <style>
-    .event-card {
-      min-height: var(--width-col-9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .event-card a {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: var(--size-h3);
-    }
-  </style>
 </SkeletonPage>

@@ -9,7 +9,7 @@ import { Image, getImage } from 'astro:assets'
 const { members = [], width = 240 } = Astro.props
 
 const globImages = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/images/team/others/*.{jpeg,jpg,png,gif,webp,svg}'
+  '../assets/images/team/*/*.{jpeg,jpg,png,gif,webp,svg}'
 )
 
 const resolvedMembers = (
@@ -42,10 +42,7 @@ const resolvedMembers = (
 
 {
   resolvedMembers.map(member => (
-    <figure
-      class="card-team flow gap-p"
-      style="text-align: center; align-items: center; margin: 0 auto;"
-    >
+    <figure class="card-team flow gap-p" style="text-align: center; align-items: center;">
       {member.optimizedMeta ? (
         <img src={member.optimizedMeta.src} {...member.optimizedMeta.attributes} alt={member.alt} />
       ) : (

@@ -2,6 +2,7 @@
 import { createPath } from '@utils'
 import { PlayIcon, CalendarIcon, OrgIcon, BxlIcon } from '@partials/icons'
 import { MtObf } from '@components'
+import Menu from '@components/Menu.astro'
 import { Icon } from 'astro-icon/components'
 
 const { lang: propLang, class: className } = Astro.props
@@ -29,7 +30,8 @@ const ariaCurrentAttr = currentHref => {
   class={`layout-page flow split-after-2 gap-down-h1 justify-start ${className}`}
   style="min-height: 100vh;"
 >
-  <div id="menu-main" class="color-palette-main">
+  <Menu {lang} />
+  <!-- <div id="menu-main" class="color-palette-main">
     <nav class="center width-max box no-border">
       <ul class="cluster overflow reset reset-down-a size-p gap-h6 justify-end">
         <li>
@@ -78,8 +80,6 @@ const ariaCurrentAttr = currentHref => {
             aria-current={ariaCurrentAttr(`/${lang.code}/contact/`)}>Contact</a
           >
         </li>
-        <!-- <li><a href="/styleguide">Styleguide</a></li> -->
-        <!-- TODO: Improve accessibility -->
         <Icon
           aria-disabled
           data-remove-disabled
@@ -130,7 +130,7 @@ const ariaCurrentAttr = currentHref => {
         </nav>
       </div>
     )
-  }
+  } -->
 
   <dialog
     id="searchContainer"

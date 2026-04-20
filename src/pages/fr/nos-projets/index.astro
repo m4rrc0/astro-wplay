@@ -1,8 +1,8 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
-import '@styles/partials/our-projets.css'
+// import '@styles/partials/our-projets.css'
 import { SEO } from '@components'
-import bannerApero from '@assets/images/inauguration-2018/veronique-bosschaert/IMG_9165_2.webp'
+import bannerApero from '@assets/images/nuit-decouverte-ludique-2018/galerie/photo-18.webp'
 const lang = { code: 'fr' }
 const pageUrl = new URL(Astro.url.pathname, Astro.site)
 const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
@@ -60,10 +60,10 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
       <section class="flow">
         <h2 class="center text">Organisé par Wanna Play</h2>
         <ul
-          class="grid-fluid gap-p list reset"
+          class="grid-fluid gap-p list reset projects-list-wanna-play"
           style="--columns: 3; --width-column-min: var(--width-col-4);"
         >
-          <li class="test1 project-card border-radius-m color-palette-variation-contrast">
+          <li class="project-card border-radius-m color-palette-variation-contrast">
             <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
               <p class="bold">08.07.2023</p>
             </div>
@@ -74,7 +74,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <a href="/fr/nos-projets/wanna-play-in-brussel-2023">En savoir plus</a>
             </div>
           </li>
-          <li class="test2 project-card border-radius-m color-palette-variation-contrast">
+          <li class="project-card border-radius-m color-palette-variation-contrast">
             <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
               <p class="bold">30.07.2022</p>
             </div>
@@ -85,7 +85,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <a href="/fr/nos-projets/wanna-play-in-brussel-2022">En savoir plus</a>
             </div>
           </li>
-          <li class="test3 project-card border-radius-m color-palette-variation-contrast">
+          <li class="project-card border-radius-m color-palette-variation-contrast">
             <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
               <p class="bold">10.06.2018</p>
             </div>
@@ -106,21 +106,21 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
         <h2 class="center text">En partenariat</h2>
 
         <ul
-          class="grid-fluid gap-p list reset"
+          class="grid-fluid gap-p list reset projects-list-partnerships"
           style="--columns: 3; --width-column-min: var(--width-col-4);"
         >
-          <li class="test4 project-card border-radius-m color-palette-variation-funky-contrast">
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
             <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+              <p class="bold">⚠️ … - 2020</p>
             </div>
             <div class="project-card-body box no-border flow">
               <h3 class="h4">Le jeu parfait</h3>
-              <p class="bold">⚠️ … - 2020</p>
               <p>⚠️ Coordination et animation</p>
               <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
               <a href="/fr/nos-projets/le-jeu-parfait">En savoir plus</a>
             </div>
           </li>
-          <li class="test5 project-card border-radius-m color-palette-variation-funky-contrast">
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
             <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
               <p class="bold">⚠️ 2018</p>
             </div>
@@ -131,9 +131,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <a href="/fr/nos-projets/nuit-decouverte-ludique">En savoir plus</a>
             </div>
           </li>
-          <li
-            class="test5 test6 project-card border-radius-m color-palette-variation-funky-contrast"
-          >
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
             <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
               <p class="bold">⚠️ … - 2017</p>
             </div>
@@ -144,9 +142,7 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <a href="/fr/nos-projets/tables-ouvertes">En savoir plus</a>
             </div>
           </li>
-          <li
-            class="test5 test7 project-card border-radius-m color-palette-variation-funky-contrast"
-          >
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
             <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
               <p class="bold">… - 2025</p>
             </div>
@@ -160,7 +156,9 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
               <p class="bold">Avril, mai, juin 2023</p>
             </div>
-            <div class="project-card-body box no-border flow">
+            <div
+              class="project-card-body box no-border flow color-palette-variation-funky-contrast"
+            >
               <h3 class="h4">
                 Soirées jeux <a href="https://jardin.brussels/fr">au Bar du Jardin</a>
               </h3>
@@ -315,8 +313,87 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 </SkeletonPage>
 
 <style>
+  .project-card {
+    transition: all 0.3s ease;
+    isolation: isolate;
+  }
+
+  .project-card:hover .project-card-header::after {
+    opacity: 0.2;
+  }
+  .project-card:hover .project-card-header p {
+    background-color: transparent;
+    background-size: 100% 100%;
+  }
+
   .project-card-header {
-    filter: grayscale(1);
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    align-items: flex-end;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: grayscale(1);
+
+    & p {
+      display: block;
+      width: 100%;
+      padding-inline: var(--size-p);
+      padding-block: 0.5em;
+      position: relative;
+      z-index: 3;
+      background-image: linear-gradient(var(--color-bg), var(--color-bg));
+      background-repeat: no-repeat;
+      background-size: 100% 0%;
+      background-position: bottom;
+
+      transition:
+        background-size 0.3s ease-out,
+        color 0.3s;
+    }
+  }
+
+  .project-card-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
     mix-blend-mode: lighten;
+    background-color: var(--color-secondary);
+
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  .project-card-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    mix-blend-mode: darken;
+    background-color: var(--color-bg);
+
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+
+  .project-card:hover .project-card-header::before,
+  .project-card:hover .project-card-header::after {
+    opacity: 0;
+  }
+
+  .project-card-body a.button {
+    width: fit-content;
+    text-align: center;
+    padding-inline: var(--size-p);
+    text-decoration: none;
+  }
+
+  .projects-list-wanna-play .project-card-header::after {
+    background-color: var(--color-bg);
+  }
+  .projects-list-wanna-play .project-card-header::before {
+    background-color: var(--color-secondary);
   }
 </style>

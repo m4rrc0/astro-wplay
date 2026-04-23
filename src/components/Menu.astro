@@ -268,16 +268,16 @@ const ariaCurrentAttr = currentHref => {
   }
 
   @media screen and (max-width: 34rem) {
-    #menu-main nav {
+    html.js #menu-main nav {
       flex-wrap: wrap;
     }
 
-    #burgerMenuBtn {
+    html.js #burgerMenuBtn {
       display: flex;
     }
 
-    #menu-main ul,
-    #menu-secondary ul {
+    html.js #menu-main ul,
+    html.js #menu-secondary ul {
       flex-direction: column;
       width: 100%;
       text-align: center;
@@ -285,8 +285,8 @@ const ariaCurrentAttr = currentHref => {
       align-items: flex-end;
     }
 
-    #menu-main ul,
-    #menu-secondary {
+    html.js #menu-main ul,
+    html.js #menu-secondary {
       flex-wrap: nowrap;
       max-height: 0;
       opacity: 0;
@@ -299,8 +299,8 @@ const ariaCurrentAttr = currentHref => {
         visibility 0s 0.4s;
     }
 
-    #menu-main ul.active,
-    #menu-secondary.active {
+    html.js #menu-main ul.active,
+    html.js #menu-secondary.active {
       max-height: 36rem;
       opacity: 1;
       visibility: visible;
@@ -311,15 +311,15 @@ const ariaCurrentAttr = currentHref => {
         visibility 0s;
     }
 
-    #menu-main ul li:first-child {
+    html.js #menu-main ul li:first-child {
       padding-top: var(--gap);
     }
 
-    #menu-secondary li > a {
+    html.js #menu-secondary li > a {
       justify-content: center;
     }
 
-    .visually-hidden {
+    html.js .visually-hidden {
       display: initial;
     }
   }

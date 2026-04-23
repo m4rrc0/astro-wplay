@@ -38,6 +38,18 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
   import { areasBe, citiesBe } from '@src/utils/areas/be.js'
   import citiesJson from '@src/utils/areas/cities.json'
 
+  function isWebGLSupported() {
+    try {
+      const canvas = document.createElement('canvas')
+      return !!(
+        window.WebGLRenderingContext &&
+        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+      )
+    } catch (e) {
+      return false
+    }
+  }
+
   const bounds: [[number, number], [number, number]] = [
     [1.9, 49.4], // West, South
     [7.1, 51.55], // East, North
@@ -114,6 +126,18 @@ const { itemType = 'organizations', area, city, date, orgType } = Astro.props
       return matchType && matchProximity
     })
   }
+
+  if (mapContainer && !isWebGLSupported()) {
+    mapContainer.innerHTML = `
+      <div class="flow" style="justify-content: center; text-align: center; padding-inline: var(--size-h2);">
+        <p class="h4">L'affichage de la carte a échoué</p>
+        <p>Il semble que l'accélération graphique de votre navigateur soit désactivée ou non supportée.</p>
+        <p>Veuillez l'activer dans les paramètres de votre navigateur pour voir la carte.</p>
+      </div>
+    `
+    throw new Error('WebGL not supported, map initialization aborted.')
+  }
+
   const map = new maplibregl.Map({
     // style: 'https://tiles.openfreemap.org/styles/bright',
     style: '/assets/map/styles/bright.json',

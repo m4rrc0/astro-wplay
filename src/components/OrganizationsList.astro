@@ -1,37 +1,25 @@
 ---
 import { IO, Img, ImgDirectus } from '@components'
+import Ad from '@components/ads/Ad.astro'
 import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
 import { getOrganizations } from '../store/dataService.js'
 import { start as startDirectus } from '../services/directus.js'
 import badge from '@assets/images/badge.png'
 
 // Props passed from the MDX page
-const { type, areaCode, lang = { code: 'fr' } } = Astro.props
+const { type, areaCode, lang = { code: 'fr' }, organizations, ad = false } = Astro.props
 
 // // Start Directus (login/refresh) before using data
 await startDirectus()
 
 // Get all organizations from the database
-const allOrganizations = await getOrganizations()
+const allOrganizations = organizations ?? (await getOrganizations())
 
 // Holds filtered organizations (by type and area); make sure MDX page always provides the props. (type: association, bar, escape_room, festival, ...)
 const filteredOrganizations = (allOrganizations ?? [])
   .filter(org => org.boardgame_related)
   .filter(org => !type || org.typesTranslated?.some(t => t?.code_name === type))
   .filter(org => !areaCode || org.location?.area?.code_name === areaCode)
-
-/* Holds filtered organizations (by type and area); Needed for reusability: allow no type filter with `if (!type) return true`
-const filteredOrganizations =
-  (allOrganizations ?? []).filter(org => {
-    if (!type) return true
-    return org.typesTranslated?.some(
-      t => t?.code_name === type
-    )
-  }).filter(org => {
-    if (!areaCode) return true
-    return org.location?.area?.code_name === areaCode
-  })
-  */
 ---
 
 <section class="organizations-list">
@@ -46,10 +34,11 @@ const filteredOrganizations =
       <IO
         ul
         $skipNoInner
-        class="reset grid-fluid gap-p"
-        style="--width-column-min: var(--width-col-6); --width-column-max: 25rem; grid-template-columns: repeat(auto-fill, minmax(min(var(--width-column-min, 10rem), 100%), 1fr));"
+        class="organizations-list grid-fluid reset"
+        style="--width-column-min: var(--width-col-6); --gap-grid: var(--size-p);"
       >
-        {filteredOrganizations.map(organization => {
+        {ad && <Ad adType="organization" />}
+        {filteredOrganizations.map((organization, index) => {
           const {
             name,
             path,
@@ -62,15 +51,15 @@ const filteredOrganizations =
           const isPartner =
             admin_categories?.includes('partner') || admin_categories?.includes('badge_default')
 
-          const nameIsLong = name?.length > 30
+          // const nameIsLong = name.length > 30
 
           return (
             <li
-              class={`card-organization box no-border flow gap-h7 border-radius-s breakout-clickable ${isPartner ? 'badge' : ''}`}
+              class={`card-organization box no-border flow gap-h4 border-radius-s breakout-clickable ${isPartner ? 'badge' : ''}`}
               style={`--badge-url: url(${badge.src});`}
-              data-zip={location?.postalCode}
-              data-city={location?.addressLocality}
-              data-services={servicesTranslated?.map(s => s.code_name)}
+              data-area={location?.area.code_name}
+              data-types={typesTranslated?.map(t => t.code_name)}
+              data-services={servicesTranslated?.map(t => t.code_name)}
             >
               {isPartner && (
                 <div class="badge-hover" title={`${name} est partenaire de Wannaplay`} />
@@ -104,19 +93,18 @@ const filteredOrganizations =
                   />
                 )}
               </div>
-              <h3 class={`${nameIsLong ? ' p' : ' h4'}`}>
+              <h3 class="p">
+                {/* <h3 class={`${nameIsLong ? ' p' : ' h4'}`}> */}
                 <a href={`/${path}/`} class={`reset clickable`}>
                   {name}
                 </a>
               </h3>
-              <ul class="cluster gap-h8 reset">
+              <ul class="cluster gap-h8 reset" style="margin-top: var(--size-h4);">
                 {typesTranslated?.map(type => {
                   const currentPalette = `color-palette-${type.colorPalette || type.code_name}`
                   return (
                     <li
-                      class={`box no-border padding-x-h8 padding-y-h9
-                              ${currentPalette} color-palette-variation-contrast
-                              border-radius-s`}
+                      class={`box no-border padding-x-h8 padding-y-h9 ${currentPalette} color-palette-variation-contrast border-radius-s`}
                     >
                       {type.translations.find(t => t.language_code === lang.code).default_label}
                     </li>
@@ -131,12 +119,7 @@ const filteredOrganizations =
   }
 </section>
 
-<!-- temporary style card for now -->
 <style>
-  .organizations-list {
-    margin-block: var(--size-h3);
-  }
-
   .badge {
     position: relative;
     overflow: visible !important;

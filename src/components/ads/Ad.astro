@@ -1,0 +1,20 @@
+---
+import AdEventListCustom from '@components/ads/AdEventListCustom.astro'
+import AdEventListMeeple from '@components/ads/AdEventListMeeple.astro'
+import AdEventListYourAdHere from '@components/ads/AdEventListYourAdHere.astro'
+import AdOrgaListCustom from '@components/ads/AdOrgaListCustom.astro'
+import AdOrgaListMeeple from '@components/ads/AdOrgaListMeeple.astro'
+import AdOrgaListYourAdHere from '@components/ads/AdOrgaListYourAdHere.astro'
+
+const { adType } = Astro.props
+
+const eventAds = [AdEventListCustom, AdEventListMeeple, AdEventListYourAdHere]
+const orgaAds = [AdOrgaListCustom, AdOrgaListMeeple, AdOrgaListYourAdHere]
+
+const adPool = adType === 'organization' ? orgaAds : eventAds
+
+// Pick a random ad at render time (changes on every page refresh)
+const RandomAd = adPool[Math.floor(Math.random() * adPool.length)]
+---
+
+<RandomAd />

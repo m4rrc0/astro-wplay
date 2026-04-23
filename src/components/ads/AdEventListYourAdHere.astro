@@ -1,0 +1,42 @@
+---
+import bannerYourAdHere from '@assets/images/ads/banner-your-ad-here.svg'
+---
+
+<li
+  class="ad-event-list-your-ad-here box no-border border-radius-s breakout-clickable"
+  style={`--bg-image: url('${bannerYourAdHere.src}');`}
+>
+  <a href="" class="button">Proposer un partenariat</a>
+</li>
+
+<style>
+  .ad-event-list-your-ad-here {
+    min-height: 15rem;
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    background: var(--bg-image) center / 100% auto no-repeat;
+    display: flex;
+    justify-content: center;
+  }
+  @media (min-width: 53rem) {
+    .ad-event-list-your-ad-here {
+      grid-column: 2 / -1;
+    }
+  }
+
+  .ad-event-list-your-ad-here a.button {
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    text-decoration: none;
+    padding-inline: 0.5em;
+    border-radius: var(--border-radius-s);
+    background-color: var(--color-neutral);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+  }
+  .ad-event-list-your-ad-here a.button:hover {
+    background-color: var(--color-primary);
+    color: white;
+  }
+</style>

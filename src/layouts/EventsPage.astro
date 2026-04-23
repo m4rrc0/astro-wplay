@@ -1,12 +1,12 @@
 ---
 import path from 'node:path'
 import { IO, Img, ImgDirectus, SEO } from '@components'
-import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
 import { BasicPage, SkeletonPage } from '@layouts'
 import { imageDirectusSrc } from '@utils'
 import citiesUnordered from '@utils/areas/cities.json'
 import { Icon } from 'astro-icon/components'
 import Map from '@components/Map.astro'
+import EventsList from '@components/EventsList.astro'
 
 const { lang, events: eventsUnfiltered, dictionary: eventTypes } = Astro.props
 const events = eventsUnfiltered?.filter(e => !e.isCanonical)
@@ -215,121 +215,7 @@ const cssRulesDisplayByType =
 
       <IO p $skip={!events?.[0]?.name} id="eventsPhrase" class="">{eventsPhrase}</IO>
 
-      <IO
-        ul
-        $skip={!events?.[0]?.name}
-        class="grid-fluid gap-p list reset"
-        style="--width-column-min: var(--width-col-3);"
-      >
-        {
-          events?.map(event => {
-            const {
-              name,
-              typesTranslated,
-              location,
-              cover_image,
-              organizers,
-              time_start,
-              time_end,
-              isSameDay,
-            } = event
-
-            const srcCover = imageDirectusSrc({
-              src: cover_image?.src,
-              width: '1000',
-              fit: 'cover',
-              quality: '50',
-            })
-
-            const currentTypes = typesTranslated?.map(t => t.code_name)
-            const typeAttributes = currentTypes?.reduce(
-              (acc, type) => ({ ...acc, [`data-type-${type}`]: true }),
-              {}
-            )
-
-            const [lng, lat] = location?.geo?.coordinates || []
-
-            return (
-              <li
-                class="card-event breakout-clickable box no-border no-padding border-radius-s"
-                style=""
-                data-types={currentTypes}
-                {...typeAttributes}
-                data-latitude={lat}
-                data-longitude={lng}
-              >
-                <div
-                  class="box no-border padding-p with-sidebar gap-p color-palette-trans background-overlay"
-                  style={
-                    (srcCover
-                      ? `background-image: url("${srcCover}"); `
-                      : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) + ``
-                  }
-                >
-                  <time
-                    datetime={time_start.dateTimeRaw}
-                    class="timestart flow gap-h8 center intrinsic"
-                    style="line-height: 1; --flow-space: var(--size-h8);"
-                  >
-                    <span class="size-h2">{time_start?.fr?.day}</span>
-                    <span class="size-h3">{time_start?.fr?.monthShort}</span>
-                    <span class="size-h3">{time_start?.fr?.year}</span>
-                  </time>
-                  <div class="flow justify-center align-items-center no-gap">
-                    <h2 class="h4 centered">
-                      <a href={`/${event.path}/`} class="name reset clickable" set:html={name} />
-                    </h2>
-                  </div>
-                </div>
-                <div class="card-event-footer box no-border padding-h8 flow horizontal justify-between">
-                  {/* TODO: repair geting location from organization */}
-                  <IO
-                    p
-                    $skipNoInner
-                    class="zip city h5"
-                    data-zip={location.postalCode}
-                    data-city={location.addressLocality}
-                    data-latitude={location.geo?.coordinates[1]}
-                    data-longitude={location.geo?.coordinates[0]}
-                  >
-                    {location.addressLocality}
-                  </IO>
-                  <ul class="reset flow horizontal ">
-                    {organizers?.map(({ name, logo }) => (
-                      <li>
-                        {logo?.src ? (
-                          <ImgDirectus
-                            image={logo}
-                            src={logo?.src}
-                            alt={name}
-                            loading="lazy"
-                            class=""
-                            style="width: 2rem; height: 2rem; object-fit:contain;"
-                            width="32"
-                            height="32"
-                            fit="inside"
-                            quality="99"
-                          />
-                        ) : (
-                          <Img
-                            src={placeholderWPlayCircleBlue}
-                            alt="logo"
-                            loading="lazy"
-                            class=""
-                            style="width: 2rem; height: 2rem; object-fit:contain;"
-                            width="32"
-                            height="32"
-                          />
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            )
-          })
-        }
-      </IO>
+      <EventsList {events} />
     </main>
   </BasicPage>
   {
@@ -345,9 +231,6 @@ const cssRulesDisplayByType =
 </SkeletonPage>
 
 <style>
-  .card-event-footer {
-    line-height: 32px;
-  }
   .sort.asc::after {
     content: '\002B06';
     padding-left: 3px;
@@ -391,14 +274,6 @@ const cssRulesDisplayByType =
     .card-event[data-type-gameTime='true'] {
     display: block !important;
   } */
-
-  section {
-    padding-block: var(--size-h2);
-  }
-
-  div.flow > * {
-    --flow-space: var(--gap-h3);
-  }
 </style>
 
 <style type="text/css" set:html={cssRulesDisplayByType}></style>

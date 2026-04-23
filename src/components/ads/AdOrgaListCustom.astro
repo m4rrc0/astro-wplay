@@ -1,0 +1,70 @@
+---
+import logo from '@assets/images/partners/logo-au-fil-des-mot.webp'
+---
+
+<li
+  class="ad-orga-list box no-border border-radius-s color-palette-main cluster breakout-clickable"
+>
+  <div class="flow content">
+    <!-- <p>Discover our latest game</p> -->
+    <p class="h2">MTJeux</p>
+    <p class="truncate-lines">
+      In Boktor, you and your allies are legendary heroes, racing against time to defeat one of four
+      fearsome tyrants before their summoned vortex destroys the beautiful lands of Boktor.
+    </p>
+    <a href="" class="button">Aller voir</a>
+  </div>
+  <div class="action">
+    <img src={logo.src} alt="" />
+  </div>
+</li>
+
+<style>
+  .ad-orga-list {
+    --color-orgas-1: #2a563f;
+    --color-orgas-2: #e4d7bc;
+    min-height: 10rem;
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    flex-wrap: wrap-reverse;
+    justify-content: space-between;
+
+    background: linear-gradient(220deg, var(--color-orgas-2) 33%, var(--color-orgas-1) 33%);
+  }
+  @media (min-width: 55rem) {
+    .ad-orga-list {
+      grid-column: 2 / -1;
+      background: linear-gradient(32deg, var(--color-orgas-1) 65%, var(--color-orgas-2) 65%);
+    }
+  }
+  @media (min-width: 70rem) {
+    .ad-orga-list {
+      grid-column: 3 / -1;
+    }
+  }
+
+  .ad-orga-list .content {
+    flex-basis: 20rem;
+    flex-grow: 1;
+    color: var(--color-orgas-2);
+  }
+
+  .ad-orga-list .action {
+    width: 12rem;
+    margin-inline: auto;
+  }
+  .ad-orga-list a.button {
+    display: block;
+    width: fit-content;
+    text-decoration: none;
+    padding-inline: 0.5em;
+    border-radius: var(--border-radius-s);
+    background-color: var(--color-orgas-1);
+    color: var(--color-orgas-2);
+    border: 2px solid var(--color-orgas-2);
+  }
+  .ad-orga-list a.button:hover {
+    background-color: var(--color-orgas-2);
+    color: var(--color-orgas-1);
+  }
+</style>

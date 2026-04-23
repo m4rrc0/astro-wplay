@@ -1,14 +1,15 @@
 ---
 import { IO, Img, ImgDirectus } from '@components'
+import Ad from '@components/ads/Ad.astro'
 import placeholderWPlayCircleBlue from '@images/WannaPlay-button-circle-blue.png'
 import { getEvents } from '../store/dataService.js'
 import { start as startDirectus } from '../services/directus.js'
 import { imageDirectusSrc } from '@utils'
 
 // Props passed from the MDX page
-const { eventTypeFilter, areaCode, lang = { code: 'fr' } } = Astro.props
+const { eventTypeFilter, areaCode, lang = { code: 'fr' }, events } = Astro.props
 
-// // Start Directus (login/refresh) before using data
+// Start Directus (login/refresh) before using data
 await startDirectus()
 
 const now = new Date()
@@ -16,12 +17,14 @@ const in10Days = new Date(now)
 in10Days.setDate(in10Days.getDate() + 10)
 
 // Fetch all events (from Directus or cache); async so use await; result stored in allEvents
-const allEvents = await getEvents({
-  // Filter out past events; only include events with start date from now
-  after: now,
-  // Only events within the next 10 days
-  before: in10Days,
-})
+const allEvents =
+  events ??
+  (await getEvents({
+    // Filter out past events; only include events with start date from now
+    after: now,
+    // Only events within the next 10 days
+    before: in10Days,
+  }))
 
 // Holds filtered events (by type and area); make sure MDX page always provides the props (type: festival, gameTime, gamesMarket, tournament, workshop)
 const filteredEvents = (allEvents ?? [])
@@ -44,12 +47,25 @@ const filteredEvents = (allEvents ?? [])
     filteredEvents.length > 0 && (
       <IO
         ul
-        $skipNoInner
-        class="list reset grid-fluid gap-p"
+        $skip={!filteredEvents?.[0]?.name}
+        class="grid-fluid gap-p list reset"
         style="--width-column-min: var(--width-col-3);"
       >
-        {filteredEvents.map(event => {
-          const { name, location, cover_image, organizers, time_start } = event
+        <Ad adType="event" />
+        {/* <AdEventListMeeple /> */}
+        {/* <AdEventListYourAdHere /> */}
+
+        {filteredEvents?.map(event => {
+          const {
+            name,
+            typesTranslated,
+            location,
+            cover_image,
+            organizers,
+            time_start,
+            time_end,
+            isSameDay,
+          } = event
 
           const srcCover = imageDirectusSrc({
             src: cover_image?.src,
@@ -58,23 +74,36 @@ const filteredEvents = (allEvents ?? [])
             quality: '50',
           })
 
+          const currentTypes = typesTranslated?.map(t => t.code_name)
+          const typeAttributes = currentTypes?.reduce(
+            (acc, type) => ({ ...acc, [`data-type-${type}`]: true }),
+            {}
+          )
+
+          const [lng, lat] = location?.geo?.coordinates || []
+
           return (
             <li
               class="card-event breakout-clickable box no-border no-padding border-radius-s"
-              style=""
+              style="display: flex; flex-direction: column;"
+              data-types={currentTypes}
+              {...typeAttributes}
+              data-latitude={lat}
+              data-longitude={lng}
             >
               <div
-                class="box no-border padding-p fixed-fluid gap-p color-palette-trans background-overlay"
+                class="box no-border padding-p with-sidebar gap-p color-palette-trans background-overlay"
                 style={
-                  srcCover
+                  (srcCover
                     ? `background-image: url("${srcCover}"); `
-                    : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`
+                    : `background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");`) +
+                  `height: 100%; background-size: cover; background-position: center;`
                 }
               >
                 <time
-                  datetime={time_start?.dateTimeRaw}
+                  datetime={time_start.dateTimeRaw}
                   class="timestart flow gap-h8 center intrinsic"
-                  style="line-height: 1; --flow-space: var(--size-h8);"
+                  style="line-height: 1; --flow-space: var(--size-h8); justify-content: center;"
                 >
                   <span class="size-h2">{time_start?.fr?.day}</span>
                   <span class="size-h3">{time_start?.fr?.monthShort}</span>
@@ -86,17 +115,20 @@ const filteredEvents = (allEvents ?? [])
                   </h2>
                 </div>
               </div>
-              <div class="card-event-footer box no-border padding-h8 flow justify-between horizontal">
+              <div class="card-event-footer box no-border padding-h8 flow horizontal justify-between">
+                {/* TODO: repair geting location from organization */}
                 <IO
                   p
                   $skipNoInner
                   class="zip city h5"
-                  data-zip={location?.postalCode}
-                  data-city={location?.addressLocality}
+                  data-zip={location.postalCode}
+                  data-city={location.addressLocality}
+                  data-latitude={location.geo?.coordinates[1]}
+                  data-longitude={location.geo?.coordinates[0]}
                 >
-                  {location?.addressLocality}
+                  {location.addressLocality}
                 </IO>
-                <ul class="reset flow horizontal">
+                <ul class="reset flow horizontal ">
                   {organizers?.map(({ name, logo }) => (
                     <li>
                       {logo?.src ? (

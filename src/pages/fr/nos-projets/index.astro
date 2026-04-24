@@ -1,8 +1,23 @@
 ---
 import { SkeletonPage, BasicPage } from '@layouts'
-// import '@styles/partials/our-projets.css'
 import { SEO } from '@components'
-import bannerApero from '@assets/images/nuit-decouverte-ludique-2018/galerie/photo-18.webp'
+import coverPaper from '@assets/images/WannaPlay-banner-paper.jpeg'
+import coverFestival2023 from '@assets/images/our-projects/Festival-2023-2.webp'
+import coverFestival2022 from '@assets/images/our-projects/Festival-2022.webp'
+import coverInauguration from '@assets/images/our-projects/Inauguration-1.webp'
+import coverFestivalBiere from '@assets/images/our-projects/Festival-de-la-Biere.jpg'
+import coverIdeesBleues from '@assets/images/our-projects/festival-idees-bleues.webp'
+import coverBELvue from '@assets/images/our-projects/BELvue.webp'
+import coverMuntpunt from '@assets/images/our-projects/Muntpunt-3.webp'
+import coverJeuxJardin from '@assets/images/our-projects/soiree-theme-jardin-3.webp'
+import coverFonderie from '@assets/images/our-projects/la-Fonderie-3.webp'
+import coverJeuParfait from '@assets/images/our-projects/BGF-2020-Le-jeu-parfait.webp'
+import coverNuitDecouvertes from '@assets/images/our-projects/nuit-decouvertes-ludiques.webp'
+import coverAppCompagnon from '@assets/images/our-projects/BGF-2019-app-compagnon.webp'
+import coverTablesOuvertes from '@assets/images/our-projects/BGF-2017-tables-ouvertes.webp'
+import coverHachette from '@assets/images/our-projects/avec-Hachette.webp'
+import coverJeuTAime from '@assets/images/our-projects/jeux-taime-1.webp'
+
 const lang = { code: 'fr' }
 const pageUrl = new URL(Astro.url.pathname, Astro.site)
 const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
@@ -64,7 +79,10 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           style="--columns: 3; --width-column-min: var(--width-col-4);"
         >
           <li class="project-card border-radius-m color-palette-variation-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverFestival2023.src}');`}
+            >
               <p class="bold">08.07.2023</p>
             </div>
             <div class="project-card-body box no-border flow">
@@ -75,7 +93,10 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             </div>
           </li>
           <li class="project-card border-radius-m color-palette-variation-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverFestival2022.src}');`}
+            >
               <p class="bold">30.07.2022</p>
             </div>
             <div class="project-card-body box no-border flow">
@@ -86,7 +107,10 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
             </div>
           </li>
           <li class="project-card border-radius-m color-palette-variation-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverInauguration.src}');`}
+            >
               <p class="bold">10.06.2018</p>
             </div>
             <div
@@ -110,50 +134,84 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           style="--columns: 3; --width-column-min: var(--width-col-4);"
         >
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
-              <p class="bold">⚠️ … - 2020</p>
-            </div>
-            <div class="project-card-body box no-border flow">
-              <h3 class="h4">Le jeu parfait</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
-              <a href="/fr/nos-projets/le-jeu-parfait">En savoir plus</a>
-            </div>
-          </li>
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
-              <p class="bold">⚠️ 2018</p>
-            </div>
-            <div class="project-card-body box no-border flow">
-              <h3 class="h4">La nuit des découvertes ludiques</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
-              <a href="/fr/nos-projets/nuit-decouverte-ludique">En savoir plus</a>
-            </div>
-          </li>
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
-              <p class="bold">⚠️ … - 2017</p>
-            </div>
-            <div class="project-card-body box no-border flow">
-              <h3 class="h4">Tables ouvertes</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
-              <a href="/fr/nos-projets/tables-ouvertes">En savoir plus</a>
-            </div>
-          </li>
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverFestivalBiere.src}'); background-size: cover; background-position-y: 10%;`}
+            >
               <p class="bold">… - 2025</p>
             </div>
             <div class="project-card-body box no-border flow">
-              <h3 class="h4">Festival de la bière</h3>
+              <h3 class="h4">Festival de la bière</h3>
               <p>Coordination et animation</p>
               <p>Bruxelles - Woluwe-Saint-Pierre</p>
             </div>
           </li>
+
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverIdeesBleues.src}');`}
+            >
+              <p class="bold">01.10.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">Festival des Idées Bleues</h3>
+              <p>
+                Aide animation, rangement, photos sur le festival organisé par la boutique <a
+                  href="https://www.lesideesbleues.be/">Les Idées Bleues</a
+                >
+              </p>
+              <p>Wavre</p>
+            </div>
+          </li>
+
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+            <div class="project-card-header" style={`background-image: url('${coverBELvue.src}');`}>
+              <p class="bold">01.10.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">
+                <a href="https://www.belvue.be/cms/web/fr/" class="bold">BELvue</a> - Mission chamboule
+                temps
+              </h3>
+              <p>Jeu d'enquête dans le musée</p>
+              <p>Coordination, animation</p>
+              <p>Bruxelles - Centre ville</p>
+            </div>
+          </li>
+
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+            <div class="project-card-header" style={`background-image: url('${coverPaper.src}');`}>
+              <p class="bold">01.10.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">Color my Day - fête de quartier</h3>
+              <p>Coordination, animation et création d'un jeu concours</p>
+              <p>Bruxelles - Centre ville</p>
+            </div>
+          </li>
+
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverMuntpunt.src}');`}
+            >
+              <p class="bold">16.03.2023 - 20.09.2023 - 12.10.2023</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">
+                <a href="https://muntpunt.be/">Muntpunt</a> - All You Can Play
+              </h3>
+              <p>Coordination et animation FR ENG NL</p>
+              <p>Bruxelles - Centre ville</p>
+            </div>
+          </li>
+
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverJeuxJardin.src}');`}
+            >
               <p class="bold">Avril, mai, juin 2023</p>
             </div>
             <div
@@ -171,8 +229,12 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <p>Bruxelles - Centre ville</p>
             </div>
           </li>
+
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverFonderie.src}');`}
+            >
               <p class="bold">03.06.2023 - 17.06.2023</p>
             </div>
             <div class="project-card-body box no-border flow">
@@ -183,54 +245,91 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <p>Bruxelles - Molenbeek-Saint-Jean</p>
             </div>
           </li>
+
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
-              <p class="bold">16.03.2023 - 20.09.2023 - 12.10.2023</p>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverJeuParfait.src}');`}
+            >
+              <p class="bold">⚠️ … - 2020</p>
             </div>
             <div class="project-card-body box no-border flow">
-              <h3 class="h4">
-                <a href="https://muntpunt.be/">Muntpunt</a> - All You Can Play
-              </h3>
-              <p>Coordination et animation FR ENG NL</p>
-              <p>Bruxelles - Centre ville</p>
+              <h3 class="h4">Le jeu parfait</h3>
+              <p>⚠️ Coordination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+              <a href="/fr/nos-projets/le-jeu-parfait">En savoir plus</a>
             </div>
           </li>
+
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
-              <p class="bold">01.10.2023</p>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverNuitDecouvertes.src}');`}
+            >
+              <p class="bold">⚠️ 2018</p>
             </div>
             <div class="project-card-body box no-border flow">
-              <h3 class="h4">Festival des Idées Bleues</h3>
-              <p>
-                Aide animation, rangement, photos sur le festival organisé par la boutique <a
-                  href="https://www.lesideesbleues.be/">Les Idées Bleues</a
-                >
-              </p>
-              <p>Wavre</p>
+              <h3 class="h4">La nuit des découvertes ludiques</h3>
+              <p>⚠️ Coordination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+              <a href="/fr/nos-projets/nuit-decouverte-ludique">En savoir plus</a>
             </div>
           </li>
+
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
-              <p class="bold">01.10.2023</p>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverAppCompagnon.src}');`}
+            >
+              <p class="bold">⚠️ ...</p>
             </div>
             <div class="project-card-body box no-border flow">
-              <h3 class="h4">
-                <a href="https://www.belvue.be/cms/web/fr/" class="bold">BELvue</a> - Mission chamboule
-                temps
-              </h3>
-              <p>Jeu d'enquête dans le musée</p>
-              <p>Coordination, animation</p>
-              <p>Bruxelles - Centre ville</p>
+              <h3 class="h4">App compagnon</h3>
+              <p>⚠️ Coordination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
             </div>
           </li>
+
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${bannerApero.src}');`}>
-              <p class="bold">01.10.2023</p>
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverTablesOuvertes.src}');`}
+            >
+              <p class="bold">⚠️ … - 2017</p>
             </div>
             <div class="project-card-body box no-border flow">
-              <h3 class="h4">Color my Day - fête de quartier</h3>
-              <p>Coordination, animation et création d'un jeu concours</p>
-              <p>Bruxelles - Centre ville</p>
+              <h3 class="h4">Tables ouvertes</h3>
+              <p>⚠️ Coordination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+              <a href="/fr/nos-projets/tables-ouvertes">En savoir plus</a>
+            </div>
+          </li>
+
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverHachette.src}');`}
+            >
+              <p class="bold">⚠️ …</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">Hachette</h3>
+              <p>⚠️ Coordination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+            </div>
+          </li>
+
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverJeuTAime.src}');`}
+            >
+              <p class="bold">⚠️ …</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">Jeu t'aime</h3>
+              <p>⚠️ Coordination et animation</p>
+              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
             </div>
           </li>
         </ul>

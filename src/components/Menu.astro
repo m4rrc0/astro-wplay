@@ -91,10 +91,8 @@ const ariaCurrentAttr = currentHref => {
           >Contact</a
         >
       </li>
-      <!-- <li><a href="/styleguide">Styleguide</a></li> -->
-      <!-- TODO: Improve accessibility -->
 
-      <button class="search-toggle-btn" onclick="searchContainer.showModal()">
+      <button class="search-toggle-btn" id="open-search-btn" onclick="searchContainer.showModal()">
         <Icon aria-disabled data-remove-disabled id="searchBtn" name="gridicons:search" />
         <span class="visually-hidden">Rechercher</span>
       </button>
@@ -250,21 +248,15 @@ const ariaCurrentAttr = currentHref => {
     padding: 0;
     margin: 0;
     cursor: pointer;
-    display: inline-flex;
     align-items: center;
     font-size: inherit;
     display: flex;
     gap: 0.2rem;
     color: var(--color-text);
   }
-  .search-toggle-btn:hover {
+  button.search-toggle-btn:has(span.visually-hidden):hover {
     background-color: transparent !important;
     color: var(--color-text);
-  }
-  .search-toggle-btn:focus-visible {
-    outline: 2px solid var(--color-text);
-    outline-offset: 4px;
-    border-radius: 4px;
   }
 
   @media screen and (max-width: 34rem) {
@@ -291,7 +283,6 @@ const ariaCurrentAttr = currentHref => {
       max-height: 0;
       opacity: 0;
       visibility: hidden;
-      overflow: hidden;
 
       transition:
         max-height 0.5s ease,
@@ -338,4 +329,13 @@ const ariaCurrentAttr = currentHref => {
       burgerBtn.setAttribute('aria-label', isExpanded ? 'Close menu' : 'Open menu')
     })
   }
+
+  document.querySelector('.search-toggle-btn').addEventListener('click', e => {
+    e.preventDefault()
+    e.stopPropagation()
+    const modal = document.getElementById('searchContainer')
+    if (modal instanceof HTMLDialogElement) {
+      modal.showModal()
+    }
+  })
 </script>

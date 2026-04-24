@@ -6,15 +6,56 @@ import AdOrgaListCustom from '@components/ads/AdOrgaListCustom.astro'
 import AdOrgaListMeeple from '@components/ads/AdOrgaListMeeple.astro'
 import AdOrgaListYourAdHere from '@components/ads/AdOrgaListYourAdHere.astro'
 
-const { adType } = Astro.props
+interface Props {
+  adType: 'event' | 'organization' | 'orga';
+}
 
-const eventAds = [AdEventListCustom, AdEventListMeeple, AdEventListYourAdHere]
-const orgaAds = [AdOrgaListCustom, AdOrgaListMeeple, AdOrgaListYourAdHere]
-
-const adPool = adType === 'organization' ? orgaAds : eventAds
-
-// Pick a random ad at render time (changes on every page refresh)
-const RandomAd = adPool[Math.floor(Math.random() * adPool.length)]
+const { adType } = Astro.props;
 ---
 
-<RandomAd />
+<div class="ad-container" style="display: contents;">
+  {['event', 'events'].includes(adType) ? (
+    <>
+      <div class="ad-wrapper"><AdEventListCustom /></div>
+      <div class="ad-wrapper"><AdEventListMeeple /></div>
+      <div class="ad-wrapper"><AdEventListYourAdHere /></div>
+    </>
+  ) : (
+    <>
+      <div class="ad-wrapper"><AdOrgaListCustom /></div>
+      <div class="ad-wrapper"><AdOrgaListMeeple /></div>
+      <div class="ad-wrapper"><AdOrgaListYourAdHere /></div>
+    </>
+  )}
+</div>
+
+<style>
+  /* On cache tout par défaut. */
+  .ad-wrapper {
+    display: none;
+  }
+  
+  /* Quand on affiche, on utilise 'contents' pour que le <li> 
+     à l'intérieur de ce div participe directement à la grille 
+     CSS du parent (EventsList/OrganizationsList). */
+  .ad-wrapper.is-visible {
+    display: contents;
+  }
+</style>
+
+<script>
+  // Ce script s'exécute sur le navigateur.
+  // Utilisation de querySelectorAll sans se fier à un container strict
+  // au cas où display: contents; poserait souci pour la sélection.
+  const containers = document.querySelectorAll('.ad-container');
+
+  containers.forEach(container => {
+    // Les conteneurs avec display: contents sont trouvables via DOM.
+    // Mais s'ils sont retirés par certains navigateurs, on utilise le JS pour être sûr.
+    const ads = container.querySelectorAll('.ad-wrapper');
+    if (ads.length > 0) {
+      const randomIndex = Math.floor(Math.random() * ads.length);
+      ads[randomIndex].classList.add('is-visible');
+    }
+  });
+</script>

@@ -210,13 +210,10 @@ if (jsonldType === 'Library') {
     twitterCard="summary"
   />
   <BasicPage {lang}>
-    <main class="max" style="margin-top: 0;">
+    <main class="center width-max" style="margin-top: 0;">
       <header>
         <div
-          class="flex center text box no-border flow gap-h7
-            color-palette-trans
-            h2 padding-y-relative-xl
-            background-overlay"
+          class="center flow intrinsic text box no-border color-palette-trans padding-y-h-1 background-overlay"
           style={srcCover
             ? `background-image: url("${srcCover}");`
             : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}
@@ -331,24 +328,12 @@ if (jsonldType === 'Library') {
       {
         (rich_text_content && (
           <div
-            class="
-        rich-text-content
-        box no-border center
-        max-width-measure-p
-        flow
-      "
+            class="rich-text-content box no-border center max-width-measure-p flow gap-p"
             set:html={rich_text_content}
           />
         )) ||
           (description && (
-            <div
-              class="
-        description
-        box no-border center
-        max-width-measure-p
-        flow
-      "
-            >
+            <div class="description box no-border center max-width-measure-p flow gap-p">
               <h2>Description</h2>
               <Markdown content={description} class="flow" />
             </div>

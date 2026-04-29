@@ -44,10 +44,10 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site)
 const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
 
 const cssRulesDisplayByType =
-  `#eventsForm:has(input:checked) ~ ul .card-event{display:none;}` +
+  `#eventsForm:has(input[name='types']:checked) ~ .events-list .card-event { display: none; }` +
   (eventTypes || [])
     .map(({ code_name }) => {
-      return `#eventsForm:has(input[data-code='${code_name}']:checked) ~ ul .card-event[data-type-${code_name}='true']:not(.hidden) { display: block; }`
+      return `#eventsForm:has(input[data-code='${code_name}']:checked) ~ .events-list .card-event[data-type-${code_name}='true']:not(.hidden) { display: flex; }`
     })
     .join('\n')
 ---

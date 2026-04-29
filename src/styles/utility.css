@@ -66,6 +66,12 @@
     z-index: -1;
   }
 }
+.full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+}
 
 /* Skew border */
 .skew-border-after,

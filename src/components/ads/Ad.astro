@@ -7,38 +7,52 @@ import AdOrgaListMeeple from '@components/ads/AdOrgaListMeeple.astro'
 import AdOrgaListYourAdHere from '@components/ads/AdOrgaListYourAdHere.astro'
 
 interface Props {
-  adType: 'event' | 'organization' | 'orga';
+  adType: 'event' | 'organization' | 'orga'
 }
 
-const { adType } = Astro.props;
+const { adType } = Astro.props
 ---
 
-<div class="ad-container" style="display: contents;">
-  {['event', 'events'].includes(adType) ? (
-    <>
-      <div class="ad-wrapper"><AdEventListCustom /></div>
-      <div class="ad-wrapper"><AdEventListMeeple /></div>
-      <div class="ad-wrapper"><AdEventListYourAdHere /></div>
-    </>
-  ) : (
-    <>
-      <div class="ad-wrapper"><AdOrgaListCustom /></div>
-      <div class="ad-wrapper"><AdOrgaListMeeple /></div>
-      <div class="ad-wrapper"><AdOrgaListYourAdHere /></div>
-    </>
-  )}
+<div class="promo-box-container" style="display: contents;">
+  {
+    ['event', 'events'].includes(adType) ? (
+      <>
+        <div class="promo-box-wrapper">
+          <AdEventListCustom />
+        </div>
+        <div class="promo-box-wrapper">
+          <AdEventListMeeple />
+        </div>
+        <div class="promo-box-wrapper">
+          <AdEventListYourAdHere />
+        </div>
+      </>
+    ) : (
+      <>
+        <div class="promo-box-wrapper">
+          <AdOrgaListCustom />
+        </div>
+        <div class="promo-box-wrapper">
+          <AdOrgaListMeeple />
+        </div>
+        <div class="promo-box-wrapper">
+          <AdOrgaListYourAdHere />
+        </div>
+      </>
+    )
+  }
 </div>
 
 <style>
   /* On cache tout par défaut. */
-  .ad-wrapper {
+  .promo-box-wrapper {
     display: none;
   }
-  
+
   /* Quand on affiche, on utilise 'contents' pour que le <li> 
      à l'intérieur de ce div participe directement à la grille 
      CSS du parent (EventsList/OrganizationsList). */
-  .ad-wrapper.is-visible {
+  .promo-box-wrapper.is-visible {
     display: contents;
   }
 </style>
@@ -47,15 +61,15 @@ const { adType } = Astro.props;
   // Ce script s'exécute sur le navigateur.
   // Utilisation de querySelectorAll sans se fier à un container strict
   // au cas où display: contents; poserait souci pour la sélection.
-  const containers = document.querySelectorAll('.ad-container');
+  const containers = document.querySelectorAll('.promo-box-container')
 
   containers.forEach(container => {
     // Les conteneurs avec display: contents sont trouvables via DOM.
     // Mais s'ils sont retirés par certains navigateurs, on utilise le JS pour être sûr.
-    const ads = container.querySelectorAll('.ad-wrapper');
+    const ads = container.querySelectorAll('.promo-box-wrapper')
     if (ads.length > 0) {
-      const randomIndex = Math.floor(Math.random() * ads.length);
-      ads[randomIndex].classList.add('is-visible');
+      const randomIndex = Math.floor(Math.random() * ads.length)
+      ads[randomIndex].classList.add('is-visible')
     }
-  });
+  })
 </script>

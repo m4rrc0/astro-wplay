@@ -85,7 +85,6 @@ const filteredEvents = (allEvents ?? [])
           return (
             <li
               class="card-event breakout-clickable box no-border no-padding border-radius-s"
-              style="display: flex; flex-direction: column;"
               data-types={currentTypes}
               {...typeAttributes}
               data-latitude={lat}
@@ -171,6 +170,13 @@ const filteredEvents = (allEvents ?? [])
 <style>
   .events-list {
     margin-block: var(--size-h3);
+  }
+  .card-event {
+    display: flex;
+    flex-direction: column;
+  }
+  .card-event.hidden {
+    display: none !important;
   }
   .card-event-footer {
     line-height: 32px;

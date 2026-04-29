@@ -24,7 +24,7 @@ const titleComposed = title ? `${title}${siteName ? ` | ${siteName}` : ''}` : si
 // To support string paths (e.g. from MDX frontmatter where imports are not possible),
 // we dynamically import local paths (/src/... or @..) so getImage() can process them.
 const isInternalImage = /^\/src|^\@/.test(socialImageRaw)
-const socialImagePath = isInternalImage ? await import(socialImageRaw) : socialImageRaw
+const socialImagePath = isInternalImage ? await import(/* @vite-ignore */ socialImageRaw) : socialImageRaw
 const srcRaw = socialImagePath?.default || socialImagePath
 const socialImage = srcRaw ? await getImage({ src: srcRaw, alt: title, width: 1200, height: 630 }) : null
 
@@ -42,16 +42,22 @@ const socialImage = srcRaw ? await getImage({ src: srcRaw, alt: title, width: 12
 {siteName && <meta property="og:site_name" content={siteName} />}
 
 {title &&
-  <title>{titleComposed}</title>
-  <meta property="og:title" content={titleComposed} />}
+  <>
+    <title>{titleComposed}</title>
+    <meta property="og:title" content={titleComposed} />
+  </>}
 
 {description &&
-  <meta name="description" content={description} />
-  <meta property="og:description" content={description} />}
+  <>
+    <meta name="description" content={description} />
+    <meta property="og:description" content={description} />
+  </>}
 
 {canonicalUrl &&
-  <link rel="canonical" href={canonicalUrl} />
-  <meta property="og:url" content={canonicalUrl} />}
+  <>
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:url" content={canonicalUrl} />
+  </>}
 
 {favicon && <link rel="icon" type="image/png" sizes="32x32" href={favicon} />}
 

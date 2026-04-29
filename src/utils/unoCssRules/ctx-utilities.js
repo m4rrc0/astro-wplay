@@ -158,64 +158,67 @@ export default [
   ],
 
   // Full bleed utility
-  // [
-  //   /^full-bleed$/,
-  //   (match, { symbols }) => {
-  //     return {
-  //       [symbols.selector]: () => `:where(.full-bleed)`,
-  //       width: 'min(99.99vw, var(--full-bleed-max-width, 99.99vw))',
-  //       'margin-left': 'calc(50% - min(99.99vw, var(--full-bleed-max-width, 99.99vw)) / 2)',
-  //     }
-  //   },
-  // ],
+  [
+    /^full-bleed$/,
+    (match, { symbols }) => {
+      return {
+        [symbols.selector]: () => `:where(.full-bleed)`,
+        width: 'min(99.99vw, var(--full-bleed-max-width, 99.99vw))',
+        // 'margin-left': 'calc(50% - min(99.99vw, var(--full-bleed-max-width, 99.99vw)) / 2)',
+        'margin-left': 'calc(min(99.99vw, var(--full-bleed-max-width, 99.99vw)) / -2)',
+        position: 'relative',
+        left: '50%',
+      }
+    },
+  ],
 
   // Full bleed before utility
-  // [
-  //   /^full-bleed-before$/,
-  //   (match, { symbols }) => {
-  //     return [
-  //       {
-  //         [symbols.selector]: () => `:where(.full-bleed-before)`,
-  //         position: 'relative',
-  //       },
-  //       {
-  //         [symbols.selector]: () => `:where(.full-bleed-before)::before`,
-  //         width: 'min(99.99vw, var(--full-bleed-max-width, 99.99vw))',
-  //         'margin-left': 'calc(50% - min(99.99vw, var(--full-bleed-max-width, 99.99vw)) / 2)',
-  //         position: 'absolute',
-  //         content: "''",
-  //         display: 'block',
-  //         background: 'inherit',
-  //         inset: '0',
-  //         'z-index': '-1',
-  //       },
-  //     ]
-  //   },
-  // ],
+  [
+    /^full-bleed-before$/,
+    (match, { symbols }) => {
+      return [
+        {
+          [symbols.selector]: () => `:where(.full-bleed-before)`,
+          position: 'relative',
+        },
+        {
+          [symbols.selector]: () => `:where(.full-bleed-before)::before`,
+          width: 'min(99.99vw, var(--full-bleed-max-width, 99.99vw))',
+          'margin-left': 'calc(50% - min(99.99vw, var(--full-bleed-max-width, 99.99vw)) / 2)',
+          position: 'absolute',
+          content: "''",
+          display: 'block',
+          background: 'inherit',
+          inset: '0',
+          'z-index': '-1',
+        },
+      ]
+    },
+  ],
 
   // Full bleed after utility
-  // [
-  //   /^full-bleed-after$/,
-  //   (match, { symbols }) => {
-  //     return [
-  //       {
-  //         [symbols.selector]: () => `:where(.full-bleed-after)`,
-  //         position: 'relative',
-  //       },
-  //       {
-  //         [symbols.selector]: () => `:where(.full-bleed-after)::after`,
-  //         width: 'min(99.99vw, var(--full-bleed-max-width, 99.99vw))',
-  //         'margin-left': 'calc(50% - min(99.99vw, var(--full-bleed-max-width, 99.99vw)) / 2)',
-  //         position: 'absolute',
-  //         content: "''",
-  //         display: 'block',
-  //         background: 'inherit',
-  //         inset: '0',
-  //         'z-index': '-1',
-  //       },
-  //     ]
-  //   },
-  // ],
+  [
+    /^full-bleed-after$/,
+    (match, { symbols }) => {
+      return [
+        {
+          [symbols.selector]: () => `:where(.full-bleed-after)`,
+          position: 'relative',
+        },
+        {
+          [symbols.selector]: () => `:where(.full-bleed-after)::after`,
+          width: 'min(99.99vw, var(--full-bleed-max-width, 99.99vw))',
+          'margin-left': 'calc(50% - min(99.99vw, var(--full-bleed-max-width, 99.99vw)) / 2)',
+          position: 'absolute',
+          content: "''",
+          display: 'block',
+          background: 'inherit',
+          inset: '0',
+          'z-index': '-1',
+        },
+      ]
+    },
+  ],
   // Bleed background with the least interference
   [
     /^bleed-bg$/,

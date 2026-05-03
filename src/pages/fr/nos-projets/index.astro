@@ -77,7 +77,9 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           class="grid-fluid gap-p list reset projects-list-wanna-play"
           style="--columns: 3; --width-column-min: var(--width-col-4);"
         >
-          <li class="project-card border-radius-m color-palette-variation-contrast">
+          <li
+            class="project-card border-radius-m color-palette-variation-contrast breakout-clickable"
+          >
             <div
               class="project-card-header"
               style={`background-image: url('${coverFestival2023.src}');`}
@@ -90,7 +92,9 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <a href="/fr/nos-projets/wanna-play-in-brussel-2023">En savoir plus</a>
             </div>
           </li>
-          <li class="project-card border-radius-m color-palette-variation-contrast">
+          <li
+            class="project-card border-radius-m color-palette-variation-contrast breakout-clickable"
+          >
             <div
               class="project-card-header"
               style={`background-image: url('${coverFestival2022.src}');`}
@@ -103,7 +107,9 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               <a href="/fr/nos-projets/wanna-play-in-brussel-2022">En savoir plus</a>
             </div>
           </li>
-          <li class="project-card border-radius-m color-palette-variation-contrast">
+          <li
+            class="project-card border-radius-m color-palette-variation-contrast breakout-clickable"
+          >
             <div
               class="project-card-header"
               style={`background-image: url('${coverInauguration.src}');`}
@@ -132,13 +138,51 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
             <div
               class="project-card-header"
+              style={`background-image: url('${coverHachette.src}');`}
+            >
+              <p class="bold">Depuis 2024</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">Animation sur festivals</h3>
+              <p>
+                Coordination d'un réseau d'animateurs et animation sur les festivals belges avec
+                <strong>Hachette Boardgames Benelux</strong> et <strong>Blackrock Games</strong>
+              </p>
+              <p>Dans toute la Belgique</p>
+            </div>
+          </li>
+
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+            <div class="project-card-header" style={`background-image: url('${coverBELvue.src}');`}>
+              <p class="bold">Sur commande</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">Mission chamboule temps</h3>
+              <p>
+                Jeu d'enquête créé par <a href="/fr/o/game-spirit/" target="_blank" class="bold"
+                  >Game Spirit</a
+                > dans le musée <a
+                  href="https://www.belvue.be/cms/web/fr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="bold">BELvue</a
+                > pour team-buildings et animations publiques
+              </p>
+              <p>Coordination, animation</p>
+              <p>Bruxelles - Centre ville</p>
+            </div>
+          </li>
+
+          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+            <div
+              class="project-card-header"
               style={`background-image: url('${coverFestivalBiere.src}'); background-size: cover; background-position-y: 10%;`}
             >
               <p class="bold">Festival annuel 2023 -> 2025</p>
             </div>
             <div class="project-card-body box no-border flow">
-              <h3 class="h4">Festival de la bière</h3>
-              <p>Animation publique</p>
+              <h3 class="h4">Festival de la bière</h3>
+              <p>Animation publique avec la commune de Woluwe-Saint-Pierre</p>
               <p>Woluwe-Saint-Pierre</p>
             </div>
           </li>
@@ -163,27 +207,20 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           </li>
 
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div class="project-card-header" style={`background-image: url('${coverBELvue.src}');`}>
-              <p class="bold">Sur commande</p>
-            </div>
-            <div class="project-card-body box no-border flow">
-              <h3 class="h4">
-                <a href="https://www.belvue.be/cms/web/fr/" target="_blank" class="bold">BELvue</a> -
-                Mission chamboule temps
-              </h3>
-              <p>Jeu d'enquête dans le musée pour team-buildings et animations publiques</p>
-              <p>Coordination, animation</p>
-              <p>Bruxelles - Centre ville</p>
-            </div>
-          </li>
-
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
             <div class="project-card-header" style={`background-image: url('${coverPaper.src}');`}>
-              <p class="bold">01.10.2023</p>
+              <p class="bold">16.09.2023</p>
             </div>
             <div class="project-card-body box no-border flow">
               <h3 class="h4">Color my Day - fête de quartier</h3>
-              <p>Coordination, animation et création d'un jeu concours</p>
+              <p>
+                Avec <a
+                  href="https://www.brusselsmajorevents.be/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="bold">Brussels Major Events</a
+                >.<br />
+                Coordination, animation et création d'un jeu concours.
+              </p>
               <p>Bruxelles - Centre ville</p>
             </div>
           </li>
@@ -193,13 +230,16 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
               class="project-card-header"
               style={`background-image: url('${coverMuntpunt.src}');`}
             >
-              <p class="bold">16.03.2023 - 20.09.2023 - 12.10.2023</p>
+              <p class="bold">Animation mensuelle 2023 -> 2024</p>
             </div>
             <div class="project-card-body box no-border flow">
-              <h3 class="h4">
-                <a href="https://muntpunt.be/" target="_blank">Muntpunt</a> - All You Can Play
-              </h3>
-              <p>Coordination et animation trilingue</p>
+              <h3 class="h4">All You Can Play</h3>
+              <p>
+                Coordination et animation trilingue dans la bibliothèque <a
+                  href="https://muntpunt.be/"
+                  target="_blank">Muntpunt</a
+                >.
+              </p>
               <p>Bruxelles - Centre ville</p>
             </div>
           </li>
@@ -251,87 +291,97 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           <li class="project-card border-radius-m color-palette-variation-funky-contrast">
             <div
               class="project-card-header"
-              style={`background-image: url('${coverJeuParfait.src}');`}
+              style={`background-image: url('${coverJeuTAime.src}');`}
             >
-              <p class="bold">⚠️ … - 2020</p>
+              <p class="bold">2022 -> 2024</p>
             </div>
             <div class="project-card-body box no-border flow">
-              <h3 class="h4">Le jeu parfait</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
-              <a href="/fr/nos-projets/le-jeu-parfait">En savoir plus</a>
+              <h3 class="h4">Rencontres Jeu t'aime</h3>
+              <p>Création d'activités ludiques et animation de jeux</p>
+              <p>Maison de la création E. Bockstael - Laeken</p>
             </div>
           </li>
 
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
+            <div
+              class="project-card-header"
+              style={`background-image: url('${coverJeuParfait.src}');`}
+            >
+              <p class="bold">30.08.2020</p>
+            </div>
+            <div class="project-card-body box no-border flow">
+              <h3 class="h4">Le jeu parfait</h3>
+              <p>
+                Conception, promotion et illustration d'un jeu d'enquête en ligne en partenariat
+                avec <a href="/fr/o/be-dete/" target="_blank">Be Detective</a> pour le <a
+                  href="/fr/o/ludiris-asbl/"
+                  target="_blank">Brussels Games Festival</a
+                > (on tour)
+              </p>
+              <a href="/fr/nos-projets/le-jeu-parfait" class="clickable">En savoir plus</a>
+            </div>
+          </li>
+
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
             <div
               class="project-card-header"
               style={`background-image: url('${coverNuitDecouvertes.src}');`}
             >
-              <p class="bold">⚠️ 2018</p>
+              <p class="bold">24.08.2018</p>
             </div>
             <div class="project-card-body box no-border flow">
               <h3 class="h4">La nuit des découvertes ludiques</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
-              <a href="/fr/nos-projets/nuit-decouverte-ludique">En savoir plus</a>
+              <p>Coordination et animation pour la nocturne du Brussels Games Festival 2018</p>
+              <p>Parc du cinquentenaire - Etterbeek</p>
+              <a href="/fr/nos-projets/nuit-decouverte-ludique" class="clickable">En savoir plus</a>
             </div>
           </li>
 
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
             <div
               class="project-card-header"
               style={`background-image: url('${coverAppCompagnon.src}');`}
             >
-              <p class="bold">⚠️ ...</p>
+              <p class="bold">2018 - 2019</p>
             </div>
             <div class="project-card-body box no-border flow">
               <h3 class="h4">App compagnon</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+              <p>
+                Développement d'une <em>progressive web app</em> pour accompagner les visiteurs du <a
+                  href="/fr/o/ludiris-asbl/"
+                  target="_blank">Brussels Games Festival</a
+                >
+              </p>
+              <p>En ligne</p>
+              <p>
+                <a href="https://bgf.wanna-play.be/" target="_blank" class="clickable"
+                  >Voir l'application</a
+                ><br />
+                <small>(liens des images cassés)</small>
+              </p>
             </div>
           </li>
 
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
+          <li
+            class="project-card border-radius-m color-palette-variation-funky-contrast breakout-clickable"
+          >
             <div
               class="project-card-header"
               style={`background-image: url('${coverTablesOuvertes.src}');`}
             >
-              <p class="bold">⚠️ … - 2017</p>
+              <p class="bold">25.08.2017</p>
             </div>
             <div class="project-card-body box no-border flow">
               <h3 class="h4">Tables ouvertes</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
+              <p>On teste notre application de gestion de parties pendant la nocturne du BGF.</p>
+              <p>Parc du cinquentenaire - Etterbeek</p>
               <a href="/fr/nos-projets/tables-ouvertes">En savoir plus</a>
-            </div>
-          </li>
-
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div
-              class="project-card-header"
-              style={`background-image: url('${coverHachette.src}');`}
-            >
-              <p class="bold">⚠️ …</p>
-            </div>
-            <div class="project-card-body box no-border flow">
-              <h3 class="h4">Hachette</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
-            </div>
-          </li>
-
-          <li class="project-card border-radius-m color-palette-variation-funky-contrast">
-            <div
-              class="project-card-header"
-              style={`background-image: url('${coverJeuTAime.src}');`}
-            >
-              <p class="bold">⚠️ …</p>
-            </div>
-            <div class="project-card-body box no-border flow">
-              <h3 class="h4">Jeu t'aime</h3>
-              <p>⚠️ Coordination et animation</p>
-              <p>⚠️ Bruxelles - Woluwe-Saint-Pierre</p>
             </div>
           </li>
         </ul>

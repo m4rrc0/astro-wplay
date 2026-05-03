@@ -210,7 +210,7 @@ if (jsonldType === 'EventSeries') {
   <BasicPage {lang}>
     <main class="max" style="margin-top: 0;">
       <header>
-        <div
+        <hgroup
           class="center flow intrinsic text box no-border color-palette-trans padding-y-h-1 background-overlay"
           style={srcCover
             ? `background-image: url("${srcCover}");`
@@ -221,7 +221,7 @@ if (jsonldType === 'EventSeries') {
             {presentation && <p class="h4">{presentation}</p>}
             {
               location?.string && (
-                <p class="h6">
+                <p>
                   <a href={location.gMapLink} target="_blank" rel="noopener noreferrer nofollow">
                     {location.fullString}
                   </a>
@@ -246,7 +246,7 @@ if (jsonldType === 'EventSeries') {
               />
             )
           }
-        </div>
+        </hgroup>
       </header>
       {
         organizers?.[0] && (

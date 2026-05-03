@@ -212,8 +212,11 @@ if (jsonldType === 'Library') {
   <BasicPage {lang}>
     <main class="max" style="margin-top: 0;">
       <header>
-        <div
-          class="center flow intrinsic text box no-border color-palette-trans padding-y-h-1 background-overlay"
+        <hgroup
+          class="flex center text box no-border flow gap-h7
+            color-palette-trans
+            padding-y-h-1
+            background-overlay"
           style={srcCover
             ? `background-image: url("${srcCover}");`
             : 'background-image: url("/assets/images/WannaPlay-banner-paper.jpeg");'}
@@ -222,14 +225,14 @@ if (jsonldType === 'Library') {
           {presentation && <p class="h4">{presentation}</p>}
           {
             location?.string && (
-              <p class="h6">
+              <p>
                 <a href={location.gMapLink} target="_blank" rel="noopener noreferrer nofollow">
                   {location.string}
                 </a>
               </p>
             )
           }
-        </div>
+        </hgroup>
         {
           logo?.src && (
             <div

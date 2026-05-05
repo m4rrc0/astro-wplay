@@ -6,6 +6,8 @@ import AdOrgaListCustom from '@components/ads/AdOrgaListCustom.astro'
 import AdOrgaListMeeple from '@components/ads/AdOrgaListMeeple.astro'
 import AdOrgaListYourAdHere from '@components/ads/AdOrgaListYourAdHere.astro'
 
+import logoMTJeux from '@assets/images/partners/logo-mtjeux.webp'
+import logoBlackrockGames from '@assets/images/partners/logo-blackrock-games.webp'
 interface Props {
   adType: 'event' | 'organization' | 'orga'
 }
@@ -18,7 +20,24 @@ const { adType } = Astro.props
     ['event', 'events'].includes(adType) ? (
       <>
         <div class="promo-box-wrapper">
-          <AdEventListCustom />
+          <AdEventListCustom
+            title="MTJeux"
+            text="Jeux, animations et expériences sur mesure. On crée des moments uniques."
+            url="https://mtjeux.com/"
+            image={logoMTJeux}
+            color1="#102624"
+            color2="#ddf1ce"
+          />
+        </div>
+        <div class="promo-box-wrapper">
+          <AdEventListCustom
+            title="Blackrock Games"
+            text="Des jeux sélectionnés avec passion. Partenaire des pros du jeu."
+            url="https://blackrockgames.fr/"
+            image={logoBlackrockGames}
+            color1="#121212"
+            color2="#B8B8B8"
+          />
         </div>
         <div class="promo-box-wrapper">
           <AdEventListMeeple />
@@ -30,7 +49,24 @@ const { adType } = Astro.props
     ) : (
       <>
         <div class="promo-box-wrapper">
-          <AdOrgaListCustom />
+          <AdOrgaListCustom
+            title="MTJeux"
+            text="Jeux, animations et expériences sur mesure. On crée des moments uniques."
+            url="https://mtjeux.com/"
+            image={logoMTJeux}
+            color1="#102624"
+            color2="#ddf1ce"
+          />
+        </div>
+        <div class="promo-box-wrapper">
+          <AdOrgaListCustom
+            title="Blackrock Games"
+            text="Des jeux sélectionnés avec passion. Partenaire des pros du jeu."
+            url="https://blackrockgames.fr/"
+            image={logoBlackrockGames}
+            color1="#121212"
+            color2="#B8B8B8"
+          />
         </div>
         <div class="promo-box-wrapper">
           <AdOrgaListMeeple />
@@ -44,28 +80,19 @@ const { adType } = Astro.props
 </div>
 
 <style>
-  /* On cache tout par défaut. */
   .promo-box-wrapper {
     display: none;
   }
 
-  /* Quand on affiche, on utilise 'contents' pour que le <li> 
-     à l'intérieur de ce div participe directement à la grille 
-     CSS du parent (EventsList/OrganizationsList). */
   .promo-box-wrapper.is-visible {
     display: contents;
   }
 </style>
 
 <script>
-  // Ce script s'exécute sur le navigateur.
-  // Utilisation de querySelectorAll sans se fier à un container strict
-  // au cas où display: contents; poserait souci pour la sélection.
   const containers = document.querySelectorAll('.promo-box-container')
 
   containers.forEach(container => {
-    // Les conteneurs avec display: contents sont trouvables via DOM.
-    // Mais s'ils sont retirés par certains navigateurs, on utilise le JS pour être sûr.
     const ads = container.querySelectorAll('.promo-box-wrapper')
     if (ads.length > 0) {
       const randomIndex = Math.floor(Math.random() * ads.length)

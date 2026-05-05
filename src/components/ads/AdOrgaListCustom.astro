@@ -1,28 +1,26 @@
 ---
 import logo from '@assets/images/partners/logo-au-fil-des-mot.webp'
+
+const { title, text, url, image, color1 = '#2f53a2', color2 = '#ffffff' } = Astro.props
 ---
 
 <li
   class="ad-orga-list box no-border border-radius-s color-palette-main cluster breakout-clickable"
+  style={`--color-orgas-1: ${color1}; --color-orgas-2: ${color2};`}
 >
   <div class="flow content">
     <!-- <p>Discover our latest game</p> -->
-    <p class="h2">MTJeux</p>
-    <p class="truncate-lines">
-      In Boktor, you and your allies are legendary heroes, racing against time to defeat one of four
-      fearsome tyrants before their summoned vortex destroys the beautiful lands of Boktor.
-    </p>
-    <a href="" class="button">Aller voir</a>
+    <p class="h3">{title}</p>
+    <p class="truncate-lines:4">{text}</p>
+    <a href={url} target="_blank" class="button">Aller voir</a>
   </div>
   <div class="action">
-    <img src={logo.src} alt="" />
+    <img src={image.src} alt="" />
   </div>
 </li>
 
 <style>
   .ad-orga-list {
-    --color-orgas-1: #2a563f;
-    --color-orgas-2: #e4d7bc;
     min-height: 10rem;
     grid-column: 1 / -1;
     grid-row: 1 / 2;

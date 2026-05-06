@@ -20,7 +20,7 @@ import meepleBanner from '@assets/images/ads/banner-meeple.svg'
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    min-height: 15rem;
+    min-height: 13rem;
     grid-column: 1 / -1;
     grid-row: 1 / 2;
     display: flex;
@@ -44,13 +44,18 @@ import meepleBanner from '@assets/images/ads/banner-meeple.svg'
   }
 
   .ad-event-list-meeple .content {
-    --flow-space: 0.7em;
+    --flow-space: 0.2em;
     flex-basis: 20rem;
     /* flex-grow: 1; */
   }
 
   .ad-event-list-meeple .action {
     margin-inline: auto;
+  }
+
+  .ad-event-list-meeple .content,
+  .ad-event-list-meeple .action {
+    margin-block-start: -1.75rem;
   }
 
   .ad-event-list-meeple .action a.button {

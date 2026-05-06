@@ -5,6 +5,7 @@ import { SkeletonPage, BasicPage } from '@layouts'
 import { SEO, MtObf } from '@components'
 import { Image } from 'astro:assets'
 import cover from '@assets/images/covers/devenir-pro.webp'
+import badge from '@assets/images/badge.svg'
 
 const email = import.meta.env.CONTACT_EMAIL
 
@@ -38,59 +39,105 @@ const canonicalUrl = (pageUrl.href + '/').replace(/[\/]+$/, '/')
           style="object-fit: cover; overflow: hidden; width: 100%; height: 250px; object-position: 60%;"
         />
       </div> -->
-      <h1 class="center text">Contacte-nous</h1>
+      <h1 class="center text">Contact</h1>
 
-      <p class="h3 center text">
-        <span>par e-mail à</span>
-        <MtObf {email} />
-      </p>
-      <div class="center text flow" style="margin-top: var(--size-h1);">
-        <p>Retrouvez-nous aussi sur:</p>
-        <ul class="cluster list reset justify-center">
-          <li>
-            <a
-              href="https://www.facebook.com/WannaPlayBE/"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Facebook
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.instagram.com/wannaplay_be/"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Instagram
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Youtube
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Spotify
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.redbubble.com/fr/people/Wanna-Play-asbl/explore"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Redbubble
-            </a>
-          </li>
-        </ul>
-        <p>En live lors d'événements ludiques belges 😉</p>
+      <div class="center text">
+        <p>Un mot, une idée ou juste un coucou?</p>
+        <p>Écris-nous, on est toujours ravis d’échanger <MtObf {email} /></p>
       </div>
+
+      <section
+        class="grid-fluid v--columns:2 v--gap-grid:var(--s7) v--flow-space:.5em"
+        style="margin-top: var(--size-h1);"
+      >
+        <div class="flow">
+          <h2 class="h3">Contenus</h2>
+          <p>
+            Besoin de mettre à jour un contenu, gérer tes infos (agenda, annuaire) ou demander un
+            accès à ton organisation?
+          </p>
+          <p>Contacte-nous à <MtObf email="content@wanna-play.be" /></p>
+        </div>
+        <div class="flow">
+          <h2 class="h3">Services pro</h2>
+          <p>
+            Tu veux organiser une animation, une activité ludique ou mettre le jeu en projet dans
+            ton organisation?
+          </p>
+          <p>Discutons-en <MtObf email="animation@wanna-play.be" /></p>
+        </div>
+        <div class="flow">
+          <h2 class="h3">Supportaires</h2>
+          <p>
+            <Image
+              src={badge}
+              alt="Badge Wanna Play"
+              width={48}
+              style="display: inline; vertical-align: middle;"
+            /> Envie de soutenir Wanna Play?
+          </p>
+          <p>
+            Ton aide nous permet de faire vivre le projet (participation consciente à partir de
+            5€/mois ou 50€/an)
+          </p>
+          <MtObf email="info@wanna-play.be" />
+        </div>
+        <div class="flow">
+          <h2 class="h3">Annonceurs</h2>
+          <p>Tu veux communiquer sur le site?</p>
+          <p>On a des "espaces pub" disponibles à partir de 50€/mois.</p>
+          <p>En même temps, tu soutiens le développement de l'asbl.</p>
+          <p class="size-h5" style="color: var(--color-secondary);">
+            Nous n'acceptons que les projets vraiment liés au jeu de société
+          </p>
+          <MtObf email="ads@wanna-play.be" />
+        </div>
+      </section>
     </main>
+
+    <div class="center text flow" style="margin-top: var(--size-h1);">
+      <p>Retrouve-nous aussi sur:</p>
+      <ul class="cluster list reset justify-center">
+        <li>
+          <a href="https://www.facebook.com/WannaPlayBE/" target="_blank" rel="noopener noreferrer"
+            >Facebook
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.instagram.com/wannaplay_be/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Instagram
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.youtube.com/channel/UCiDueliYGH4b3RMG0AYE5EQ/featured"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Youtube
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://open.spotify.com/user/1149328236/playlist/3GVw45aSu4KAai7C5lNQHN?si=RFN2zR1bQCqyT_oQe89CXQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Spotify
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.redbubble.com/fr/people/Wanna-Play-asbl/explore"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Redbubble
+          </a>
+        </li>
+      </ul>
+      <p>En live lors d'événements ludiques belges 😉</p>
+    </div>
   </BasicPage>
 </SkeletonPage>
 

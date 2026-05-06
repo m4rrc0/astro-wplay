@@ -389,7 +389,7 @@ utility classes to make it easier to apply font-sizes or other dimensions inside
 h1, h1 *, .size-h1, .h1, .size-h1 *, .h1 * { font-size: 2rem; font-size: var(--size-h1, 2rem); } /* prettier-ignore */
 h2, h2 *, .size-h2, .h2, .size-h2 *, .h2 * { font-size: 1.8rem; font-size: var(--size-h2, 1.8rem); } /* prettier-ignore */
 h3, h3 *, .size-h3, .h3, .size-h3 *, .h3 * { font-size: 1.5rem; font-size: var(--size-h3, 1.5rem); } /* prettier-ignore */
-h5, h5 *, .size-h5, .h5, .size-h5 *, .h5 * { font-size: 0.8rem; font-size: var(--size-h5, 0.8rem); } /* prettier-ignore */
+h5, h5 *, .size-h5, .h5, .size-h5 *, .h5 *, small, .small { font-size: 0.8rem; font-size: var(--size-h5, 0.8rem); } /* prettier-ignore */
 h6, h6 *, .size-h6, .h6, .size-h6 *, .h6 * { font-size: 0.6rem; font-size: var(--size-h6, 0.6rem); } /* prettier-ignore */
 .size-h7, .h7, .size-h7 *, .h7 * { font-size: 0.4rem; font-size: var(--size-h7, 0.4rem); } /* prettier-ignore */
 .size-h8, .h8, .size-h8 *, .h8 * { font-size: 0.25rem; font-size: var(--size-h8, 0.25rem); } /* prettier-ignore */

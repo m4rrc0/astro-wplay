@@ -153,6 +153,11 @@ export default [
           outline: '1px solid var(--color-outline--focus, currentColor)',
           'outline-offset': 'calc(var(--focus-offset, 1rem) / 2 * -1)',
         },
+        {
+          [symbols.selector]: () => `:where(.breakout-clickable) a:not(.clickable)`,
+          position: 'relative',
+          'z-index': '1',
+        },
       ]
     },
   ],
